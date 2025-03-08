@@ -1,6 +1,7 @@
 name: deeplink_x_example
 description: "Demonstrates how to use the deeplink_x plugin."
 publish_to: 'none'
+version: 1.0.0+1
 
 environment:
   sdk: ^3.7.0
