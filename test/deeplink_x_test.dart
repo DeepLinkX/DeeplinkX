@@ -1,29 +1,62 @@
+import 'package:deeplink_x/deeplink_x.dart'; // Make sure to import the deeplink_x package
 import 'package:flutter_test/flutter_test.dart';
-import 'package:deeplink_x/deeplink_x.dart';
-import 'package:deeplink_x/deeplink_x_platform_interface.dart';
-import 'package:deeplink_x/deeplink_x_method_channel.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:mocktail/mocktail.dart';
 
-class MockDeeplink_xPlatform
-    with MockPlatformInterfaceMixin
-    implements Deeplink_xPlatform {
-
-  @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+enum DummyActionType implements ActionTypeEnum {
+  open;
 }
 
-void main() {
-  final Deeplink_xPlatform initialPlatform = Deeplink_xPlatform.instance;
+class DummyAppAction extends AppAction {
+  DummyAppAction() : super(actionType: DummyActionType.open);
 
-  test('$MethodChannelDeeplink_x is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelDeeplink_x>());
+  @override
+  Future<List<Uri>> getUris() async {
+    return [];
+  }
+}
+
+class MockDeeplinkX extends Mock implements DeeplinkX {}
+
+// Tests apis exposed correctly
+void main() {
+  late MockDeeplinkX deeplinkX;
+
+  setUp(() {
+    deeplinkX = MockDeeplinkX();
+
+    when(() => deeplinkX.launchAction(any())).thenAnswer((_) async => true);
+    when(() => deeplinkX.canLaunch(any())).thenAnswer((_) async => true);
   });
 
-  test('getPlatformVersion', () async {
-    Deeplink_x deeplink_xPlugin = Deeplink_x();
-    MockDeeplink_xPlatform fakePlatform = MockDeeplink_xPlatform();
-    Deeplink_xPlatform.instance = fakePlatform;
+  setUpAll(() {
+    registerFallbackValue(DummyAppAction());
+  });
 
-    expect(await deeplink_xPlugin.getPlatformVersion(), '42');
+  group('Exposed Api Access Check:', () {
+    group('Apps:', () {
+      test('Instagram', () {
+        final action = Instagram.open;
+        expect(action, isA<AppAction>());
+      });
+    });
+
+    group('Enums:', () {
+      test('PlatformEnum', () {
+        const platform = PlatformEnum.android;
+        expect(platform, isA<PlatformEnum>());
+      });
+    });
+
+    group('Public methods:', () {
+      test('launchAction', () async {
+        final result = await deeplinkX.launchAction(DummyAppAction());
+        expect(result, true);
+      });
+
+      test('canLaunch', () async {
+        final result = await deeplinkX.canLaunch(DummyAppAction());
+        expect(result, true);
+      });
+    });
   });
 }
