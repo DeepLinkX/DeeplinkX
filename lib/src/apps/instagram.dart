@@ -1,20 +1,31 @@
 import '../core/app_action.dart';
 import '../core/enums/action_type_enum.dart';
 
-/// Instagram-specific action types
+/// Instagram-specific action types that define available deeplink actions
 enum InstagramActionType implements ActionTypeEnum {
+  /// Opens the Instagram app
   open,
+
+  /// Opens a specific Instagram profile
   openProfile,
 }
 
-/// Instagram action implementation
+/// Instagram action implementation for handling Instagram-specific deeplinks
 class InstagramAction extends AppAction {
+  /// Base URI for Instagram app deeplinks
   static const baseUrl = 'instagram://';
+
+  /// Base URI for Instagram web fallback
   static const fallBackUri = 'https://www.instagram.com';
 
+  /// The type of Instagram action to perform
   final InstagramActionType type;
 
-  InstagramAction(
+  /// Creates a new Instagram action
+  ///
+  /// [type] specifies the type of action to perform
+  /// [parameters] contains any additional data needed for the action
+  const InstagramAction(
     this.type, {
     super.parameters,
   }) : super(actionType: type);
@@ -37,10 +48,14 @@ class InstagramAction extends AppAction {
   }
 }
 
-/// Instagram deeplink builder class for easy usage
+/// Utility class for creating Instagram deeplink actions
 class Instagram {
-  static InstagramAction open = InstagramAction(InstagramActionType.open);
+  /// Opens the Instagram app
+  static const InstagramAction open = InstagramAction(InstagramActionType.open);
 
+  /// Opens a specific Instagram profile
+  ///
+  /// [username] is the Instagram username to open
   static InstagramAction openProfile(String username) => InstagramAction(
         InstagramActionType.openProfile,
         parameters: {'username': username},
