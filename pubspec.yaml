@@ -1,9 +1,15 @@
 name: deeplink_x
-description: A cross-platform deeplink plugin that supports various apps and platforms
+description: A cross-platform deeplink plugin that supports various apps and platforms. Easily create and launch deeplinks with fallback support for web URLs.
 version: 0.0.1
 homepage: https://github.com/ParhamHatan/DeeplinkX
 repository: https://github.com/ParhamHatan/DeeplinkX
 issue_tracker: https://github.com/ParhamHatan/DeeplinkX/issues
+documentation: https://github.com/ParhamHatan/DeeplinkX/blob/main/README.md
+topics:
+  - deeplink
+  - url-launcher
+  - cross-platform
+  - instagram
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -22,5 +28,3 @@ dev_dependencies:
   url_launcher_platform_interface: ^2.3.2
 
 flutter:
-  plugin:
-    platforms: {}
