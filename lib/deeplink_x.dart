@@ -16,6 +16,6 @@
 /// // Open a specific profile
 /// await deeplinkX.launchAction(Instagram.openProfile('username'));
 /// ```
-library deeplink_x;
+library;
 
 export 'src/src.dart';

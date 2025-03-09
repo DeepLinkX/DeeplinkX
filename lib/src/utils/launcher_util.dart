@@ -21,9 +21,7 @@ class LauncherUtil {
   /// For example:
   /// - `http://` and `https://` URLs will open in the default browser
   /// - Custom schemes like `instagram://` will open in the corresponding app
-  Future<bool> launchUrl(Uri uri) async {
-    return await url_launcher.launchUrl(uri);
-  }
+  Future<bool> launchUrl(final Uri uri) => url_launcher.launchUrl(uri);
 
   /// Checks if the given [uri] can be launched on the current platform.
   ///
@@ -31,7 +29,5 @@ class LauncherUtil {
   ///
   /// This is useful for checking if a specific app or URL scheme is supported
   /// before attempting to launch it.
-  Future<bool> canLaunchUrl(Uri uri) async {
-    return await url_launcher.canLaunchUrl(uri);
-  }
+  Future<bool> canLaunchUrl(final Uri uri) => url_launcher.canLaunchUrl(uri);
 }

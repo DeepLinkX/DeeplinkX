@@ -1,5 +1,5 @@
-import '../core/app_action.dart';
-import '../core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/core/app_action.dart';
+import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
 
 /// Instagram-specific action types that define available deeplink actions
 enum InstagramActionType implements ActionTypeEnum {
@@ -12,15 +12,6 @@ enum InstagramActionType implements ActionTypeEnum {
 
 /// Instagram action implementation for handling Instagram-specific deeplinks
 class InstagramAction extends AppAction {
-  /// Base URI for Instagram app deeplinks
-  static const baseUrl = 'instagram://';
-
-  /// Base URI for Instagram web fallback
-  static const fallBackUri = 'https://www.instagram.com';
-
-  /// The type of Instagram action to perform
-  final InstagramActionType type;
-
   /// Creates a new Instagram action
   ///
   /// [type] specifies the type of action to perform
@@ -29,6 +20,15 @@ class InstagramAction extends AppAction {
     this.type, {
     super.parameters,
   }) : super(actionType: type);
+
+  /// Base URI for Instagram app deeplinks
+  static const baseUrl = 'instagram://';
+
+  /// Base URI for Instagram web fallback
+  static const fallBackUri = 'https://www.instagram.com';
+
+  /// The type of Instagram action to perform
+  final InstagramActionType type;
 
   @override
   Future<List<Uri>> getUris() async {
@@ -48,15 +48,21 @@ class InstagramAction extends AppAction {
   }
 }
 
-/// Utility class for creating Instagram deeplink actions
+/// Factory class for creating Instagram deeplink actions
+///
+/// This class provides convenient factory methods for creating common Instagram
+/// deeplink actions. While it only contains static members, this is intentional
+/// as it serves as a namespace for Instagram-specific action creation.
 class Instagram {
+  Instagram._();
+
   /// Opens the Instagram app
   static const InstagramAction open = InstagramAction(InstagramActionType.open);
 
   /// Opens a specific Instagram profile
   ///
   /// [username] is the Instagram username to open
-  static InstagramAction openProfile(String username) => InstagramAction(
+  static InstagramAction openProfile(final String username) => InstagramAction(
         InstagramActionType.openProfile,
         parameters: {'username': username},
       );

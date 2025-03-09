@@ -2,7 +2,7 @@
 ///
 /// This interface is implemented by app-specific enums to define
 /// the possible actions that can be performed for each app.
-/// For example, [InstagramActionType] implements this interface
+/// For example, the Instagram action type implements this interface
 /// to define actions like opening the app or viewing a profile.
 ///
 /// Each app should create its own enum that implements this interface

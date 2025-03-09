@@ -1,4 +1,4 @@
-import 'enums/action_type_enum.dart';
+import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
 
 /// Base class for all app actions.
 ///
@@ -6,6 +6,12 @@ import 'enums/action_type_enum.dart';
 /// Each app (e.g., Instagram, LinkedIn) will have its own implementation
 /// that defines how to generate the appropriate URIs for each action.
 abstract class AppAction {
+  /// Creates a new app action with the specified type and optional parameters.
+  const AppAction({
+    required this.actionType,
+    this.parameters,
+  });
+
   /// The type of action to perform.
   ///
   /// This is typically an enum value that implements [ActionTypeEnum]
@@ -17,12 +23,6 @@ abstract class AppAction {
   /// For example, when opening a specific profile, this might contain
   /// the username or profile ID.
   final Map<String, String>? parameters;
-
-  /// Creates a new app action with the specified type and optional parameters.
-  const AppAction({
-    required this.actionType,
-    this.parameters,
-  });
 
   /// Get all possible URIs for the action.
   ///
