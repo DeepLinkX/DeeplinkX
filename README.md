@@ -1,32 +1,60 @@
 # DeeplinkX
 
-A cross-platform deeplink plugin that supports various apps and platforms. This plugin provides a simple way to create deeplinks for different apps, with fallback support for web URLs when native apps are not available.
+A lightweight Flutter plugin that provides type-safe handling of external deep links, with built-in support for popular apps like Telegram and Instagram. Seamlessly handles fallback to web URLs when apps aren't installed, working across all major platforms.
 
 ## Features
 
-- Cross-platform support (iOS, Android, macOS, Windows, Linux, Web)
-- Automatic fallback to web URLs when native apps are not available
-- Type-safe API for creating deeplinks
-- Support for multiple apps (Instagram, more coming soon)
+- Support for multiple platforms (iOS, Android, Web, macOS, Windows, Linux)
+- Fallback to web URLs when apps are not installed
+- Type-safe API for creating deep links
+- Support Instagram, Telegram deeplinks and more coming soon
 
-## Getting Started
+## Supported Apps
 
-Add this to your package's `pubspec.yaml` file:
+### Telegram
 
-```yaml
-dependencies:
-  deeplink_x: ^0.0.1
-```
-
-## Usage
-
-### Instagram Deeplinks
+DeeplinkX supports various Telegram deep linking actions:
 
 ```dart
-import 'package:deeplink_x/deeplink_x.dart';
+final deeplinkX = DeeplinkX();
 
-// Create a DeeplinkX instance
-final deeplinkX = const DeeplinkX();
+// Open Telegram app
+await deeplinkX.launchAction(Telegram.open);
+
+// Open a specific profile by username
+await deeplinkX.launchAction(Telegram.openProfile('username'));
+
+// Open a profile by phone number (include country code)
+await deeplinkX.launchAction(Telegram.openProfilePhoneNumber('1234567890'));
+
+// Send a message to a user by username
+await deeplinkX.launchAction(
+  Telegram.sendMessage('username', 'Hello!'),
+);
+
+// Send a message to a user by phone number
+await deeplinkX.launchAction(
+  Telegram.sendMessagePhoneNumber('1234567890', 'Hello!'),
+);
+```
+
+#### Phone Number Format
+When using phone number-based actions:
+- Include the country code (e.g., '1234567890' for US number)
+- Do not include '+' or spaces
+- Example formats:
+  - US: '1234567890'
+  - UK: '447911123456'
+  - International: '861234567890'
+
+#### Message Formatting
+- Messages starting with '@' are automatically prefixed with a space to avoid triggering inline queries
+- Messages are automatically URL-encoded
+
+### Instagram
+
+```dart
+final deeplinkX = DeeplinkX();
 
 // Open Instagram app
 await deeplinkX.launchAction(Instagram.open);
@@ -35,42 +63,62 @@ await deeplinkX.launchAction(Instagram.open);
 await deeplinkX.launchAction(Instagram.openProfile('username'));
 ```
 
-## Platform Support
+## Installation
 
-| Platform | Support Level |
-|----------|--------------|
-| Android  | SDK 16+ |
-| iOS      | 12.0+ |
-| Linux    | Any |
-| macOS    | 10.14+ |
-| Web      | Any |
-| Windows  | 10+ |
+Add this to your package's `pubspec.yaml` file:
 
-### Platform-Specific Notes
+```yaml
+dependencies:
+  deeplink_x: ^0.0.2
+```
 
-- **iOS**: Uses app-specific schemes (e.g., `instagram://`)
-  - Requires iOS 12.0 or higher
-  - Requires the following keys in your `Info.plist`:
-    ```xml
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>instagram</string>
-    </array>
-    ```
+## Usage
 
-- **Android**: Uses `intent://` scheme with fallback to web
-  - Requires Android SDK 16 or higher
-  - No additional configuration needed
+1. Import the package:
 
-- **Web**: Uses `https://` URLs
-  - Works in all modern browsers
-  - Some features might be limited by browser security policies
+```dart
+import 'package:deeplink_x/deeplink_x.dart';
+```
 
-- **Desktop** (Windows, macOS, Linux):
-  - Uses web URLs as fallback
-  - Windows requires Windows 10 or higher
-  - macOS requires 10.14 (Mojave) or higher
-  - Linux requires `xdg-utils` installed
+2. Create a DeeplinkX instance:
+
+```dart
+final deeplinkX = DeeplinkX();
+```
+
+3. Launch deep links:
+
+```dart
+// Example: Open a Telegram profile
+await deeplinkX.launchAction(Telegram.openProfile('username'));
+```
+
+## Platform-Specific Configuration
+
+### iOS
+Add required schemes to your `ios/Runner/Info.plist`:
+```xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>instagram</string>
+    <string>tg</string>
+</array>
+```
+
+### Android
+Add required schemes to your `android/app/src/main/AndroidManifest.xml` inside the `<queries>` tag:
+```xml
+<queries>
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="instagram" />
+    </intent>
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="tg" />
+    </intent>
+</queries>
+```
 
 ## Contributing
 
