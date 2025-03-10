@@ -8,6 +8,7 @@ A lightweight Flutter plugin that provides type-safe handling of external deep l
 - Fallback to web URLs when apps are not installed
 - Type-safe API for creating deep links
 - Support Instagram, Telegram deeplinks and more coming soon
+- Comprehensive test suite ensuring reliability
 
 ## Usage
 
@@ -58,6 +59,12 @@ DeeplinkX uses a dual-URL approach for maximum compatibility across all supporte
 This ensures your app works seamlessly whether or not the target apps are installed on the user's device. For app-specific URL schemes and web fallbacks, please refer to each app's documentation:
 - [Telegram URL Schemes](docs/apps/telegram.md#url-schemes)
 - [Instagram URL Schemes](docs/apps/instagram.md#url-schemes)
+
+## Testing
+
+DeeplinkX maintains a comprehensive test suite to ensure reliability and stability:
+
+- **Unit Tests**: Extensive testing of all core functionality
 
 ## Platform-Specific Configuration
 For platform-specific configuration instructions (iOS and Android), please refer to the respective app documentation:
