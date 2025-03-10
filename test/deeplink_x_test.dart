@@ -36,6 +36,11 @@ void main() {
         const action = Instagram.open;
         expect(action, isA<AppAction>());
       });
+
+      test('Telegram', () {
+        const action = Telegram.open;
+        expect(action, isA<AppAction>());
+      });
     });
 
     group('Enums:', () {
