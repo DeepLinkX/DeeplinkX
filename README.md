@@ -9,116 +9,60 @@ A lightweight Flutter plugin that provides type-safe handling of external deep l
 - Type-safe API for creating deep links
 - Support Instagram, Telegram deeplinks and more coming soon
 
-## Supported Apps
-
-### Telegram
-
-DeeplinkX supports various Telegram deep linking actions:
-
-```dart
-final deeplinkX = DeeplinkX();
-
-// Open Telegram app
-await deeplinkX.launchAction(Telegram.open);
-
-// Open a specific profile by username
-await deeplinkX.launchAction(Telegram.openProfile('username'));
-
-// Open a profile by phone number (include country code)
-await deeplinkX.launchAction(Telegram.openProfilePhoneNumber('1234567890'));
-
-// Send a message to a user by username
-await deeplinkX.launchAction(
-  Telegram.sendMessage('username', 'Hello!'),
-);
-
-// Send a message to a user by phone number
-await deeplinkX.launchAction(
-  Telegram.sendMessagePhoneNumber('1234567890', 'Hello!'),
-);
-```
-
-#### Phone Number Format
-When using phone number-based actions:
-- Include the country code (e.g., '1234567890' for US number)
-- Do not include '+' or spaces
-- Example formats:
-  - US: '1234567890'
-  - UK: '447911123456'
-  - International: '861234567890'
-
-#### Message Formatting
-- Messages starting with '@' are automatically prefixed with a space to avoid triggering inline queries
-- Messages are automatically URL-encoded
-
-### Instagram
-
-```dart
-final deeplinkX = DeeplinkX();
-
-// Open Instagram app
-await deeplinkX.launchAction(Instagram.open);
-
-// Open a specific profile
-await deeplinkX.launchAction(Instagram.openProfile('username'));
-```
-
-## Installation
-
-Add this to your package's `pubspec.yaml` file:
-
-```yaml
-dependencies:
-  deeplink_x: ^0.0.2
-```
-
 ## Usage
-
-1. Import the package:
 
 ```dart
 import 'package:deeplink_x/deeplink_x.dart';
+
+void main() {
+  // Create instance
+  final deeplinkX = DeeplinkX();
+
+  // Open Instagram app
+  deeplinkX.launchAction(Instagram.open);
+
+  // Open Telegram profile
+  deeplinkX.launchAction(Telegram.openProfile('username'));
+}
 ```
 
-2. Create a DeeplinkX instance:
+## Supported Apps
 
-```dart
-final deeplinkX = DeeplinkX();
-```
+### Telegram
+- Open Telegram app
+- Open profile by username
+- Open profile by phone number
+- Send message to user by username
+- Send message to user by phone number
 
-3. Launch deep links:
+### Instagram
+- Open Instagram app
+- Open profile by username
 
-```dart
-// Example: Open a Telegram profile
-await deeplinkX.launchAction(Telegram.openProfile('username'));
-```
+For detailed documentation on each app's capabilities, parameter validations, and platform-specific configurations, please refer to the [Documentation](#documentation) section below.
+
+## Documentation
+
+Detailed documentation for each supported app is available in the [docs/apps](docs/apps) directory:
+
+- [Instagram Deeplinks](docs/apps/instagram.md)
+- [Telegram Deeplinks](docs/apps/telegram.md)
+
+## URL Scheme Handling
+
+DeeplinkX uses a dual-URL approach for maximum compatibility across all supported apps:
+
+1. **Native App Deep Links**: Uses custom URL schemes to launch apps directly when installed
+2. **Web Fallback URLs**: Automatically redirects to web URLs when apps aren't installed
+
+This ensures your app works seamlessly whether or not the target apps are installed on the user's device. For app-specific URL schemes and web fallbacks, please refer to each app's documentation:
+- [Telegram URL Schemes](docs/apps/telegram.md#url-schemes)
+- [Instagram URL Schemes](docs/apps/instagram.md#url-schemes)
 
 ## Platform-Specific Configuration
-
-### iOS
-Add required schemes to your `ios/Runner/Info.plist`:
-```xml
-<key>LSApplicationQueriesSchemes</key>
-<array>
-    <string>instagram</string>
-    <string>tg</string>
-</array>
-```
-
-### Android
-Add required schemes to your `android/app/src/main/AndroidManifest.xml` inside the `<queries>` tag:
-```xml
-<queries>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="instagram" />
-    </intent>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="tg" />
-    </intent>
-</queries>
-```
+For platform-specific configuration instructions (iOS and Android), please refer to the respective app documentation:
+- [Telegram Platform Configuration](docs/apps/telegram.md#platform-specific-configuration)
+- [Instagram Platform Configuration](docs/apps/instagram.md#platform-specific-configuration)
 
 ## Contributing
 
