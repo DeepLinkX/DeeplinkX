@@ -35,9 +35,21 @@ class _MyAppState extends State<MyApp> {
         child: Scaffold(
           appBar: AppBar(
             title: const Text('DeeplinkX Example'),
-            bottom: const TabBar(tabs: [Tab(text: 'Instagram'), Tab(text: 'Telegram'), Tab(text: 'LinkedIn')]),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: 'Instagram'),
+                Tab(text: 'Telegram'),
+                Tab(text: 'LinkedIn'),
+              ],
+            ),
           ),
-          body: TabBarView(children: [_buildInstagramTab(), _buildTelegramTab(), _buildLinkedInTab()]),
+          body: TabBarView(
+            children: [
+              _buildInstagramTab(),
+              _buildTelegramTab(),
+              _buildLinkedInTab(),
+            ],
+          ),
         ),
       ),
     );
@@ -49,7 +61,10 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Instagram Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Instagram Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 24),
           _buildInstagramActions(),
         ],
@@ -63,7 +78,10 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Telegram Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Telegram Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 24),
           _buildTelegramActions(),
         ],
@@ -72,7 +90,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _buildLinkedInTab() {
-    return const Center(child: Text('LinkedIn support coming soon!', style: TextStyle(fontSize: 16)));
+    return const Center(
+      child: Text(
+        'LinkedIn support coming soon!',
+        style: TextStyle(fontSize: 16),
+      ),
+    );
   }
 
   Widget _buildInstagramActions() {
@@ -98,7 +121,9 @@ class _MyAppState extends State<MyApp> {
         ElevatedButton(
           onPressed: () async {
             if (_usernameController.text.isNotEmpty) {
-              await _deeplinkX.launchAction(Instagram.openProfile(_usernameController.text));
+              await _deeplinkX.launchAction(
+                Instagram.openProfile(_usernameController.text),
+              );
             }
           },
           child: const Text('Open Instagram Profile'),
@@ -118,7 +143,10 @@ class _MyAppState extends State<MyApp> {
           child: const Text('Open Telegram App'),
         ),
         const SizedBox(height: 16),
-        const Text('Profile Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text(
+          'Profile Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: _usernameController,
@@ -145,7 +173,9 @@ class _MyAppState extends State<MyApp> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (_usernameController.text.isNotEmpty) {
-                    await _deeplinkX.launchAction(Telegram.openProfile(_usernameController.text));
+                    await _deeplinkX.launchAction(
+                      Telegram.openProfile(_usernameController.text),
+                    );
                   }
                 },
                 child: const Text('Open Profile by Username'),
@@ -156,7 +186,9 @@ class _MyAppState extends State<MyApp> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (_phoneController.text.isNotEmpty) {
-                    await _deeplinkX.launchAction(Telegram.openProfilePhoneNumber(_phoneController.text));
+                    await _deeplinkX.launchAction(
+                      Telegram.openProfilePhoneNumber(_phoneController.text),
+                    );
                   }
                 },
                 child: const Text('Open Profile by Phone'),
@@ -165,7 +197,10 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         const SizedBox(height: 16),
-        const Text('Message Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text(
+          'Message Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: _messageController,
@@ -182,9 +217,13 @@ class _MyAppState extends State<MyApp> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () async {
-                  if (_usernameController.text.isNotEmpty && _messageController.text.isNotEmpty) {
+                  if (_usernameController.text.isNotEmpty &&
+                      _messageController.text.isNotEmpty) {
                     await _deeplinkX.launchAction(
-                      Telegram.sendMessage(_usernameController.text, _messageController.text),
+                      Telegram.sendMessage(
+                        _usernameController.text,
+                        _messageController.text,
+                      ),
                     );
                   }
                 },
@@ -195,9 +234,13 @@ class _MyAppState extends State<MyApp> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () async {
-                  if (_phoneController.text.isNotEmpty && _messageController.text.isNotEmpty) {
+                  if (_phoneController.text.isNotEmpty &&
+                      _messageController.text.isNotEmpty) {
                     await _deeplinkX.launchAction(
-                      Telegram.sendMessagePhoneNumber(_phoneController.text, _messageController.text),
+                      Telegram.sendMessagePhoneNumber(
+                        _phoneController.text,
+                        _messageController.text,
+                      ),
                     );
                   }
                 },
