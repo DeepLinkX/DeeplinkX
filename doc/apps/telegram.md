@@ -112,6 +112,10 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="tg" />
     </intent>
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="https" />
+    </intent>
 </queries>
 ```
 
