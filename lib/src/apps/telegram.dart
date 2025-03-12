@@ -58,13 +58,13 @@ class TelegramAction extends AppAction {
       case TelegramActionType.sendMessage:
         final username = parameters!['username'];
         final message = parameters!['message']!;
-        final encodedMessage = getEncodedMessage(message);
+        final encodedMessage = _getEncodedMessage(message);
         uris.add(Uri.parse('${baseUrl}resolve?domain=$username&text=$encodedMessage'));
         uris.add(Uri.parse('$fallBackUri/$username?text=$encodedMessage'));
       case TelegramActionType.sendMessagePhoneNumber:
         final phoneNumber = parameters!['phoneNumber'];
         final message = parameters!['message']!;
-        final encodedMessage = getEncodedMessage(message);
+        final encodedMessage = _getEncodedMessage(message);
         uris.add(Uri.parse('${baseUrl}resolve?phone=$phoneNumber&text=$encodedMessage'));
         uris.add(Uri.parse('$fallBackUri/+$phoneNumber?text=$encodedMessage'));
     }
@@ -72,13 +72,7 @@ class TelegramAction extends AppAction {
     return uris;
   }
 
-  /// Encodes a message according to Telegram requirements
-  ///
-  /// This method prepends a whitespace to the message if it starts with '@'
-  /// to avoid triggering inline query.
-  ///
-  /// [message] is the message to encode
-  String getEncodedMessage(final String message) {
+  String _getEncodedMessage(final String message) {
     String encodedMessage = message;
     if (encodedMessage.startsWith('@')) {
       encodedMessage = ' $encodedMessage'; // Prepend whitespace to avoid triggering inline query
