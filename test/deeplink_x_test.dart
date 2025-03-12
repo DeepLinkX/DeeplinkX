@@ -10,9 +10,7 @@ class DummyAppAction extends AppAction {
   DummyAppAction() : super(actionType: DummyActionType.open);
 
   @override
-  Future<List<Uri>> getUris() async {
-    return [];
-  }
+  Future<List<Uri>> getUris() => Future.value([]);
 }
 
 class MockDeeplinkX extends Mock implements DeeplinkX {}
@@ -24,8 +22,8 @@ void main() {
   setUp(() {
     deeplinkX = MockDeeplinkX();
 
-    when(() => deeplinkX.launchAction(any())).thenAnswer((_) async => true);
-    when(() => deeplinkX.canLaunch(any())).thenAnswer((_) async => true);
+    when(() => deeplinkX.launchAction(any())).thenAnswer((final _) async => true);
+    when(() => deeplinkX.canLaunch(any())).thenAnswer((final _) async => true);
   });
 
   setUpAll(() {
@@ -35,7 +33,17 @@ void main() {
   group('Exposed Api Access Check:', () {
     group('Apps:', () {
       test('Instagram', () {
-        final action = Instagram.open;
+        const action = Instagram.open;
+        expect(action, isA<AppAction>());
+      });
+
+      test('Telegram', () {
+        const action = Telegram.open;
+        expect(action, isA<AppAction>());
+      });
+
+      test('AppStore', () {
+        const action = AppStore.open;
         expect(action, isA<AppAction>());
       });
     });

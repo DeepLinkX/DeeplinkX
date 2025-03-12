@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Instagram Actions', () {
     test('open action generates correct URIs', () async {
-      final action = Instagram.open;
+      const action = Instagram.open;
       final uris = await action.getUris();
 
       expect(uris.length, 2);

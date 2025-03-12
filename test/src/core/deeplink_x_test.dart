@@ -24,10 +24,9 @@ void main() {
     mockLauncherUtil = MockLauncherUtil();
     deeplinkX = DeeplinkX(launcherUtil: mockLauncherUtil);
 
-    when(() => mockLauncherUtil.canLaunchUrl(any()))
-        .thenAnswer((_) async => true);
-    when(() => mockLauncherUtil.launchUrl(any())).thenAnswer((_) async => true);
-    when(() => mockAppAction.getUris()).thenAnswer((_) async => dummyUris);
+    when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => true);
+    when(() => mockLauncherUtil.launchUrl(any())).thenAnswer((final _) async => true);
+    when(() => mockAppAction.getUris()).thenAnswer((final _) async => dummyUris);
   });
 
   setUpAll(() {
@@ -36,7 +35,7 @@ void main() {
 
   test('launchAction returns false when no URIs are available', () async {
     // Arrange
-    when(() => mockAppAction.getUris()).thenAnswer((_) async => []);
+    when(() => mockAppAction.getUris()).thenAnswer((final _) async => []);
 
     // Act
     final result = await deeplinkX.launchAction(mockAppAction);
@@ -49,7 +48,7 @@ void main() {
 
   test('canLaunch returns false when no URIs are available', () async {
     // Arrange
-    when(() => mockAppAction.getUris()).thenAnswer((_) async => []);
+    when(() => mockAppAction.getUris()).thenAnswer((final _) async => []);
 
     // Act
     final result = await deeplinkX.canLaunch(mockAppAction);
@@ -67,10 +66,8 @@ void main() {
     // uri[3] => true
 
     // Arrange
-    when(() => mockLauncherUtil.canLaunchUrl(dummyUris[0]))
-        .thenAnswer((_) async => false);
-    when(() => mockLauncherUtil.canLaunchUrl(dummyUris[1]))
-        .thenAnswer((_) async => false);
+    when(() => mockLauncherUtil.canLaunchUrl(dummyUris[0])).thenAnswer((final _) async => false);
+    when(() => mockLauncherUtil.canLaunchUrl(dummyUris[1])).thenAnswer((final _) async => false);
 
     // Act
     final result = await deeplinkX.launchAction(mockAppAction);
@@ -97,10 +94,8 @@ void main() {
     // uri[3] => true
 
     // Arrange
-    when(() => mockLauncherUtil.canLaunchUrl(dummyUris[0]))
-        .thenAnswer((_) async => false);
-    when(() => mockLauncherUtil.canLaunchUrl(dummyUris[1]))
-        .thenAnswer((_) async => false);
+    when(() => mockLauncherUtil.canLaunchUrl(dummyUris[0])).thenAnswer((final _) async => false);
+    when(() => mockLauncherUtil.canLaunchUrl(dummyUris[1])).thenAnswer((final _) async => false);
 
     // Act
     final result = await deeplinkX.canLaunch(mockAppAction);
@@ -115,8 +110,7 @@ void main() {
 
   test('launchAction returns false when no URI can be launched', () async {
     // Arrange
-    when(() => mockLauncherUtil.canLaunchUrl(any()))
-        .thenAnswer((_) async => false);
+    when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => false);
 
     // Act
     final result = await deeplinkX.launchAction(mockAppAction);
@@ -129,8 +123,7 @@ void main() {
 
   test('canLaunch returns false when no URI can be launched', () async {
     // Arrange
-    when(() => mockLauncherUtil.canLaunchUrl(any()))
-        .thenAnswer((_) async => false);
+    when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => false);
 
     // Act
     final result = await deeplinkX.canLaunch(mockAppAction);

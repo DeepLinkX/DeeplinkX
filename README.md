@@ -1,76 +1,87 @@
 # DeeplinkX
 
-A cross-platform deeplink plugin that supports various apps and platforms. This plugin provides a simple way to create deeplinks for different apps, with fallback support for web URLs when native apps are not available.
+A lightweight Flutter plugin that provides type-safe handling of external deep links, with built-in support for popular apps like Telegram and Instagram. Seamlessly handles fallback to web URLs when apps aren't installed, working across all major platforms.
 
 ## Features
 
-- Cross-platform support (iOS, Android, macOS, Windows, Linux, Web)
-- Automatic fallback to web URLs when native apps are not available
-- Type-safe API for creating deeplinks
-- Support for multiple apps (Instagram, more coming soon)
-
-## Getting Started
-
-Add this to your package's `pubspec.yaml` file:
-
-```yaml
-dependencies:
-  deeplink_x: ^0.0.1
-```
+- Support for multiple platforms (iOS, Android, Web, macOS, Windows, Linux)
+- Fallback to web URLs when apps are not installed
+- Type-safe API for creating deep links
+- Support Instagram, Telegram deeplinks and more coming soon
+- Comprehensive test suite ensuring reliability
 
 ## Usage
-
-### Instagram Deeplinks
 
 ```dart
 import 'package:deeplink_x/deeplink_x.dart';
 
-// Create a DeeplinkX instance
-final deeplinkX = const DeeplinkX();
+void main() {
+  // Create instance
+  final deeplinkX = DeeplinkX();
 
-// Open Instagram app
-await deeplinkX.launchAction(Instagram.open);
+  // Open Instagram app
+  deeplinkX.launchAction(Instagram.open);
 
-// Open a specific profile
-await deeplinkX.launchAction(Instagram.openProfile('username'));
+  // Open Telegram profile
+  deeplinkX.launchAction(Telegram.openProfile('username'));
+
+  // Open AppStore app
+  deeplinkX.launchAction(AppStore.open);
+}
 ```
 
-## Platform Support
+## Supported Apps And Actions
 
-| Platform | Support Level |
-|----------|--------------|
-| Android  | SDK 16+ |
-| iOS      | 12.0+ |
-| Linux    | Any |
-| macOS    | 10.14+ |
-| Web      | Any |
-| Windows  | 10+ |
+### iOS App Store
+- Open App Store app
+- Open specific app page
+- Open specific app review page
+- Open specific app iMessage extension page
 
-### Platform-Specific Notes
+### Telegram
+- Open Telegram app
+- Open profile by username
+- Open profile by phone number
+- Send message to user by username
+- Send message to user by phone number
 
-- **iOS**: Uses app-specific schemes (e.g., `instagram://`)
-  - Requires iOS 12.0 or higher
-  - Requires the following keys in your `Info.plist`:
-    ```xml
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>instagram</string>
-    </array>
-    ```
+### Instagram
+- Open Instagram app
+- Open profile by username
 
-- **Android**: Uses `intent://` scheme with fallback to web
-  - Requires Android SDK 16 or higher
-  - No additional configuration needed
+For detailed documentation on each app's capabilities, parameter validations, and platform-specific configurations, please refer to the [Documentation](#documentation) section below.
 
-- **Web**: Uses `https://` URLs
-  - Works in all modern browsers
-  - Some features might be limited by browser security policies
+## Documentation
 
-- **Desktop** (Windows, macOS, Linux):
-  - Uses web URLs as fallback
-  - Windows requires Windows 10 or higher
-  - macOS requires 10.14 (Mojave) or higher
-  - Linux requires `xdg-utils` installed
+Detailed documentation for each supported app is available in the [doc/apps](doc/apps) directory:
+
+- [App Store Deeplinks](doc/apps/app_store.md)
+- [Instagram Deeplinks](doc/apps/instagram.md)
+- [Telegram Deeplinks](doc/apps/telegram.md)
+
+## URL Scheme Handling
+
+DeeplinkX uses a dual-URL approach for maximum compatibility across all supported apps:
+
+1. **Native App Deep Links**: Uses custom URL schemes to launch apps directly when installed
+2. **Web Fallback URLs**: Automatically redirects to web URLs when apps aren't installed
+
+This ensures your app works seamlessly whether or not the target apps are installed on the user's device. For app-specific URL schemes and web fallbacks, please refer to each app's documentation:
+- [App Store URL Schemes](doc/apps/app_store.md#url-schemes)
+- [Telegram URL Schemes](doc/apps/telegram.md#url-schemes)
+- [Instagram URL Schemes](doc/apps/instagram.md#url-schemes)
+
+## Testing
+
+DeeplinkX maintains a comprehensive test suite to ensure reliability and stability:
+
+- **Unit Tests**: Extensive testing of all core functionality
+
+## Platform-Specific Configuration
+For platform-specific configuration instructions (iOS and Android), please refer to the respective app documentation:
+- [App Store Platform Configuration](doc/apps/app_store.md#platform-specific-configuration)
+- [Telegram Platform Configuration](doc/apps/telegram.md#platform-specific-configuration)
+- [Instagram Platform Configuration](doc/apps/instagram.md#platform-specific-configuration)
 
 ## Contributing
 

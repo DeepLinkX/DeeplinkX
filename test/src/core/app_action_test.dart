@@ -7,17 +7,15 @@ enum DummyActionType implements ActionTypeEnum {
 }
 
 class DummyAppAction extends AppAction {
-  final DummyActionType type;
-
   DummyAppAction(
     this.type, {
     super.parameters,
   }) : super(actionType: type);
 
+  final DummyActionType type;
+
   @override
-  Future<List<Uri>> getUris() async {
-    return [];
-  }
+  Future<List<Uri>> getUris() => Future.value([]);
 }
 
 void main() {
