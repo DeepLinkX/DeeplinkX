@@ -10,9 +10,6 @@ topics:
   - deeplink
   - external-deeplink
   - custom-url-schemes
-  - instagram
-  - telegram
-  - app-store
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
