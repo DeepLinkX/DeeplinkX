@@ -13,7 +13,7 @@ await deeplinkX.launchAction(AppStore.open);
 ### Open App Page
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(AppStore.openApp(
+await deeplinkX.launchAction(AppStore.openAppPage(
   appId: '284882215',  // Facebook app ID
   appName: 'facebook',
   country: 'us',       // Optional: two-letter country code

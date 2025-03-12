@@ -13,7 +13,7 @@ void main() {
     });
 
     test('openApp action generates correct URIs', () async {
-      final action = AppStore.openApp(
+      final action = AppStore.openAppPage(
         appId: '123456789',
         appName: 'testapp',
       );
@@ -31,7 +31,7 @@ void main() {
     });
 
     test('openApp action with country and tracking parameters generates correct URIs', () async {
-      final action = AppStore.openApp(
+      final action = AppStore.openAppPage(
         appId: '123456789',
         appName: 'testapp',
         country: 'us',
@@ -134,7 +134,7 @@ void main() {
     });
 
     test('parameters are correctly stored for openApp', () {
-      final action = AppStore.openApp(
+      final action = AppStore.openAppPage(
         appId: '123456789',
         appName: 'testapp',
         country: 'us',

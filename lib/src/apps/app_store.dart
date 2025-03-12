@@ -9,7 +9,7 @@ enum AppStoreActionType implements ActionTypeEnum {
   open,
 
   /// Opens a specific app page in the App Store
-  openApp,
+  openAppPage,
 
   /// Opens the review page for a specific app
   openReview,
@@ -46,7 +46,7 @@ class AppStoreAction extends AppAction {
       case AppStoreActionType.open:
         uris.add(Uri.parse(baseUrl));
         uris.add(Uri.parse(fallBackUri));
-      case AppStoreActionType.openApp:
+      case AppStoreActionType.openAppPage:
         final appId = parameters!['appId'];
         final appName = parameters!['appName'];
         final country = parameters!['country'];
@@ -220,7 +220,7 @@ class AppStore {
   /// [providerToken] is a numeric identifier for your team/developer (optional)
   /// [affiliateToken] is used for Apple's affiliate tracking (optional)
   /// [uniqueOrigin] indicates the origin of the link (optional)
-  static AppStoreAction openApp({
+  static AppStoreAction openAppPage({
     required final String appId,
     required final String appName,
     final String? country,
@@ -253,7 +253,7 @@ class AppStore {
     }
 
     return AppStoreAction(
-      AppStoreActionType.openApp,
+      AppStoreActionType.openAppPage,
       parameters: parameters,
     );
   }
