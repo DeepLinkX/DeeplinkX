@@ -41,6 +41,11 @@ void main() {
         const action = Telegram.open;
         expect(action, isA<AppAction>());
       });
+
+      test('AppStore', () {
+        const action = AppStore.open;
+        expect(action, isA<AppAction>());
+      });
     });
 
     group('Enums:', () {
