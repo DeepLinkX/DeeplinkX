@@ -24,10 +24,19 @@ void main() {
 
   // Open Telegram profile
   deeplinkX.launchAction(Telegram.openProfile('username'));
+
+  // Open AppStore app
+  deeplinkX.launchAction(AppStore.open);
 }
 ```
 
-## Supported Apps
+## Supported Apps And Actions
+
+### iOS App Store
+- Open App Store app
+- Open specific app page
+- Open specific app review page
+- Open specific app iMessage extension page
 
 ### Telegram
 - Open Telegram app
@@ -46,6 +55,7 @@ For detailed documentation on each app's capabilities, parameter validations, an
 
 Detailed documentation for each supported app is available in the [docs/apps](docs/apps) directory:
 
+- [App Store Deeplinks](docs/apps/app_store.md)
 - [Instagram Deeplinks](docs/apps/instagram.md)
 - [Telegram Deeplinks](docs/apps/telegram.md)
 
@@ -57,6 +67,7 @@ DeeplinkX uses a dual-URL approach for maximum compatibility across all supporte
 2. **Web Fallback URLs**: Automatically redirects to web URLs when apps aren't installed
 
 This ensures your app works seamlessly whether or not the target apps are installed on the user's device. For app-specific URL schemes and web fallbacks, please refer to each app's documentation:
+- [App Store URL Schemes](docs/apps/app_store.md#url-schemes)
 - [Telegram URL Schemes](docs/apps/telegram.md#url-schemes)
 - [Instagram URL Schemes](docs/apps/instagram.md#url-schemes)
 
@@ -68,6 +79,7 @@ DeeplinkX maintains a comprehensive test suite to ensure reliability and stabili
 
 ## Platform-Specific Configuration
 For platform-specific configuration instructions (iOS and Android), please refer to the respective app documentation:
+- [App Store Platform Configuration](docs/apps/app_store.md#platform-specific-configuration)
 - [Telegram Platform Configuration](docs/apps/telegram.md#platform-specific-configuration)
 - [Instagram Platform Configuration](docs/apps/instagram.md#platform-specific-configuration)
 
