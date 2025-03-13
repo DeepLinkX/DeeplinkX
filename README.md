@@ -7,7 +7,7 @@ A lightweight Flutter plugin that provides type-safe handling of external deep l
 - Support for multiple platforms (iOS, Android, Web, macOS, Windows, Linux)
 - Fallback to web URLs when apps are not installed
 - Type-safe API for creating deep links
-- Support Instagram, Telegram deeplinks and more coming soon
+- Support Instagram, Telegram, iOS App Store deeplinks and more coming soon
 - Comprehensive test suite ensuring reliability
 
 ## Usage
