@@ -8,7 +8,7 @@ void main() {
       final uris = await action.getUris();
 
       expect(uris.length, 2);
-      expect(uris[0].toString(), 'itms-apps://');
+      expect(uris[0].toString(), 'itms-apps://itunes.apple.com');
       expect(uris[1].toString(), 'https://apps.apple.com');
     });
 
