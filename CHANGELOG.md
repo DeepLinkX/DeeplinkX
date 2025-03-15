@@ -1,3 +1,9 @@
+## 0.0.3
+* Added support for Google Play Store deeplinks:
+  * Open Play Store
+  * Open app page by app package name
+  * Open app review page
+
 ## 0.0.2
 
 * Added support for App Store deeplinks:
