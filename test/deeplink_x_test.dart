@@ -46,6 +46,11 @@ void main() {
         const action = AppStore.open;
         expect(action, isA<AppAction>());
       });
+
+      test('PlayStore', () {
+        const action = PlayStore.open;
+        expect(action, isA<AppAction>());
+      });
     });
 
     group('Enums:', () {

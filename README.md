@@ -7,7 +7,7 @@ A lightweight Flutter plugin that provides type-safe handling of external deep l
 - Support for multiple platforms (iOS, Android, Web, macOS, Windows, Linux)
 - Fallback to web URLs when apps are not installed
 - Type-safe API for creating deep links
-- Support Instagram, Telegram deeplinks and more coming soon
+- Support Instagram, Telegram, iOS App Store deeplinks and more coming soon
 - Comprehensive test suite ensuring reliability
 
 ## Usage
@@ -38,6 +38,11 @@ void main() {
 - Open specific app review page
 - Open specific app iMessage extension page
 
+### Google Play Store
+- Open Play Store app
+- Open specific app page
+- Open specific app review page
+
 ### Telegram
 - Open Telegram app
 - Open profile by username
@@ -56,6 +61,7 @@ For detailed documentation on each app's capabilities, parameter validations, an
 Detailed documentation for each supported app is available in the [doc/apps](doc/apps) directory:
 
 - [App Store Deeplinks](doc/apps/app_store.md)
+- [Play Store Deeplinks](doc/apps/play_store.md)
 - [Instagram Deeplinks](doc/apps/instagram.md)
 - [Telegram Deeplinks](doc/apps/telegram.md)
 
@@ -68,6 +74,7 @@ DeeplinkX uses a dual-URL approach for maximum compatibility across all supporte
 
 This ensures your app works seamlessly whether or not the target apps are installed on the user's device. For app-specific URL schemes and web fallbacks, please refer to each app's documentation:
 - [App Store URL Schemes](doc/apps/app_store.md#url-schemes)
+- [Play Store URL Schemes](doc/apps/play_store.md#url-schemes)
 - [Telegram URL Schemes](doc/apps/telegram.md#url-schemes)
 - [Instagram URL Schemes](doc/apps/instagram.md#url-schemes)
 
@@ -80,6 +87,7 @@ DeeplinkX maintains a comprehensive test suite to ensure reliability and stabili
 ## Platform-Specific Configuration
 For platform-specific configuration instructions (iOS and Android), please refer to the respective app documentation:
 - [App Store Platform Configuration](doc/apps/app_store.md#platform-specific-configuration)
+- [Play Store Platform Configuration](doc/apps/play_store.md#platform-specific-configuration)
 - [Telegram Platform Configuration](doc/apps/telegram.md#platform-specific-configuration)
 - [Instagram Platform Configuration](doc/apps/instagram.md#platform-specific-configuration)
 

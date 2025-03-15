@@ -34,16 +34,28 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: DefaultTabController(
-        length: 4,
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('DeeplinkX Example'),
             bottom: const TabBar(
-              tabs: [Tab(text: 'Instagram'), Tab(text: 'Telegram'), Tab(text: 'App Store'), Tab(text: 'LinkedIn')],
+              tabs: [
+                Tab(text: 'Instagram'),
+                Tab(text: 'Telegram'),
+                Tab(text: 'App Store'),
+                Tab(text: 'Play Store'),
+                Tab(text: 'LinkedIn'),
+              ],
             ),
           ),
           body: TabBarView(
-            children: [_buildInstagramTab(), _buildTelegramTab(), _buildAppStoreTab(), _buildLinkedInTab()],
+            children: [
+              _buildInstagramTab(),
+              _buildTelegramTab(),
+              _buildAppStoreTab(),
+              _buildPlayStoreTab(),
+              _buildLinkedInTab(),
+            ],
           ),
         ),
       ),
@@ -212,6 +224,100 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPlayStoreTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text('Play Store Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 24),
+          _buildPlayStoreActions(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPlayStoreActions() {
+    // Controller for package name input
+    final packageNameController = TextEditingController(text: 'com.instagram.android');
+    // Controller for referrer input
+    final referrerController = TextEditingController(text: 'utm_source=deeplink_x_example');
+    // Controller for language code input
+    final languageController = TextEditingController(text: 'en');
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          onPressed: () async {
+            await _deeplinkX.launchAction(PlayStore.open);
+          },
+          child: const Text('Open Play Store'),
+        ),
+        const SizedBox(height: 16),
+        const Text('App Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        TextField(
+          controller: packageNameController,
+          decoration: const InputDecoration(
+            labelText: 'Package Name',
+            hintText: 'Enter Package Name (e.g., com.instagram.android)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: referrerController,
+          decoration: const InputDecoration(
+            labelText: 'Referrer (optional)',
+            hintText: 'Enter referrer for tracking (e.g., utm_source=your_app)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: languageController,
+          decoration: const InputDecoration(
+            labelText: 'Language Code (optional)',
+            hintText: 'Enter language code (e.g., en, fr, de)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (packageNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                PlayStore.openAppPage(
+                  packageName: packageNameController.text,
+                  referrer: referrerController.text.isNotEmpty ? referrerController.text : null,
+                  hl: languageController.text.isNotEmpty ? languageController.text : null,
+                ),
+              );
+            }
+          },
+          child: const Text('Open App Page'),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (packageNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                PlayStore.openAppReviewPage(
+                  packageName: packageNameController.text,
+                  referrer: referrerController.text.isNotEmpty ? referrerController.text : null,
+                  hl: languageController.text.isNotEmpty ? languageController.text : null,
+                ),
+              );
+            }
+          },
+          child: const Text('Open App Review Page'),
         ),
       ],
     );
