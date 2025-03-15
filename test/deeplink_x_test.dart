@@ -56,6 +56,11 @@ void main() {
         const action = MacAppStore.open;
         expect(action, isA<AppAction>());
       });
+
+      test('MicrosoftStore', () {
+        const action = MicrosoftStore.open;
+        expect(action, isA<AppAction>());
+      });
     });
 
     group('Enums:', () {

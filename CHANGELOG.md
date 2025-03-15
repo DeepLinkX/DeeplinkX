@@ -1,3 +1,13 @@
+## 0.0.4
+* Added support for Mac App Store deeplinks:
+  * Open Mac App Store
+  * Open app page by app ID
+  * Open app review page
+* Added support for Microsoft Store deeplinks:
+  * Open Microsoft Store
+  * Open app page by app ID
+  * Open app review page
+
 ## 0.0.3
 * Added support for Google Play Store deeplinks:
   * Open Play Store

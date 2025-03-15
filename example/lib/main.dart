@@ -22,6 +22,8 @@ class _MyAppState extends State<MyApp> {
   final _macAppIdController = TextEditingController(text: '497799835'); // Example: Xcode app ID
   final _macAppNameController = TextEditingController(text: 'xcode'); // Example: Xcode app name
   final _countryController = TextEditingController(text: 'us'); // Example: US country code
+  final _msProductIdController = TextEditingController(text: '9WZDNCRFHVJL'); // Example: Microsoft Edge product ID
+  final _msLanguageController = TextEditingController(text: 'en-US'); // Example: Language code
 
   @override
   void dispose() {
@@ -33,6 +35,8 @@ class _MyAppState extends State<MyApp> {
     _macAppIdController.dispose();
     _macAppNameController.dispose();
     _countryController.dispose();
+    _msProductIdController.dispose();
+    _msLanguageController.dispose();
     super.dispose();
   }
 
@@ -41,17 +45,19 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: DefaultTabController(
-        length: 6,
+        length: 7,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('DeeplinkX Example'),
             bottom: const TabBar(
+              isScrollable: true,
               tabs: [
                 Tab(text: 'Instagram'),
                 Tab(text: 'Telegram'),
                 Tab(text: 'iOS App Store'),
                 Tab(text: 'Play Store'),
                 Tab(text: 'Mac App Store'),
+                Tab(text: 'Microsoft Store'),
                 Tab(text: 'LinkedIn'),
               ],
             ),
@@ -63,6 +69,7 @@ class _MyAppState extends State<MyApp> {
               _buildAppStoreTab(),
               _buildPlayStoreTab(),
               _buildMacAppStoreTab(),
+              _buildMicrosoftStoreTab(),
               _buildLinkedInTab(),
             ],
           ),
@@ -494,6 +501,77 @@ class _MyAppState extends State<MyApp> {
                   country: _countryController.text.isNotEmpty ? _countryController.text : null,
                 ),
               );
+            }
+          },
+          child: const Text('Open App Review Page'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMicrosoftStoreTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text('Microsoft Store Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 24),
+          _buildMicrosoftStoreActions(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMicrosoftStoreActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          onPressed: () async {
+            await _deeplinkX.launchAction(MicrosoftStore.open);
+          },
+          child: const Text('Open Microsoft Store'),
+        ),
+        const SizedBox(height: 16),
+        const Text('App Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _msProductIdController,
+          decoration: const InputDecoration(
+            labelText: 'Product ID',
+            hintText: 'Enter Product ID (e.g., 9WZDNCRFHVJL for Microsoft Edge)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _msLanguageController,
+          decoration: const InputDecoration(
+            labelText: 'Language Code (optional)',
+            hintText: 'Enter language code (e.g., en-US)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_msProductIdController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                MicrosoftStore.openAppPage(
+                  productId: _msProductIdController.text,
+                  language: _msLanguageController.text.isNotEmpty ? _msLanguageController.text : null,
+                ),
+              );
+            }
+          },
+          child: const Text('Open App Page'),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_msProductIdController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(MicrosoftStore.openAppReviewPage(productId: _msProductIdController.text));
             }
           },
           child: const Text('Open App Review Page'),
