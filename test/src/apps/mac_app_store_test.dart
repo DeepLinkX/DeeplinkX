@@ -8,7 +8,7 @@ void main() {
       final uris = await action.getUris();
 
       expect(uris.length, 2);
-      expect(uris[0].toString(), 'macappstore://');
+      expect(uris[0].toString(), 'macappstore://itunes.apple.com');
       expect(uris[1].toString(), 'https://apps.apple.com/app/mac');
     });
 
@@ -22,7 +22,7 @@ void main() {
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'macappstore://apps.apple.com/app/mac/testapp/id123456789?mt=12',
+        'macappstore://itunes.apple.com/app/mac/testapp/id123456789?mt=12',
       );
       expect(
         uris[1].toString(),
@@ -44,7 +44,7 @@ void main() {
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'macappstore://apps.apple.com/us/app/mac/testapp/id123456789?mt=12&ct=campaign123&pt=provider456&at=affiliate789',
+        'macappstore://itunes.apple.com/us/app/mac/testapp/id123456789?mt=12&ct=campaign123&pt=provider456&at=affiliate789',
       );
       expect(
         uris[1].toString(),
@@ -62,7 +62,7 @@ void main() {
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'macappstore://apps.apple.com/app/mac/testapp/id123456789?action=write-review&mt=12',
+        'macappstore://itunes.apple.com/app/mac/testapp/id123456789?action=write-review&mt=12',
       );
       expect(
         uris[1].toString(),
@@ -84,7 +84,7 @@ void main() {
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'macappstore://apps.apple.com/us/app/mac/testapp/id123456789?action=write-review&mt=12&ct=campaign123&pt=provider456&at=affiliate789',
+        'macappstore://itunes.apple.com/us/app/mac/testapp/id123456789?action=write-review&mt=12&ct=campaign123&pt=provider456&at=affiliate789',
       );
       expect(
         uris[1].toString(),
