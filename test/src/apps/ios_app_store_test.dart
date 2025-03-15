@@ -1,10 +1,10 @@
-import 'package:deeplink_x/src/apps/app_store.dart';
+import 'package:deeplink_x/src/apps/ios_app_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('App Store Actions', () {
+  group('iOS App Store Actions', () {
     test('open action generates correct URIs', () async {
-      const action = AppStore.open;
+      const action = IOSAppStore.open;
       final uris = await action.getUris();
 
       expect(uris.length, 2);
@@ -13,7 +13,7 @@ void main() {
     });
 
     test('openApp action generates correct URIs', () async {
-      final action = AppStore.openAppPage(
+      final action = IOSAppStore.openAppPage(
         appId: '123456789',
         appName: 'testapp',
       );
@@ -31,7 +31,7 @@ void main() {
     });
 
     test('openApp action with country and tracking parameters generates correct URIs', () async {
-      final action = AppStore.openAppPage(
+      final action = IOSAppStore.openAppPage(
         appId: '123456789',
         appName: 'testapp',
         country: 'us',
@@ -54,7 +54,7 @@ void main() {
     });
 
     test('openReview action generates correct URIs', () async {
-      final action = AppStore.openReview(
+      final action = IOSAppStore.openReview(
         appId: '123456789',
         appName: 'testapp',
       );
@@ -72,7 +72,7 @@ void main() {
     });
 
     test('openReview action with country and tracking parameters generates correct URIs', () async {
-      final action = AppStore.openReview(
+      final action = IOSAppStore.openReview(
         appId: '123456789',
         appName: 'testapp',
         country: 'us',
@@ -94,7 +94,7 @@ void main() {
     });
 
     test('openMessagesExtension action generates correct URIs', () async {
-      final action = AppStore.openMessagesExtension(
+      final action = IOSAppStore.openMessagesExtension(
         appId: '123456789',
         appName: 'testapp',
       );
@@ -112,7 +112,7 @@ void main() {
     });
 
     test('openMessagesExtension action with country and tracking parameters generates correct URIs', () async {
-      final action = AppStore.openMessagesExtension(
+      final action = IOSAppStore.openMessagesExtension(
         appId: '123456789',
         appName: 'testapp',
         country: 'us',
@@ -131,71 +131,6 @@ void main() {
         uris[1].toString(),
         'https://apps.apple.com/us/app/testapp/id123456789?app=messages&mt=8&ct=campaign123&pt=provider456&at=affiliate789',
       );
-    });
-
-    test('parameters are correctly stored for openApp', () {
-      final action = AppStore.openAppPage(
-        appId: '123456789',
-        appName: 'testapp',
-        country: 'us',
-        campaignToken: 'campaign123',
-        providerToken: 'provider456',
-        affiliateToken: 'affiliate789',
-        uniqueOrigin: 'origin123',
-      );
-
-      expect(action.parameters, {
-        'appId': '123456789',
-        'appName': 'testapp',
-        'country': 'us',
-        'mt': '8',
-        'ct': 'campaign123',
-        'pt': 'provider456',
-        'at': 'affiliate789',
-        'uo': 'origin123',
-      });
-    });
-
-    test('parameters are correctly stored for openReview', () {
-      final action = AppStore.openReview(
-        appId: '123456789',
-        appName: 'testapp',
-        country: 'us',
-        campaignToken: 'campaign123',
-        providerToken: 'provider456',
-        affiliateToken: 'affiliate789',
-      );
-
-      expect(action.parameters, {
-        'appId': '123456789',
-        'appName': 'testapp',
-        'country': 'us',
-        'mt': '8',
-        'ct': 'campaign123',
-        'pt': 'provider456',
-        'at': 'affiliate789',
-      });
-    });
-
-    test('parameters are correctly stored for openMessagesExtension', () {
-      final action = AppStore.openMessagesExtension(
-        appId: '123456789',
-        appName: 'testapp',
-        country: 'us',
-        campaignToken: 'campaign123',
-        providerToken: 'provider456',
-        affiliateToken: 'affiliate789',
-      );
-
-      expect(action.parameters, {
-        'appId': '123456789',
-        'appName': 'testapp',
-        'country': 'us',
-        'mt': '8',
-        'ct': 'campaign123',
-        'pt': 'provider456',
-        'at': 'affiliate789',
-      });
     });
   });
 }

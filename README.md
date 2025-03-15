@@ -25,8 +25,8 @@ void main() {
   // Open Telegram profile
   deeplinkX.launchAction(Telegram.openProfile('username'));
 
-  // Open AppStore app
-  deeplinkX.launchAction(AppStore.open);
+  // Open iOS App Store app
+  deeplinkX.launchAction(IOSAppStore.open);
 }
 ```
 
@@ -37,6 +37,11 @@ void main() {
 - Open specific app page
 - Open specific app review page
 - Open specific app iMessage extension page
+
+### Mac App Store
+- Open Mac App Store app
+- Open specific app page
+- Open specific app review page
 
 ### Google Play Store
 - Open Play Store app
@@ -60,7 +65,8 @@ For detailed documentation on each app's capabilities, parameter validations, an
 
 Detailed documentation for each supported app is available in the [doc/apps](doc/apps) directory:
 
-- [App Store Deeplinks](doc/apps/app_store.md)
+- [iOS App Store Deeplinks](doc/apps/ios_app_store.md)
+- [Mac App Store Deeplinks](doc/apps/mac_app_store.md)
 - [Play Store Deeplinks](doc/apps/play_store.md)
 - [Instagram Deeplinks](doc/apps/instagram.md)
 - [Telegram Deeplinks](doc/apps/telegram.md)
@@ -73,7 +79,8 @@ DeeplinkX uses a dual-URL approach for maximum compatibility across all supporte
 2. **Web Fallback URLs**: Automatically redirects to web URLs when apps aren't installed
 
 This ensures your app works seamlessly whether or not the target apps are installed on the user's device. For app-specific URL schemes and web fallbacks, please refer to each app's documentation:
-- [App Store URL Schemes](doc/apps/app_store.md#url-schemes)
+- [iOS App Store URL Schemes](doc/apps/ios_app_store.md#url-schemes)
+- [Mac App Store URL Schemes](doc/apps/mac_app_store.md#url-schemes)
 - [Play Store URL Schemes](doc/apps/play_store.md#url-schemes)
 - [Telegram URL Schemes](doc/apps/telegram.md#url-schemes)
 - [Instagram URL Schemes](doc/apps/instagram.md#url-schemes)
@@ -85,8 +92,9 @@ DeeplinkX maintains a comprehensive test suite to ensure reliability and stabili
 - **Unit Tests**: Extensive testing of all core functionality
 
 ## Platform-Specific Configuration
-For platform-specific configuration instructions (iOS and Android), please refer to the respective app documentation:
-- [App Store Platform Configuration](doc/apps/app_store.md#platform-specific-configuration)
+For platform-specific configuration instructions (iOS, Android, and macOS), please refer to the respective app documentation:
+- [iOS App Store Platform Configuration](doc/apps/ios_app_store.md#platform-specific-configuration)
+- [Mac App Store Platform Configuration](doc/apps/mac_app_store.md#platform-specific-configuration)
 - [Play Store Platform Configuration](doc/apps/play_store.md#platform-specific-configuration)
 - [Telegram Platform Configuration](doc/apps/telegram.md#platform-specific-configuration)
 - [Instagram Platform Configuration](doc/apps/instagram.md#platform-specific-configuration)

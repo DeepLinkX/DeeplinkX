@@ -1,19 +1,19 @@
-# App Store Deeplinks
+# iOS App Store Deeplinks
 
-DeeplinkX provides support for opening the App Store and specific app pages, including app details, reviews, and iMessage extensions.
+DeeplinkX provides support for opening the iOS App Store and specific app pages, including app details, reviews, and iMessage extensions.
 
 ## Available Actions
 
 ### Open App Store
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(AppStore.open);
+await deeplinkX.launchAction(IOSAppStore.open);
 ```
 
 ### Open App Page
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(AppStore.openAppPage(
+await deeplinkX.launchAction(IOSAppStore.openAppPage(
   appId: '284882215',  // Facebook app ID
   appName: 'facebook',
   country: 'us',       // Optional: two-letter country code
@@ -23,7 +23,7 @@ await deeplinkX.launchAction(AppStore.openAppPage(
 ### Open App Review Page
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(AppStore.openReview(
+await deeplinkX.launchAction(IOSAppStore.openReview(
   appId: '284882215',  // Facebook app ID
   appName: 'facebook',
   country: 'us',       // Optional: two-letter country code
@@ -33,7 +33,7 @@ await deeplinkX.launchAction(AppStore.openReview(
 ### Open App iMessage Extension
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(AppStore.openMessagesExtension(
+await deeplinkX.launchAction(IOSAppStore.openMessagesExtension(
   appId: '284882215',  // Facebook app ID
   appName: 'facebook',
   country: 'us',       // Optional: two-letter country code
@@ -43,7 +43,7 @@ await deeplinkX.launchAction(AppStore.openMessagesExtension(
 ## Parameter Validations
 
 ### App ID Validation
-App Store app IDs must follow these rules:
+iOS App Store app IDs must follow these rules:
 - Must contain only digits
 - Length: 1-10 digits
 - Cannot be empty
@@ -90,11 +90,11 @@ Add the following to your `ios/Runner/Info.plist`:
 
 ## URL Schemes
 
-DeeplinkX uses the following URL schemes for App Store:
+DeeplinkX uses the following URL schemes for iOS App Store:
 
 ### Native App Deep Links
 When on iOS, the following scheme is used:
-- `itms-apps://` - Primary App Store URL scheme
+- `itms-apps://` - Primary iOS App Store URL scheme
 
 ### Web Fallback URLs
 When on other platforms or when native schemes fail:
@@ -106,4 +106,4 @@ When on other platforms or when native schemes fail:
 - [Apple Developer Documentation - App Store Connect](https://appstoreconnect.apple.com/help)
 
 ## Fallback Behavior
-If the App Store app is not installed or the device is not running iOS, DeeplinkX will automatically fall back to opening the App Store web interface in the default browser.
+If the iOS App Store app is not installed or the device is not running iOS, DeeplinkX will automatically fall back to opening the App Store web interface in the default browser.

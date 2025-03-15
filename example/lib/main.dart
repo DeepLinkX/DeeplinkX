@@ -19,6 +19,9 @@ class _MyAppState extends State<MyApp> {
   final _phoneController = TextEditingController();
   final _appIdController = TextEditingController(text: '389801252'); // Example: Instagram app ID
   final _appNameController = TextEditingController(text: 'instagram'); // Example: Instagram app name
+  final _macAppIdController = TextEditingController(text: '497799835'); // Example: Xcode app ID
+  final _macAppNameController = TextEditingController(text: 'xcode'); // Example: Xcode app name
+  final _countryController = TextEditingController(text: 'us'); // Example: US country code
 
   @override
   void dispose() {
@@ -26,6 +29,10 @@ class _MyAppState extends State<MyApp> {
     _usernameController.dispose();
     _phoneController.dispose();
     _appIdController.dispose();
+    _appNameController.dispose();
+    _macAppIdController.dispose();
+    _macAppNameController.dispose();
+    _countryController.dispose();
     super.dispose();
   }
 
@@ -34,7 +41,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: DefaultTabController(
-        length: 5,
+        length: 6,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('DeeplinkX Example'),
@@ -42,8 +49,9 @@ class _MyAppState extends State<MyApp> {
               tabs: [
                 Tab(text: 'Instagram'),
                 Tab(text: 'Telegram'),
-                Tab(text: 'App Store'),
+                Tab(text: 'iOS App Store'),
                 Tab(text: 'Play Store'),
+                Tab(text: 'Mac App Store'),
                 Tab(text: 'LinkedIn'),
               ],
             ),
@@ -54,6 +62,7 @@ class _MyAppState extends State<MyApp> {
               _buildTelegramTab(),
               _buildAppStoreTab(),
               _buildPlayStoreTab(),
+              _buildMacAppStoreTab(),
               _buildLinkedInTab(),
             ],
           ),
@@ -329,7 +338,7 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('App Store Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text('iOS App Store Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 24),
           _buildAppStoreActions(),
         ],
@@ -343,7 +352,7 @@ class _MyAppState extends State<MyApp> {
       children: [
         ElevatedButton(
           onPressed: () async {
-            await _deeplinkX.launchAction(AppStore.open);
+            await _deeplinkX.launchAction(IOSAppStore.open);
           },
           child: const Text('Open App Store'),
         ),
@@ -373,7 +382,7 @@ class _MyAppState extends State<MyApp> {
           onPressed: () async {
             if (_appIdController.text.isNotEmpty && _appNameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
-                AppStore.openAppPage(appId: _appIdController.text, appName: _appNameController.text),
+                IOSAppStore.openAppPage(appId: _appIdController.text, appName: _appNameController.text),
               );
             }
           },
@@ -384,7 +393,7 @@ class _MyAppState extends State<MyApp> {
           onPressed: () async {
             if (_appIdController.text.isNotEmpty && _appNameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
-                AppStore.openReview(appId: _appIdController.text, appName: _appNameController.text),
+                IOSAppStore.openReview(appId: _appIdController.text, appName: _appNameController.text),
               );
             }
           },
@@ -395,11 +404,99 @@ class _MyAppState extends State<MyApp> {
           onPressed: () async {
             if (_appIdController.text.isNotEmpty && _appNameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
-                AppStore.openMessagesExtension(appId: _appIdController.text, appName: _appNameController.text),
+                IOSAppStore.openMessagesExtension(appId: _appIdController.text, appName: _appNameController.text),
               );
             }
           },
           child: const Text('Open App iMessage Extension'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMacAppStoreTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text('Mac App Store Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 24),
+          _buildMacAppStoreActions(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMacAppStoreActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          onPressed: () async {
+            await _deeplinkX.launchAction(MacAppStore.open);
+          },
+          child: const Text('Open Mac App Store'),
+        ),
+        const SizedBox(height: 16),
+        const Text('App Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _macAppIdController,
+          decoration: const InputDecoration(
+            labelText: 'App ID',
+            hintText: 'Enter App ID (e.g., 497799835 for Xcode)',
+            border: OutlineInputBorder(),
+          ),
+          keyboardType: TextInputType.number,
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _macAppNameController,
+          decoration: const InputDecoration(
+            labelText: 'App Name',
+            hintText: 'Enter App Name (e.g., xcode)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _countryController,
+          decoration: const InputDecoration(
+            labelText: 'Country Code (optional)',
+            hintText: 'Enter two-letter country code (e.g., us, uk)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_macAppIdController.text.isNotEmpty && _macAppNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                MacAppStore.openAppPage(
+                  appId: _macAppIdController.text,
+                  appName: _macAppNameController.text,
+                  country: _countryController.text.isNotEmpty ? _countryController.text : null,
+                ),
+              );
+            }
+          },
+          child: const Text('Open App Page'),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_macAppIdController.text.isNotEmpty && _macAppNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                MacAppStore.openReview(
+                  appId: _macAppIdController.text,
+                  appName: _macAppNameController.text,
+                  country: _countryController.text.isNotEmpty ? _countryController.text : null,
+                ),
+              );
+            }
+          },
+          child: const Text('Open App Review Page'),
         ),
       ],
     );

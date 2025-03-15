@@ -42,13 +42,18 @@ void main() {
         expect(action, isA<AppAction>());
       });
 
-      test('AppStore', () {
-        const action = AppStore.open;
+      test('IOSAppStore', () {
+        const action = IOSAppStore.open;
         expect(action, isA<AppAction>());
       });
 
       test('PlayStore', () {
         const action = PlayStore.open;
+        expect(action, isA<AppAction>());
+      });
+
+      test('MacAppStore', () {
+        const action = MacAppStore.open;
         expect(action, isA<AppAction>());
       });
     });

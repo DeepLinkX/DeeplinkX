@@ -3,8 +3,8 @@ import 'dart:core';
 import 'package:deeplink_x/src/core/app_action.dart';
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
 
-/// App Store-specific action types that define available deeplink actions
-enum AppStoreActionType implements ActionTypeEnum {
+/// iOS App Store-specific action types that define available deeplink actions
+enum IOSAppStoreActionType implements ActionTypeEnum {
   /// Opens the App Store app
   open,
 
@@ -18,35 +18,35 @@ enum AppStoreActionType implements ActionTypeEnum {
   openMessagesExtension,
 }
 
-/// App Store action implementation for handling App Store-specific deeplinks
-class AppStoreAction extends AppAction {
-  /// Creates a new App Store action
+/// iOS App Store action implementation for handling App Store-specific deeplinks
+class IOSAppStoreAction extends AppAction {
+  /// Creates a new iOS App Store action
   ///
   /// [type] specifies the type of action to perform
   /// [parameters] contains any additional data needed for the action
-  const AppStoreAction(
+  const IOSAppStoreAction(
     this.type, {
     super.parameters,
   }) : super(actionType: type);
 
   /// Base URI for App Store app deeplinks
-  static const baseUrl = 'itms-apps://';
+  static const baseUrl = 'itms-apps://itunes.apple.com';
 
   /// Base URI for App Store web fallback
   static const fallBackUri = 'https://apps.apple.com';
 
-  /// The type of App Store action to perform
-  final AppStoreActionType type;
+  /// The type of iOS App Store action to perform
+  final IOSAppStoreActionType type;
 
   @override
   Future<List<Uri>> getUris() async {
     final List<Uri> uris = [];
 
     switch (type) {
-      case AppStoreActionType.open:
+      case IOSAppStoreActionType.open:
         uris.add(Uri.parse(baseUrl));
         uris.add(Uri.parse(fallBackUri));
-      case AppStoreActionType.openAppPage:
+      case IOSAppStoreActionType.openAppPage:
         final appId = parameters!['appId'];
         final appName = parameters!['appName'];
         final country = parameters!['country'];
@@ -81,17 +81,13 @@ class AppStoreAction extends AppAction {
         pathSegments.add('id$appId');
 
         // Native app URI
-        final nativeUri = Uri(
-          scheme: 'itms-apps',
-          host: 'itunes.apple.com',
+        final nativeUri = Uri.parse(baseUrl).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
 
         // Web fallback URI
-        final webUri = Uri(
-          scheme: 'https',
-          host: 'apps.apple.com',
+        final webUri = Uri.parse(fallBackUri).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
@@ -99,7 +95,7 @@ class AppStoreAction extends AppAction {
         uris.add(nativeUri);
         uris.add(webUri);
 
-      case AppStoreActionType.openReview:
+      case IOSAppStoreActionType.openReview:
         final appId = parameters!['appId'];
         final appName = parameters!['appName'];
         final country = parameters!['country'];
@@ -128,17 +124,13 @@ class AppStoreAction extends AppAction {
         pathSegments.add('id$appId');
 
         // Native app URI for review
-        final nativeUri = Uri(
-          scheme: 'itms-apps',
-          host: 'itunes.apple.com',
+        final nativeUri = Uri.parse(baseUrl).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
 
         // Web fallback URI for review
-        final webUri = Uri(
-          scheme: 'https',
-          host: 'apps.apple.com',
+        final webUri = Uri.parse(fallBackUri).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
@@ -146,7 +138,7 @@ class AppStoreAction extends AppAction {
         uris.add(nativeUri);
         uris.add(webUri);
 
-      case AppStoreActionType.openMessagesExtension:
+      case IOSAppStoreActionType.openMessagesExtension:
         final appId = parameters!['appId'];
         final appName = parameters!['appName'];
         final country = parameters!['country'];
@@ -175,17 +167,13 @@ class AppStoreAction extends AppAction {
         pathSegments.add('id$appId');
 
         // Native app URI for messages extension
-        final nativeUri = Uri(
-          scheme: 'itms-apps',
-          host: 'itunes.apple.com',
+        final nativeUri = Uri.parse(baseUrl).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
 
         // Web fallback URI for messages extension
-        final webUri = Uri(
-          scheme: 'https',
-          host: 'apps.apple.com',
+        final webUri = Uri.parse(fallBackUri).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
@@ -198,16 +186,16 @@ class AppStoreAction extends AppAction {
   }
 }
 
-/// Factory class for creating App Store deeplink actions
+/// Factory class for creating iOS App Store deeplink actions
 ///
-/// This class provides convenient factory methods for creating common App Store
+/// This class provides convenient factory methods for creating common iOS App Store
 /// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for App Store-specific action creation.
-class AppStore {
-  AppStore._();
+/// as it serves as a namespace for iOS App Store-specific action creation.
+class IOSAppStore {
+  IOSAppStore._();
 
   /// Opens the App Store app
-  static const AppStoreAction open = AppStoreAction(AppStoreActionType.open);
+  static const IOSAppStoreAction open = IOSAppStoreAction(IOSAppStoreActionType.open);
 
   /// Opens a specific app page in the App Store
   ///
@@ -220,7 +208,7 @@ class AppStore {
   /// [providerToken] is a numeric identifier for your team/developer (optional)
   /// [affiliateToken] is used for Apple's affiliate tracking (optional)
   /// [uniqueOrigin] indicates the origin of the link (optional)
-  static AppStoreAction openAppPage({
+  static IOSAppStoreAction openAppPage({
     required final String appId,
     required final String appName,
     final String? country,
@@ -252,8 +240,8 @@ class AppStore {
       parameters['uo'] = uniqueOrigin;
     }
 
-    return AppStoreAction(
-      AppStoreActionType.openAppPage,
+    return IOSAppStoreAction(
+      IOSAppStoreActionType.openAppPage,
       parameters: parameters,
     );
   }
@@ -268,7 +256,7 @@ class AppStore {
   /// [campaignToken] is used to track campaigns (optional)
   /// [providerToken] is a numeric identifier for your team/developer (optional)
   /// [affiliateToken] is used for Apple's affiliate tracking (optional)
-  static AppStoreAction openReview({
+  static IOSAppStoreAction openReview({
     required final String appId,
     required final String appName,
     final String? country,
@@ -292,8 +280,8 @@ class AppStore {
       parameters['at'] = affiliateToken;
     }
 
-    return AppStoreAction(
-      AppStoreActionType.openReview,
+    return IOSAppStoreAction(
+      IOSAppStoreActionType.openReview,
       parameters: parameters,
     );
   }
@@ -308,7 +296,7 @@ class AppStore {
   /// [campaignToken] is used to track campaigns (optional)
   /// [providerToken] is a numeric identifier for your team/developer (optional)
   /// [affiliateToken] is used for Apple's affiliate tracking (optional)
-  static AppStoreAction openMessagesExtension({
+  static IOSAppStoreAction openMessagesExtension({
     required final String appId,
     required final String appName,
     final String? country,
@@ -332,8 +320,8 @@ class AppStore {
       parameters['at'] = affiliateToken;
     }
 
-    return AppStoreAction(
-      AppStoreActionType.openMessagesExtension,
+    return IOSAppStoreAction(
+      IOSAppStoreActionType.openMessagesExtension,
       parameters: parameters,
     );
   }
