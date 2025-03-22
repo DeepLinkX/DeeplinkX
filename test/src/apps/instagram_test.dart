@@ -8,7 +8,7 @@ void main() {
   setUpAll(() {
     platfromType = PlatformEnum.android;
   });
-  
+
   group('Instagram Actions', () {
     test('open action generates correct URIs', () async {
       final action = Instagram.open();

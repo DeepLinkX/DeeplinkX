@@ -8,7 +8,7 @@ void main() {
   setUpAll(() {
     platfromType = PlatformEnum.android;
   });
-  
+
   group('Play Store Actions', () {
     test('open action generates correct URIs', () async {
       const action = PlayStore.open;

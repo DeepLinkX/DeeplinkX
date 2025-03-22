@@ -27,7 +27,8 @@ class DummyStoreAppAction extends StoreAppAction {
 }
 
 class DummyDownloadableAppAction extends DownloadableAppAction {
-  DummyDownloadableAppAction() : super(actionType: DummyActionType.open, fallBackToStore: false, supportedStoresActions: []);
+  DummyDownloadableAppAction()
+      : super(actionType: DummyActionType.open, fallBackToStore: false, supportedStoresActions: []);
 
   @override
   Future<Uri> getNativeUri() async => Uri(scheme: 'test', host: 'test');

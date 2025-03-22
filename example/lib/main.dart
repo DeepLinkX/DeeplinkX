@@ -17,13 +17,27 @@ class _MyAppState extends State<MyApp> {
   final _messageController = TextEditingController(text: 'Hello! How are you?');
   final _usernameController = TextEditingController(text: 'johndoe');
   final _phoneController = TextEditingController(text: '+14155552671');
-  final _appIdController = TextEditingController(text: '389801252'); // Example: Instagram app ID
-  final _appNameController = TextEditingController(text: 'instagram'); // Example: Instagram app name
-  final _macAppIdController = TextEditingController(text: '497799835'); // Example: Xcode app ID
-  final _macAppNameController = TextEditingController(text: 'xcode'); // Example: Xcode app name
-  final _countryController = TextEditingController(text: 'us'); // Example: US country code
-  final _msProductIdController = TextEditingController(text: '9WZDNCRFHVJL'); // Example: Microsoft Edge product ID
-  final _msLanguageController = TextEditingController(text: 'en-US'); // Example: Language code
+  final _appIdController = TextEditingController(
+    text: '389801252',
+  ); // Example: Instagram app ID
+  final _appNameController = TextEditingController(
+    text: 'instagram',
+  ); // Example: Instagram app name
+  final _macAppIdController = TextEditingController(
+    text: '497799835',
+  ); // Example: Xcode app ID
+  final _macAppNameController = TextEditingController(
+    text: 'xcode',
+  ); // Example: Xcode app name
+  final _countryController = TextEditingController(
+    text: 'us',
+  ); // Example: US country code
+  final _msProductIdController = TextEditingController(
+    text: '9WZDNCRFHVJL',
+  ); // Example: Microsoft Edge product ID
+  final _msLanguageController = TextEditingController(
+    text: 'en-US',
+  ); // Example: Language code
 
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
@@ -90,11 +104,16 @@ class _MyAppState extends State<MyApp> {
         children: [
           Row(
             children: [
-              const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+              const Text(
+                'Fallback to App Store:',
+                style: TextStyle(fontSize: 16),
+              ),
               const SizedBox(width: 8),
               Switch(
                 value: _instagramFallBackToStore,
-                onChanged: (value) => setState(() => _instagramFallBackToStore = value),
+                onChanged:
+                    (value) =>
+                        setState(() => _instagramFallBackToStore = value),
               ),
               const Expanded(
                 child: Text(
@@ -105,7 +124,10 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
           const SizedBox(height: 24),
-          const Text('Instagram Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Instagram Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 24),
           _buildInstagramActions(),
         ],
@@ -121,11 +143,15 @@ class _MyAppState extends State<MyApp> {
         children: [
           Row(
             children: [
-              const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+              const Text(
+                'Fallback to App Store:',
+                style: TextStyle(fontSize: 16),
+              ),
               const SizedBox(width: 8),
               Switch(
                 value: _telegramFallBackToStore,
-                onChanged: (value) => setState(() => _telegramFallBackToStore = value),
+                onChanged:
+                    (value) => setState(() => _telegramFallBackToStore = value),
               ),
               const Expanded(
                 child: Text(
@@ -136,7 +162,10 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
           const SizedBox(height: 24),
-          const Text('Telegram Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Telegram Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 24),
           _buildTelegramActions(),
         ],
@@ -145,7 +174,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _buildLinkedInTab() {
-    return const Center(child: Text('LinkedIn support coming soon!', style: TextStyle(fontSize: 16)));
+    return const Center(
+      child: Text(
+        'LinkedIn support coming soon!',
+        style: TextStyle(fontSize: 16),
+      ),
+    );
   }
 
   Widget _buildInstagramActions() {
@@ -154,7 +188,9 @@ class _MyAppState extends State<MyApp> {
       children: [
         ElevatedButton(
           onPressed: () async {
-            await _deeplinkX.launchAction(Instagram.open(fallBackToStore: _instagramFallBackToStore));
+            await _deeplinkX.launchAction(
+              Instagram.open(fallBackToStore: _instagramFallBackToStore),
+            );
           },
           child: const Text('Open Instagram App'),
         ),
@@ -172,7 +208,10 @@ class _MyAppState extends State<MyApp> {
           onPressed: () async {
             if (_usernameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
-                Instagram.openProfile(_usernameController.text, fallBackToStore: _instagramFallBackToStore),
+                Instagram.openProfile(
+                  _usernameController.text,
+                  fallBackToStore: _instagramFallBackToStore,
+                ),
               );
             }
           },
@@ -188,12 +227,17 @@ class _MyAppState extends State<MyApp> {
       children: [
         ElevatedButton(
           onPressed: () async {
-            await _deeplinkX.launchAction(Telegram.open(fallBackToStore: _telegramFallBackToStore));
+            await _deeplinkX.launchAction(
+              Telegram.open(fallBackToStore: _telegramFallBackToStore),
+            );
           },
           child: const Text('Open Telegram App'),
         ),
         const SizedBox(height: 16),
-        const Text('Profile Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text(
+          'Profile Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: _usernameController,
@@ -208,7 +252,10 @@ class _MyAppState extends State<MyApp> {
           onPressed: () async {
             if (_usernameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
-                Telegram.openProfile(_usernameController.text, fallBackToStore: _telegramFallBackToStore),
+                Telegram.openProfile(
+                  _usernameController.text,
+                  fallBackToStore: _telegramFallBackToStore,
+                ),
               );
             }
           },
@@ -224,7 +271,10 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Play Store Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Play Store Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 24),
           _buildPlayStoreActions(),
         ],
@@ -234,9 +284,13 @@ class _MyAppState extends State<MyApp> {
 
   Widget _buildPlayStoreActions() {
     // Controller for package name input
-    final packageNameController = TextEditingController(text: 'com.instagram.android');
+    final packageNameController = TextEditingController(
+      text: 'com.instagram.android',
+    );
     // Controller for referrer input
-    final referrerController = TextEditingController(text: 'utm_source=deeplink_x_example');
+    final referrerController = TextEditingController(
+      text: 'utm_source=deeplink_x_example',
+    );
     // Controller for language code input
     final languageController = TextEditingController(text: 'en');
 
@@ -250,7 +304,10 @@ class _MyAppState extends State<MyApp> {
           child: const Text('Open Play Store'),
         ),
         const SizedBox(height: 16),
-        const Text('App Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text(
+          'App Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: packageNameController,
@@ -285,8 +342,14 @@ class _MyAppState extends State<MyApp> {
               await _deeplinkX.launchAction(
                 PlayStore.openAppPage(
                   packageName: packageNameController.text,
-                  referrer: referrerController.text.isNotEmpty ? referrerController.text : null,
-                  hl: languageController.text.isNotEmpty ? languageController.text : null,
+                  referrer:
+                      referrerController.text.isNotEmpty
+                          ? referrerController.text
+                          : null,
+                  hl:
+                      languageController.text.isNotEmpty
+                          ? languageController.text
+                          : null,
                 ),
               );
             }
@@ -300,8 +363,14 @@ class _MyAppState extends State<MyApp> {
               await _deeplinkX.launchAction(
                 PlayStore.openAppReviewPage(
                   packageName: packageNameController.text,
-                  referrer: referrerController.text.isNotEmpty ? referrerController.text : null,
-                  hl: languageController.text.isNotEmpty ? languageController.text : null,
+                  referrer:
+                      referrerController.text.isNotEmpty
+                          ? referrerController.text
+                          : null,
+                  hl:
+                      languageController.text.isNotEmpty
+                          ? languageController.text
+                          : null,
                 ),
               );
             }
@@ -318,7 +387,10 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('iOS App Store Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'iOS App Store Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 24),
           _buildAppStoreActions(),
         ],
@@ -337,7 +409,10 @@ class _MyAppState extends State<MyApp> {
           child: const Text('Open App Store'),
         ),
         const SizedBox(height: 16),
-        const Text('App Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text(
+          'App Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: _appIdController,
@@ -360,9 +435,13 @@ class _MyAppState extends State<MyApp> {
         const SizedBox(height: 8),
         ElevatedButton(
           onPressed: () async {
-            if (_appIdController.text.isNotEmpty && _appNameController.text.isNotEmpty) {
+            if (_appIdController.text.isNotEmpty &&
+                _appNameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
-                IOSAppStore.openAppPage(appId: _appIdController.text, appName: _appNameController.text),
+                IOSAppStore.openAppPage(
+                  appId: _appIdController.text,
+                  appName: _appNameController.text,
+                ),
               );
             }
           },
@@ -371,9 +450,13 @@ class _MyAppState extends State<MyApp> {
         const SizedBox(height: 8),
         ElevatedButton(
           onPressed: () async {
-            if (_appIdController.text.isNotEmpty && _appNameController.text.isNotEmpty) {
+            if (_appIdController.text.isNotEmpty &&
+                _appNameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
-                IOSAppStore.openReview(appId: _appIdController.text, appName: _appNameController.text),
+                IOSAppStore.openReview(
+                  appId: _appIdController.text,
+                  appName: _appNameController.text,
+                ),
               );
             }
           },
@@ -382,9 +465,13 @@ class _MyAppState extends State<MyApp> {
         const SizedBox(height: 8),
         ElevatedButton(
           onPressed: () async {
-            if (_appIdController.text.isNotEmpty && _appNameController.text.isNotEmpty) {
+            if (_appIdController.text.isNotEmpty &&
+                _appNameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
-                IOSAppStore.openMessagesExtension(appId: _appIdController.text, appName: _appNameController.text),
+                IOSAppStore.openMessagesExtension(
+                  appId: _appIdController.text,
+                  appName: _appNameController.text,
+                ),
               );
             }
           },
@@ -400,7 +487,10 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Mac App Store Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Mac App Store Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 24),
           _buildMacAppStoreActions(),
         ],
@@ -419,7 +509,10 @@ class _MyAppState extends State<MyApp> {
           child: const Text('Open Mac App Store'),
         ),
         const SizedBox(height: 16),
-        const Text('App Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text(
+          'App Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: _macAppIdController,
@@ -451,12 +544,16 @@ class _MyAppState extends State<MyApp> {
         const SizedBox(height: 8),
         ElevatedButton(
           onPressed: () async {
-            if (_macAppIdController.text.isNotEmpty && _macAppNameController.text.isNotEmpty) {
+            if (_macAppIdController.text.isNotEmpty &&
+                _macAppNameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
                 MacAppStore.openAppPage(
                   appId: _macAppIdController.text,
                   appName: _macAppNameController.text,
-                  country: _countryController.text.isNotEmpty ? _countryController.text : null,
+                  country:
+                      _countryController.text.isNotEmpty
+                          ? _countryController.text
+                          : null,
                 ),
               );
             }
@@ -466,12 +563,16 @@ class _MyAppState extends State<MyApp> {
         const SizedBox(height: 8),
         ElevatedButton(
           onPressed: () async {
-            if (_macAppIdController.text.isNotEmpty && _macAppNameController.text.isNotEmpty) {
+            if (_macAppIdController.text.isNotEmpty &&
+                _macAppNameController.text.isNotEmpty) {
               await _deeplinkX.launchAction(
                 MacAppStore.openReview(
                   appId: _macAppIdController.text,
                   appName: _macAppNameController.text,
-                  country: _countryController.text.isNotEmpty ? _countryController.text : null,
+                  country:
+                      _countryController.text.isNotEmpty
+                          ? _countryController.text
+                          : null,
                 ),
               );
             }
@@ -488,7 +589,10 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text('Microsoft Store Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text(
+            'Microsoft Store Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 24),
           _buildMicrosoftStoreActions(),
         ],
@@ -507,13 +611,17 @@ class _MyAppState extends State<MyApp> {
           child: const Text('Open Microsoft Store'),
         ),
         const SizedBox(height: 16),
-        const Text('App Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const Text(
+          'App Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: _msProductIdController,
           decoration: const InputDecoration(
             labelText: 'Product ID',
-            hintText: 'Enter Product ID (e.g., 9WZDNCRFHVJL for Microsoft Edge)',
+            hintText:
+                'Enter Product ID (e.g., 9WZDNCRFHVJL for Microsoft Edge)',
             border: OutlineInputBorder(),
           ),
         ),
@@ -533,7 +641,10 @@ class _MyAppState extends State<MyApp> {
               await _deeplinkX.launchAction(
                 MicrosoftStore.openAppPage(
                   productId: _msProductIdController.text,
-                  language: _msLanguageController.text.isNotEmpty ? _msLanguageController.text : null,
+                  language:
+                      _msLanguageController.text.isNotEmpty
+                          ? _msLanguageController.text
+                          : null,
                 ),
               );
             }
@@ -544,7 +655,11 @@ class _MyAppState extends State<MyApp> {
         ElevatedButton(
           onPressed: () async {
             if (_msProductIdController.text.isNotEmpty) {
-              await _deeplinkX.launchAction(MicrosoftStore.openAppReviewPage(productId: _msProductIdController.text));
+              await _deeplinkX.launchAction(
+                MicrosoftStore.openAppReviewPage(
+                  productId: _msProductIdController.text,
+                ),
+              );
             }
           },
           child: const Text('Open App Review Page'),

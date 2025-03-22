@@ -7,7 +7,7 @@ import 'package:deeplink_x/src/utils/launcher_util.dart';
 /// A class to handle deeplink actions across different platforms
 class DeeplinkX {
   /// Creates a new [DeeplinkX] instance.
-  /// 
+  ///
   /// Parameters:
   /// - [launcherUtil]: Optional custom launcher utility for URL handling. If not provided, uses default [LauncherUtil].
   /// - [platformType]: Optional platform type override. If not provided, automatically detects from current operating system.

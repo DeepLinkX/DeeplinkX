@@ -45,7 +45,7 @@ void main() {
       expect(uris[0].toString(), 'tg://resolve?domain=testuser&text=Hello%20World');
       expect(uris[1].toString(), 'https://t.me/testuser?text=Hello%20World');
     });
-    
+
     test('open action generates correct URIs when fallBackToStore is true on Android platform', () async {
       final action = Telegram.open(fallBackToStore: true);
       final uris = await action.getUris(PlatformEnum.android);
