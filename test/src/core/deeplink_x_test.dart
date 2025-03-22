@@ -1,5 +1,6 @@
-import 'package:deeplink_x/src/core/app_action.dart';
+import 'package:deeplink_x/src/core/app_actions/app_action.dart';
 import 'package:deeplink_x/src/core/deeplink_x.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 import 'package:deeplink_x/src/utils/launcher_util.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -22,20 +23,21 @@ void main() {
   setUp(() {
     mockAppAction = MockAppAction();
     mockLauncherUtil = MockLauncherUtil();
-    deeplinkX = DeeplinkX(launcherUtil: mockLauncherUtil);
+    deeplinkX = DeeplinkX(launcherUtil: mockLauncherUtil, platformType: PlatformEnum.android);
 
     when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => true);
     when(() => mockLauncherUtil.launchUrl(any())).thenAnswer((final _) async => true);
-    when(() => mockAppAction.getUris()).thenAnswer((final _) async => dummyUris);
+    when(() => mockAppAction.getUris(any())).thenAnswer((final _) async => dummyUris);
   });
 
   setUpAll(() {
     registerFallbackValue(Uri());
+    registerFallbackValue(PlatformEnum.android);
   });
 
   test('launchAction returns false when no URIs are available', () async {
     // Arrange
-    when(() => mockAppAction.getUris()).thenAnswer((final _) async => []);
+    when(() => mockAppAction.getUris(any())).thenAnswer((final _) async => []);
 
     // Act
     final result = await deeplinkX.launchAction(mockAppAction);
@@ -48,7 +50,7 @@ void main() {
 
   test('canLaunch returns false when no URIs are available', () async {
     // Arrange
-    when(() => mockAppAction.getUris()).thenAnswer((final _) async => []);
+    when(() => mockAppAction.getUris(any())).thenAnswer((final _) async => []);
 
     // Act
     final result = await deeplinkX.canLaunch(mockAppAction);
@@ -132,4 +134,6 @@ void main() {
     expect(result, false);
     verify(() => mockLauncherUtil.canLaunchUrl(any())).called(dummyUris.length);
   });
+
+  // TODO: Add PlatformType tests
 }

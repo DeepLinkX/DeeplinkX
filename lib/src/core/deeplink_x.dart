@@ -1,12 +1,25 @@
-import 'package:deeplink_x/src/core/app_action.dart';
+import 'dart:io';
+
+import 'package:deeplink_x/src/core/app_actions/app_action.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 import 'package:deeplink_x/src/utils/launcher_util.dart';
 
 /// A class to handle deeplink actions across different platforms
 class DeeplinkX {
-  /// Creates a new [DeeplinkX] instance with an optional [LauncherUtil].
-  const DeeplinkX({final LauncherUtil launcherUtil = const LauncherUtil()}) : _launcherUtil = launcherUtil;
+  /// Creates a new [DeeplinkX] instance.
+  /// 
+  /// Parameters:
+  /// - [launcherUtil]: Optional custom launcher utility for URL handling. If not provided, uses default [LauncherUtil].
+  /// - [platformType]: Optional platform type override. If not provided, automatically detects from current operating system.
+  DeeplinkX({
+    final LauncherUtil? launcherUtil,
+    final PlatformEnum? platformType,
+  })  : _launcherUtil = launcherUtil ?? const LauncherUtil(),
+        _playformType = platformType ?? PlatformEnum.fromOperatingSystem(Platform.operatingSystem);
 
   final LauncherUtil _launcherUtil;
+
+  final PlatformEnum _playformType;
 
   /// Launches a deeplink action.
   ///
@@ -17,7 +30,7 @@ class DeeplinkX {
   /// * `true` if the action was successfully launched
   /// * `false` if the action could not be launched or no URIs were available
   Future<bool> launchAction(final AppAction action) async {
-    final uris = await action.getUris();
+    final uris = await action.getUris(_playformType);
     if (uris.isEmpty) {
       return false;
     }
@@ -53,7 +66,7 @@ class DeeplinkX {
   /// );
   /// ```
   Future<bool> canLaunch(final AppAction action) async {
-    final uris = await action.getUris();
+    final uris = await action.getUris(_playformType);
     if (uris.isEmpty) {
       return false;
     }

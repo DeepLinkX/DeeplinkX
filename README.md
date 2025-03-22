@@ -1,14 +1,14 @@
 # DeeplinkX
 
-A lightweight Flutter plugin that provides type-safe handling of external deep links, with built-in support for popular apps like Telegram and Instagram. Seamlessly handles fallback to web URLs when apps aren't installed, working across all major platforms.
+A lightweight Flutter plugin for type-safe handling of external deeplinks with built-in support for popular apps. Features smart fallback to app stores and web URLs across all major platforms.
+
+> **Naming Note**: 'X' in DeeplinkX stands for external.
 
 ## Features
 
-- Support for multiple platforms (iOS, Android, Web, macOS, Windows, Linux)
-- Fallback to web URLs when apps are not installed
-- Type-safe API for creating deep links
-- Support Instagram, Telegram, iOS App Store deeplinks and more coming soon
-- Comprehensive test suite ensuring reliability
+- Multi-platform support (iOS, Android, Web, macOS, Windows, Linux)
+- Smart fallback system (app stores → web URLs)
+- Type-safe API for external deeplinks
 
 ## Usage
 
@@ -16,100 +16,63 @@ A lightweight Flutter plugin that provides type-safe handling of external deep l
 import 'package:deeplink_x/deeplink_x.dart';
 
 void main() {
-  // Create instance
   final deeplinkX = DeeplinkX();
 
-  // Open Instagram app
-  deeplinkX.launchAction(Instagram.open);
+  // Open Instagram app with store fallback
+  deeplinkX.launchAction(Instagram.open(fallBackToStore: true));
 
   // Open Telegram profile
   deeplinkX.launchAction(Telegram.openProfile('username'));
 
   // Open iOS App Store app
-  deeplinkX.launchAction(IOSAppStore.open);
+  deeplinkX.launchAction(IOSAppStore.open());
 }
 ```
 
 ## Supported Apps And Actions
 
-### iOS App Store
-- Open App Store app
-- Open specific app page
-- Open specific app review page
-- Open specific app iMessage extension page
-
-### Mac App Store
-- Open Mac App Store app
-- Open specific app page
-- Open specific app review page
-
-### Microsoft Store
-- Open Microsoft Store app
-- Open specific app page
-- Open specific app review page
-
-### Google Play Store
-- Open Play Store app
-- Open specific app page
-- Open specific app review page
-
-### Telegram
-- Open Telegram app
-- Open profile by username
-- Open profile by phone number
-- Send message to user by username
-- Send message to user by phone number
-
-### Instagram
-- Open Instagram app
-- Open profile by username
-
-For detailed documentation on each app's capabilities, parameter validations, and platform-specific configurations, please refer to the [Documentation](#documentation) section below.
+| Category    | App               | Supported Actions                                   |
+| ----------- | ----------------- | --------------------------------------------------- |
+| Stores      | iOS App Store     | Open app, app page, review page, iMessage extension |
+| Stores      | Mac App Store     | Open app, app page, review page                     |
+| Stores      | Microsoft Store   | Open app, app page, review page                     |
+| Stores      | Google Play Store | Open app, app page, review page                     |
+| Social Apps | Telegram          | Open app, profile by username/phone, send message   |
+| Social Apps | Instagram         | Open app, profile by username                       |
 
 ## Documentation
 
-Detailed documentation for each supported app is available in the [doc/apps](doc/apps) directory:
+Detailed documentation available in [doc/apps](doc/apps):
 
-- [iOS App Store Deeplinks](doc/apps/ios_app_store.md)
-- [Mac App Store Deeplinks](doc/apps/mac_app_store.md)
-- [Microsoft Store Deeplinks](doc/apps/microsoft_store.md)
-- [Play Store Deeplinks](doc/apps/play_store.md)
-- [Instagram Deeplinks](doc/apps/instagram.md)
-- [Telegram Deeplinks](doc/apps/telegram.md)
+- [iOS App Store](doc/apps/stores/ios_app_store.md)
+- [Mac App Store](doc/apps/stores/mac_app_store.md)
+- [Microsoft Store](doc/apps/stores/microsoft_store.md)
+- [Play Store](doc/apps/stores/play_store.md)
+- [Instagram](doc/apps/instagram.md)
+- [Telegram](doc/apps/telegram.md)
 
 ## URL Scheme Handling
 
-DeeplinkX uses a dual-URL approach for maximum compatibility across all supported apps:
+DeeplinkX uses a three-tier approach for maximum compatibility:
 
-1. **Native App Deep Links**: Uses custom URL schemes to launch apps directly when installed
-2. **Web Fallback URLs**: Automatically redirects to web URLs when apps aren't installed
+1. **Native App Deep Links**: Direct app launch when installed
+2. **Store Fallback**: Redirects to app stores when apps aren't installed (with `fallBackToStore: true`)
+3. **Web Fallback**: Redirects to web URLs when neither app nor store is available
 
-This ensures your app works seamlessly whether or not the target apps are installed on the user's device. For app-specific URL schemes and web fallbacks, please refer to each app's documentation:
-- [iOS App Store URL Schemes](doc/apps/ios_app_store.md#url-schemes)
-- [Mac App Store URL Schemes](doc/apps/mac_app_store.md#url-schemes)
-- [Microsoft Store URL Schemes](doc/apps/microsoft_store.md#url-schemes)
-- [Play Store URL Schemes](doc/apps/play_store.md#url-schemes)
-- [Telegram URL Schemes](doc/apps/telegram.md#url-schemes)
-- [Instagram URL Schemes](doc/apps/instagram.md#url-schemes)
+Example:
+```dart
+// Enable store fallback
+await deeplinkX.launchAction(Instagram.open(fallBackToStore: true));
+```
 
-## Testing
-
-DeeplinkX maintains a comprehensive test suite to ensure reliability and stability:
-
-- **Unit Tests**: Extensive testing of all core functionality
+For URL schemes and web fallbacks, see each app's documentation.
 
 ## Platform-Specific Configuration
-For platform-specific configuration instructions (iOS, Android, and macOS), please refer to the respective app documentation:
-- [iOS App Store Platform Configuration](doc/apps/ios_app_store.md#platform-specific-configuration)
-- [Mac App Store Platform Configuration](doc/apps/mac_app_store.md#platform-specific-configuration)
-- [Microsoft Store Platform Configuration](doc/apps/microsoft_store.md#platform-specific-configuration)
-- [Play Store Platform Configuration](doc/apps/play_store.md#platform-specific-configuration)
-- [Telegram Platform Configuration](doc/apps/telegram.md#platform-specific-configuration)
-- [Instagram Platform Configuration](doc/apps/instagram.md#platform-specific-configuration)
+See respective app documentation for platform-specific configuration.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes:
+Contributions are welcome! Please feel free to submit a Pull Request:
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -123,4 +86,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Issues and Feature Requests
 
-Have a bug or a feature request? Please first search for existing and closed issues. If your problem or idea is not addressed yet, [please open a new issue](https://github.com/ParhamHatan/DeeplinkX/issues).
+Have a bug or feature request? [Please open a new issue](https://github.com/ParhamHatan/DeeplinkX/issues) after checking existing ones.

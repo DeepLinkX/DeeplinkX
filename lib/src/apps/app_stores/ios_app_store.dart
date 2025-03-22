@@ -1,7 +1,8 @@
 import 'dart:core';
 
-import 'package:deeplink_x/src/core/app_action.dart';
+import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 
 /// iOS App Store-specific action types that define available deeplink actions
 enum IOSAppStoreActionType implements ActionTypeEnum {
@@ -19,7 +20,7 @@ enum IOSAppStoreActionType implements ActionTypeEnum {
 }
 
 /// iOS App Store action implementation for handling App Store-specific deeplinks
-class IOSAppStoreAction extends AppAction {
+class IOSAppStoreAction extends StoreAppAction {
   /// Creates a new iOS App Store action
   ///
   /// [type] specifies the type of action to perform
@@ -27,7 +28,10 @@ class IOSAppStoreAction extends AppAction {
   const IOSAppStoreAction(
     this.type, {
     super.parameters,
-  }) : super(actionType: type);
+  }) : super(actionType: type, platform: platformType);
+
+  /// The native platform type
+  static const platformType = PlatformEnum.ios;
 
   /// Base URI for App Store app deeplinks
   static const baseUrl = 'itms-apps://itunes.apple.com';
@@ -39,13 +43,10 @@ class IOSAppStoreAction extends AppAction {
   final IOSAppStoreActionType type;
 
   @override
-  Future<List<Uri>> getUris() async {
-    final List<Uri> uris = [];
-
+  Future<Uri> getNativeUri() async {
     switch (type) {
       case IOSAppStoreActionType.open:
-        uris.add(Uri.parse(baseUrl));
-        uris.add(Uri.parse(fallBackUri));
+        return Uri.parse(baseUrl);
       case IOSAppStoreActionType.openAppPage:
         final appId = parameters!['appId'];
         final appName = parameters!['appName'];
@@ -81,20 +82,10 @@ class IOSAppStoreAction extends AppAction {
         pathSegments.add('id$appId');
 
         // Native app URI
-        final nativeUri = Uri.parse(baseUrl).replace(
+        return Uri.parse(baseUrl).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
-
-        // Web fallback URI
-        final webUri = Uri.parse(fallBackUri).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-
-        uris.add(nativeUri);
-        uris.add(webUri);
-
       case IOSAppStoreActionType.openReview:
         final appId = parameters!['appId'];
         final appName = parameters!['appName'];
@@ -124,20 +115,10 @@ class IOSAppStoreAction extends AppAction {
         pathSegments.add('id$appId');
 
         // Native app URI for review
-        final nativeUri = Uri.parse(baseUrl).replace(
+        return Uri.parse(baseUrl).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
-
-        // Web fallback URI for review
-        final webUri = Uri.parse(fallBackUri).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-
-        uris.add(nativeUri);
-        uris.add(webUri);
-
       case IOSAppStoreActionType.openMessagesExtension:
         final appId = parameters!['appId'];
         final appName = parameters!['appName'];
@@ -167,22 +148,124 @@ class IOSAppStoreAction extends AppAction {
         pathSegments.add('id$appId');
 
         // Native app URI for messages extension
-        final nativeUri = Uri.parse(baseUrl).replace(
+        return Uri.parse(baseUrl).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
+    }
+  }
+
+  @override
+  Future<Uri> getFallbackUri() async {
+    switch (type) {
+      case IOSAppStoreActionType.open:
+        return Uri.parse(fallBackUri);
+      case IOSAppStoreActionType.openAppPage:
+        final appId = parameters!['appId'];
+        final appName = parameters!['appName'];
+        final country = parameters!['country'];
+        final mediaType = parameters!['mt'];
+        final campaignToken = parameters!['ct'];
+        final providerToken = parameters!['pt'];
+        final affiliateToken = parameters!['at'];
+        final uniqueOrigin = parameters!['uo'];
+
+        // Build query parameters
+        final queryParams = <String, String>{'mt': mediaType!};
+
+        if (campaignToken != null) {
+          queryParams['ct'] = campaignToken;
+        }
+        if (providerToken != null) {
+          queryParams['pt'] = providerToken;
+        }
+        if (affiliateToken != null) {
+          queryParams['at'] = affiliateToken;
+        }
+        if (uniqueOrigin != null) {
+          queryParams['uo'] = uniqueOrigin;
+        }
+
+        final pathSegments = <String>[];
+        if (country != null) {
+          pathSegments.add(country);
+        }
+        pathSegments.add('app');
+        pathSegments.add(appName!);
+        pathSegments.add('id$appId');
+
+        // Web fallback URI
+        return Uri.parse(fallBackUri).replace(
+          pathSegments: pathSegments,
+          queryParameters: queryParams,
+        );
+      case IOSAppStoreActionType.openReview:
+        final appId = parameters!['appId'];
+        final appName = parameters!['appName'];
+        final country = parameters!['country'];
+        final mediaType = parameters!['mt'];
+
+        // Add action=write-review parameter
+        final queryParams = <String, String>{'action': 'write-review', 'mt': mediaType!};
+
+        // Add other parameters if provided
+        if (parameters!['ct'] != null) {
+          queryParams['ct'] = parameters!['ct']!;
+        }
+        if (parameters!['pt'] != null) {
+          queryParams['pt'] = parameters!['pt']!;
+        }
+        if (parameters!['at'] != null) {
+          queryParams['at'] = parameters!['at']!;
+        }
+
+        final pathSegments = <String>[];
+        if (country != null) {
+          pathSegments.add(country);
+        }
+        pathSegments.add('app');
+        pathSegments.add(appName!);
+        pathSegments.add('id$appId');
+
+        // Web fallback URI for review
+        return Uri.parse(fallBackUri).replace(
+          pathSegments: pathSegments,
+          queryParameters: queryParams,
+        );
+      case IOSAppStoreActionType.openMessagesExtension:
+        final appId = parameters!['appId'];
+        final appName = parameters!['appName'];
+        final country = parameters!['country'];
+        final mediaType = parameters!['mt'];
+
+        // Build query parameters with app=messages
+        final queryParams = <String, String>{'app': 'messages', 'mt': mediaType!};
+
+        // Add other parameters if provided
+        if (parameters!['ct'] != null) {
+          queryParams['ct'] = parameters!['ct']!;
+        }
+        if (parameters!['pt'] != null) {
+          queryParams['pt'] = parameters!['pt']!;
+        }
+        if (parameters!['at'] != null) {
+          queryParams['at'] = parameters!['at']!;
+        }
+
+        final pathSegments = <String>[];
+        if (country != null) {
+          pathSegments.add(country);
+        }
+        pathSegments.add('app');
+        pathSegments.add(appName!);
+        pathSegments.add('id$appId');
 
         // Web fallback URI for messages extension
-        final webUri = Uri.parse(fallBackUri).replace(
+        return Uri.parse(fallBackUri).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
-
-        uris.add(nativeUri);
-        uris.add(webUri);
     }
-
-    return uris;
   }
 }
 

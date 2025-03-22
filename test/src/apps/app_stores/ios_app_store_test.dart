@@ -1,11 +1,18 @@
-import 'package:deeplink_x/src/apps/ios_app_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/ios_app_store.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late PlatformEnum platfromType;
+
+  setUpAll(() {
+    platfromType = PlatformEnum.android;
+  });
+
   group('iOS App Store Actions', () {
     test('open action generates correct URIs', () async {
       const action = IOSAppStore.open;
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'itms-apps://itunes.apple.com');
@@ -17,7 +24,7 @@ void main() {
         appId: '123456789',
         appName: 'testapp',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -40,7 +47,7 @@ void main() {
         affiliateToken: 'affiliate789',
         uniqueOrigin: 'origin123',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -58,7 +65,7 @@ void main() {
         appId: '123456789',
         appName: 'testapp',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -80,7 +87,7 @@ void main() {
         providerToken: 'provider456',
         affiliateToken: 'affiliate789',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -98,7 +105,7 @@ void main() {
         appId: '123456789',
         appName: 'testapp',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -120,7 +127,7 @@ void main() {
         providerToken: 'provider456',
         affiliateToken: 'affiliate789',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(

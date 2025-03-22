@@ -1,11 +1,18 @@
-import 'package:deeplink_x/src/apps/play_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late PlatformEnum platfromType;
+
+  setUpAll(() {
+    platfromType = PlatformEnum.android;
+  });
+  
   group('Play Store Actions', () {
     test('open action generates correct URIs', () async {
       const action = PlayStore.open;
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'market://');
@@ -16,7 +23,7 @@ void main() {
       final action = PlayStore.openAppPage(
         packageName: 'com.example.app',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -34,7 +41,7 @@ void main() {
         packageName: 'com.example.app',
         referrer: 'utm_source=test_app',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -51,7 +58,7 @@ void main() {
       final action = PlayStore.openAppReviewPage(
         packageName: 'com.example.app',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -69,7 +76,7 @@ void main() {
         packageName: 'com.example.app',
         referrer: 'utm_source=test_app',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -111,7 +118,7 @@ void main() {
         packageName: 'com.example.app',
         hl: 'fr',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -130,7 +137,7 @@ void main() {
         referrer: 'utm_source=test_app',
         hl: 'de',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -148,7 +155,7 @@ void main() {
         packageName: 'com.example.app',
         hl: 'es',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(

@@ -1,7 +1,8 @@
 import 'dart:core';
 
-import 'package:deeplink_x/src/core/app_action.dart';
+import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 
 /// Play Store-specific action types that define available deeplink actions
 enum PlayStoreActionType implements ActionTypeEnum {
@@ -16,7 +17,7 @@ enum PlayStoreActionType implements ActionTypeEnum {
 }
 
 /// Play Store action implementation for handling Play Store-specific deeplinks
-class PlayStoreAction extends AppAction {
+class PlayStoreAction extends StoreAppAction {
   /// Creates a new Play Store action
   ///
   /// [type] specifies the type of action to perform
@@ -24,7 +25,10 @@ class PlayStoreAction extends AppAction {
   const PlayStoreAction(
     this.type, {
     super.parameters,
-  }) : super(actionType: type);
+  }) : super(actionType: type, platform: platformType);
+
+  /// The native platform type
+  static const platformType = PlatformEnum.android;
 
   /// Base URI for Play Store app deeplinks
   static const baseUrl = 'market://';
@@ -36,13 +40,10 @@ class PlayStoreAction extends AppAction {
   final PlayStoreActionType type;
 
   @override
-  Future<List<Uri>> getUris() async {
-    final List<Uri> uris = [];
-
+  Future<Uri> getNativeUri() async {
     switch (type) {
       case PlayStoreActionType.open:
-        uris.add(Uri.parse(baseUrl));
-        uris.add(Uri.parse(fallBackUri));
+        return Uri.parse(baseUrl);
       case PlayStoreActionType.openAppPage:
         final packageName = parameters!['packageName'];
         final referrer = parameters!['referrer'];
@@ -60,23 +61,10 @@ class PlayStoreAction extends AppAction {
         }
 
         // Native app URI
-        final nativeUri = Uri(
-          scheme: 'market',
+        return Uri.parse(baseUrl).replace(
           host: 'details',
           queryParameters: queryParams,
         );
-
-        // Web fallback URI
-        final webUri = Uri(
-          scheme: 'https',
-          host: 'play.google.com',
-          path: '/store/apps/details',
-          queryParameters: queryParams,
-        );
-
-        uris.add(nativeUri);
-        uris.add(webUri);
-
       case PlayStoreActionType.openAppReviewPage:
         final packageName = parameters!['packageName'];
         final referrer = parameters!['referrer'];
@@ -94,25 +82,65 @@ class PlayStoreAction extends AppAction {
         }
 
         // Native app URI for review
-        final nativeUri = Uri(
-          scheme: 'market',
+        return Uri.parse(baseUrl).replace(
           host: 'details',
           queryParameters: queryParams,
         );
+    }
+  }
 
-        // Web fallback URI for review
-        final webUri = Uri(
+  @override
+  Future<Uri> getFallbackUri() async {
+    switch (type) {
+      case PlayStoreActionType.open:
+        return Uri.parse(fallBackUri);
+      case PlayStoreActionType.openAppPage:
+        final packageName = parameters!['packageName'];
+        final referrer = parameters!['referrer'];
+        final hl = parameters!['hl'];
+
+        // Build query parameters
+        final queryParams = <String, String>{'id': packageName!};
+
+        if (referrer != null) {
+          queryParams['referrer'] = referrer;
+        }
+
+        if (hl != null) {
+          queryParams['hl'] = hl;
+        }
+
+        // Web fallback URI
+        return Uri(
           scheme: 'https',
           host: 'play.google.com',
           path: '/store/apps/details',
           queryParameters: queryParams,
         );
+      case PlayStoreActionType.openAppReviewPage:
+        final packageName = parameters!['packageName'];
+        final referrer = parameters!['referrer'];
+        final hl = parameters!['hl'];
 
-        uris.add(nativeUri);
-        uris.add(webUri);
+        // Build query parameters
+        final queryParams = <String, String>{'id': packageName!, 'showAllReviews': 'true'};
+
+        if (referrer != null) {
+          queryParams['referrer'] = referrer;
+        }
+
+        if (hl != null) {
+          queryParams['hl'] = hl;
+        }
+
+        // Web fallback URI for review
+        return Uri(
+          scheme: 'https',
+          host: 'play.google.com',
+          path: '/store/apps/details',
+          queryParameters: queryParams,
+        );
     }
-
-    return uris;
   }
 }
 

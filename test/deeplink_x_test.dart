@@ -10,7 +10,30 @@ class DummyAppAction extends AppAction {
   DummyAppAction() : super(actionType: DummyActionType.open);
 
   @override
-  Future<List<Uri>> getUris() => Future.value([]);
+  Future<Uri> getNativeUri() async => Uri(scheme: 'test', host: 'test');
+
+  @override
+  Future<Uri> getFallbackUri() async => Uri(scheme: 'https', host: 'test');
+}
+
+class DummyStoreAppAction extends StoreAppAction {
+  DummyStoreAppAction() : super(actionType: DummyActionType.open, platform: PlatformEnum.android);
+
+  @override
+  Future<Uri> getNativeUri() async => Uri(scheme: 'test', host: 'test');
+
+  @override
+  Future<Uri> getFallbackUri() async => Uri(scheme: 'https', host: 'test');
+}
+
+class DummyDownloadableAppAction extends DownloadableAppAction {
+  DummyDownloadableAppAction() : super(actionType: DummyActionType.open, fallBackToStore: false, supportedStoresActions: []);
+
+  @override
+  Future<Uri> getNativeUri() async => Uri(scheme: 'test', host: 'test');
+
+  @override
+  Future<Uri> getFallbackUri() async => Uri(scheme: 'https', host: 'test');
 }
 
 class MockDeeplinkX extends Mock implements DeeplinkX {}
@@ -33,12 +56,12 @@ void main() {
   group('Exposed Api Access Check:', () {
     group('Apps:', () {
       test('Instagram', () {
-        const action = Instagram.open;
+        final action = Instagram.open();
         expect(action, isA<AppAction>());
       });
 
       test('Telegram', () {
-        const action = Telegram.open;
+        final action = Telegram.open();
         expect(action, isA<AppAction>());
       });
 

@@ -1,11 +1,18 @@
-import 'package:deeplink_x/src/apps/microsoft_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/microsoft_store.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late PlatformEnum platfromType;
+
+  setUpAll(() {
+    platfromType = PlatformEnum.android;
+  });
+
   group('Microsoft Store Actions', () {
     test('open action generates correct URIs', () async {
       const action = MicrosoftStore.open;
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'ms-windows-store://');
@@ -16,12 +23,12 @@ void main() {
       final action = MicrosoftStore.openAppPage(
         productId: '9WZDNCRFHVJL',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'ms-windows-store:///pdp?ProductId=9WZDNCRFHVJL',
+        'ms-windows-store://pdp/?ProductId=9WZDNCRFHVJL',
       );
       expect(
         uris[1].toString(),
@@ -34,12 +41,12 @@ void main() {
         productId: '9WZDNCRFHVJL',
         language: 'en-us',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'ms-windows-store:///pdp?hl=en-us&ProductId=9WZDNCRFHVJL',
+        'ms-windows-store://pdp/?hl=en-us&ProductId=9WZDNCRFHVJL',
       );
       expect(
         uris[1].toString(),
@@ -53,12 +60,12 @@ void main() {
         language: 'en-us',
         countryCode: 'US',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'ms-windows-store:///pdp?hl=en-us&gl=US&ProductId=9WZDNCRFHVJL',
+        'ms-windows-store://pdp/?hl=en-us&gl=US&ProductId=9WZDNCRFHVJL',
       );
       expect(
         uris[1].toString(),
@@ -70,12 +77,12 @@ void main() {
       final action = MicrosoftStore.openAppReviewPage(
         productId: '9WZDNCRFHVJL',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'ms-windows-store:///review?ProductId=9WZDNCRFHVJL',
+        'ms-windows-store://review/?ProductId=9WZDNCRFHVJL',
       );
       expect(
         uris[1].toString(),
@@ -88,12 +95,12 @@ void main() {
         productId: '9WZDNCRFHVJL',
         language: 'en-us',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'ms-windows-store:///review?hl=en-us&ProductId=9WZDNCRFHVJL',
+        'ms-windows-store://review/?hl=en-us&ProductId=9WZDNCRFHVJL',
       );
       expect(
         uris[1].toString(),
@@ -107,12 +114,12 @@ void main() {
         language: 'en-us',
         countryCode: 'US',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
         uris[0].toString(),
-        'ms-windows-store:///review?hl=en-us&gl=US&ProductId=9WZDNCRFHVJL',
+        'ms-windows-store://review/?hl=en-us&gl=US&ProductId=9WZDNCRFHVJL',
       );
       expect(
         uris[1].toString(),

@@ -1,7 +1,8 @@
 import 'dart:core';
 
-import 'package:deeplink_x/src/core/app_action.dart';
+import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 
 /// Microsoft Store-specific action types that define available deeplink actions
 enum MicrosoftStoreActionType implements ActionTypeEnum {
@@ -16,7 +17,7 @@ enum MicrosoftStoreActionType implements ActionTypeEnum {
 }
 
 /// Microsoft Store action implementation for handling Microsoft Store-specific deeplinks
-class MicrosoftStoreAction extends AppAction {
+class MicrosoftStoreAction extends StoreAppAction {
   /// Creates a new Microsoft Store action
   ///
   /// [type] specifies the type of action to perform
@@ -24,7 +25,10 @@ class MicrosoftStoreAction extends AppAction {
   const MicrosoftStoreAction(
     this.type, {
     super.parameters,
-  }) : super(actionType: type);
+  }) : super(actionType: type, platform: platformType);
+
+  /// The native platform type
+  static const platformType = PlatformEnum.windows;
 
   /// Base URI for Microsoft Store app deeplinks
   static const baseUrl = 'ms-windows-store://';
@@ -36,13 +40,10 @@ class MicrosoftStoreAction extends AppAction {
   final MicrosoftStoreActionType type;
 
   @override
-  Future<List<Uri>> getUris() async {
-    final List<Uri> uris = [];
-
+  Future<Uri> getNativeUri() async {
     switch (type) {
       case MicrosoftStoreActionType.open:
-        uris.add(Uri.parse(baseUrl));
-        uris.add(Uri.parse(fallBackUri));
+        return Uri.parse(baseUrl);
       case MicrosoftStoreActionType.openAppPage:
         final productId = parameters!['productId'];
         final language = parameters!['language'];
@@ -63,20 +64,11 @@ class MicrosoftStoreAction extends AppAction {
         nativeQueryParams['ProductId'] = productId!;
 
         // Native app URI with query parameters
-        final nativeUri = Uri.parse(baseUrl).replace(
-          path: 'pdp',
+        return Uri.parse(baseUrl).replace(
+          host: 'pdp',
+          path: '/',
           queryParameters: nativeQueryParams,
         );
-
-        // Web fallback URI with query parameters
-        final webUri = Uri.parse(fallBackUri).replace(
-          path: 'store/detail/app/$productId',
-          queryParameters: queryParams.isNotEmpty ? queryParams : null,
-        );
-
-        uris.add(nativeUri);
-        uris.add(webUri);
-
       case MicrosoftStoreActionType.openAppReviewPage:
         final productId = parameters!['productId'];
         final language = parameters!['language'];
@@ -97,23 +89,63 @@ class MicrosoftStoreAction extends AppAction {
         nativeQueryParams['ProductId'] = productId!;
 
         // Native app URI with query parameters
-        final nativeUri = Uri.parse(baseUrl).replace(
-          path: 'review',
+        return Uri.parse(baseUrl).replace(
+          host: 'review',
+          path: '/',
           queryParameters: nativeQueryParams,
         );
+    }
+  }
+
+  @override
+  Future<Uri> getFallbackUri() async {
+    switch (type) {
+      case MicrosoftStoreActionType.open:
+        return Uri.parse(fallBackUri);
+      case MicrosoftStoreActionType.openAppPage:
+        final productId = parameters!['productId'];
+        final language = parameters!['language'];
+        final countryCode = parameters!['countryCode'];
+
+        // Build query parameters
+        final queryParams = <String, String>{};
+
+        if (language != null) {
+          queryParams['hl'] = language;
+        }
+
+        if (countryCode != null) {
+          queryParams['gl'] = countryCode;
+        }
 
         // Web fallback URI with query parameters
-        final webUri = Uri.parse(fallBackUri).replace(
+        return Uri.parse(fallBackUri).replace(
+          path: 'store/detail/app/$productId',
+          queryParameters: queryParams.isNotEmpty ? queryParams : null,
+        );
+      case MicrosoftStoreActionType.openAppReviewPage:
+        final productId = parameters!['productId'];
+        final language = parameters!['language'];
+        final countryCode = parameters!['countryCode'];
+
+        // Build query parameters
+        final queryParams = <String, String>{};
+
+        if (language != null) {
+          queryParams['hl'] = language;
+        }
+
+        if (countryCode != null) {
+          queryParams['gl'] = countryCode;
+        }
+
+        // Web fallback URI with query parameters
+        return Uri.parse(fallBackUri).replace(
           path: 'store/detail/app/$productId',
           queryParameters: queryParams.isNotEmpty ? queryParams : null,
           fragment: 'reviews',
         );
-
-        uris.add(nativeUri);
-        uris.add(webUri);
     }
-
-    return uris;
   }
 }
 

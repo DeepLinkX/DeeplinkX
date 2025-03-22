@@ -1,4 +1,5 @@
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 
 /// Base class for all app actions.
 ///
@@ -24,10 +25,32 @@ abstract class AppAction {
   /// the username or profile ID.
   final Map<String, String>? parameters;
 
+  /// Get the native URI for the action.
+  ///
+  /// Returns the native app URI (e.g., instagram://) that can be used to open the app
+  /// or perform a specific action within the app.
+  Future<Uri> getNativeUri();
+
+  /// Get the fallback URI for the action.
+  ///
+  /// Returns the web fallback URL (e.g., https://instagram.com) that can be used when
+  /// the native app is not installed or cannot be launched.
+  Future<Uri> getFallbackUri();
+
   /// Get all possible URIs for the action.
   ///
-  /// Returns a list of URIs in order of preference. The first URI that can be
+  /// Returns a list of URIs in order of preference for the specified platform. The first URI that can be
   /// launched will be used. This typically includes both native app URIs
   /// (e.g., instagram://) and web fallback URLs (e.g., https://instagram.com).
-  Future<List<Uri>> getUris();
+  ///
+  /// The [platform] parameter determines the target platform (iOS, Android, etc.) which may affect
+  /// the URI scheme and format.
+  ///
+  /// By default, this method returns a list containing the native URI followed by
+  /// the fallback URI. Override this method if you need custom URI ordering or
+  /// platform-specific URI handling.
+  Future<List<Uri>> getUris(final PlatformEnum platform) async {
+    final List<Uri> uris = [await getNativeUri(), await getFallbackUri()];
+    return uris;
+  }
 }

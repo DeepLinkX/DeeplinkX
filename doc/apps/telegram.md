@@ -101,6 +101,7 @@ Add the following to your `ios/Runner/Info.plist`:
 <key>LSApplicationQueriesSchemes</key>
 <array>
     <string>tg</string>
+    <string>itms-apps</string>
 </array>
 ```
 
@@ -112,11 +113,27 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="tg" />
     </intent>
+    <!-- Play store fallback -->
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="market" />
+    </intent>
+    <!-- Web fallback -->
     <intent>
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="https" />
     </intent>
 </queries>
+```
+
+### macOS
+Add the following to your `macos/Runner/Info.plist`:
+```xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>tg</string>
+    <string>macappstore</string>
+</array>
 ```
 
 ## URL Schemes
@@ -131,5 +148,24 @@ When Telegram is installed, the following scheme is used:
 When Telegram is not installed, DeeplinkX automatically falls back to:
 - `https://t.me` - Official Telegram web URL 
 
+## Supported Fallback Stores
+When the Telegram app is not installed, DeeplinkX can redirect users to download Telegram from the following app stores:
+
+- iOS App Store
+- Google Play Store
+- Mac App Store
+- Microsoft Store
+
+To enable fallback to app stores, use the `fallBackToStore` parameter:
+
+```dart
+final deeplinkX = DeeplinkX();
+await deeplinkX.launchAction(Telegram.open(fallBackToStore: true));
+```
+
 ## Fallback Behavior
-If the Telegram app is not installed, DeeplinkX will automatically fall back to opening the Telegram web interface in the default browser.
+DeeplinkX follows this sequence when handling Telegram deeplinks:
+
+1. First, it attempts to launch the Telegram app if it's installed on the device.
+2. If the Telegram app is not installed and `fallBackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store, Google Play Store, Mac App Store, or Microsoft Store).
+3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the Telegram web interface in the default browser.

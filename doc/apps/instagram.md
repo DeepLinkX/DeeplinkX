@@ -48,6 +48,7 @@ Add the following to your `ios/Runner/Info.plist`:
 <key>LSApplicationQueriesSchemes</key>
 <array>
     <string>instagram</string>
+    <string>itms-apps</string>
 </array>
 ```
 
@@ -59,6 +60,12 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="instagram" />
     </intent>
+    <!-- Play store fallback -->
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="market" />
+    </intent>
+    <!-- Web fallback -->
     <intent>
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="https" />
@@ -78,5 +85,22 @@ When Instagram is installed, the following scheme is used:
 When Instagram is not installed, DeeplinkX automatically falls back to:
 - `https://instagram.com` - Official Instagram web URL
 
+## Supported Fallback Stores
+When the Instagram app is not installed, DeeplinkX can redirect users to download Instagram from the following app stores:
+
+- iOS App Store
+- Google Play Store
+
+To enable fallback to app stores, use the `fallBackToStore` parameter:
+
+```dart
+final deeplinkX = DeeplinkX();
+await deeplinkX.launchAction(Instagram.open(fallBackToStore: true));
+```
+
 ## Fallback Behavior
-If the Instagram app is not installed, DeeplinkX will automatically fall back to opening the Instagram web profile in the default browser. 
+DeeplinkX follows this sequence when handling Instagram deeplinks:
+
+1. First, it attempts to launch the Instagram app if it's installed on the device.
+2. If the Instagram app is not installed and `fallBackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
+3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the Instagram web interface in the default browser.

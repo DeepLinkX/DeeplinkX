@@ -55,6 +55,27 @@ The referrer parameter is used for tracking the source of an app installation. I
 
 The `hl` parameter specifies the language to display the Play Store content in. It uses ISO 639-1 language codes (e.g., 'en' for English, 'fr' for French, 'de' for German, 'ja' for Japanese, etc.).
 
+## Platform-Specific Configuration
+
+### Android
+Add the following to your `android/app/src/main/AndroidManifest.xml` inside the `<queries>` tag:
+```xml
+<queries>
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="market" />
+    </intent>
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="https" />
+    </intent>
+</queries>
+```
+
+### iOS
+
+Play Store deeplinks on iOS will always use the web fallback URLs, as the Play Store app is not available on iOS devices.
+
 ## URL Schemes
 
 DeeplinkX uses the following URL schemes for Play Store actions:
@@ -70,13 +91,3 @@ DeeplinkX uses the following URL schemes for Play Store actions:
 - Base URI: `https://play.google.com`
 - App Page: `https://play.google.com/store/apps/details?id=<package_name>&referrer=<referrer>&hl=<language_code>`
 - Review Page: `https://play.google.com/store/apps/details?id=<package_name>&showAllReviews=true&referrer=<referrer>&hl=<language_code>`
-
-## Platform-Specific Configuration
-
-### Android
-
-No additional configuration is required for Android devices to handle Play Store deeplinks.
-
-### iOS
-
-Play Store deeplinks on iOS will always use the web fallback URLs, as the Play Store app is not available on iOS devices.

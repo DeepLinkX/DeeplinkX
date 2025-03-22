@@ -1,21 +1,21 @@
-# iOS App Store Deeplinks
+# Mac App Store Deeplinks
 
-DeeplinkX provides support for opening the iOS App Store and specific app pages, including app details, reviews, and iMessage extensions.
+DeeplinkX provides support for opening the Mac App Store and specific app pages, including app details and reviews.
 
 ## Available Actions
 
-### Open App Store
+### Open Mac App Store
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(IOSAppStore.open);
+await deeplinkX.launchAction(MacAppStore.open);
 ```
 
 ### Open App Page
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(IOSAppStore.openAppPage(
-  appId: '284882215',  // Facebook app ID
-  appName: 'facebook',
+await deeplinkX.launchAction(MacAppStore.openAppPage(
+  appId: '497799835',  // Xcode app ID
+  appName: 'xcode',
   country: 'us',       // Optional: two-letter country code
 ));
 ```
@@ -23,19 +23,9 @@ await deeplinkX.launchAction(IOSAppStore.openAppPage(
 ### Open App Review Page
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(IOSAppStore.openReview(
-  appId: '284882215',  // Facebook app ID
-  appName: 'facebook',
-  country: 'us',       // Optional: two-letter country code
-));
-```
-
-### Open App iMessage Extension
-```dart
-final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(IOSAppStore.openMessagesExtension(
-  appId: '284882215',  // Facebook app ID
-  appName: 'facebook',
+await deeplinkX.launchAction(MacAppStore.openReview(
+  appId: '497799835',  // Xcode app ID
+  appName: 'xcode',
   country: 'us',       // Optional: two-letter country code
 ));
 ```
@@ -43,15 +33,15 @@ await deeplinkX.launchAction(IOSAppStore.openMessagesExtension(
 ## Parameter Validations
 
 ### App ID Validation
-iOS App Store app IDs must follow these rules:
+Mac App Store app IDs must follow these rules:
 - Must contain only digits
 - Length: 1-10 digits
 - Cannot be empty
 
 Example valid app IDs:
-- `284882215` (Facebook)
-- `310633997` (WhatsApp)
-- `389801252` (Instagram)
+- `497799835` (Xcode)
+- `409203825` (Numbers)
+- `409201541` (Pages)
 
 Example invalid app IDs:
 - `abc123` (contains letters)
@@ -62,43 +52,42 @@ Example invalid app IDs:
 App names must follow these rules:
 - Must be a valid URL slug format
 - Typically lowercase with hyphens instead of spaces
-- Should match the app's name in the App Store URL
+- Should match the app's name in the Mac App Store URL
 
 Example valid app names:
-- `facebook`
-- `whatsapp-messenger`
-- `instagram`
+- `xcode`
+- `final-cut-pro`
+- `logic-pro`
 
 ### Optional Parameters
 - **country**: Two-letter country code (e.g., 'us', 'uk', 'jp')
-- **mediaType**: Specifies content type (default: '8' for iOS apps)
+- **mediaType**: Specifies content type (default: '12' for macOS apps)
 - **campaignToken**: Used for tracking marketing campaigns
 - **providerToken**: Numeric identifier for your team/developer
 - **affiliateToken**: Used for Apple's affiliate tracking
-- **uniqueOrigin**: Indicates the origin of the link
 
 ## Platform-Specific Configuration
 
-### iOS
-Add the following to your `ios/Runner/Info.plist`:
+### macOS
+Add the following to your `macos/Runner/Info.plist`:
 ```xml
 <key>LSApplicationQueriesSchemes</key>
 <array>
-    <string>itms-apps</string>
+    <string>macappstore</string>
 </array>
 ```
 
 ## URL Schemes
 
-DeeplinkX uses the following URL schemes for iOS App Store:
+DeeplinkX uses the following URL schemes for Mac App Store:
 
 ### Native App Deep Links
-When on iOS, the following scheme is used:
-- `itms-apps://` - Primary iOS App Store URL scheme
+When on macOS, the following scheme is used:
+- `macappstore://` - Primary Mac App Store URL scheme
 
 ### Web Fallback URLs
 When on other platforms or when native schemes fail:
-- `https://apps.apple.com` - Official App Store web URL
+- `https://apps.apple.com/app/mac` - Official Mac App Store web URL
 
 ## Official Documentation
 - [Apple Developer Documentation - Universal Links](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content)
@@ -106,4 +95,7 @@ When on other platforms or when native schemes fail:
 - [Apple Developer Documentation - App Store Connect](https://appstoreconnect.apple.com/help)
 
 ## Fallback Behavior
-If the iOS App Store app is not installed or the device is not running iOS, DeeplinkX will automatically fall back to opening the App Store web interface in the default browser.
+DeeplinkX follows this sequence when handling Mac App Store deeplinks:
+
+1. First, it attempts to launch the Mac App Store app if it's installed on the device.
+2. If the Mac App Store app is not installed or the device is not running macOS, DeeplinkX will automatically fall back to opening the Mac App Store web interface in the default browser.

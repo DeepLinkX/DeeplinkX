@@ -1,5 +1,5 @@
 name: deeplink_x
-description: Lightweight Flutter plugin for type-safe external deeplink launching across platforms with built-in web fallback.
+description: Lightweight Flutter plugin for type-safe external deeplink launching with built-in smart fallback feature.
 version: 0.0.3
 
 repository: https://github.com/ParhamHatan/DeeplinkX

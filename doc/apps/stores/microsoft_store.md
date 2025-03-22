@@ -62,3 +62,9 @@ When on Windows, the following schemes are used:
 When on other platforms or when native schemes fail:
 - `https://apps.microsoft.com/store/detail/app/{app_id}` - For opening app pages
 - `https://apps.microsoft.com/store/detail/app/{app_id}#reviews` - For opening app review pages
+
+## Fallback Behavior
+DeeplinkX follows this sequence when handling Microsoft Store deeplinks:
+
+1. First, it attempts to launch the Microsoft Store app if it's installed on the device.
+2. If the Microsoft Store app is not installed or the device is not running windows, DeeplinkX will automatically fall back to opening the Microsoft Store web interface in the default browser.

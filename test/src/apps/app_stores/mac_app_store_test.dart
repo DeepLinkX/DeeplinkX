@@ -1,11 +1,18 @@
-import 'package:deeplink_x/src/apps/mac_app_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/mac_app_store.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late PlatformEnum platfromType;
+
+  setUpAll(() {
+    platfromType = PlatformEnum.android;
+  });
+  
   group('Mac App Store Actions', () {
     test('open action generates correct URIs', () async {
       const action = MacAppStore.open;
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'macappstore://itunes.apple.com');
@@ -17,7 +24,7 @@ void main() {
         appId: '123456789',
         appName: 'testapp',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -39,7 +46,7 @@ void main() {
         providerToken: 'provider456',
         affiliateToken: 'affiliate789',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -57,7 +64,7 @@ void main() {
         appId: '123456789',
         appName: 'testapp',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(
@@ -79,7 +86,7 @@ void main() {
         providerToken: 'provider456',
         affiliateToken: 'affiliate789',
       );
-      final uris = await action.getUris();
+      final uris = await action.getUris(platfromType);
 
       expect(uris.length, 2);
       expect(

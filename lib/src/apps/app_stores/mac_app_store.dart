@@ -1,7 +1,8 @@
 import 'dart:core';
 
-import 'package:deeplink_x/src/core/app_action.dart';
+import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_enum.dart';
 
 /// Mac App Store-specific action types that define available deeplink actions
 enum MacAppStoreActionType implements ActionTypeEnum {
@@ -16,7 +17,7 @@ enum MacAppStoreActionType implements ActionTypeEnum {
 }
 
 /// Mac App Store action implementation for handling Mac App Store-specific deeplinks
-class MacAppStoreAction extends AppAction {
+class MacAppStoreAction extends StoreAppAction {
   /// Creates a new Mac App Store action
   ///
   /// [type] specifies the type of action to perform
@@ -24,7 +25,10 @@ class MacAppStoreAction extends AppAction {
   const MacAppStoreAction(
     this.type, {
     super.parameters,
-  }) : super(actionType: type);
+  }) : super(actionType: type, platform: platformType);
+
+  /// The native platform type
+  static const platformType = PlatformEnum.macos;
 
   /// Base URI for Mac App Store app deeplinks
   static const baseUrl = 'macappstore://itunes.apple.com';
@@ -36,13 +40,10 @@ class MacAppStoreAction extends AppAction {
   final MacAppStoreActionType type;
 
   @override
-  Future<List<Uri>> getUris() async {
-    final List<Uri> uris = [];
-
+  Future<Uri> getNativeUri() async {
     switch (type) {
       case MacAppStoreActionType.open:
-        uris.add(Uri.parse(baseUrl));
-        uris.add(Uri.parse(fallBackUri));
+        return Uri.parse(baseUrl);
       case MacAppStoreActionType.openAppPage:
         final appId = parameters!['appId'];
         final appName = parameters!['appName'];
@@ -75,20 +76,10 @@ class MacAppStoreAction extends AppAction {
         pathSegments.add('id$appId');
 
         // Native app URI
-        final nativeUri = Uri.parse(baseUrl).replace(
+        return Uri.parse(baseUrl).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
-
-        // Web fallback URI
-        final webUri = Uri.parse(fallBackUri).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-
-        uris.add(nativeUri);
-        uris.add(webUri);
-
       case MacAppStoreActionType.openReview:
         final appId = parameters!['appId'];
         final appName = parameters!['appName'];
@@ -119,22 +110,89 @@ class MacAppStoreAction extends AppAction {
         pathSegments.add('id$appId');
 
         // Native app URI for review
-        final nativeUri = Uri.parse(baseUrl).replace(
+        return Uri.parse(baseUrl).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
+    }
+  }
+
+  @override
+  Future<Uri> getFallbackUri() async {
+    switch (type) {
+      case MacAppStoreActionType.open:
+        return Uri.parse(fallBackUri);
+      case MacAppStoreActionType.openAppPage:
+        final appId = parameters!['appId'];
+        final appName = parameters!['appName'];
+        final country = parameters!['country'];
+        final mediaType = parameters!['mt'];
+        final campaignToken = parameters!['ct'];
+        final providerToken = parameters!['pt'];
+        final affiliateToken = parameters!['at'];
+
+        // Build query parameters
+        final queryParams = <String, String>{'mt': mediaType!};
+
+        if (campaignToken != null) {
+          queryParams['ct'] = campaignToken;
+        }
+        if (providerToken != null) {
+          queryParams['pt'] = providerToken;
+        }
+        if (affiliateToken != null) {
+          queryParams['at'] = affiliateToken;
+        }
+
+        final pathSegments = <String>[];
+        if (country != null) {
+          pathSegments.add(country);
+        }
+        pathSegments.add('app');
+        pathSegments.add('mac');
+        pathSegments.add(appName!);
+        pathSegments.add('id$appId');
+
+        // Web fallback URI
+        return Uri.parse(fallBackUri).replace(
+          pathSegments: pathSegments,
+          queryParameters: queryParams,
+        );
+      case MacAppStoreActionType.openReview:
+        final appId = parameters!['appId'];
+        final appName = parameters!['appName'];
+        final country = parameters!['country'];
+        final mediaType = parameters!['mt'];
+
+        // Add action=write-review parameter
+        final queryParams = <String, String>{'action': 'write-review', 'mt': mediaType!};
+
+        // Add other parameters if provided
+        if (parameters!['ct'] != null) {
+          queryParams['ct'] = parameters!['ct']!;
+        }
+        if (parameters!['pt'] != null) {
+          queryParams['pt'] = parameters!['pt']!;
+        }
+        if (parameters!['at'] != null) {
+          queryParams['at'] = parameters!['at']!;
+        }
+
+        final pathSegments = <String>[];
+        if (country != null) {
+          pathSegments.add(country);
+        }
+        pathSegments.add('app');
+        pathSegments.add('mac');
+        pathSegments.add(appName!);
+        pathSegments.add('id$appId');
 
         // Web fallback URI for review
-        final webUri = Uri.parse(fallBackUri).replace(
+        return Uri.parse(fallBackUri).replace(
           pathSegments: pathSegments,
           queryParameters: queryParams,
         );
-
-        uris.add(nativeUri);
-        uris.add(webUri);
     }
-
-    return uris;
   }
 }
 

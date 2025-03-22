@@ -13,10 +13,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _deeplinkX = const DeeplinkX();
-  final _messageController = TextEditingController();
-  final _usernameController = TextEditingController();
-  final _phoneController = TextEditingController();
+  final _deeplinkX = DeeplinkX();
+  final _messageController = TextEditingController(text: 'Hello! How are you?');
+  final _usernameController = TextEditingController(text: 'johndoe');
+  final _phoneController = TextEditingController(text: '+14155552671');
   final _appIdController = TextEditingController(text: '389801252'); // Example: Instagram app ID
   final _appNameController = TextEditingController(text: 'instagram'); // Example: Instagram app name
   final _macAppIdController = TextEditingController(text: '497799835'); // Example: Xcode app ID
@@ -24,6 +24,10 @@ class _MyAppState extends State<MyApp> {
   final _countryController = TextEditingController(text: 'us'); // Example: US country code
   final _msProductIdController = TextEditingController(text: '9WZDNCRFHVJL'); // Example: Microsoft Edge product ID
   final _msLanguageController = TextEditingController(text: 'en-US'); // Example: Language code
+
+  // FallBackToStore flags
+  bool _instagramFallBackToStore = true;
+  bool _telegramFallBackToStore = true;
 
   @override
   void dispose() {
@@ -84,6 +88,23 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Row(
+            children: [
+              const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+              const SizedBox(width: 8),
+              Switch(
+                value: _instagramFallBackToStore,
+                onChanged: (value) => setState(() => _instagramFallBackToStore = value),
+              ),
+              const Expanded(
+                child: Text(
+                  'When enabled, redirects to app store if Instagram is not installed',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
           const Text('Instagram Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 24),
           _buildInstagramActions(),
@@ -98,6 +119,23 @@ class _MyAppState extends State<MyApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Row(
+            children: [
+              const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+              const SizedBox(width: 8),
+              Switch(
+                value: _telegramFallBackToStore,
+                onChanged: (value) => setState(() => _telegramFallBackToStore = value),
+              ),
+              const Expanded(
+                child: Text(
+                  'When enabled, redirects to app store if Telegram is not installed',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
           const Text('Telegram Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 24),
           _buildTelegramActions(),
@@ -116,7 +154,7 @@ class _MyAppState extends State<MyApp> {
       children: [
         ElevatedButton(
           onPressed: () async {
-            await _deeplinkX.launchAction(Instagram.open);
+            await _deeplinkX.launchAction(Instagram.open(fallBackToStore: _instagramFallBackToStore));
           },
           child: const Text('Open Instagram App'),
         ),
@@ -133,7 +171,9 @@ class _MyAppState extends State<MyApp> {
         ElevatedButton(
           onPressed: () async {
             if (_usernameController.text.isNotEmpty) {
-              await _deeplinkX.launchAction(Instagram.openProfile(_usernameController.text));
+              await _deeplinkX.launchAction(
+                Instagram.openProfile(_usernameController.text, fallBackToStore: _instagramFallBackToStore),
+              );
             }
           },
           child: const Text('Open Instagram Profile'),
@@ -148,7 +188,7 @@ class _MyAppState extends State<MyApp> {
       children: [
         ElevatedButton(
           onPressed: () async {
-            await _deeplinkX.launchAction(Telegram.open);
+            await _deeplinkX.launchAction(Telegram.open(fallBackToStore: _telegramFallBackToStore));
           },
           child: const Text('Open Telegram App'),
         ),
@@ -164,82 +204,15 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         const SizedBox(height: 8),
-        TextField(
-          controller: _phoneController,
-          decoration: const InputDecoration(
-            labelText: 'Phone Number (with country code)',
-            hintText: 'e.g., 1234567890 for US',
-            border: OutlineInputBorder(),
-          ),
-          keyboardType: TextInputType.phone,
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (_usernameController.text.isNotEmpty) {
-                    await _deeplinkX.launchAction(Telegram.openProfile(_usernameController.text));
-                  }
-                },
-                child: const Text('Open Profile by Username'),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (_phoneController.text.isNotEmpty) {
-                    await _deeplinkX.launchAction(Telegram.openProfilePhoneNumber(_phoneController.text));
-                  }
-                },
-                child: const Text('Open Profile by Phone'),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        const Text('Message Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 8),
-        TextField(
-          controller: _messageController,
-          decoration: const InputDecoration(
-            labelText: 'Message',
-            hintText: 'Enter message to send',
-            border: OutlineInputBorder(),
-          ),
-          maxLines: 3,
-        ),
-        const SizedBox(height: 8),
-        Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (_usernameController.text.isNotEmpty && _messageController.text.isNotEmpty) {
-                    await _deeplinkX.launchAction(
-                      Telegram.sendMessage(_usernameController.text, _messageController.text),
-                    );
-                  }
-                },
-                child: const Text('Send Message by Username'),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (_phoneController.text.isNotEmpty && _messageController.text.isNotEmpty) {
-                    await _deeplinkX.launchAction(
-                      Telegram.sendMessagePhoneNumber(_phoneController.text, _messageController.text),
-                    );
-                  }
-                },
-                child: const Text('Send Message by Phone'),
-              ),
-            ),
-          ],
+        ElevatedButton(
+          onPressed: () async {
+            if (_usernameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                Telegram.openProfile(_usernameController.text, fallBackToStore: _telegramFallBackToStore),
+              );
+            }
+          },
+          child: const Text('Open Telegram Profile'),
         ),
       ],
     );
