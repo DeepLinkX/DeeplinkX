@@ -1,4 +1,4 @@
-## 0.0.4
+## 0.1.0
 * New Faeture:
   * Added fallback to supported stores option when desiered app is not installed
 * Added support for Mac App Store deeplinks:
