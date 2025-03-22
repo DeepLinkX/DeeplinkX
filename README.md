@@ -6,9 +6,9 @@ A lightweight Flutter plugin for type-safe handling of external deeplinks with b
 
 ## Features
 
-- Multi-platform support (iOS, Android, Web, macOS, Windows, Linux)
-- Smart fallback system (app stores → web URLs)
 - Type-safe API for external deeplinks
+- Multi-platform support
+- Smart fallback system
 
 ## Usage
 
@@ -31,14 +31,14 @@ void main() {
 
 ## Supported Apps And Actions
 
-| Category    | App               | Supported Actions                                   |
-| ----------- | ----------------- | --------------------------------------------------- |
-| Stores      | iOS App Store     | Open app, app page, review page, iMessage extension |
-| Stores      | Mac App Store     | Open app, app page, review page                     |
-| Stores      | Microsoft Store   | Open app, app page, review page                     |
-| Stores      | Google Play Store | Open app, app page, review page                     |
-| Social Apps | Telegram          | Open app, profile by username/phone, send message   |
-| Social Apps | Instagram         | Open app, profile by username                       |
+| Category    | App               | Supported Actions                                                                |
+| ----------- | ----------------- | -------------------------------------------------------------------------------- |
+| Stores      | iOS App Store     | • Open app<br>• Open app page<br>• Open review page<br>• Open iMessage extension |
+| Stores      | Mac App Store     | • Open app<br>• Open app page<br>• Open review page                              |
+| Stores      | Microsoft Store   | • Open app<br>• Open app page<br>• Open review page                              |
+| Stores      | Google Play Store | • Open app<br>• Open app page<br>• Open review page                              |
+| Social Apps | Telegram          | • Open app<br>• Open profile by username/phone<br>• Send message                 |
+| Social Apps | Instagram         | • Open app<br>• Open profile by username                                         |
 
 ## Documentation
 
