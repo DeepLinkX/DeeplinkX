@@ -1,3 +1,6 @@
+## 0.1.1
+* Updated readme
+
 ## 0.1.0
 * New Faeture:
   * Added fallback to supported stores option when desiered app is not installed
