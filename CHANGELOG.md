@@ -1,5 +1,9 @@
+## 0.1.2
+* Added support for Huawei AppGallery Store deeplinks:
+  * Open app page by app ID and package name
+
 ## 0.1.1
-* Updated readme
+* Improve readme
 
 ## 0.1.0
 * New Faeture:
@@ -17,6 +21,10 @@
 * Added support for Google Play Store deeplinks:
   * Open Play Store
   * Open app page by app package name
+  * Open app review page
+* Added support for Huawei AppGallery deeplinks:
+  * Open AppGallery
+  * Open app page by app ID
   * Open app review page
 
 ## 0.0.2

@@ -46,17 +46,25 @@
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="https" />
         </intent>
-
         <!-- For Instagram deep links -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="instagram" />
         </intent>
-
         <!-- For Telegram deep links -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="tg" />
+        </intent>
+        <!-- For Play store deep links -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="market"/>
+        </intent>
+        <!-- For Huawei app gallery deep links -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="appmarket" android:host="details" />
         </intent>
     </queries>
 </manifest>

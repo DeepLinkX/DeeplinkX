@@ -38,6 +38,14 @@ class _MyAppState extends State<MyApp> {
   final _msLanguageController = TextEditingController(
     text: 'en-US',
   ); // Example: Language code
+  final _huaweiAppIdController = TextEditingController(text: 'C101184875');
+  final _huaweiPackageNameController = TextEditingController(
+    text: 'org.telegram.messenger',
+  );
+  final _huaweiReferrerController = TextEditingController(
+    text: 'utm_source=deeplink_x_example',
+  );
+  final _huaweiLocaleController = TextEditingController(text: 'en_US');
 
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
@@ -55,6 +63,10 @@ class _MyAppState extends State<MyApp> {
     _countryController.dispose();
     _msProductIdController.dispose();
     _msLanguageController.dispose();
+    _huaweiAppIdController.dispose();
+    _huaweiPackageNameController.dispose();
+    _huaweiReferrerController.dispose();
+    _huaweiLocaleController.dispose();
     super.dispose();
   }
 
@@ -63,7 +75,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: DefaultTabController(
-        length: 7,
+        length: 8,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('DeeplinkX Example'),
@@ -76,6 +88,7 @@ class _MyAppState extends State<MyApp> {
                 Tab(text: 'Play Store'),
                 Tab(text: 'Mac App Store'),
                 Tab(text: 'Microsoft Store'),
+                Tab(text: 'Huawei AppGallery'),
                 Tab(text: 'LinkedIn'),
               ],
             ),
@@ -88,6 +101,7 @@ class _MyAppState extends State<MyApp> {
               _buildPlayStoreTab(),
               _buildMacAppStoreTab(),
               _buildMicrosoftStoreTab(),
+              _buildHuaweiAppGalleryTab(),
               _buildLinkedInTab(),
             ],
           ),
@@ -663,6 +677,95 @@ class _MyAppState extends State<MyApp> {
             }
           },
           child: const Text('Open App Review Page'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHuaweiAppGalleryTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            'Huawei AppGallery Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          _buildHuaweiAppGalleryActions(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHuaweiAppGalleryActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 16),
+        const Text(
+          'App Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _huaweiAppIdController,
+          decoration: const InputDecoration(
+            labelText: 'App ID',
+            hintText: 'Enter App ID (e.g., C100000000)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _huaweiPackageNameController,
+          decoration: const InputDecoration(
+            labelText: 'Package Name',
+            hintText: 'Enter Package Name (e.g., org.telegram.messenger)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _huaweiReferrerController,
+          decoration: const InputDecoration(
+            labelText: 'Referrer (optional)',
+            hintText: 'Enter referrer for tracking (e.g., utm_source=your_app)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _huaweiLocaleController,
+          decoration: const InputDecoration(
+            labelText: 'Locale (optional)',
+            hintText: 'Enter locale (e.g., en_US, zh_CN)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_huaweiAppIdController.text.isNotEmpty &&
+                _huaweiPackageNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                HuaweiAppGalleryStore.openAppPage(
+                  appId: _huaweiAppIdController.text,
+                  packageName: _huaweiPackageNameController.text,
+                  referrer:
+                      _huaweiReferrerController.text.isNotEmpty
+                          ? _huaweiReferrerController.text
+                          : null,
+                  locale:
+                      _huaweiLocaleController.text.isNotEmpty
+                          ? _huaweiLocaleController.text
+                          : null,
+                ),
+              );
+            }
+          },
+          child: const Text('Open App Page'),
         ),
       ],
     );

@@ -31,14 +31,15 @@ void main() {
 
 ## Supported Apps And Actions
 
-| Category    | App               | Supported Actions                                                                |
-| ----------- | ----------------- | -------------------------------------------------------------------------------- |
-| Stores      | iOS App Store     | • Open app<br>• Open app page<br>• Open review page<br>• Open iMessage extension |
-| Stores      | Mac App Store     | • Open app<br>• Open app page<br>• Open review page                              |
-| Stores      | Microsoft Store   | • Open app<br>• Open app page<br>• Open review page                              |
-| Stores      | Google Play Store | • Open app<br>• Open app page<br>• Open review page                              |
-| Social Apps | Telegram          | • Open app<br>• Open profile by username/phone<br>• Send message                 |
-| Social Apps | Instagram         | • Open app<br>• Open profile by username                                         |
+| Category    | App                     | Supported Actions                                                                |
+| ----------- | ----------------------- | -------------------------------------------------------------------------------- |
+| Stores      | iOS App Store           | • Open app<br>• Open app page<br>• Open review page<br>• Open iMessage extension |
+| Stores      | Mac App Store           | • Open app<br>• Open app page<br>• Open review page                              |
+| Stores      | Microsoft Store         | • Open app<br>• Open app page<br>• Open review page                              |
+| Stores      | Google Play Store       | • Open app<br>• Open app page<br>• Open review page                              |
+| Stores      | Huawei AppGallery Store | • Open app page<br>                                                              |
+| Social Apps | Telegram                | • Open app<br>• Open profile by username/phone<br>• Send message                 |
+| Social Apps | Instagram               | • Open app<br>• Open profile by username                                         |
 
 ## Documentation
 
@@ -48,6 +49,7 @@ Detailed documentation available in [doc/apps](doc/apps):
 - [Mac App Store](doc/apps/stores/mac_app_store.md)
 - [Microsoft Store](doc/apps/stores/microsoft_store.md)
 - [Play Store](doc/apps/stores/play_store.md)
+- [Huawei AppGalley Store](doc/apps/stores/huawei_app_gallery_store.md)
 - [Instagram](doc/apps/instagram.md)
 - [Telegram](doc/apps/telegram.md)
 

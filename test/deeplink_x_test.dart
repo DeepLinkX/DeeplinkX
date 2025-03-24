@@ -76,6 +76,11 @@ void main() {
         expect(action, isA<AppAction>());
       });
 
+      test('HuaweiAppGalleryStore', () {
+        final action = HuaweiAppGalleryStore.openAppPage(packageName: 'packageName', appId: 'appId');
+        expect(action, isA<AppAction>());
+      });
+
       test('MacAppStore', () {
         const action = MacAppStore.open;
         expect(action, isA<AppAction>());
