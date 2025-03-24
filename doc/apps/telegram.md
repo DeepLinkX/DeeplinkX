@@ -118,6 +118,11 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="market" />
     </intent>
+    <!-- Huawei AppGallery store fallback -->
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="appmarket" android:host="details" />
+    </intent>
     <!-- Web fallback -->
     <intent>
         <action android:name="android.intent.action.VIEW" />
@@ -153,6 +158,7 @@ When the Telegram app is not installed, DeeplinkX can redirect users to download
 
 - iOS App Store
 - Google Play Store
+- Huawei AppGallery Store
 - Mac App Store
 - Microsoft Store
 

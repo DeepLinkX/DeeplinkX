@@ -50,10 +50,11 @@ void main() {
       final action = Telegram.open(fallBackToStore: true);
       final uris = await action.getUris(PlatformEnum.android);
 
-      expect(uris.length, 3);
+      expect(uris.length, 4);
       expect(uris[0].toString(), 'tg://');
       expect(uris[1].toString(), 'market://details?id=org.telegram.messenger');
-      expect(uris[2].toString(), 'https://t.me');
+      expect(uris[2].toString(), 'appmarket://details?id=org.telegram.messenger');
+      expect(uris[3].toString(), 'https://t.me');
     });
 
     test('open action generates correct URIs when fallBackToStore is true on iOS platform', () async {

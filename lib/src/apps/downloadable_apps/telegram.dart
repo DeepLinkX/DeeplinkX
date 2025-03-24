@@ -54,6 +54,7 @@ class TelegramAction extends DownloadableAppAction {
   /// - Mac App Store
   static final List<StoreAppAction> storesActions = [
     PlayStore.openAppPage(packageName: 'org.telegram.messenger'),
+    HuaweiAppGalleryStore.openAppPage(packageName: 'org.telegram.messenger', appId: 'C101184875'),
     IOSAppStore.openAppPage(appId: '686449807', appName: 'telegram-messenger'),
     MicrosoftStore.openAppPage(productId: '9nztwsqntd0s'),
     MacAppStore.openAppPage(appId: '747648890', appName: 'telegram'),
