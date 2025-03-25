@@ -1,6 +1,9 @@
 ## 0.1.2
 * Added support for Huawei AppGallery Store deeplinks:
   * Open app page by app ID and package name
+* Added support for Cafe Bazaar Android app store deeplinks:
+  * Open Cafe Bazaar app
+  * Open app page by package name
 
 ## 0.1.1
 * Improve readme

@@ -66,5 +66,10 @@
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="appmarket" android:host="details" />
         </intent>
+        <!-- For Cafe Bazaar store deep links -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="bazaar" android:host="home" />
+        </intent>
     </queries>
 </manifest>

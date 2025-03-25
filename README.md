@@ -38,6 +38,7 @@ void main() {
 | Stores      | Microsoft Store         | • Open app<br>• Open app page<br>• Open review page                              |
 | Stores      | Google Play Store       | • Open app<br>• Open app page<br>• Open review page                              |
 | Stores      | Huawei AppGallery Store | • Open app page<br>                                                              |
+| Stores      | Cafe Bazaar Store       | • Open app<br>• Open app page<br>• Open review page                              |
 | Social Apps | Telegram                | • Open app<br>• Open profile by username/phone<br>• Send message                 |
 | Social Apps | Instagram               | • Open app<br>• Open profile by username                                         |
 
@@ -50,6 +51,7 @@ Detailed documentation available in [doc/apps](doc/apps):
 - [Microsoft Store](doc/apps/stores/microsoft_store.md)
 - [Play Store](doc/apps/stores/play_store.md)
 - [Huawei AppGalley Store](doc/apps/stores/huawei_app_gallery_store.md)
+- [Cafe Bazaar Store](doc/apps/stores/cafe_bazaar_store.md)
 - [Instagram](doc/apps/instagram.md)
 - [Telegram](doc/apps/telegram.md)
 

@@ -47,6 +47,14 @@ class _MyAppState extends State<MyApp> {
   );
   final _huaweiLocaleController = TextEditingController(text: 'en_US');
 
+  // Cafe Bazaar controllers
+  final _cafeBazaarPackageNameController = TextEditingController(
+    text: 'org.telegram.messenger',
+  );
+  final _cafeBazaarReferrerController = TextEditingController(
+    text: 'utm_source=deeplink_x_example',
+  );
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
@@ -67,6 +75,8 @@ class _MyAppState extends State<MyApp> {
     _huaweiPackageNameController.dispose();
     _huaweiReferrerController.dispose();
     _huaweiLocaleController.dispose();
+    _cafeBazaarPackageNameController.dispose();
+    _cafeBazaarReferrerController.dispose();
     super.dispose();
   }
 
@@ -75,7 +85,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: DefaultTabController(
-        length: 8,
+        length: 9,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('DeeplinkX Example'),
@@ -89,6 +99,7 @@ class _MyAppState extends State<MyApp> {
                 Tab(text: 'Mac App Store'),
                 Tab(text: 'Microsoft Store'),
                 Tab(text: 'Huawei AppGallery'),
+                Tab(text: 'Cafe Bazaar'),
                 Tab(text: 'LinkedIn'),
               ],
             ),
@@ -102,6 +113,7 @@ class _MyAppState extends State<MyApp> {
               _buildMacAppStoreTab(),
               _buildMicrosoftStoreTab(),
               _buildHuaweiAppGalleryTab(),
+              _buildCafeBazaarTab(),
               _buildLinkedInTab(),
             ],
           ),
@@ -760,6 +772,77 @@ class _MyAppState extends State<MyApp> {
                   locale:
                       _huaweiLocaleController.text.isNotEmpty
                           ? _huaweiLocaleController.text
+                          : null,
+                ),
+              );
+            }
+          },
+          child: const Text('Open App Page'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCafeBazaarTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            'Cafe Bazaar Store Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          _buildCafeBazaarActions(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCafeBazaarActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          onPressed: () async {
+            await _deeplinkX.launchAction(CafeBazaarStore.open);
+          },
+          child: const Text('Open Cafe Bazaar'),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'App Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _cafeBazaarPackageNameController,
+          decoration: const InputDecoration(
+            labelText: 'Package Name',
+            hintText: 'Enter Package Name (e.g., org.telegram.messenger)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _cafeBazaarReferrerController,
+          decoration: const InputDecoration(
+            labelText: 'Referrer (optional)',
+            hintText: 'Enter referrer for tracking (e.g., utm_source=your_app)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_cafeBazaarPackageNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                CafeBazaarStore.openAppPage(
+                  packageName: _cafeBazaarPackageNameController.text,
+                  referrer:
+                      _cafeBazaarReferrerController.text.isNotEmpty
+                          ? _cafeBazaarReferrerController.text
                           : null,
                 ),
               );

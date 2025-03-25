@@ -81,6 +81,11 @@ void main() {
         expect(action, isA<AppAction>());
       });
 
+      test('CafeBazaarStore', () {
+        const action = CafeBazaarStore.open;
+        expect(action, isA<AppAction>());
+      });
+
       test('MacAppStore', () {
         const action = MacAppStore.open;
         expect(action, isA<AppAction>());
