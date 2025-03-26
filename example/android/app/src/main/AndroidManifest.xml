@@ -56,6 +56,11 @@
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="tg" />
         </intent>
+        <!-- For WhatsApp deep links -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="whatsapp" />
+        </intent>
         <!-- For Play store deep links -->
         <intent>
             <action android:name="android.intent.action.VIEW" />

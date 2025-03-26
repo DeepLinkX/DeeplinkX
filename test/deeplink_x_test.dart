@@ -66,6 +66,11 @@ void main() {
         expect(action, isA<AppAction>());
       });
 
+      test('WhatsApp', () {
+        final action = WhatsApp.open();
+        expect(action, isA<AppAction>());
+      });
+
       test('IOSAppStore', () {
         const action = IOSAppStore.open;
         expect(action, isA<AppAction>());

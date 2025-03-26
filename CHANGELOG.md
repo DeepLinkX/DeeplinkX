@@ -9,6 +9,10 @@
   * Open app page by package name
   * Rate app by package name
 * Added can launch native deeplink method to check app installed and action can be launched
+* * Added support for Telegram deeplinks:
+  * Open app
+  * Start chat by phone number and pre-filled message
+  * Share text content
 
 ## 0.1.1
 * Improve readme

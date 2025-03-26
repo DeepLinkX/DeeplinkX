@@ -17,6 +17,9 @@ class _MyAppState extends State<MyApp> {
   final _messageController = TextEditingController(text: 'Hello! How are you?');
   final _usernameController = TextEditingController(text: 'johndoe');
   final _phoneController = TextEditingController(text: '+14155552671');
+  final _whatsappPhoneController = TextEditingController(
+    text: '14155552671',
+  ); // WhatsApp phone number without '+' sign
   final _appIdController = TextEditingController(
     text: '389801252',
   ); // Example: Instagram app ID
@@ -66,12 +69,14 @@ class _MyAppState extends State<MyApp> {
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
+  bool _whatsappFallBackToStore = true;
 
   @override
   void dispose() {
     _messageController.dispose();
     _usernameController.dispose();
     _phoneController.dispose();
+    _whatsappPhoneController.dispose();
     _appIdController.dispose();
     _appNameController.dispose();
     _macAppIdController.dispose();
@@ -95,7 +100,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: DefaultTabController(
-        length: 10,
+        length: 11,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('DeeplinkX Example'),
@@ -104,6 +109,7 @@ class _MyAppState extends State<MyApp> {
               tabs: [
                 Tab(text: 'Instagram'),
                 Tab(text: 'Telegram'),
+                Tab(text: 'WhatsApp'),
                 Tab(text: 'iOS App Store'),
                 Tab(text: 'Play Store'),
                 Tab(text: 'Mac App Store'),
@@ -119,6 +125,7 @@ class _MyAppState extends State<MyApp> {
             children: [
               _buildInstagramTab(),
               _buildTelegramTab(),
+              _buildWhatsAppTab(),
               _buildAppStoreTab(),
               _buildPlayStoreTab(),
               _buildMacAppStoreTab(),
@@ -211,12 +218,136 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  Widget _buildWhatsAppTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Text(
+                'Fallback to App Store:',
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(width: 8),
+              Switch(
+                value: _whatsappFallBackToStore,
+                onChanged:
+                    (value) => setState(() => _whatsappFallBackToStore = value),
+              ),
+              const Expanded(
+                child: Text(
+                  'When enabled, redirects to app store if WhatsApp is not installed',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          const Text(
+            'WhatsApp Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          _buildWhatsAppActions(),
+        ],
+      ),
+    );
+  }
+
   Widget _buildLinkedInTab() {
     return const Center(
       child: Text(
         'LinkedIn support coming soon!',
         style: TextStyle(fontSize: 16),
       ),
+    );
+  }
+
+  Widget _buildWhatsAppActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          onPressed: () async {
+            await _deeplinkX.launchAction(
+              WhatsApp.open(fallBackToStore: _whatsappFallBackToStore),
+            );
+          },
+          child: const Text('Open WhatsApp App'),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'Chat Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _whatsappPhoneController,
+          decoration: const InputDecoration(
+            labelText: 'Phone Number',
+            hintText: 'Enter phone number without + (e.g., 14155552671)',
+            border: OutlineInputBorder(),
+          ),
+          keyboardType: TextInputType.phone,
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _messageController,
+          decoration: const InputDecoration(
+            labelText: 'Message (optional)',
+            hintText: 'Enter message to pre-fill',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_whatsappPhoneController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                WhatsApp.chat(
+                  _whatsappPhoneController.text,
+                  text:
+                      _messageController.text.isNotEmpty
+                          ? _messageController.text
+                          : null,
+                  fallBackToStore: _whatsappFallBackToStore,
+                ),
+              );
+            }
+          },
+          child: const Text('Open WhatsApp Chat'),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'Share Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _messageController,
+          decoration: const InputDecoration(
+            labelText: 'Text to Share',
+            hintText: 'Enter text to share via WhatsApp',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_messageController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                WhatsApp.share(
+                  _messageController.text,
+                  fallBackToStore: _whatsappFallBackToStore,
+                ),
+              );
+            }
+          },
+          child: const Text('Share via WhatsApp'),
+        ),
+      ],
     );
   }
 

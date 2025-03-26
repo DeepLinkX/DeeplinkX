@@ -50,6 +50,7 @@ void main() {
 | Stores      | Myket Store             | • Open app<br>• Open app page<br>• Rate app                                      |
 | Social Apps | Telegram                | • Open app<br>• Open profile by username/phone<br>• Send message                 |
 | Social Apps | Instagram               | • Open app<br>• Open profile by username                                         |
+| Social Apps | WhatsApp                | • Open app<br>• Chat with phone number<br>• Share text content                   |
 
 ## Documentation
 
@@ -64,6 +65,7 @@ Detailed documentation available in [doc/apps](doc/apps):
 - [Myket Store](doc/apps/stores/myket_store.md)
 - [Instagram](doc/apps/instagram.md)
 - [Telegram](doc/apps/telegram.md)
+- [WhatsApp](doc/apps/whatsapp.md)
 
 ## URL Scheme Handling
 
