@@ -26,6 +26,14 @@ void main() {
 
   // Open iOS App Store app
   deeplinkX.launchAction(IOSAppStore.open());
+  
+  // Check if Instagram app can be opened
+  final canOpenInstagram = await deeplinkX.canLaunch(Instagram.open());
+  
+  // Check if native Instagram URI can be launched and app is installed
+  final canLaunchNative = await deeplinkX.canLaunchNativeDeeplink(
+    Instagram.openProfile('username')
+  );
 }
 ```
 

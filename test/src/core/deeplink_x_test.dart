@@ -28,6 +28,7 @@ void main() {
     when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => true);
     when(() => mockLauncherUtil.launchUrl(any())).thenAnswer((final _) async => true);
     when(() => mockAppAction.getUris(any())).thenAnswer((final _) async => dummyUris);
+    when(() => mockAppAction.getNativeUri()).thenAnswer((final _) async => dummyUris[0]);
   });
 
   setUpAll(() {
@@ -133,6 +134,30 @@ void main() {
     // Assert
     expect(result, false);
     verify(() => mockLauncherUtil.canLaunchUrl(any())).called(dummyUris.length);
+  });
+
+  test('canLaunchNativeDeeplink tries action native URI', () async {
+    // Arrange
+    when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => true);
+
+    // Act
+    final result = await deeplinkX.canLaunchNativeDeeplink(mockAppAction);
+
+    // Assert
+    expect(result, true);
+    verify(() => mockLauncherUtil.canLaunchUrl(any())).called(1);
+  });
+
+  test('canLaunchNativeDeeplink returns false when no URI can be launched', () async {
+    // Arrange
+    when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => false);
+
+    // Act
+    final result = await deeplinkX.canLaunchNativeDeeplink(mockAppAction);
+
+    // Assert
+    expect(result, false);
+    verify(() => mockLauncherUtil.canLaunchUrl(any())).called(1);
   });
 
   // TODO: Add PlatformType tests

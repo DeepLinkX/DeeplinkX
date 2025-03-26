@@ -79,4 +79,30 @@ class DeeplinkX {
     }
     return false;
   }
+
+  /// Checks app is installed and if a native deeplink URI can be launched.
+  ///
+  /// Takes an [action] parameter of type [AppAction] and checks if its
+  /// native URI can be launched.
+  ///
+  /// Returns a [Future<bool>] that completes with:
+  /// * `true` if the native URI can be launched
+  /// * `false` if the native URI cannot be launched
+  /// 
+  /// Note: apps schemes must be registered based on the platform.
+  /// Check Platform-Specific Configurations in apps documents for more details.
+  ///
+  /// Example:
+  /// ```dart
+  /// final deeplinkX = DeeplinkX();
+  /// 
+  /// // Check if native Instagram URI can be launched
+  /// final canLaunchNative = await deeplinkX.canLaunchNativeDeeplink(
+  ///   Instagram.openProfile('username')
+  /// );
+  /// ```
+  Future<bool> canLaunchNativeDeeplink(final AppAction action) async {
+    final uri = await action.getNativeUri();
+    return _launcherUtil.canLaunchUrl(uri);
+  }
 }
