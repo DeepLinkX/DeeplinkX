@@ -8,6 +8,7 @@
   * Open Myket app
   * Open app page by package name
   * Rate app by package name
+* Added can launch native deeplink method to check app installed and action can be launched
 
 ## 0.1.1
 * Improve readme
