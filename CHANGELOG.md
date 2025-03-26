@@ -4,6 +4,10 @@
 * Added support for Cafe Bazaar Android app store deeplinks:
   * Open Cafe Bazaar app
   * Open app page by package name
+* Added support for Myket Android app store deeplinks:
+  * Open Myket app
+  * Open app page by package name
+  * Rate app by package name
 
 ## 0.1.1
 * Improve readme

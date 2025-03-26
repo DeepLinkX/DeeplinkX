@@ -55,6 +55,14 @@ class _MyAppState extends State<MyApp> {
     text: 'utm_source=deeplink_x_example',
   );
 
+  // Myket controllers
+  final _myketPackageNameController = TextEditingController(
+    text: 'org.telegram.messenger',
+  );
+  final _myketReferrerController = TextEditingController(
+    text: 'utm_source=deeplink_x_example',
+  );
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
@@ -77,6 +85,8 @@ class _MyAppState extends State<MyApp> {
     _huaweiLocaleController.dispose();
     _cafeBazaarPackageNameController.dispose();
     _cafeBazaarReferrerController.dispose();
+    _myketPackageNameController.dispose();
+    _myketReferrerController.dispose();
     super.dispose();
   }
 
@@ -85,7 +95,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: DefaultTabController(
-        length: 9,
+        length: 10,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('DeeplinkX Example'),
@@ -100,6 +110,7 @@ class _MyAppState extends State<MyApp> {
                 Tab(text: 'Microsoft Store'),
                 Tab(text: 'Huawei AppGallery'),
                 Tab(text: 'Cafe Bazaar'),
+                Tab(text: 'Myket'),
                 Tab(text: 'LinkedIn'),
               ],
             ),
@@ -114,6 +125,7 @@ class _MyAppState extends State<MyApp> {
               _buildMicrosoftStoreTab(),
               _buildHuaweiAppGalleryTab(),
               _buildCafeBazaarTab(),
+              _buildMyketTab(),
               _buildLinkedInTab(),
             ],
           ),
@@ -849,6 +861,90 @@ class _MyAppState extends State<MyApp> {
             }
           },
           child: const Text('Open App Page'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMyketTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            'Myket Store Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          _buildMyketActions(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMyketActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          onPressed: () async {
+            await _deeplinkX.launchAction(MyketStore.open);
+          },
+          child: const Text('Open Myket'),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'App Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _myketPackageNameController,
+          decoration: const InputDecoration(
+            labelText: 'Package Name',
+            hintText: 'Enter Package Name (e.g., org.telegram.messenger)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _myketReferrerController,
+          decoration: const InputDecoration(
+            labelText: 'Referrer (optional)',
+            hintText: 'Enter referrer for tracking (e.g., utm_source=your_app)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_myketPackageNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                MyketStore.openAppPage(
+                  packageName: _myketPackageNameController.text,
+                  referrer:
+                      _myketReferrerController.text.isNotEmpty
+                          ? _myketReferrerController.text
+                          : null,
+                ),
+              );
+            }
+          },
+          child: const Text('Open App Page'),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_myketPackageNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                MyketStore.rateApp(
+                  packageName: _myketPackageNameController.text,
+                ),
+              );
+            }
+          },
+          child: const Text('Rate app'),
         ),
       ],
     );

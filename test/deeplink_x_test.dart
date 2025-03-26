@@ -86,6 +86,11 @@ void main() {
         expect(action, isA<AppAction>());
       });
 
+      test('MyketStore', () {
+        const action = MyketStore.open;
+        expect(action, isA<AppAction>());
+      });
+
       test('MacAppStore', () {
         const action = MacAppStore.open;
         expect(action, isA<AppAction>());

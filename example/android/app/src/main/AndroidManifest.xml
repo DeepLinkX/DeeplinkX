@@ -71,5 +71,10 @@
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="bazaar" android:host="home" />
         </intent>
+        <!-- For Myket store deep links -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="myket" android:host="main" />
+        </intent>
     </queries>
 </manifest>
