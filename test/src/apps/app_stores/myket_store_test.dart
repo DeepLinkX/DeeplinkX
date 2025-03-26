@@ -29,6 +29,22 @@ void main() {
       expect(nativeUri.toString(), 'myket://details?id=com.example.app&referrer=utm_source%3Dtest');
       expect(fallbackUri.toString(), 'https://myket.ir/app/com.example.app?referrer=utm_source%3Dtest');
     });
+
+    test('rateApp action returns correct URIs', () async {
+      const packageName = 'com.example.app';
+      const action = MyketAction(
+        MyketActionType.rateApp,
+        parameters: {
+          'packageName': packageName,
+        },
+      );
+
+      final nativeUri = await action.getNativeUri();
+      final fallbackUri = await action.getFallbackUri();
+
+      expect(nativeUri.toString(), 'myket://comment?id=com.example.app');
+      expect(fallbackUri.toString(), 'https://myket.ir/app/com.example.app#reviews');
+    });
   });
 
   group('MyketStore', () {
@@ -49,6 +65,16 @@ void main() {
       expect(action.type, MyketActionType.openAppPage);
       expect(action.parameters!['packageName'], packageName);
       expect(action.parameters!['referrer'], referrer);
+    });
+
+    test('rateApp returns correct action', () {
+      const packageName = 'com.example.app';
+      final action = MyketStore.rateApp(
+        packageName: packageName,
+      );
+
+      expect(action.type, MyketActionType.rateApp);
+      expect(action.parameters!['packageName'], packageName);
     });
   });
 }
