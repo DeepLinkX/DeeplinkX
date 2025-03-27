@@ -17,6 +17,7 @@
   * Start chat by phone number and pre-filled message
   * Share text content
 * Added WASM support
+* Added third party licenses in LICENSES
 
 ## 0.1.1
 * Improve readme
