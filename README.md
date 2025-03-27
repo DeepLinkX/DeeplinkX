@@ -9,6 +9,7 @@ A lightweight Flutter plugin for type-safe handling of external deeplinks with b
 - Type-safe API for external deeplinks
 - Multi-platform support
 - Smart fallback system
+- No native platform code, everything is handled by url_launcher package.
 
 ## Usage
 
@@ -51,6 +52,7 @@ void main() {
 | Social Apps | Telegram                | • Open app<br>• Open profile by username/phone<br>• Send message                 |
 | Social Apps | Instagram               | • Open app<br>• Open profile by username                                         |
 | Social Apps | WhatsApp                | • Open app<br>• Chat with phone number<br>• Share text content                   |
+| Business    | LinkedIn                | •• Open profile<br>• Open company page                                           |
 
 ## Documentation
 
@@ -66,6 +68,7 @@ Detailed documentation available in [doc/apps](doc/apps):
 - [Instagram](doc/apps/instagram.md)
 - [Telegram](doc/apps/telegram.md)
 - [WhatsApp](doc/apps/whatsapp.md)
+- [LinkedIn](doc/apps/linkedin.md)
 
 ## URL Scheme Handling
 

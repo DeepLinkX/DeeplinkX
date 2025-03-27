@@ -1,4 +1,7 @@
 ## 0.1.2
+* Added support for LinkedIn deeplinks:
+  * Open profile
+  * Open company page
 * Added support for Huawei AppGallery Store deeplinks:
   * Open app page by app ID and package name
 * Added support for Cafe Bazaar Android app store deeplinks:

@@ -70,6 +70,7 @@ class _MyAppState extends State<MyApp> {
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
   bool _whatsappFallBackToStore = true;
+  bool _linkedInFallBackToStore = true;
 
   @override
   void dispose() {
@@ -110,6 +111,7 @@ class _MyAppState extends State<MyApp> {
                 Tab(text: 'Instagram'),
                 Tab(text: 'Telegram'),
                 Tab(text: 'WhatsApp'),
+                Tab(text: 'LinkedIn'),
                 Tab(text: 'iOS App Store'),
                 Tab(text: 'Play Store'),
                 Tab(text: 'Mac App Store'),
@@ -117,7 +119,6 @@ class _MyAppState extends State<MyApp> {
                 Tab(text: 'Huawei AppGallery'),
                 Tab(text: 'Cafe Bazaar'),
                 Tab(text: 'Myket'),
-                Tab(text: 'LinkedIn'),
               ],
             ),
           ),
@@ -126,6 +127,7 @@ class _MyAppState extends State<MyApp> {
               _buildInstagramTab(),
               _buildTelegramTab(),
               _buildWhatsAppTab(),
+              _buildLinkedInTab(),
               _buildAppStoreTab(),
               _buildPlayStoreTab(),
               _buildMacAppStoreTab(),
@@ -133,7 +135,6 @@ class _MyAppState extends State<MyApp> {
               _buildHuaweiAppGalleryTab(),
               _buildCafeBazaarTab(),
               _buildMyketTab(),
-              _buildLinkedInTab(),
             ],
           ),
         ),
@@ -257,11 +258,128 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _buildLinkedInTab() {
-    return const Center(
-      child: Text(
-        'LinkedIn support coming soon!',
-        style: TextStyle(fontSize: 16),
+    // Create a controller for LinkedIn profile ID and company ID
+    final linkedInProfileController = TextEditingController(text: 'john-doe');
+    final linkedInCompanyController = TextEditingController(
+      text: 'example-company',
+    );
+    final linkedInJobsKeywordsController = TextEditingController(
+      text: 'software developer',
+    );
+    final linkedInShareController = TextEditingController(
+      text: 'Check out this awesome content!',
+    );
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Text(
+                'Fallback to App Store:',
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(width: 8),
+              Switch(
+                value: _linkedInFallBackToStore,
+                onChanged:
+                    (value) => setState(() => _linkedInFallBackToStore = value),
+              ),
+              const Expanded(
+                child: Text(
+                  'When enabled, redirects to app store if LinkedIn is not installed',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          const Text(
+            'LinkedIn Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          _buildLinkedInActions(
+            linkedInProfileController,
+            linkedInCompanyController,
+            linkedInJobsKeywordsController,
+            linkedInShareController,
+            _linkedInFallBackToStore,
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget _buildLinkedInActions(
+    TextEditingController profileController,
+    TextEditingController companyController,
+    TextEditingController jobsKeywordsController,
+    TextEditingController shareController,
+    bool fallBackToStore,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Profile Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: profileController,
+          decoration: const InputDecoration(
+            labelText: 'LinkedIn Profile ID',
+            hintText: 'Enter LinkedIn profile ID',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (profileController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                LinkedIn.openProfile(
+                  profileController.text,
+                  fallBackToStore: fallBackToStore,
+                ),
+              );
+            }
+          },
+          child: const Text('Open LinkedIn Profile'),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'Company Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: companyController,
+          decoration: const InputDecoration(
+            labelText: 'LinkedIn Company ID',
+            hintText: 'Enter LinkedIn company ID',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (companyController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                LinkedIn.openCompany(
+                  companyController.text,
+                  fallBackToStore: fallBackToStore,
+                ),
+              );
+            }
+          },
+          child: const Text('Open LinkedIn Company'),
+        ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 
