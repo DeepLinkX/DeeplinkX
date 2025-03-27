@@ -15,11 +15,11 @@ class DeeplinkX {
     final LauncherUtil? launcherUtil,
     final PlatformEnum? platformType,
   })  : _launcherUtil = launcherUtil ?? const LauncherUtil(),
-        _playformType = platformType ?? PlatformEnum.fromOperatingSystem(Platform.operatingSystem);
+        _platformType = platformType ?? PlatformEnum.fromOperatingSystem(Platform.operatingSystem);
 
   final LauncherUtil _launcherUtil;
 
-  final PlatformEnum _playformType;
+  final PlatformEnum _platformType;
 
   /// Launches a deeplink action.
   ///
@@ -30,7 +30,7 @@ class DeeplinkX {
   /// * `true` if the action was successfully launched
   /// * `false` if the action could not be launched or no URIs were available
   Future<bool> launchAction(final AppAction action) async {
-    final uris = await action.getUris(_playformType);
+    final uris = await action.getUris(_platformType);
     if (uris.isEmpty) {
       return false;
     }
@@ -66,7 +66,7 @@ class DeeplinkX {
   /// );
   /// ```
   Future<bool> canLaunch(final AppAction action) async {
-    final uris = await action.getUris(_playformType);
+    final uris = await action.getUris(_platformType);
     if (uris.isEmpty) {
       return false;
     }
