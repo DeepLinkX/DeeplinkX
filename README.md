@@ -52,7 +52,7 @@ void main() {
 | Social Apps | Telegram                | • Open app<br>• Open profile by username/phone<br>• Send message                 |
 | Social Apps | Instagram               | • Open app<br>• Open profile by username                                         |
 | Social Apps | WhatsApp                | • Open app<br>• Chat with phone number<br>• Share text content                   |
-| Business    | LinkedIn                | •• Open profile<br>• Open company page                                           |
+| Business    | LinkedIn                | • Open profile<br>• Open company page                                            |
 
 ## Documentation
 
