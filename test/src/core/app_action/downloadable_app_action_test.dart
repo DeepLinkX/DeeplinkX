@@ -1,7 +1,7 @@
 import 'package:deeplink_x/src/core/app_actions/downloadable_app_action.dart';
 import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 enum TestActionType implements ActionTypeEnum {
@@ -10,7 +10,7 @@ enum TestActionType implements ActionTypeEnum {
 
 class TestStoreAppAction extends StoreAppAction {
   TestStoreAppAction({
-    super.platform = PlatformEnum.android,
+    super.platform = PlatformType.android,
     super.actionType = TestActionType.open,
   });
 
@@ -29,7 +29,7 @@ class TestStoreAppAction extends StoreAppAction {
 
 class TestStoreAppAction2 extends StoreAppAction {
   TestStoreAppAction2({
-    super.platform = PlatformEnum.android,
+    super.platform = PlatformType.android,
     super.actionType = TestActionType.open,
   });
 
@@ -60,7 +60,7 @@ class TestDownloadableAppAction extends DownloadableAppAction {
   static final storesActions = [
     TestStoreAppAction(),
     TestStoreAppAction2(),
-    TestStoreAppAction(platform: PlatformEnum.ios),
+    TestStoreAppAction(platform: PlatformType.ios),
   ];
 
   @override
@@ -74,7 +74,7 @@ void main() {
   group('DownloadableAppAction', () {
     test('getUris generates correct URIs when fallBackToStore is true and Android platfrom', () async {
       final action = TestDownloadableAppAction(TestActionType.open, fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.android);
+      final uris = await action.getUris(PlatformType.android);
 
       expect(uris.length, 4);
       expect(uris[0].toString(), 'test://example.com');
@@ -85,7 +85,7 @@ void main() {
 
     test('getUris generates correct URIs when fallBackToStore is true and iOS platfrom', () async {
       final action = TestDownloadableAppAction(TestActionType.open, fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.ios);
+      final uris = await action.getUris(PlatformType.ios);
 
       expect(uris.length, 3);
       expect(uris[0].toString(), 'test://example.com');
@@ -95,7 +95,7 @@ void main() {
 
     test('getUris generates correct URIs when fallBackToStore is true and Windows platfrom', () async {
       final action = TestDownloadableAppAction(TestActionType.open, fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.windows);
+      final uris = await action.getUris(PlatformType.windows);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'test://example.com');
@@ -104,7 +104,7 @@ void main() {
 
     test('getUris generates correct URIs when fallBackToStore is true and MacOS platfrom', () async {
       final action = TestDownloadableAppAction(TestActionType.open, fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.macos);
+      final uris = await action.getUris(PlatformType.macos);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'test://example.com');
@@ -113,7 +113,7 @@ void main() {
 
     test('getUris generates correct URIs when fallBackToStore is true and Linux platfrom', () async {
       final action = TestDownloadableAppAction(TestActionType.open, fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.linux);
+      final uris = await action.getUris(PlatformType.linux);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'test://example.com');

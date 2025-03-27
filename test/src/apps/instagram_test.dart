@@ -1,12 +1,12 @@
 import 'package:deeplink_x/src/apps/downloadable_apps/instagram.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late PlatformEnum platfromType;
+  late PlatformType platfromType;
 
   setUpAll(() {
-    platfromType = PlatformEnum.android;
+    platfromType = PlatformType.android;
   });
 
   group('Instagram Actions', () {
@@ -30,7 +30,7 @@ void main() {
 
     test('open action generates correct URIs when fallBackToStore is true on Android platform', () async {
       final action = Instagram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.android);
+      final uris = await action.getUris(PlatformType.android);
 
       expect(uris.length, 3);
       expect(uris[0].toString(), 'instagram://');
@@ -40,7 +40,7 @@ void main() {
 
     test('open action generates correct URIs when fallBackToStore is true on iOS platform', () async {
       final action = Instagram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.ios);
+      final uris = await action.getUris(PlatformType.ios);
 
       expect(uris.length, 3);
       expect(uris[0].toString(), 'instagram://');
@@ -50,7 +50,7 @@ void main() {
 
     test('open action generates correct URIs when fallBackToStore is true on macOS platform', () async {
       final action = Instagram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.macos);
+      final uris = await action.getUris(PlatformType.macos);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'instagram://');
@@ -59,7 +59,7 @@ void main() {
 
     test('open action generates correct URIs when fallBackToStore is true on Windows platform', () async {
       final action = Instagram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.windows);
+      final uris = await action.getUris(PlatformType.windows);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'instagram://');
@@ -68,7 +68,7 @@ void main() {
 
     test('open action generates correct URIs when fallBackToStore is true on Linux platform', () async {
       final action = Instagram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.linux);
+      final uris = await action.getUris(PlatformType.linux);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'instagram://');
@@ -77,7 +77,7 @@ void main() {
 
     test('open action generates correct URIs when fallBackToStore is true on Web platform', () async {
       final action = Instagram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformEnum.web);
+      final uris = await action.getUris(PlatformType.web);
 
       expect(uris.length, 2);
       expect(uris[0].toString(), 'instagram://');

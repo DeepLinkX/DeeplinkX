@@ -15,9 +15,9 @@ class PlatformUtil {
   /// Returns the current platform based on the default target platform of the app.
   ///
   /// This method converts the system's default target platform name to lowercase
-  /// and maps it to the corresponding [PlatformEnum] value.
+  /// and maps it to the corresponding [PlatformType] value.
   ///
   /// Returns:
-  ///   A [PlatformEnum] representing the current platform.
-  PlatformEnum getCurrentPlatform() => PlatformEnum.fromOperatingSystem(defaultTargetPlatform.name.toLowerCase());
+  ///   A [PlatformType] representing the current platform.
+  PlatformType getCurrentPlatform() => PlatformType.fromOperatingSystem(defaultTargetPlatform.name.toLowerCase());
 }

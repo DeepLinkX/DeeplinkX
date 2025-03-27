@@ -17,7 +17,7 @@ class DummyAppAction extends AppAction {
 }
 
 class DummyStoreAppAction extends StoreAppAction {
-  DummyStoreAppAction() : super(actionType: DummyActionType.open, platform: PlatformEnum.android);
+  DummyStoreAppAction() : super(actionType: DummyActionType.open, platform: PlatformType.android);
 
   @override
   Future<Uri> getNativeUri() async => Uri(scheme: 'test', host: 'test');
@@ -113,9 +113,9 @@ void main() {
     });
 
     group('Enums:', () {
-      test('PlatformEnum', () {
-        const platform = PlatformEnum.android;
-        expect(platform, isA<PlatformEnum>());
+      test('PlatformType', () {
+        const platform = PlatformType.android;
+        expect(platform, isA<PlatformType>());
       });
     });
 

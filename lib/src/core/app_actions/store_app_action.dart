@@ -1,5 +1,5 @@
 import 'package:deeplink_x/src/core/app_actions/app_action.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 
 /// Base class for all store-specific app actions.
 ///
@@ -16,5 +16,5 @@ abstract class StoreAppAction extends AppAction {
   /// The platform this store action is intended for.
   ///
   /// This specifies which platform (iOS, Android, Windows, macOS) the store action targets.
-  final PlatformEnum platform;
+  final PlatformType platform;
 }

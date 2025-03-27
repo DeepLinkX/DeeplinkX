@@ -1,5 +1,5 @@
 import 'package:deeplink_x/src/core/app_actions/app_action.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:deeplink_x/src/utils/launcher_util.dart';
 import 'package:deeplink_x/src/utils/platform_util.dart';
 
@@ -12,13 +12,13 @@ class DeeplinkX {
   /// - [platformType]: Optional platform type override. If not provided, automatically detects from current operating system.
   DeeplinkX({
     final LauncherUtil? launcherUtil,
-    final PlatformEnum? platformType,
+    final PlatformType? platformType,
   })  : _launcherUtil = launcherUtil ?? const LauncherUtil(),
         _platformType = platformType ?? const PlatformUtil().getCurrentPlatform();
 
   final LauncherUtil _launcherUtil;
 
-  final PlatformEnum _platformType;
+  final PlatformType _platformType;
 
   /// Launches a deeplink action.
   ///

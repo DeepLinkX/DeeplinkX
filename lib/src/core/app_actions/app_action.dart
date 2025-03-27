@@ -1,5 +1,5 @@
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 
 /// Base class for all app actions.
 ///
@@ -49,7 +49,7 @@ abstract class AppAction {
   /// By default, this method returns a list containing the native URI followed by
   /// the fallback URI. Override this method if you need custom URI ordering or
   /// platform-specific URI handling.
-  Future<List<Uri>> getUris(final PlatformEnum platform) async {
+  Future<List<Uri>> getUris(final PlatformType platform) async {
     final List<Uri> uris = [await getNativeUri(), await getFallbackUri()];
     return uris;
   }

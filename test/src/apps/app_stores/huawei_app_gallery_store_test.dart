@@ -1,12 +1,12 @@
 import 'package:deeplink_x/src/apps/app_stores/huawei_app_gallery_store.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late PlatformEnum platformType;
+  late PlatformType platformType;
 
   setUpAll(() {
-    platformType = PlatformEnum.android;
+    platformType = PlatformType.android;
   });
 
   group('Huawei AppGallery Actions', () {
