@@ -159,6 +159,4 @@ void main() {
     expect(result, false);
     verify(() => mockLauncherUtil.canLaunchUrl(any())).called(1);
   });
-
-  // TODO: Add PlatformType tests
 }
