@@ -52,23 +52,23 @@ void main() {
 | Social Apps | Telegram                | • Open app<br>• Open profile by username/phone<br>• Send message                 |
 | Social Apps | Instagram               | • Open app<br>• Open profile by username                                         |
 | Social Apps | WhatsApp                | • Open app<br>• Chat with phone number<br>• Share text content                   |
-| Business    | LinkedIn                | •• Open profile<br>• Open company page                                           |
+| Business    | LinkedIn                | • Open profile<br>• Open company page                                            |
 
 ## Documentation
 
-Detailed documentation available in [doc/apps](doc/apps):
+Detailed documentation available in [doc/apps](https://github.com/ParhamHatan/DeeplinkX/tree/master/doc/apps):
 
-- [iOS App Store](doc/apps/stores/ios_app_store.md)
-- [Mac App Store](doc/apps/stores/mac_app_store.md)
-- [Microsoft Store](doc/apps/stores/microsoft_store.md)
-- [Play Store](doc/apps/stores/play_store.md)
-- [Huawei AppGalley Store](doc/apps/stores/huawei_app_gallery_store.md)
-- [Cafe Bazaar Store](doc/apps/stores/cafe_bazaar_store.md)
-- [Myket Store](doc/apps/stores/myket_store.md)
-- [Instagram](doc/apps/instagram.md)
-- [Telegram](doc/apps/telegram.md)
-- [WhatsApp](doc/apps/whatsapp.md)
-- [LinkedIn](doc/apps/linkedin.md)
+- [iOS App Store](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/stores/ios_app_store.md)
+- [Mac App Store](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/stores/mac_app_store.md)
+- [Microsoft Store](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/stores/microsoft_store.md)
+- [Play Store](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/stores/play_store.md)
+- [Huawei AppGalley Store](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/stores/huawei_app_gallery_store.md)
+- [Cafe Bazaar Store](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/stores/cafe_bazaar_store.md)
+- [Myket Store](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/stores/myket_store.md)
+- [Instagram](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/instagram.md)
+- [Telegram](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/telegram.md)
+- [WhatsApp](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/whatsapp.md)
+- [LinkedIn](https://github.com/ParhamHatan/DeeplinkX/blob/master/doc/apps/linkedin.md)
 
 ## URL Scheme Handling
 
@@ -101,7 +101,7 @@ Contributions are welcome! Please feel free to submit a Pull Request:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/ParhamHatan/DeeplinkX/blob/master/LICENSE) file for details.
 
 ## Issues and Feature Requests
 

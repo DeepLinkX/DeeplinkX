@@ -1,3 +1,7 @@
+## 0.1.3
+* Improved README
+  * Used complete Github links instead of relative paths 
+
 ## 0.1.2
 * Added support for LinkedIn deeplinks:
   * Open profile
@@ -20,7 +24,7 @@
 * Added third party licenses in LICENSES
 
 ## 0.1.1
-* Improve readme
+* Improved readme
 
 ## 0.1.0
 * New Feature:
