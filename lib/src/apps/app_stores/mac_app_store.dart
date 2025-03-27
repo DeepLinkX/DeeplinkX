@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 
 /// Mac App Store-specific action types that define available deeplink actions
 enum MacAppStoreActionType implements ActionTypeEnum {
@@ -28,7 +28,7 @@ class MacAppStoreAction extends StoreAppAction {
   }) : super(actionType: type, platform: platformType);
 
   /// The native platform type
-  static const platformType = PlatformEnum.macos;
+  static const platformType = PlatformType.macos;
 
   /// Base URI for Mac App Store app deeplinks
   static const baseUrl = 'macappstore://itunes.apple.com';

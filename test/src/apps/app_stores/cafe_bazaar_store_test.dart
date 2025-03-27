@@ -1,12 +1,12 @@
 import 'package:deeplink_x/src/apps/app_stores/cafe_bazaar_store.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late PlatformEnum platformType;
+  late PlatformType platformType;
 
   setUpAll(() {
-    platformType = PlatformEnum.android;
+    platformType = PlatformType.android;
   });
 
   group('Cafe Bazaar Store Actions', () {

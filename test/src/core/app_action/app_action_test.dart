@@ -1,6 +1,6 @@
 import 'package:deeplink_x/src/core/app_actions/app_action.dart';
 import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 enum DummyActionType implements ActionTypeEnum {
@@ -23,10 +23,10 @@ class DummyAppAction extends AppAction {
 }
 
 void main() {
-  late PlatformEnum platfromType;
+  late PlatformType platfromType;
 
   setUp(() {
-    platfromType = PlatformEnum.android;
+    platfromType = PlatformType.android;
   });
 
   group('AppAction', () {

@@ -1,6 +1,6 @@
 import 'package:deeplink_x/src/core/app_actions/app_action.dart';
 import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 
 /// Base class for all downloadable app actions.
 ///
@@ -50,7 +50,7 @@ abstract class DownloadableAppAction extends AppAction {
   /// [platform] The target platform (iOS, Android, etc.) to get URIs for
   /// Returns a list of URIs to try in sequential order
   @override
-  Future<List<Uri>> getUris(final PlatformEnum platform) async {
+  Future<List<Uri>> getUris(final PlatformType platform) async {
     final List<Uri> uris = [await getNativeUri()];
     if (fallBackToStore) {
       final supportedStores = supportedStoresActions.where((final store) => store.platform == platform);

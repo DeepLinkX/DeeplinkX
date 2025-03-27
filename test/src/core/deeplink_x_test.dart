@@ -1,6 +1,6 @@
 import 'package:deeplink_x/src/core/app_actions/app_action.dart';
 import 'package:deeplink_x/src/core/deeplink_x.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:deeplink_x/src/utils/launcher_util.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -23,16 +23,17 @@ void main() {
   setUp(() {
     mockAppAction = MockAppAction();
     mockLauncherUtil = MockLauncherUtil();
-    deeplinkX = DeeplinkX(launcherUtil: mockLauncherUtil, platformType: PlatformEnum.android);
+    deeplinkX = DeeplinkX(launcherUtil: mockLauncherUtil, platformType: PlatformType.android);
 
     when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => true);
     when(() => mockLauncherUtil.launchUrl(any())).thenAnswer((final _) async => true);
     when(() => mockAppAction.getUris(any())).thenAnswer((final _) async => dummyUris);
+    when(() => mockAppAction.getNativeUri()).thenAnswer((final _) async => dummyUris[0]);
   });
 
   setUpAll(() {
     registerFallbackValue(Uri());
-    registerFallbackValue(PlatformEnum.android);
+    registerFallbackValue(PlatformType.android);
   });
 
   test('launchAction returns false when no URIs are available', () async {
@@ -135,5 +136,27 @@ void main() {
     verify(() => mockLauncherUtil.canLaunchUrl(any())).called(dummyUris.length);
   });
 
-  // TODO: Add PlatformType tests
+  test('canLaunchNativeDeeplink tries action native URI', () async {
+    // Arrange
+    when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => true);
+
+    // Act
+    final result = await deeplinkX.canLaunchNativeDeeplink(mockAppAction);
+
+    // Assert
+    expect(result, true);
+    verify(() => mockLauncherUtil.canLaunchUrl(any())).called(1);
+  });
+
+  test('canLaunchNativeDeeplink returns false when no URI can be launched', () async {
+    // Arrange
+    when(() => mockLauncherUtil.canLaunchUrl(any())).thenAnswer((final _) async => false);
+
+    // Act
+    final result = await deeplinkX.canLaunchNativeDeeplink(mockAppAction);
+
+    // Assert
+    expect(result, false);
+    verify(() => mockLauncherUtil.canLaunchUrl(any())).called(1);
+  });
 }

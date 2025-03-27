@@ -1,12 +1,12 @@
 import 'package:deeplink_x/src/apps/app_stores/mac_app_store.dart';
-import 'package:deeplink_x/src/core/enums/platform_enum.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late PlatformEnum platfromType;
+  late PlatformType platfromType;
 
   setUpAll(() {
-    platfromType = PlatformEnum.android;
+    platfromType = PlatformType.android;
   });
 
   group('Mac App Store Actions', () {

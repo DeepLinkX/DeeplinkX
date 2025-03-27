@@ -4,9 +4,9 @@
 /// behavior for deeplinks. Each value corresponds to a supported platform with its
 /// string representation.
 ///
-/// The enum provides a [fromOperatingSystem] factory method to create a [PlatformEnum]
+/// The enum provides a [fromOperatingSystem] factory method to create a [PlatformType]
 /// instance from a platform string. If the platform is not recognized, it defaults to web.
-enum PlatformEnum {
+enum PlatformType {
   /// Web platform - used for browser-based applications
   web('web'),
 
@@ -26,23 +26,23 @@ enum PlatformEnum {
   /// Linux platform - used for Linux desktop applications
   linux('linux');
 
-  /// Creates a new [PlatformEnum] instance with the specified [value]
-  const PlatformEnum(this.value);
+  /// Creates a new [PlatformType] instance with the specified [value]
+  const PlatformType(this.value);
 
   /// The string representation of the platform
   final String value;
 
-  /// Creates a [PlatformEnum] from an operating system string.
+  /// Creates a [PlatformType] from an operating system string.
   ///
-  /// If the operating system is not recognized, returns [PlatformEnum.web].
+  /// If the operating system is not recognized, returns [PlatformType.web].
   ///
   /// Example:
   /// ```dart
-  /// final platform = PlatformEnum.fromOperatingSystem('ios'); // Returns PlatformEnum.ios
-  /// final unknown = PlatformEnum.fromOperatingSystem('unknown'); // Returns PlatformEnum.web
+  /// final platform = PlatformType.fromOperatingSystem('ios'); // Returns PlatformType.ios
+  /// final unknown = PlatformType.fromOperatingSystem('unknown'); // Returns PlatformType.web
   /// ```
-  static PlatformEnum fromOperatingSystem(final String os) => PlatformEnum.values.firstWhere(
+  static PlatformType fromOperatingSystem(final String os) => PlatformType.values.firstWhere(
         (final e) => e.value == os,
-        orElse: () => PlatformEnum.web,
+        orElse: () => PlatformType.web,
       );
 }

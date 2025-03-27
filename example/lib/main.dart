@@ -17,6 +17,9 @@ class _MyAppState extends State<MyApp> {
   final _messageController = TextEditingController(text: 'Hello! How are you?');
   final _usernameController = TextEditingController(text: 'johndoe');
   final _phoneController = TextEditingController(text: '+14155552671');
+  final _whatsappPhoneController = TextEditingController(
+    text: '14155552671',
+  ); // WhatsApp phone number without '+' sign
   final _appIdController = TextEditingController(
     text: '389801252',
   ); // Example: Instagram app ID
@@ -55,15 +58,26 @@ class _MyAppState extends State<MyApp> {
     text: 'utm_source=deeplink_x_example',
   );
 
+  // Myket controllers
+  final _myketPackageNameController = TextEditingController(
+    text: 'org.telegram.messenger',
+  );
+  final _myketReferrerController = TextEditingController(
+    text: 'utm_source=deeplink_x_example',
+  );
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
+  bool _whatsappFallBackToStore = true;
+  bool _linkedInFallBackToStore = true;
 
   @override
   void dispose() {
     _messageController.dispose();
     _usernameController.dispose();
     _phoneController.dispose();
+    _whatsappPhoneController.dispose();
     _appIdController.dispose();
     _appNameController.dispose();
     _macAppIdController.dispose();
@@ -77,6 +91,8 @@ class _MyAppState extends State<MyApp> {
     _huaweiLocaleController.dispose();
     _cafeBazaarPackageNameController.dispose();
     _cafeBazaarReferrerController.dispose();
+    _myketPackageNameController.dispose();
+    _myketReferrerController.dispose();
     super.dispose();
   }
 
@@ -85,7 +101,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: DefaultTabController(
-        length: 9,
+        length: 11,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('DeeplinkX Example'),
@@ -94,13 +110,15 @@ class _MyAppState extends State<MyApp> {
               tabs: [
                 Tab(text: 'Instagram'),
                 Tab(text: 'Telegram'),
+                Tab(text: 'WhatsApp'),
+                Tab(text: 'LinkedIn'),
                 Tab(text: 'iOS App Store'),
                 Tab(text: 'Play Store'),
                 Tab(text: 'Mac App Store'),
                 Tab(text: 'Microsoft Store'),
                 Tab(text: 'Huawei AppGallery'),
                 Tab(text: 'Cafe Bazaar'),
-                Tab(text: 'LinkedIn'),
+                Tab(text: 'Myket'),
               ],
             ),
           ),
@@ -108,13 +126,15 @@ class _MyAppState extends State<MyApp> {
             children: [
               _buildInstagramTab(),
               _buildTelegramTab(),
+              _buildWhatsAppTab(),
+              _buildLinkedInTab(),
               _buildAppStoreTab(),
               _buildPlayStoreTab(),
               _buildMacAppStoreTab(),
               _buildMicrosoftStoreTab(),
               _buildHuaweiAppGalleryTab(),
               _buildCafeBazaarTab(),
-              _buildLinkedInTab(),
+              _buildMyketTab(),
             ],
           ),
         ),
@@ -199,12 +219,253 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget _buildLinkedInTab() {
-    return const Center(
-      child: Text(
-        'LinkedIn support coming soon!',
-        style: TextStyle(fontSize: 16),
+  Widget _buildWhatsAppTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Text(
+                'Fallback to App Store:',
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(width: 8),
+              Switch(
+                value: _whatsappFallBackToStore,
+                onChanged:
+                    (value) => setState(() => _whatsappFallBackToStore = value),
+              ),
+              const Expanded(
+                child: Text(
+                  'When enabled, redirects to app store if WhatsApp is not installed',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          const Text(
+            'WhatsApp Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          _buildWhatsAppActions(),
+        ],
       ),
+    );
+  }
+
+  Widget _buildLinkedInTab() {
+    // Create a controller for LinkedIn profile ID and company ID
+    final linkedInProfileController = TextEditingController(text: 'john-doe');
+    final linkedInCompanyController = TextEditingController(
+      text: 'example-company',
+    );
+    final linkedInJobsKeywordsController = TextEditingController(
+      text: 'software developer',
+    );
+    final linkedInShareController = TextEditingController(
+      text: 'Check out this awesome content!',
+    );
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              const Text(
+                'Fallback to App Store:',
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(width: 8),
+              Switch(
+                value: _linkedInFallBackToStore,
+                onChanged:
+                    (value) => setState(() => _linkedInFallBackToStore = value),
+              ),
+              const Expanded(
+                child: Text(
+                  'When enabled, redirects to app store if LinkedIn is not installed',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          const Text(
+            'LinkedIn Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          _buildLinkedInActions(
+            linkedInProfileController,
+            linkedInCompanyController,
+            linkedInJobsKeywordsController,
+            linkedInShareController,
+            _linkedInFallBackToStore,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLinkedInActions(
+    TextEditingController profileController,
+    TextEditingController companyController,
+    TextEditingController jobsKeywordsController,
+    TextEditingController shareController,
+    bool fallBackToStore,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'Profile Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: profileController,
+          decoration: const InputDecoration(
+            labelText: 'LinkedIn Profile ID',
+            hintText: 'Enter LinkedIn profile ID',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (profileController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                LinkedIn.openProfile(
+                  profileController.text,
+                  fallBackToStore: fallBackToStore,
+                ),
+              );
+            }
+          },
+          child: const Text('Open LinkedIn Profile'),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'Company Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: companyController,
+          decoration: const InputDecoration(
+            labelText: 'LinkedIn Company ID',
+            hintText: 'Enter LinkedIn company ID',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (companyController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                LinkedIn.openCompany(
+                  companyController.text,
+                  fallBackToStore: fallBackToStore,
+                ),
+              );
+            }
+          },
+          child: const Text('Open LinkedIn Company'),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _buildWhatsAppActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          onPressed: () async {
+            await _deeplinkX.launchAction(
+              WhatsApp.open(fallBackToStore: _whatsappFallBackToStore),
+            );
+          },
+          child: const Text('Open WhatsApp App'),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'Chat Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _whatsappPhoneController,
+          decoration: const InputDecoration(
+            labelText: 'Phone Number',
+            hintText: 'Enter phone number without + (e.g., 14155552671)',
+            border: OutlineInputBorder(),
+          ),
+          keyboardType: TextInputType.phone,
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _messageController,
+          decoration: const InputDecoration(
+            labelText: 'Message (optional)',
+            hintText: 'Enter message to pre-fill',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_whatsappPhoneController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                WhatsApp.chat(
+                  _whatsappPhoneController.text,
+                  text:
+                      _messageController.text.isNotEmpty
+                          ? _messageController.text
+                          : null,
+                  fallBackToStore: _whatsappFallBackToStore,
+                ),
+              );
+            }
+          },
+          child: const Text('Open WhatsApp Chat'),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'Share Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _messageController,
+          decoration: const InputDecoration(
+            labelText: 'Text to Share',
+            hintText: 'Enter text to share via WhatsApp',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_messageController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                WhatsApp.share(
+                  _messageController.text,
+                  fallBackToStore: _whatsappFallBackToStore,
+                ),
+              );
+            }
+          },
+          child: const Text('Share via WhatsApp'),
+        ),
+      ],
     );
   }
 
@@ -849,6 +1110,90 @@ class _MyAppState extends State<MyApp> {
             }
           },
           child: const Text('Open App Page'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMyketTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            'Myket Store Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 24),
+          _buildMyketActions(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMyketActions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          onPressed: () async {
+            await _deeplinkX.launchAction(MyketStore.open);
+          },
+          child: const Text('Open Myket'),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'App Actions',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _myketPackageNameController,
+          decoration: const InputDecoration(
+            labelText: 'Package Name',
+            hintText: 'Enter Package Name (e.g., org.telegram.messenger)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _myketReferrerController,
+          decoration: const InputDecoration(
+            labelText: 'Referrer (optional)',
+            hintText: 'Enter referrer for tracking (e.g., utm_source=your_app)',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_myketPackageNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                MyketStore.openAppPage(
+                  packageName: _myketPackageNameController.text,
+                  referrer:
+                      _myketReferrerController.text.isNotEmpty
+                          ? _myketReferrerController.text
+                          : null,
+                ),
+              );
+            }
+          },
+          child: const Text('Open App Page'),
+        ),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: () async {
+            if (_myketPackageNameController.text.isNotEmpty) {
+              await _deeplinkX.launchAction(
+                MyketStore.rateApp(
+                  packageName: _myketPackageNameController.text,
+                ),
+              );
+            }
+          },
+          child: const Text('Rate app'),
         ),
       ],
     );
