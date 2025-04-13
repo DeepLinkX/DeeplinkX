@@ -1,33 +1,40 @@
-# Cafe Bazaar Store
+# Cafe Bazaar Store Deeplinks
 
-Cafe Bazaar is a popular Android app store in Iran. This module provides deeplink actions for interacting with the Cafe Bazaar app store.
+DeeplinkX provides support for opening the Cafe Bazaar app store and specific app pages.
 
 ## Available Actions
 
-### Open Cafe Bazaar
-
-Opens the Cafe Bazaar app store.
-
+### Launch Cafe Bazaar Store
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(CafeBazaarStore.open);
+
+// Simple launch
+await deeplinkX.launchApp(CafeBazaarStore.open());
+
+// Launch with fallback disabled
+await deeplinkX.launchApp(CafeBazaarStore.open(), disableFallback: true);
 ```
 
-### Open App Page
-
-Opens a specific app page in the Cafe Bazaar app store.
-
+### Launch Cafe Bazaar App Page Action
 ```dart
 final deeplinkX = DeeplinkX();
+
+// Simple action
+await deeplinkX.launchAction(CafeBazaarStore.openAppPage(
+  packageName: 'com.example.app',
+  referrer: 'utm_source=deeplink_x',  // Optional
+));
+
+// Action with fallback disabled
 await deeplinkX.launchAction(
   CafeBazaarStore.openAppPage(
     packageName: 'com.example.app',
-    referrer: 'utm_source=deeplink_x',
   ),
+  disableFallback: true,
 );
 ```
 
-#### Parameters
+## Parameters
 
 - `packageName` (required): The package name of the app to open (e.g., 'com.example.app')
 - `referrer` (optional): A parameter for tracking the source of the install
@@ -38,10 +45,7 @@ await deeplinkX.launchAction(
 Add the following to your `android/app/src/main/AndroidManifest.xml` inside the `<queries>` tag:
 ```xml
 <queries>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="bazaar" android:host="home" />
-    </intent>
+    <package android:name="com.farsitel.bazaar" />
     <intent>
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="https" />
@@ -51,12 +55,32 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
 
 ## URL Schemes
 
-### Native App URI
+### Native App URIs
 
-- Open Cafe Bazaar: `bazaar://home`
-- Open App Page: `bazaar://details/com.example.app`
+- Open App Page: `bazaar://details?id=com.example.app`
 
-### Web Fallback URI
+### Web Fallback URIs
 
-- Open Cafe Bazaar: `https://cafebazaar.ir`
 - Open App Page: `https://cafebazaar.ir/app/com.example.app`
+
+## Fallback Behavior
+
+DeeplinkX follows this sequence when handling Cafe Bazaar deeplinks:
+
+1. First, it attempts to launch the Cafe Bazaar app if it's installed on the device.
+2. If the Cafe Bazaar app is not installed or the device is not running Android, it will automatically fall back to opening the Cafe Bazaar web interface in the default browser.
+3. You can disable fallbacks by setting `disableFallback: true` in the launch methods.
+
+## Fallback Support for Actions
+
+| Action      | Web Fallback |
+| ----------- | ------------ |
+| open        | ✅            |
+| openAppPage | ✅            |
+
+## Check If Cafe Bazaar Store Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(CafeBazaarStore());
+```

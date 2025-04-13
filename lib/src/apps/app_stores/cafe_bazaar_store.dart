@@ -1,121 +1,111 @@
-import 'dart:core';
+import 'package:deeplink_x/src/core/core.dart';
 
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_type.dart';
-
-/// Cafe Bazaar-specific action types that define available deeplink actions
-enum CafeBazaarActionType implements ActionTypeEnum {
-  /// Opens the Cafe Bazaar app
-  open,
-
-  /// Opens a specific app page in the Cafe Bazaar
-  openAppPage,
-}
-
-/// Cafe Bazaar action implementation for handling Cafe Bazaar-specific deeplinks
-class CafeBazaarAction extends StoreAppAction {
-  /// Creates a new Cafe Bazaar action
-  ///
-  /// [type] specifies the type of action to perform
-  /// [parameters] contains any additional data needed for the action
-  const CafeBazaarAction(
-    this.type, {
-    super.parameters,
-  }) : super(actionType: type, platform: platformType);
-
-  /// The native platform type
-  static const platformType = PlatformType.android;
-
-  /// Base URI for Cafe Bazaar app deeplinks
-  static const baseUrl = 'bazaar://';
-
-  /// Base URI for Cafe Bazaar web fallback
-  static const fallBackUri = 'https://cafebazaar.ir';
-
-  /// The type of Cafe Bazaar action to perform
-  final CafeBazaarActionType type;
-
-  @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case CafeBazaarActionType.open:
-        return Uri.parse(baseUrl).replace(host: 'home');
-      case CafeBazaarActionType.openAppPage:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-
-        // Build query parameters
-        final queryParams = <String, String>{};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        // Native app URI
-        return Uri.parse(baseUrl).replace(
-          host: 'details',
-          path: '$packageName',
-          queryParameters: queryParams.isNotEmpty ? queryParams : null,
-        );
-    }
-  }
-
-  @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case CafeBazaarActionType.open:
-        return Uri.parse(fallBackUri);
-      case CafeBazaarActionType.openAppPage:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-
-        // Build query parameters
-        final queryParams = <String, String>{};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        // Web fallback URI
-        return Uri.parse(fallBackUri).replace(
-          path: '/app/$packageName',
-          queryParameters: queryParams.isNotEmpty ? queryParams : null,
-        );
-    }
-  }
-}
-
-/// Factory class for creating Cafe Bazaar deeplink actions
+/// Cafe Bazaar Store application for Android.
 ///
-/// This class provides convenient factory methods for creating common Cafe Bazaar
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for Cafe Bazaar-specific action creation.
-class CafeBazaarStore {
-  CafeBazaarStore._();
+/// This class implements the [StoreApp] interface to provide capabilities
+/// for interacting with the Cafe Bazaar store on Android devices. Cafe Bazaar
+/// is a popular app store in Iran.
+class CafeBazaarStore extends StoreApp {
+  /// Creates a new [CafeBazaarStore] instance.
+  CafeBazaarStore();
 
-  /// Opens the Cafe Bazaar app
-  static const CafeBazaarAction open = CafeBazaarAction(CafeBazaarActionType.open);
-
-  /// Opens a specific app page in the Cafe Bazaar
+  /// Creates an action to open the Cafe Bazaar app.
   ///
-  /// [packageName] is the package name of the app to open (e.g., 'com.example.app')
-  /// [referrer] is an optional parameter for tracking the source of the install (optional)
-  static CafeBazaarAction openAppPage({
+  /// Returns a [CafeBazaarStore] instance that can be used to open the Cafe Bazaar app.
+  factory CafeBazaarStore.open() => CafeBazaarStore();
+
+  /// The platform this store app is associated with (Android).
+  @override
+  PlatformType platform = PlatformType.android;
+
+  /// The Android package name for the Cafe Bazaar app.
+  @override
+  String? get androidPackageName => 'com.farsitel.bazaar';
+
+  /// The custom URL scheme for the Cafe Bazaar app (not applicable for other platforms).
+  @override
+  String? customScheme;
+
+  /// The web URL for the Cafe Bazaar store.
+  @override
+  Uri get website => Uri.parse('https://cafebazaar.ir');
+
+  /// Creates an action to open a specific app's page in the Cafe Bazaar store.
+  ///
+  /// Parameters:
+  /// - [packageName]: The package name of the app to open in the Cafe Bazaar store.
+  /// - [referrer]: Optional referrer parameter for tracking (e.g. 'utm_source=test_app').
+  ///
+  /// Returns a [CafeBazaarStoreOpenAppPageAction] instance that can be used to open
+  /// the specified app's page in the Cafe Bazaar store.
+  static CafeBazaarStoreOpenAppPageAction openAppPage({
     required final String packageName,
     final String? referrer,
-  }) {
-    final parameters = <String, String>{
-      'packageName': packageName,
+  }) =>
+      CafeBazaarStoreOpenAppPageAction(
+        packageName: packageName,
+        referrer: referrer,
+      );
+}
+
+/// An action to open a specific app's page in the Cafe Bazaar store.
+///
+/// This class extends [CafeBazaarStore] and implements multiple interfaces to provide
+/// comprehensive functionality for opening app pages with fallback support.
+class CafeBazaarStoreOpenAppPageAction extends CafeBazaarStore
+    implements IntentAppLinkAction, Fallbackable, StoreOpenAppPageAction {
+  /// Creates a new [CafeBazaarStoreOpenAppPageAction] instance.
+  ///
+  /// Parameters:
+  /// - [packageName]: The package name of the app to open in the Cafe Bazaar store.
+  /// - [referrer]: Optional referrer parameter for tracking (e.g. 'utm_source=test_app').
+  CafeBazaarStoreOpenAppPageAction({
+    required this.packageName,
+    this.referrer,
+  });
+
+  /// The package name of the app to open in the Cafe Bazaar store.
+  final String packageName;
+
+  /// Optional referrer parameter for tracking.
+  final String? referrer;
+
+  /// The app link URL for opening the specified app in the Cafe Bazaar app.
+  @override
+  Uri? appLink;
+
+  /// The fallback link to use when the Cafe Bazaar app cannot be opened.
+  ///
+  /// This URL opens the app's page on the Cafe Bazaar website.
+  @override
+  Uri get fallbackLink {
+    final queryParameters = <String, String>{
+      if (referrer != null) 'referrer': referrer!,
     };
+    return Uri(
+      scheme: 'https',
+      host: 'cafebazaar.ir',
+      path: 'app/$packageName',
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+    );
+  }
 
-    if (referrer != null) {
-      parameters['referrer'] = referrer;
-    }
-
-    return CafeBazaarAction(
-      CafeBazaarActionType.openAppPage,
-      parameters: parameters,
+  @override
+  AndroidIntentOption get androidIntentOptions {
+    final queryParameters = <String, String>{
+      'id': packageName,
+      if (referrer != null) 'referrer': referrer!,
+    };
+    final dataUri = Uri(
+      scheme: 'bazaar',
+      host: 'details',
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+    );
+    return AndroidIntentOption(
+      action: 'action_view',
+      data: dataUri.toString(),
+      package: androidPackageName,
+      flags: const [0x10000000], // Intent.FLAG_ACTIVITY_NEW_TASK
     );
   }
 }

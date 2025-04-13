@@ -1,411 +1,272 @@
-import 'dart:core';
+import 'package:deeplink_x/src/core/core.dart';
 
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_type.dart';
-
-/// iOS App Store-specific action types that define available deeplink actions
-enum IOSAppStoreActionType implements ActionTypeEnum {
-  /// Opens the App Store app
-  open,
-
-  /// Opens a specific app page in the App Store
-  openAppPage,
-
-  /// Opens the review page for a specific app
-  openReview,
-
-  /// Opens the iMessage extension page for a specific app
-  openMessagesExtension,
-}
-
-/// iOS App Store action implementation for handling App Store-specific deeplinks
-class IOSAppStoreAction extends StoreAppAction {
-  /// Creates a new iOS App Store action
-  ///
-  /// [type] specifies the type of action to perform
-  /// [parameters] contains any additional data needed for the action
-  const IOSAppStoreAction(
-    this.type, {
-    super.parameters,
-  }) : super(actionType: type, platform: platformType);
-
-  /// The native platform type
-  static const platformType = PlatformType.ios;
-
-  /// Base URI for App Store app deeplinks
-  static const baseUrl = 'itms-apps://itunes.apple.com';
-
-  /// Base URI for App Store web fallback
-  static const fallBackUri = 'https://apps.apple.com';
-
-  /// The type of iOS App Store action to perform
-  final IOSAppStoreActionType type;
-
-  @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case IOSAppStoreActionType.open:
-        return Uri.parse(baseUrl);
-      case IOSAppStoreActionType.openAppPage:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-        final campaignToken = parameters!['ct'];
-        final providerToken = parameters!['pt'];
-        final affiliateToken = parameters!['at'];
-        final uniqueOrigin = parameters!['uo'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'mt': mediaType!};
-
-        if (campaignToken != null) {
-          queryParams['ct'] = campaignToken;
-        }
-        if (providerToken != null) {
-          queryParams['pt'] = providerToken;
-        }
-        if (affiliateToken != null) {
-          queryParams['at'] = affiliateToken;
-        }
-        if (uniqueOrigin != null) {
-          queryParams['uo'] = uniqueOrigin;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Native app URI
-        return Uri.parse(baseUrl).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-      case IOSAppStoreActionType.openReview:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-
-        // Add action=write-review parameter
-        final queryParams = <String, String>{'action': 'write-review', 'mt': mediaType!};
-
-        // Add other parameters if provided
-        if (parameters!['ct'] != null) {
-          queryParams['ct'] = parameters!['ct']!;
-        }
-        if (parameters!['pt'] != null) {
-          queryParams['pt'] = parameters!['pt']!;
-        }
-        if (parameters!['at'] != null) {
-          queryParams['at'] = parameters!['at']!;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Native app URI for review
-        return Uri.parse(baseUrl).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-      case IOSAppStoreActionType.openMessagesExtension:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-
-        // Build query parameters with app=messages
-        final queryParams = <String, String>{'app': 'messages', 'mt': mediaType!};
-
-        // Add other parameters if provided
-        if (parameters!['ct'] != null) {
-          queryParams['ct'] = parameters!['ct']!;
-        }
-        if (parameters!['pt'] != null) {
-          queryParams['pt'] = parameters!['pt']!;
-        }
-        if (parameters!['at'] != null) {
-          queryParams['at'] = parameters!['at']!;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Native app URI for messages extension
-        return Uri.parse(baseUrl).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-    }
-  }
-
-  @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case IOSAppStoreActionType.open:
-        return Uri.parse(fallBackUri);
-      case IOSAppStoreActionType.openAppPage:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-        final campaignToken = parameters!['ct'];
-        final providerToken = parameters!['pt'];
-        final affiliateToken = parameters!['at'];
-        final uniqueOrigin = parameters!['uo'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'mt': mediaType!};
-
-        if (campaignToken != null) {
-          queryParams['ct'] = campaignToken;
-        }
-        if (providerToken != null) {
-          queryParams['pt'] = providerToken;
-        }
-        if (affiliateToken != null) {
-          queryParams['at'] = affiliateToken;
-        }
-        if (uniqueOrigin != null) {
-          queryParams['uo'] = uniqueOrigin;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Web fallback URI
-        return Uri.parse(fallBackUri).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-      case IOSAppStoreActionType.openReview:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-
-        // Add action=write-review parameter
-        final queryParams = <String, String>{'action': 'write-review', 'mt': mediaType!};
-
-        // Add other parameters if provided
-        if (parameters!['ct'] != null) {
-          queryParams['ct'] = parameters!['ct']!;
-        }
-        if (parameters!['pt'] != null) {
-          queryParams['pt'] = parameters!['pt']!;
-        }
-        if (parameters!['at'] != null) {
-          queryParams['at'] = parameters!['at']!;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Web fallback URI for review
-        return Uri.parse(fallBackUri).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-      case IOSAppStoreActionType.openMessagesExtension:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-
-        // Build query parameters with app=messages
-        final queryParams = <String, String>{'app': 'messages', 'mt': mediaType!};
-
-        // Add other parameters if provided
-        if (parameters!['ct'] != null) {
-          queryParams['ct'] = parameters!['ct']!;
-        }
-        if (parameters!['pt'] != null) {
-          queryParams['pt'] = parameters!['pt']!;
-        }
-        if (parameters!['at'] != null) {
-          queryParams['at'] = parameters!['at']!;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Web fallback URI for messages extension
-        return Uri.parse(fallBackUri).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-    }
-  }
-}
-
-/// Factory class for creating iOS App Store deeplink actions
+/// Apple App Store for iOS devices.
 ///
-/// This class provides convenient factory methods for creating common iOS App Store
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for iOS App Store-specific action creation.
-class IOSAppStore {
-  IOSAppStore._();
+/// This class implements the [StoreApp] interface to provide capabilities
+/// for interacting with the App Store on iOS devices.
+class IOSAppStore implements StoreApp {
+  /// Creates a new [IOSAppStore] instance.
+  IOSAppStore();
 
-  /// Opens the App Store app
-  static const IOSAppStoreAction open = IOSAppStoreAction(IOSAppStoreActionType.open);
-
-  /// Opens a specific app page in the App Store
+  /// Creates an action to open the iOS App Store.
   ///
-  /// [appId] is the App Store ID of the app to open. Must be a valid numeric ID
-  /// between 1 and 10 digits long (e.g., '284882215' for Facebook).
-  /// [appName] is the app name slug for the web URL
-  /// [country] is the two-letter country code (optional)
-  /// [mediaType] specifies the type of content (default: '8' for iOS apps)
-  /// [campaignToken] is used to track campaigns (optional)
-  /// [providerToken] is a numeric identifier for your team/developer (optional)
-  /// [affiliateToken] is used for Apple's affiliate tracking (optional)
-  /// [uniqueOrigin] indicates the origin of the link (optional)
-  static IOSAppStoreAction openAppPage({
+  /// Returns an [IOSAppStore] instance that can be used to open the iOS App Store app.
+  factory IOSAppStore.open() => IOSAppStore();
+
+  /// The platform this store app is associated with (iOS).
+  @override
+  PlatformType platform = PlatformType.ios;
+
+  /// The Android package name for the App Store (not applicable for iOS).
+  @override
+  String? get androidPackageName => null;
+
+  /// The custom URL scheme for the iOS App Store.
+  @override
+  String get customScheme => 'itms-apps';
+
+  /// The web URL for the Apple App Store.
+  @override
+  Uri get website => Uri.parse('https://www.apple.com/app-store/');
+
+  /// Creates an action to open a specific app's page in the iOS App Store.
+  ///
+  /// Parameters:
+  /// - [appId]: The App Store ID of the app to open.
+  /// - [appName]: The name of the app to open.
+  /// - [mediaType]: The media type identifier (default is '8' for iOS apps) (e.g. '12' for MacOS apps, '8' for iOS apps).
+  /// - [country]: Optional two-letter country code to specify a country-specific store (e.g. 'us').
+  /// - [campaignToken]: Optional campaign token for tracking (e.g. 'campaign123').
+  /// - [providerToken]: Optional provider token for affiliate programs (e.g. 'provider456').
+  /// - [affiliateToken]: Optional affiliate token for affiliate programs (e.g. 'affiliate789').
+  /// - [uniqueOrigin]: Optional unique origin identifier for tracking (e.g. 'origin123').
+  ///
+  /// Returns an [IOSAppStoreOpenAppPageAction] instance that can be used to open
+  /// the specified app's page in the App Store.
+  static IOSAppStoreOpenAppPageAction openAppPage({
     required final String appId,
     required final String appName,
-    final String? country,
     final String mediaType = '8',
+    final String? country,
     final String? campaignToken,
     final String? providerToken,
     final String? affiliateToken,
     final String? uniqueOrigin,
-  }) {
-    final parameters = <String, String>{
-      'appId': appId,
-      'appName': appName,
+  }) =>
+      IOSAppStoreOpenAppPageAction(
+        appId: appId,
+        appName: appName,
+        mediaType: mediaType,
+        country: country,
+        campaignToken: campaignToken,
+        providerToken: providerToken,
+        affiliateToken: affiliateToken,
+        uniqueOrigin: uniqueOrigin,
+      );
+
+  /// Creates an action to rate a specific app in the iOS App Store.
+  ///
+  /// Parameters:
+  /// - [appId]: The App Store ID of the app to rate.
+  /// - [appName]: The name of the app to rate.
+  /// - [mediaType]: The media type identifier (default is '8' for iOS apps) (e.g. '12' for MacOS apps, '8' for iOS apps).
+  /// - [country]: Optional two-letter country code to specify a country-specific store (e.g. 'us').
+  /// - [campaignToken]: Optional campaign token for tracking (e.g. 'campaign123').
+  /// - [providerToken]: Optional provider token for affiliate programs (e.g. 'provider456').
+  /// - [affiliateToken]: Optional affiliate token for affiliate programs (e.g. 'affiliate789').
+  ///
+  /// Returns an [IOSAppStoreRateAppAction] instance that can be used to open
+  /// the app's rating page in the App Store.
+  static IOSAppStoreRateAppAction rateApp({
+    required final String appId,
+    required final String appName,
+    final String mediaType = '8',
+    final String? country,
+    final String? campaignToken,
+    final String? providerToken,
+    final String? affiliateToken,
+  }) =>
+      IOSAppStoreRateAppAction(
+        appId: appId,
+        appName: appName,
+        mediaType: mediaType,
+        country: country,
+        campaignToken: campaignToken,
+        providerToken: providerToken,
+        affiliateToken: affiliateToken,
+      );
+}
+
+/// An action to open a specific app's page in the iOS App Store.
+///
+/// This class extends [IOSAppStore] and implements multiple interfaces to provide
+/// comprehensive functionality for opening app pages with fallback support.
+class IOSAppStoreOpenAppPageAction extends IOSAppStore
+    implements AppLinkAppAction, Fallbackable, StoreOpenAppPageAction {
+  /// Creates a new [IOSAppStoreOpenAppPageAction] instance.
+  ///
+  /// Parameters:
+  /// - [appId]: The App Store ID of the app to open.
+  /// - [appName]: The name of the app to open.
+  /// - [mediaType]: The media type identifier.
+  /// - [country]: Optional two-letter country code to specify a country-specific store.
+  /// - [campaignToken]: Optional campaign token for tracking.
+  /// - [providerToken]: Optional provider token for affiliate programs.
+  /// - [affiliateToken]: Optional affiliate token for affiliate programs.
+  /// - [uniqueOrigin]: Optional unique origin identifier for tracking.
+  IOSAppStoreOpenAppPageAction({
+    required this.appId,
+    required this.appName,
+    required this.mediaType,
+    this.country,
+    this.campaignToken,
+    this.providerToken,
+    this.affiliateToken,
+    this.uniqueOrigin,
+  });
+
+  /// The App Store ID of the app to open.
+  final String appId;
+
+  /// The name of the app to open.
+  final String appName;
+
+  /// The media type identifier.
+  final String mediaType;
+
+  /// Optional two-letter country code to specify a country-specific store.
+  final String? country;
+
+  /// Optional campaign token for tracking.
+  final String? campaignToken;
+
+  /// Optional provider token for affiliate programs.
+  final String? providerToken;
+
+  /// Optional affiliate token for affiliate programs.
+  final String? affiliateToken;
+
+  /// Optional unique origin identifier for tracking.
+  final String? uniqueOrigin;
+
+  /// The app link URL for opening the specified app in the App Store app.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{
       'mt': mediaType,
+      if (campaignToken != null) 'ct': campaignToken!,
+      if (providerToken != null) 'pt': providerToken!,
+      if (affiliateToken != null) 'at': affiliateToken!,
+      if (uniqueOrigin != null) 'uo': uniqueOrigin!,
     };
-
-    if (country != null) {
-      parameters['country'] = country;
-    }
-    if (campaignToken != null) {
-      parameters['ct'] = campaignToken;
-    }
-    if (providerToken != null) {
-      parameters['pt'] = providerToken;
-    }
-    if (affiliateToken != null) {
-      parameters['at'] = affiliateToken;
-    }
-    if (uniqueOrigin != null) {
-      parameters['uo'] = uniqueOrigin;
-    }
-
-    return IOSAppStoreAction(
-      IOSAppStoreActionType.openAppPage,
-      parameters: parameters,
+    final pathSegments = <String>[
+      if (country != null) ...[country!],
+      'app',
+      appName,
+      'id$appId',
+    ];
+    return Uri(
+      scheme: 'itms-apps',
+      host: 'itunes.apple.com',
+      pathSegments: pathSegments,
+      queryParameters: queryParameters,
     );
   }
 
-  /// Opens the review page for a specific app
+  /// The fallback link to use when the App Store app cannot be opened.
   ///
-  /// [appId] is the App Store ID of the app to open. Must be a valid numeric ID
-  /// between 1 and 10 digits long (e.g., '284882215' for Facebook).
-  /// [appName] is the app name slug for the web URL
-  /// [country] is the two-letter country code (optional)
-  /// [mediaType] specifies the type of content (default: '8' for iOS apps)
-  /// [campaignToken] is used to track campaigns (optional)
-  /// [providerToken] is a numeric identifier for your team/developer (optional)
-  /// [affiliateToken] is used for Apple's affiliate tracking (optional)
-  static IOSAppStoreAction openReview({
-    required final String appId,
-    required final String appName,
-    final String? country,
-    final String mediaType = '8',
-    final String? campaignToken,
-    final String? providerToken,
-    final String? affiliateToken,
-  }) {
-    final parameters = <String, String>{'appId': appId, 'appName': appName, 'mt': mediaType};
-
-    if (country != null) {
-      parameters['country'] = country;
-    }
-    if (campaignToken != null) {
-      parameters['ct'] = campaignToken;
-    }
-    if (providerToken != null) {
-      parameters['pt'] = providerToken;
-    }
-    if (affiliateToken != null) {
-      parameters['at'] = affiliateToken;
-    }
-
-    return IOSAppStoreAction(
-      IOSAppStoreActionType.openReview,
-      parameters: parameters,
+  /// This URL opens the app's page on the Apple App Store website.
+  @override
+  Uri get fallbackLink {
+    final queryParameters = <String, String>{
+      'mt': mediaType,
+      if (campaignToken != null) 'ct': campaignToken!,
+      if (providerToken != null) 'pt': providerToken!,
+      if (affiliateToken != null) 'at': affiliateToken!,
+      if (uniqueOrigin != null) 'uo': uniqueOrigin!,
+    };
+    final pathSegments = <String>[
+      if (country != null) ...[country!],
+      'app',
+      appName,
+      'id$appId',
+    ];
+    return Uri(
+      scheme: 'https',
+      host: 'apps.apple.com',
+      pathSegments: pathSegments,
+      queryParameters: queryParameters,
     );
   }
+}
 
-  /// Opens the iMessage extension page for a specific app
+/// An action to rate a specific app in the iOS App Store.
+///
+/// This class extends [IOSAppStore] and implements [AppLinkAppAction] to provide
+/// functionality for opening the rating page of an app in the App Store.
+class IOSAppStoreRateAppAction extends IOSAppStore implements AppLinkAppAction {
+  /// Creates a new [IOSAppStoreRateAppAction] instance.
   ///
-  /// [appId] is the App Store ID of the app to open. Must be a valid numeric ID
-  /// between 1 and 10 digits long (e.g., '284882215' for Facebook).
-  /// [appName] is the app name slug for the web URL
-  /// [country] is the two-letter country code (optional)
-  /// [mediaType] specifies the type of content (default: '8' for iOS apps)
-  /// [campaignToken] is used to track campaigns (optional)
-  /// [providerToken] is a numeric identifier for your team/developer (optional)
-  /// [affiliateToken] is used for Apple's affiliate tracking (optional)
-  static IOSAppStoreAction openMessagesExtension({
-    required final String appId,
-    required final String appName,
-    final String? country,
-    final String mediaType = '8',
-    final String? campaignToken,
-    final String? providerToken,
-    final String? affiliateToken,
-  }) {
-    final parameters = <String, String>{'appId': appId, 'appName': appName, 'mt': mediaType};
+  /// Parameters:
+  /// - [appId]: The App Store ID of the app to rate.
+  /// - [appName]: The name of the app to rate.
+  /// - [mediaType]: The media type identifier.
+  /// - [country]: Optional two-letter country code to specify a country-specific store.
+  /// - [campaignToken]: Optional campaign token for tracking.
+  /// - [providerToken]: Optional provider token for affiliate programs.
+  /// - [affiliateToken]: Optional affiliate token for affiliate programs.
+  IOSAppStoreRateAppAction({
+    required this.appId,
+    required this.appName,
+    required this.mediaType,
+    this.country,
+    this.campaignToken,
+    this.providerToken,
+    this.affiliateToken,
+  });
 
-    if (country != null) {
-      parameters['country'] = country;
-    }
-    if (campaignToken != null) {
-      parameters['ct'] = campaignToken;
-    }
-    if (providerToken != null) {
-      parameters['pt'] = providerToken;
-    }
-    if (affiliateToken != null) {
-      parameters['at'] = affiliateToken;
-    }
+  /// The App Store ID of the app to rate.
+  final String appId;
 
-    return IOSAppStoreAction(
-      IOSAppStoreActionType.openMessagesExtension,
-      parameters: parameters,
+  /// The name of the app to rate.
+  final String appName;
+
+  /// The media type identifier.
+  final String mediaType;
+
+  /// Optional two-letter country code to specify a country-specific store.
+  final String? country;
+
+  /// Optional campaign token for tracking.
+  final String? campaignToken;
+
+  /// Optional provider token for affiliate programs.
+  final String? providerToken;
+
+  /// Optional affiliate token for affiliate programs.
+  final String? affiliateToken;
+
+  /// The app link URL for opening the app's rating page in the App Store app.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{
+      'mt': mediaType,
+      'action': 'write-review',
+      if (campaignToken != null) 'ct': campaignToken!,
+      if (providerToken != null) 'pt': providerToken!,
+      if (affiliateToken != null) 'at': affiliateToken!,
+    };
+    final pathSegments = <String>[
+      if (country != null) ...[country!],
+      'app',
+      appName,
+      'id$appId',
+    ];
+    return Uri(
+      scheme: 'itms-apps',
+      host: 'itunes.apple.com',
+      pathSegments: pathSegments,
+      queryParameters: queryParameters,
     );
   }
 }

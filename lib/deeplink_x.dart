@@ -11,7 +11,7 @@
 /// final deeplinkX = const DeeplinkX();
 ///
 /// // Open Instagram app
-/// await deeplinkX.launchAction(Instagram.open);
+/// await deeplinkX.launchApp(Instagram.open());
 ///
 /// // Open a specific profile
 /// await deeplinkX.launchAction(Instagram.openProfile('username'));

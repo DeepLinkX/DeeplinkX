@@ -4,30 +4,56 @@ DeeplinkX provides support for opening the Mac App Store and specific app pages,
 
 ## Available Actions
 
-### Open Mac App Store
+### Launch Mac App Store
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(MacAppStore.open);
+
+// Simple launch
+await deeplinkX.launchApp(MacAppStore.open());
+
+// Launch with fallback disabled
+await deeplinkX.launchApp(MacAppStore.open(), disableFallback: true);
 ```
 
-### Open App Page
+### Launch Mac App Store App Page Action
 ```dart
 final deeplinkX = DeeplinkX();
+
+// Simple action
 await deeplinkX.launchAction(MacAppStore.openAppPage(
-  appId: '497799835',  // Xcode app ID
-  appName: 'xcode',
-  country: 'us',       // Optional: two-letter country code
+  appId: '123456789',
+  appName: 'example-app',
 ));
+
+// Action with fallback disabled
+await deeplinkX.launchAction(
+  MacAppStore.openAppPage(
+    appId: '123456789',
+    appName: 'example-app',
+  ),
+  disableFallback: true,
+);
 ```
 
-### Open App Review Page
+### Launch App Review Page Action
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(MacAppStore.openReview(
-  appId: '497799835',  // Xcode app ID
-  appName: 'xcode',
+
+// Simple action
+await deeplinkX.launchAction(MacAppStore.rateApp(
+  appId: '123456789',  // Example app ID 
+  appName: 'example-app',
   country: 'us',       // Optional: two-letter country code
 ));
+
+// Action with fallback disabled
+await deeplinkX.launchAction(
+  MacAppStore.rateApp(
+    appId: '123456789',
+    appName: 'example-app',
+  ),
+  disableFallback: true,
+);
 ```
 
 ## Parameter Validations
@@ -94,8 +120,17 @@ When on other platforms or when native schemes fail:
 - [Apple Developer Documentation - URL Schemes](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content#3001215)
 - [Apple Developer Documentation - App Store Connect](https://appstoreconnect.apple.com/help)
 
-## Fallback Behavior
-DeeplinkX follows this sequence when handling Mac App Store deeplinks:
+## Fallback Support for Actions
 
-1. First, it attempts to launch the Mac App Store app if it's installed on the device.
-2. If the Mac App Store app is not installed or the device is not running macOS, DeeplinkX will automatically fall back to opening the Mac App Store web interface in the default browser.
+| Action      | Web Fallback |
+| ----------- | ------------ |
+| open        | ✅            |
+| openAppPage | ✅            |
+| rateApp     | ❌            |
+
+## Check If Mac App Store Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(MacAppStore());
+```

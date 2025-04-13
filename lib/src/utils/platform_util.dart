@@ -10,7 +10,9 @@ class PlatformUtil {
   ///
   /// Since this class only contains static methods and has no instance state,
   /// it can be instantiated as a const object.
-  const PlatformUtil();
+  PlatformUtil({final String? platfromName}) : _platformName = platfromName ?? defaultTargetPlatform.name;
+
+  final String _platformName;
 
   /// Returns the current platform based on the default target platform of the app.
   ///
@@ -19,5 +21,5 @@ class PlatformUtil {
   ///
   /// Returns:
   ///   A [PlatformType] representing the current platform.
-  PlatformType getCurrentPlatform() => PlatformType.fromOperatingSystem(defaultTargetPlatform.name.toLowerCase());
+  PlatformType getCurrentPlatform() => PlatformType.fromOperatingSystem(_platformName.toLowerCase());
 }

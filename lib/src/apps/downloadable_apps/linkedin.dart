@@ -1,124 +1,156 @@
-import 'package:deeplink_x/src/apps/app_stores/app_stores.dart';
-import 'package:deeplink_x/src/core/app_actions/downloadable_app_action.dart';
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/src.dart';
 
-/// LinkedIn-specific action types that define available deeplink actions
-enum LinkedInActionType implements ActionTypeEnum {
-  /// Opens a specific LinkedIn profile
-  openProfile,
-
-  /// Opens a specific LinkedIn company page
-  openCompany,
-}
-
-/// LinkedIn action implementation for handling LinkedIn-specific deeplinks
-class LinkedInAction extends DownloadableAppAction {
-  /// Creates a new LinkedIn action
-  ///
-  /// [type] specifies the type of action to perform (e.g., open app, open profile)
-  /// [fallBackToStore] determines if the action should redirect to app store when app isn't installed
-  /// [parameters] contains any additional data needed for the action (e.g., profile ID)
-  /// [actionType] is internally set to [type] for action handling
-  /// [supportedStoresActions] is set to predefined [storesActions] for store handling
-  LinkedInAction(
-    this.type, {
-    required super.fallBackToStore,
-    super.parameters,
-  }) : super(
-          actionType: type,
-          supportedStoresActions: storesActions,
-        );
-
-  /// Base URI for LinkedIn app deeplinks
-  static const baseUrl = 'linkedin://';
-
-  /// Base URI for LinkedIn web fallback
-  static const fallBackUri = 'https://www.linkedin.com';
-
-  /// The type of LinkedIn action to perform
-  final LinkedInActionType type;
-
-  /// List of store actions for downloading/opening LinkedIn across different platforms
-  ///
-  /// Contains actions for:
-  /// - Play Store
-  /// - iOS App Store
-  static final List<StoreAppAction> storesActions = [
-    PlayStore.openAppPage(packageName: 'com.linkedin.android'),
-    IOSAppStore.openAppPage(appId: '288429040', appName: 'linkedin-network-job-finder'),
-  ];
-
-  @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case LinkedInActionType.openProfile:
-        final profileId = parameters!['profileId'];
-
-        return Uri.parse(baseUrl).replace(
-          host: 'profile',
-          path: profileId,
-        );
-      case LinkedInActionType.openCompany:
-        final companyId = parameters!['companyId'];
-
-        return Uri.parse(baseUrl).replace(
-          host: 'company',
-          path: companyId,
-        );
-    }
-  }
-
-  @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case LinkedInActionType.openProfile:
-        final profileId = parameters!['profileId'];
-
-        return Uri.parse(fallBackUri).replace(
-          pathSegments: ['in', profileId!],
-        );
-      case LinkedInActionType.openCompany:
-        final companyId = parameters!['companyId'];
-
-        return Uri.parse(fallBackUri).replace(
-          pathSegments: ['company', companyId!],
-        );
-    }
-  }
-}
-
-/// Factory class for creating LinkedIn deeplink actions
+/// LinkedIn application.
 ///
-/// This class provides convenient factory methods for creating common LinkedIn
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for LinkedIn-specific action creation.
-class LinkedIn {
-  LinkedIn._();
-
-  /// Opens a specific LinkedIn profile
+/// This class implements the [DownloadableApp] interface to provide capabilities
+/// for interacting with the LinkedIn app on various platforms.
+class LinkedIn extends App implements DownloadableApp {
+  /// Creates a new [LinkedIn] instance.
   ///
-  /// [profileId] is the LinkedIn profile ID to open
-  static LinkedInAction openProfile(
-    final String profileId, {
-    final bool fallBackToStore = false,
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the LinkedIn app is not installed. Default is false.
+  LinkedIn({this.fallbackToStore = false});
+
+  /// Creates an action to open the LinkedIn app.
+  ///
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the LinkedIn app is not installed. Default is false.
+  ///
+  /// Returns a [LinkedIn] instance that can be used to open the LinkedIn app.
+  factory LinkedIn.open({final bool fallbackToStore = false}) => LinkedIn(fallbackToStore: fallbackToStore);
+
+  /// A list of actions to open the LinkedIn app's page in various app stores.
+  @override
+  List<StoreOpenAppPageAction> get storeActions => [
+        PlayStore.openAppPage(packageName: 'com.linkedin.android'),
+        IOSAppStore.openAppPage(appId: '288429040', appName: 'linkedin-network-job-finder'),
+      ];
+
+  /// The Android package name for the LinkedIn app.
+  @override
+  String get androidPackageName => 'com.linkedin.android';
+
+  /// The custom URL scheme for the LinkedIn app.
+  @override
+  String get customScheme => 'linkedin';
+
+  /// Whether to automatically redirect to app stores when the LinkedIn app is not installed.
+  @override
+  bool fallbackToStore;
+
+  /// The web URL for LinkedIn.
+  @override
+  Uri get website => Uri.parse('https://www.linkedin.com');
+
+  /// Creates an action to open a specific profile in the LinkedIn app.
+  ///
+  /// Parameters:
+  /// - [profileId]: The profile ID or username of the profile to open (e.g. 'johndoe').
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the LinkedIn app is not installed. Default is false.
+  ///
+  /// Returns a [LinkedInOpenProfileAction] instance that can be used to open
+  /// the specified profile in the LinkedIn app.
+  static LinkedInOpenProfileAction openProfile({
+    required final String profileId,
+    final bool fallbackToStore = false,
   }) =>
-      LinkedInAction(
-        LinkedInActionType.openProfile,
-        fallBackToStore: fallBackToStore,
-        parameters: {'profileId': profileId},
+      LinkedInOpenProfileAction(
+        profileId: profileId,
+        fallbackToStore: fallbackToStore,
       );
 
-  /// Opens a specific LinkedIn company page
+  /// Creates an action to open a specific company page in the LinkedIn app.
   ///
-  /// [companyId] is the LinkedIn company ID to open
-  static LinkedInAction openCompany(
-    final String companyId, {
-    final bool fallBackToStore = false,
+  /// Parameters:
+  /// - [companyId]: The company ID of the company page to open (e.g. 'johndoe').
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the LinkedIn app is not installed. Default is false.
+  ///
+  /// Returns a [LinkedInOpenCompanyAction] instance that can be used to open
+  /// the specified company page in the LinkedIn app.
+  static LinkedInOpenCompanyAction openCompany({
+    required final String companyId,
+    final bool fallbackToStore = false,
   }) =>
-      LinkedInAction(
-        LinkedInActionType.openCompany,
-        fallBackToStore: fallBackToStore,
-        parameters: {'companyId': companyId},
+      LinkedInOpenCompanyAction(
+        companyId: companyId,
+        fallbackToStore: fallbackToStore,
       );
+}
+
+/// An action to open a specific profile in the LinkedIn app.
+///
+/// This class extends [LinkedIn] and implements multiple interfaces to provide
+/// comprehensive functionality for opening profiles with fallback support.
+class LinkedInOpenProfileAction extends LinkedIn implements UniversalLinkAppAction, Fallbackable {
+  /// Creates a new [LinkedInOpenProfileAction] instance.
+  ///
+  /// Parameters:
+  /// - [profileId]: The profile ID or username of the profile to open.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the LinkedIn app is not installed.
+  LinkedInOpenProfileAction({
+    required this.profileId,
+    required super.fallbackToStore,
+  });
+
+  /// The profile ID or username of the profile to open.
+  final String profileId;
+
+  /// The universal link URL for opening the specified profile in the LinkedIn app.
+  ///
+  /// This URL can be used on any platform to open the profile in the LinkedIn app
+  /// or website if the app is not available.
+  @override
+  Uri get universalLink => Uri(
+        scheme: 'https',
+        host: 'www.linkedin.com',
+        path: 'in/$profileId',
+      );
+
+  /// The fallback link to use when the LinkedIn app cannot be opened.
+  ///
+  /// This returns the same URL as [universalLink] to open the profile on the LinkedIn website.
+  @override
+  Uri get fallbackLink => universalLink;
+}
+
+/// An action to open a specific company page in the LinkedIn app.
+///
+/// This class extends [LinkedIn] and implements multiple interfaces to provide
+/// comprehensive functionality for opening company pages with fallback support.
+class LinkedInOpenCompanyAction extends LinkedIn implements UniversalLinkAppAction, Fallbackable {
+  /// Creates a new [LinkedInOpenCompanyAction] instance.
+  ///
+  /// Parameters:
+  /// - [companyId]: The company ID of the company page to open.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the LinkedIn app is not installed.
+  LinkedInOpenCompanyAction({
+    required this.companyId,
+    required super.fallbackToStore,
+  });
+
+  /// The company ID of the company page to open.
+  final String companyId;
+
+  /// The universal link URL for opening the specified company page in the LinkedIn app.
+  ///
+  /// This URL can be used on any platform to open the company page in the LinkedIn app
+  /// or website if the app is not available.
+  @override
+  Uri get universalLink => Uri(
+        scheme: 'https',
+        host: 'www.linkedin.com',
+        path: 'company/$companyId',
+      );
+
+  /// The fallback link to use when the LinkedIn app cannot be opened.
+  ///
+  /// This returns the same URL as [universalLink] to open the company page on the LinkedIn website.
+  @override
+  Uri get fallbackLink => universalLink;
 }

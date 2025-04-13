@@ -1,170 +1,143 @@
-import 'dart:core';
+import 'package:deeplink_x/src/core/core.dart';
 
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_type.dart';
-
-/// Myket-specific action types that define available deeplink actions
-enum MyketActionType implements ActionTypeEnum {
-  /// Opens the Myket app
-  open,
-
-  /// Opens a specific app page in the Myket
-  openAppPage,
-
-  /// Rate specific app
-  rateApp,
-}
-
-/// Myket action implementation for handling Myket-specific deeplinks
-class MyketAction extends StoreAppAction {
-  /// Creates a new Myket action
-  ///
-  /// [type] specifies the type of action to perform
-  /// [parameters] contains any additional data needed for the action
-  const MyketAction(
-    this.type, {
-    super.parameters,
-  }) : super(actionType: type, platform: platformType);
-
-  /// The native platform type
-  static const platformType = PlatformType.android;
-
-  /// Base URI for Myket app deeplinks
-  static const baseUrl = 'myket://';
-
-  /// Base URI for Myket web fallback
-  static const fallBackUri = 'https://myket.ir';
-
-  /// The type of Myket action to perform
-  final MyketActionType type;
-
-  @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case MyketActionType.open:
-        return Uri.parse(baseUrl).replace(host: 'main');
-      case MyketActionType.openAppPage:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'id': packageName!};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        // Native app URI
-        return Uri.parse(baseUrl).replace(
-          host: 'details',
-          queryParameters: queryParams,
-        );
-      case MyketActionType.rateApp:
-        final packageName = parameters!['packageName'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'id': packageName!};
-
-        // Native app URI for review
-        return Uri.parse(baseUrl).replace(
-          host: 'comment',
-          queryParameters: queryParams,
-        );
-    }
-  }
-
-  @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case MyketActionType.open:
-        return Uri.parse(fallBackUri);
-      case MyketActionType.openAppPage:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-
-        // Build query parameters
-        final queryParams = <String, String>{};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        // Web fallback URI
-        return Uri.parse(fallBackUri).replace(
-          path: '/app/$packageName',
-          queryParameters: queryParams.isNotEmpty ? queryParams : null,
-        );
-      case MyketActionType.rateApp:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-
-        // Build query parameters
-        final queryParams = <String, String>{};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        // Web fallback URI for review
-        return Uri.parse(fallBackUri).replace(
-          path: '/app/$packageName',
-          fragment: 'reviews',
-          queryParameters: queryParams.isNotEmpty ? queryParams : null,
-        );
-    }
-  }
-}
-
-/// Factory class for creating Myket deeplink actions
+/// Myket Store application for Android.
 ///
-/// This class provides convenient factory methods for creating common Myket
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for Myket-specific action creation.
-class MyketStore {
-  MyketStore._();
+/// This class implements the [StoreApp] interface to provide capabilities
+/// for interacting with the Myket store on Android devices. Myket is
+/// a popular app store in Iran.
+class MyketStore implements StoreApp {
+  /// Creates a new [MyketStore] instance.
+  MyketStore();
 
-  /// Opens the Myket app
-  static const MyketAction open = MyketAction(MyketActionType.open);
-
-  /// Opens a specific app page in the Myket
+  /// Creates an action to open the Myket app.
   ///
-  /// [packageName] is the package name of the app to open (e.g., 'com.example.app')
-  /// [referrer] is an optional parameter for tracking the source of the install (optional)
-  static MyketAction openAppPage({
+  /// Returns a [MyketStore] instance that can be used to open the Myket app.
+  factory MyketStore.open() => MyketStore();
+
+  /// The platform this store app is associated with (Android).
+  @override
+  PlatformType platform = PlatformType.android;
+
+  /// The Android package name for the Myket app.
+  @override
+  String get androidPackageName => 'ir.mservices.market';
+
+  /// The custom URL scheme for the Myket app.
+  @override
+  String get customScheme => 'myket';
+
+  /// The web URL for the Myket store.
+  @override
+  Uri get website => Uri.parse('https://myket.ir');
+
+  /// Creates an action to open a specific app's page in the Myket store.
+  ///
+  /// Parameters:
+  /// - [packageName]: The package name of the app to open in the Myket store.
+  /// - [referrer]: Optional referrer parameter for tracking (e.g. 'utm_source=test_app').
+  ///
+  /// Returns a [MyketStoreOpenAppPageAction] instance that can be used to open
+  /// the specified app's page in the Myket store.
+  static MyketStoreOpenAppPageAction openAppPage({
     required final String packageName,
     final String? referrer,
-  }) {
-    final parameters = <String, String>{
-      'packageName': packageName,
+  }) =>
+      MyketStoreOpenAppPageAction(
+        packageName: packageName,
+        referrer: referrer,
+      );
+
+  /// Creates an action to rate a specific app in the Myket store.
+  ///
+  /// Parameters:
+  /// - [packageName]: The package name of the app to rate in the Myket store.
+  ///
+  /// Returns a [MyketStoreRateAppAction] instance that can be used to open
+  /// the rating page for the specified app in the Myket store.
+  static MyketStoreRateAppAction rateApp({
+    required final String packageName,
+  }) =>
+      MyketStoreRateAppAction(
+        packageName: packageName,
+      );
+}
+
+/// An action to open a specific app's page in the Myket store.
+///
+/// This class extends [MyketStore] and implements multiple interfaces to provide
+/// comprehensive functionality for opening app pages with fallback support.
+class MyketStoreOpenAppPageAction extends MyketStore implements AppLinkAppAction, Fallbackable, StoreOpenAppPageAction {
+  /// Creates a new [MyketStoreOpenAppPageAction] instance.
+  ///
+  /// Parameters:
+  /// - [packageName]: The package name of the app to open in the Myket store.
+  /// - [referrer]: Optional referrer parameter for tracking.
+  MyketStoreOpenAppPageAction({
+    required this.packageName,
+    this.referrer,
+  });
+
+  /// The package name of the app to open in the Myket store.
+  final String packageName;
+
+  /// Optional referrer parameter for tracking.
+  final String? referrer;
+
+  /// The app link URL for opening the specified app in the Myket app.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{
+      'id': packageName,
+      if (referrer != null) 'referrer': referrer!,
     };
-
-    if (referrer != null) {
-      parameters['referrer'] = referrer;
-    }
-
-    return MyketAction(
-      MyketActionType.openAppPage,
-      parameters: parameters,
+    return Uri(
+      scheme: 'myket',
+      host: 'details',
+      queryParameters: queryParameters,
     );
   }
 
-  /// Rate specific app
+  /// The fallback link to use when the Myket app cannot be opened.
   ///
-  /// On Android and when myket and app is installed, it opens Myket rating page.
-  /// On other platforms, it opens the app page review section.
-  ///
-  /// [packageName] is the package name of the app to rate (e.g., 'com.example.app')
-  static MyketAction rateApp({
-    required final String packageName,
-  }) {
-    final parameters = <String, String>{
-      'packageName': packageName,
+  /// This URL opens the app's page on the Myket website.
+  @override
+  Uri get fallbackLink {
+    final queryParameters = <String, String>{
+      if (referrer != null) 'referrer': referrer!,
     };
+    return Uri(
+      scheme: 'https',
+      host: 'myket.ir',
+      pathSegments: ['app', packageName],
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+    );
+  }
+}
 
-    return MyketAction(
-      MyketActionType.rateApp,
-      parameters: parameters,
+/// An action to rate a specific app in the Myket store.
+///
+/// This class extends [MyketStore] and implements [AppLinkAppAction] to provide
+/// functionality for opening the rating page of an app in the Myket store.
+class MyketStoreRateAppAction extends MyketStore implements AppLinkAppAction {
+  /// Creates a new [MyketStoreRateAppAction] instance.
+  ///
+  /// Parameters:
+  /// - [packageName]: The package name of the app to rate in the Myket store.
+  MyketStoreRateAppAction({
+    required this.packageName,
+  });
+
+  /// The package name of the app to rate in the Myket store.
+  final String packageName;
+
+  /// The app link URL for opening the app's rating page in the Myket app.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{'id': packageName};
+    return Uri(
+      scheme: 'myket',
+      host: 'comment',
+      queryParameters: queryParameters,
     );
   }
 }

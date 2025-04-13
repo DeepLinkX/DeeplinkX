@@ -1,104 +1,105 @@
-import 'package:deeplink_x/src/apps/app_stores/app_stores.dart';
-import 'package:deeplink_x/src/core/app_actions/downloadable_app_action.dart';
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/src.dart';
 
-/// Instagram-specific action types that define available deeplink actions
-enum InstagramActionType implements ActionTypeEnum {
-  /// Opens the Instagram app
-  open,
-
-  /// Opens a specific Instagram profile
-  openProfile,
-}
-
-/// Instagram action implementation for handling Instagram-specific deeplinks
-class InstagramAction extends DownloadableAppAction {
-  /// Creates a new Instagram action
-  ///
-  /// [type] specifies the type of action to perform (e.g., open app, open profile)
-  /// [fallBackToStore] determines if the action should redirect to app store when app isn't installed
-  /// [parameters] contains any additional data needed for the action (e.g., username for profile)
-  /// [actionType] is internally set to [type] for action handling
-  /// [supportedStoresActions] is set to predefined [storesActions] for store handling
-  InstagramAction(
-    this.type, {
-    required super.fallBackToStore,
-    super.parameters,
-  }) : super(
-          actionType: type,
-          supportedStoresActions: storesActions,
-        );
-
-  /// Base URI for Instagram app deeplinks
-  static const baseUrl = 'instagram://';
-
-  /// Base URI for Instagram web fallback
-  static const fallBackUri = 'https://www.instagram.com';
-
-  /// The type of Instagram action to perform
-  final InstagramActionType type;
-
-  /// List of store actions for downloading/opening Instagram across different platforms
-  ///
-  /// Contains actions for:
-  /// - Play Store
-  /// - iOS App Store
-  static final List<StoreAppAction> storesActions = [
-    PlayStore.openAppPage(packageName: 'com.instagram.android'),
-    IOSAppStore.openAppPage(appId: '389801252', appName: 'instagram'),
-  ];
-
-  @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case InstagramActionType.open:
-        return Uri.parse(baseUrl);
-      case InstagramActionType.openProfile:
-        final username = parameters!['username'];
-        return Uri.parse('${baseUrl}user?username=$username');
-    }
-  }
-
-  @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case InstagramActionType.open:
-        return Uri.parse(fallBackUri);
-      case InstagramActionType.openProfile:
-        final username = parameters!['username'];
-        return Uri.parse('$fallBackUri/$username');
-    }
-  }
-}
-
-/// Factory class for creating Instagram deeplink actions
+/// Instagram application.
 ///
-/// This class provides convenient factory methods for creating common Instagram
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for Instagram-specific action creation.
-class Instagram {
-  Instagram._();
-
-  /// Opens the Instagram app
-  static InstagramAction open({
-    final bool fallBackToStore = false,
-  }) =>
-      InstagramAction(
-        InstagramActionType.open,
-        fallBackToStore: fallBackToStore,
-      );
-
-  /// Opens a specific Instagram profile
+/// This class implements the [DownloadableApp] interface to provide capabilities
+/// for interacting with the Instagram app on various platforms.
+class Instagram extends App implements DownloadableApp {
+  /// Creates a new [Instagram] instance.
   ///
-  /// [username] is the Instagram username to open
-  static InstagramAction openProfile(
-    final String username, {
-    final bool fallBackToStore = false,
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Instagram app is not installed. Default is false.
+  Instagram({this.fallbackToStore = false});
+
+  /// Creates an action to open the Instagram app.
+  ///
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Instagram app is not installed. Default is false.
+  ///
+  /// Returns an [Instagram] instance that can be used to open the Instagram app.
+  factory Instagram.open({final bool fallbackToStore = false}) => Instagram(fallbackToStore: fallbackToStore);
+
+  /// A list of actions to open the Instagram app's page in various app stores.
+  @override
+  List<StoreOpenAppPageAction> get storeActions => [
+        PlayStore.openAppPage(packageName: 'com.instagram.android'),
+        IOSAppStore.openAppPage(appId: '389801252', appName: 'instagram'),
+      ];
+
+  /// The Android package name for the Instagram app.
+  @override
+  String get androidPackageName => 'com.instagram.android';
+
+  /// The custom URL scheme for the Instagram app.
+  @override
+  String get customScheme => 'instagram';
+
+  /// Whether to automatically redirect to app stores when the Instagram app is not installed.
+  @override
+  bool fallbackToStore;
+
+  /// The web URL for Instagram.
+  @override
+  Uri get website => Uri.parse('https://www.instagram.com');
+
+  /// Creates an action to open a specific profile in the Instagram app.
+  ///
+  /// Parameters:
+  /// - [username]: The username of the profile to open (e.g. 'instagram').
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Instagram app is not installed. Default is false.
+  ///
+  /// Returns an [InstagramOpenProfileAction] instance that can be used to open
+  /// the specified profile in the Instagram app.
+  static InstagramOpenProfileAction openProfile({
+    required final String username,
+    final bool fallbackToStore = false,
   }) =>
-      InstagramAction(
-        InstagramActionType.openProfile,
-        parameters: {'username': username},
-        fallBackToStore: fallBackToStore,
+      InstagramOpenProfileAction(
+        username: username,
+        fallbackToStore: fallbackToStore,
+      );
+}
+
+/// An action to open a specific profile in the Instagram app.
+///
+/// This class extends [Instagram] and implements multiple interfaces to provide
+/// comprehensive functionality for opening profiles with fallback support.
+class InstagramOpenProfileAction extends Instagram implements AppLinkAppAction, Fallbackable {
+  /// Creates a new [InstagramOpenProfileAction] instance.
+  ///
+  /// Parameters:
+  /// - [username]: The username of the profile to open.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Instagram app is not installed.
+  InstagramOpenProfileAction({
+    required this.username,
+    required super.fallbackToStore,
+  });
+
+  /// The username of the profile to open.
+  final String username;
+
+  /// The app link URL for opening the specified profile in the Instagram app.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{'username': username};
+    return Uri(
+      scheme: 'instagram',
+      host: 'user',
+      queryParameters: queryParameters,
+    );
+  }
+
+  /// The fallback link to use when the Instagram app cannot be opened.
+  ///
+  /// This URL opens the specified profile on the Instagram website.
+  @override
+  Uri get fallbackLink => Uri(
+        scheme: 'https',
+        host: 'www.instagram.com',
+        path: username,
       );
 }

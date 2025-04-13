@@ -1,152 +1,244 @@
+import 'package:deeplink_x/src/apps/app_stores/huawei_app_gallery_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/ios_app_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/mac_app_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/microsoft_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
 import 'package:deeplink_x/src/apps/downloadable_apps/telegram.dart';
-import 'package:deeplink_x/src/core/enums/platform_type.dart';
+import 'package:deeplink_x/src/core/interfaces/app_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/app_link_app_action_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/downloadable_app_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/fallbackable_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Telegram Actions', () {
-    late PlatformType platfromType;
-
-    setUpAll(() {
-      platfromType = PlatformType.android;
-    });
-
-    test('open action generates correct URIs', () async {
+    test('open action creates Telegram instance with correct properties', () {
       final action = Telegram.open();
-      final uris = await action.getUris(platfromType);
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'tg://');
-      expect(uris[1].toString(), 'https://t.me');
+      // As App
+      expect(action.customScheme, 'tg');
+      expect(action.androidPackageName, 'org.telegram.messenger');
+      expect(action.website.toString(), 'https://telegram.org');
+
+      // As DownloadableApp
+      expect(action.fallbackToStore, false);
+      expect(action.storeActions.length, 5);
     });
 
-    test('openProfile action generates correct URIs', () async {
-      final action = Telegram.openProfile('testuser');
-      final uris = await action.getUris(platfromType);
+    test('open action creates Telegram instance with correct type', () {
+      final action = Telegram.open();
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'tg://resolve?domain=testuser&profile');
-      expect(uris[1].toString(), 'https://t.me/testuser?profile');
+      expect(action, isInstanceOf<App>());
+      expect(action, isInstanceOf<DownloadableApp>());
     });
 
-    test('openProfilePhoneNumber action generates correct URIs', () async {
-      final action = Telegram.openProfilePhoneNumber('1234567890');
-      final uris = await action.getUris(platfromType);
+    test('openProfile action creates correct type', () {
+      final action = Telegram.openProfile(
+        username: 'testuser',
+      );
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'tg://resolve?phone=1234567890&profile');
-      expect(uris[1].toString(), 'https://t.me/+1234567890?profile');
+      expect(action, isInstanceOf<App>());
+      expect(action, isInstanceOf<DownloadableApp>());
+      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
     });
 
-    test('sendMessage action generates correct URIs', () async {
-      final action = Telegram.sendMessage('testuser', 'Hello World');
-      final uris = await action.getUris(platfromType);
+    test('openProfile action creates correct URIs', () {
+      final action = Telegram.openProfile(
+        username: 'testuser',
+      );
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'tg://resolve?domain=testuser&text=Hello%20World');
-      expect(uris[1].toString(), 'https://t.me/testuser?text=Hello%20World');
+      expect(
+        action.appLink.toString(),
+        'tg://resolve?domain=testuser&profile',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://t.me/testuser?profile',
+      );
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on Android platform', () async {
-      final action = Telegram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.android);
+    test('openProfileByPhoneNumber action creates correct type', () {
+      final action = Telegram.openProfileByPhoneNumber(
+        phoneNumber: '1234567890',
+      );
 
-      expect(uris.length, 4);
-      expect(uris[0].toString(), 'tg://');
-      expect(uris[1].toString(), 'market://details?id=org.telegram.messenger');
-      expect(uris[2].toString(), 'appmarket://details?id=org.telegram.messenger');
-      expect(uris[3].toString(), 'https://t.me');
+      expect(action, isInstanceOf<App>());
+      expect(action, isInstanceOf<DownloadableApp>());
+      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on iOS platform', () async {
-      final action = Telegram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.ios);
+    test('openProfileByPhoneNumber action creates correct URIs', () {
+      final action = Telegram.openProfileByPhoneNumber(
+        phoneNumber: '1234567890',
+      );
 
-      expect(uris.length, 3);
-      expect(uris[0].toString(), 'tg://');
-      expect(uris[1].toString(), 'itms-apps://itunes.apple.com/app/telegram-messenger/id686449807?mt=8');
-      expect(uris[2].toString(), 'https://t.me');
+      expect(
+        action.appLink.toString(),
+        'tg://resolve?phone=1234567890&profile',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://t.me/+1234567890?profile',
+      );
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on macOS platform', () async {
-      final action = Telegram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.macos);
+    test('sendMessage action creates correct type', () {
+      final action = Telegram.sendMessage(
+        username: 'testuser',
+        message: 'Hello World',
+      );
 
-      expect(uris.length, 3);
-      expect(uris[0].toString(), 'tg://');
-      expect(uris[1].toString(), 'macappstore://itunes.apple.com/app/mac/telegram/id747648890?mt=12');
-      expect(uris[2].toString(), 'https://t.me');
+      expect(action, isInstanceOf<App>());
+      expect(action, isInstanceOf<DownloadableApp>());
+      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on Windows platform', () async {
-      final action = Telegram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.windows);
+    test('sendMessage action creates correct URIs', () {
+      final action = Telegram.sendMessage(
+        username: 'testuser',
+        message: 'Hello World',
+      );
 
-      expect(uris.length, 3);
-      expect(uris[0].toString(), 'tg://');
-      expect(uris[1].toString(), 'ms-windows-store://pdp/?ProductId=9nztwsqntd0s');
-      expect(uris[2].toString(), 'https://t.me');
+      expect(
+        action.appLink.toString(),
+        'tg://resolve?domain=testuser&text=Hello%20World',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://t.me/testuser?text=Hello%20World',
+      );
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on Linux platform', () async {
-      final action = Telegram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.linux);
+    test('sendMessageByPhoneNumber action creates correct type', () {
+      final action = Telegram.sendMessageByPhoneNumber(
+        phoneNumber: '1234567890',
+        message: 'Hello World',
+      );
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'tg://');
-      expect(uris[1].toString(), 'https://t.me');
+      expect(action, isInstanceOf<App>());
+      expect(action, isInstanceOf<DownloadableApp>());
+      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on Web platform', () async {
-      final action = Telegram.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.web);
+    test('sendMessageByPhoneNumber action creates correct URIs', () {
+      final action = Telegram.sendMessageByPhoneNumber(
+        phoneNumber: '1234567890',
+        message: 'Hello World',
+      );
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'tg://');
-      expect(uris[1].toString(), 'https://t.me');
+      expect(
+        action.appLink.toString(),
+        'tg://resolve?phone=1234567890&text=Hello%20World',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://t.me/+1234567890?text=Hello%20World',
+      );
     });
 
-    test('sendMessagePhoneNumber action generates correct URIs', () async {
-      final action = Telegram.sendMessagePhoneNumber('1234567890', 'Hello World');
-      final uris = await action.getUris(platfromType);
+    test('open action with fallbackToStore creates Telegram instance with correct properties', () {
+      final action = Telegram.open(fallbackToStore: true);
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'tg://resolve?phone=1234567890&text=Hello%20World');
-      expect(uris[1].toString(), 'https://t.me/+1234567890?text=Hello%20World');
+      // As App
+      expect(action.customScheme, 'tg');
+      expect(action.androidPackageName, 'org.telegram.messenger');
+      expect(action.website.toString(), 'https://telegram.org');
+
+      // As DownloadableApp
+      expect(action.fallbackToStore, true);
+      expect(action.storeActions.length, 5);
     });
 
-    test('message encoding handles @ symbol correctly', () async {
-      final action = Telegram.sendMessage('testuser', '@mention');
-      final uris = await action.getUris(platfromType);
+    test('store actions have correct properties', () {
+      final telegram = Telegram();
+      final storeActions = telegram.storeActions;
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'tg://resolve?domain=testuser&text=%20%40mention');
-      expect(uris[1].toString(), 'https://t.me/testuser?text=%20%40mention');
+      // Play Store action
+      final playStoreAction = storeActions[0] as PlayStoreOpenAppPageAction;
+      expect(playStoreAction.packageName, 'org.telegram.messenger');
+
+      // Huawei App Gallery action
+      final huaweiStoreAction = storeActions[1] as HuaweiAppGalleryStoreOpenAppPageAction;
+      expect(huaweiStoreAction.packageName, 'org.telegram.messenger');
+      expect(huaweiStoreAction.appId, 'C101184875');
+
+      // iOS App Store action
+      final iosStoreAction = storeActions[2] as IOSAppStoreOpenAppPageAction;
+      expect(iosStoreAction.appId, '686449807');
+      expect(iosStoreAction.appName, 'telegram-messenger');
+
+      // Microsoft Store action
+      final microsoftStoreAction = storeActions[3] as MicrosoftStoreOpenAppPageAction;
+      expect(microsoftStoreAction.productId, '9nztwsqntd0s');
+
+      // Mac App Store action
+      final macStoreAction = storeActions[4] as MacAppStoreOpenAppPageAction;
+      expect(macStoreAction.appId, '747648890');
+      expect(macStoreAction.appName, 'telegram');
     });
 
-    test('parameters are correctly stored for openProfile', () {
-      final action = Telegram.openProfile('testuser');
-      expect(action.parameters, {'username': 'testuser'});
+    test('openProfile action stores parameters correctly', () {
+      final action = Telegram.openProfile(
+        username: 'testuser',
+        fallbackToStore: true,
+      );
+
+      expect(action.username, 'testuser');
+      expect(action.fallbackToStore, true);
     });
 
-    test('parameters are correctly stored for openProfilePhoneNumber', () {
-      final action = Telegram.openProfilePhoneNumber('1234567890');
-      expect(action.parameters, {'phoneNumber': '1234567890'});
+    test('openProfileByPhoneNumber action stores parameters correctly', () {
+      final action = Telegram.openProfileByPhoneNumber(
+        phoneNumber: '1234567890',
+        fallbackToStore: true,
+      );
+
+      expect(action.phoneNumber, '1234567890');
+      expect(action.fallbackToStore, true);
     });
 
-    test('parameters are correctly stored for sendMessage', () {
-      final action = Telegram.sendMessage('testuser', 'Hello World');
-      expect(action.parameters, {
-        'username': 'testuser',
-        'message': 'Hello World',
-      });
+    test('sendMessage action stores parameters correctly', () {
+      final action = Telegram.sendMessage(
+        username: 'testuser',
+        message: 'Hello World',
+        fallbackToStore: true,
+      );
+
+      expect(action.username, 'testuser');
+      expect(action.message, 'Hello World');
+      expect(action.fallbackToStore, true);
     });
 
-    test('parameters are correctly stored for sendMessagePhoneNumber', () {
-      final action = Telegram.sendMessagePhoneNumber('1234567890', 'Hello World');
-      expect(action.parameters, {
-        'phoneNumber': '1234567890',
-        'message': 'Hello World',
-      });
+    test('sendMessageByPhoneNumber action stores parameters correctly', () {
+      final action = Telegram.sendMessageByPhoneNumber(
+        phoneNumber: '1234567890',
+        message: 'Hello World',
+        fallbackToStore: true,
+      );
+
+      expect(action.phoneNumber, '1234567890');
+      expect(action.message, 'Hello World');
+      expect(action.fallbackToStore, true);
+    });
+
+    test('message encoding handles @ symbol correctly', () {
+      final action = Telegram.sendMessage(
+        username: 'testuser',
+        message: '@mention',
+      );
+
+      expect(
+        action.appLink.toString(),
+        'tg://resolve?domain=testuser&text=%20%40mention',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://t.me/testuser?text=%20%40mention',
+      );
     });
   });
 }

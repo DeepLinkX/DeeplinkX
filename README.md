@@ -6,10 +6,11 @@ A lightweight Flutter plugin for type-safe handling of external deeplinks with b
 
 ## Features
 
+- Easy to use
 - Type-safe API for external deeplinks
 - Multi-platform support
 - Smart fallback system
-- No native platform code, everything is handled by url_launcher package.
+- No native platform codes
 
 ## Usage
 
@@ -19,40 +20,46 @@ import 'package:deeplink_x/deeplink_x.dart';
 void main() {
   final deeplinkX = DeeplinkX();
 
-  // Open Instagram app with store fallback
-  deeplinkX.launchAction(Instagram.open(fallBackToStore: true));
+  // Launch App Actions
+  final isActionLaunched = await deeplinkX.launchAction(Telegram.openProfile('username'));
+  deeplinkX.launchAction(Telegram.openProfile('username', fallBackToStore: true));
+  deeplinkX.launchAction(Telegram.openProfile('username'), disableFallback: true);
 
-  // Open Telegram profile
-  deeplinkX.launchAction(Telegram.openProfile('username'));
+  // Launch Apps
+  final isLaunched = await deeplinkX.launchApp(Instagram.open());
+  deeplinkX.launchApp(Instagram.open(fallBackToStore: true));
+  deeplinkX.launchApp(Instagram.open(), disableFallback: true);
 
-  // Open iOS App Store app
-  deeplinkX.launchAction(IOSAppStore.open());
-  
-  // Check if Instagram app can be opened
-  final canOpenInstagram = await deeplinkX.canLaunch(Instagram.open());
-  
-  // Check if native Instagram URI can be launched and app is installed
-  final canLaunchNative = await deeplinkX.canLaunchNativeDeeplink(
-    Instagram.openProfile('username')
+  // Check App Is Installed
+  final isInstalled = await deeplinkX.isAppInstalled(LinkedIn());
+
+  // Redirect to store (Update app use case)
+  // Redirect to appropriate store based on platform
+  final isRedirected = await deeplinkX.redirectToStore(
+    storeActions: [
+      AppStore.openAppPage(appId: '389801252'),  // iOS App Store
+      PlayStore.openAppPage(packageName: 'com.instagram.android'),  // Google Play Store
+      HuaweiAppGalleryStore.openAppPage(appId: 'C101162369'),  // Huawei AppGallery Store
+    ],
   );
 }
 ```
 
 ## Supported Apps And Actions
 
-| Category    | App                     | Supported Actions                                                                |
-| ----------- | ----------------------- | -------------------------------------------------------------------------------- |
-| Stores      | iOS App Store           | • Open app<br>• Open app page<br>• Open review page<br>• Open iMessage extension |
-| Stores      | Mac App Store           | • Open app<br>• Open app page<br>• Open review page                              |
-| Stores      | Microsoft Store         | • Open app<br>• Open app page<br>• Open review page                              |
-| Stores      | Google Play Store       | • Open app<br>• Open app page<br>• Open review page                              |
-| Stores      | Huawei AppGallery Store | • Open app page                                                                  |
-| Stores      | Cafe Bazaar Store       | • Open app<br>• Open app page                                                    |
-| Stores      | Myket Store             | • Open app<br>• Open app page<br>• Rate app                                      |
-| Social Apps | Telegram                | • Open app<br>• Open profile by username/phone<br>• Send message                 |
-| Social Apps | Instagram               | • Open app<br>• Open profile by username                                         |
-| Social Apps | WhatsApp                | • Open app<br>• Chat with phone number<br>• Share text content                   |
-| Business    | LinkedIn                | • Open profile<br>• Open company page                                            |
+| Category    | App                     | Supported Actions                                                  |
+| ----------- | ----------------------- | ------------------------------------------------------------------ |
+| Stores      | iOS App Store           | • Launch app<br>• Open app page<br>• Rate app                      |
+| Stores      | Mac App Store           | • Launch app<br>• Open app page<br>• Rate app                      |
+| Stores      | Microsoft Store         | • Launch app<br>• Open app page<br>• Rate app                      |
+| Stores      | Google Play Store       | • Launch app<br>• Open app page                                    |
+| Stores      | Huawei AppGallery Store | • Launch app<br>• Open app page                                    |
+| Stores      | Cafe Bazaar Store       | • Launch app<br>• Open app page                                    |
+| Stores      | Myket Store             | • Launch app<br>• Open app page<br>• Rate app                      |
+| Social Apps | Telegram                | • Launch app<br>• Open profile by username/phone<br>• Send message |
+| Social Apps | Instagram               | • Launch app<br>• Open profile by username                         |
+| Social Apps | WhatsApp                | • Launch app<br>• Chat with phone number<br>• Share text content   |
+| Business    | LinkedIn                | • Launch app<br>• Open profile page<br>• Open company page         |
 
 ## Documentation
 
@@ -72,19 +79,23 @@ Detailed documentation available in [doc/apps](https://github.com/ParhamHatan/De
 
 ## URL Scheme Handling
 
-DeeplinkX uses a three-tier approach for maximum compatibility:
+DeeplinkX uses a three-tier approach for compatibility:
 
 1. **Native App Deep Links**: Direct app launch when installed
 2. **Store Fallback**: Redirects to app stores when apps aren't installed (with `fallBackToStore: true`)
 3. **Web Fallback**: Redirects to web URLs when neither app nor store is available
 
-Example:
+Most app actions (like opening profiles, sending messages) support all three fallback levels:
+
 ```dart
-// Enable store fallback
+// With store fallback enabled
 await deeplinkX.launchAction(Instagram.open(fallBackToStore: true));
+
+// With fallback disabled
+await deeplinkX.launchAction(Instagram.open(), disableFallback: true);
 ```
 
-For URL schemes and web fallbacks, see each app's documentation.
+For detailed URL schemes and fallback behavior, see each app's documentation.
 
 ## Platform-Specific Configuration
 See respective app documentation for platform-specific configuration.

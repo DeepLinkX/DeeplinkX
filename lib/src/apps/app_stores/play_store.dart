@@ -1,213 +1,105 @@
-import 'dart:core';
+import 'package:deeplink_x/src/core/core.dart';
 
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_type.dart';
-
-/// Play Store-specific action types that define available deeplink actions
-enum PlayStoreActionType implements ActionTypeEnum {
-  /// Opens the Play Store app
-  open,
-
-  /// Opens a specific app page in the Play Store
-  openAppPage,
-
-  /// Opens the review page for a specific app
-  openAppReviewPage,
-}
-
-/// Play Store action implementation for handling Play Store-specific deeplinks
-class PlayStoreAction extends StoreAppAction {
-  /// Creates a new Play Store action
-  ///
-  /// [type] specifies the type of action to perform
-  /// [parameters] contains any additional data needed for the action
-  const PlayStoreAction(
-    this.type, {
-    super.parameters,
-  }) : super(actionType: type, platform: platformType);
-
-  /// The native platform type
-  static const platformType = PlatformType.android;
-
-  /// Base URI for Play Store app deeplinks
-  static const baseUrl = 'market://';
-
-  /// Base URI for Play Store web fallback
-  static const fallBackUri = 'https://play.google.com';
-
-  /// The type of Play Store action to perform
-  final PlayStoreActionType type;
-
-  @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case PlayStoreActionType.open:
-        return Uri.parse(baseUrl);
-      case PlayStoreActionType.openAppPage:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-        final hl = parameters!['hl'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'id': packageName!};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        if (hl != null) {
-          queryParams['hl'] = hl;
-        }
-
-        // Native app URI
-        return Uri.parse(baseUrl).replace(
-          host: 'details',
-          queryParameters: queryParams,
-        );
-      case PlayStoreActionType.openAppReviewPage:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-        final hl = parameters!['hl'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'id': packageName!, 'showAllReviews': 'true'};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        if (hl != null) {
-          queryParams['hl'] = hl;
-        }
-
-        // Native app URI for review
-        return Uri.parse(baseUrl).replace(
-          host: 'details',
-          queryParameters: queryParams,
-        );
-    }
-  }
-
-  @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case PlayStoreActionType.open:
-        return Uri.parse(fallBackUri);
-      case PlayStoreActionType.openAppPage:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-        final hl = parameters!['hl'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'id': packageName!};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        if (hl != null) {
-          queryParams['hl'] = hl;
-        }
-
-        // Web fallback URI
-        return Uri(
-          scheme: 'https',
-          host: 'play.google.com',
-          path: '/store/apps/details',
-          queryParameters: queryParams,
-        );
-      case PlayStoreActionType.openAppReviewPage:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-        final hl = parameters!['hl'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'id': packageName!, 'showAllReviews': 'true'};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        if (hl != null) {
-          queryParams['hl'] = hl;
-        }
-
-        // Web fallback URI for review
-        return Uri(
-          scheme: 'https',
-          host: 'play.google.com',
-          path: '/store/apps/details',
-          queryParameters: queryParams,
-        );
-    }
-  }
-}
-
-/// Factory class for creating Play Store deeplink actions
+/// Google Play Store application for Android.
 ///
-/// This class provides convenient factory methods for creating common Play Store
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for Play Store-specific action creation.
-class PlayStore {
-  PlayStore._();
+/// This class implements the [StoreApp] interface to provide capabilities
+/// for interacting with the Google Play Store on Android devices.
+class PlayStore implements StoreApp {
+  /// Creates a new [PlayStore] instance.
+  PlayStore();
 
-  /// Opens the Play Store app
-  static const PlayStoreAction open = PlayStoreAction(PlayStoreActionType.open);
-
-  /// Opens a specific app page in the Play Store
+  /// Creates an action to open the Google Play Store.
   ///
-  /// [packageName] is the package name of the app to open (e.g., 'com.example.app')
-  /// [referrer] is an optional parameter for tracking the source of the install (optional)
-  /// [hl] is an optional parameter for specifying the language (e.g., 'en', 'fr', 'de')
-  static PlayStoreAction openAppPage({
+  /// Returns a [PlayStore] instance that can be used to open the Google Play Store app.
+  factory PlayStore.open() => PlayStore();
+
+  /// The platform this store app is associated with (Android).
+  @override
+  PlatformType platform = PlatformType.android;
+
+  /// The Android package name for the Google Play Store app.
+  @override
+  String? get androidPackageName => 'com.android.vending';
+
+  /// The custom URL scheme for the Google Play Store.
+  @override
+  String get customScheme => 'market';
+
+  /// The web URL for the Google Play Store.
+  @override
+  Uri get website => Uri.parse('https://play.google.com/store/apps');
+
+  /// Creates an action to open a specific app's page in the Google Play Store.
+  ///
+  /// Parameters:
+  /// - [packageName]: The package name of the app to open in the Play Store.
+  /// - [referrer]: Optional referrer parameter for tracking (e.g. 'utm_source=test_app').
+  /// - [language]: Optional language code to display the store page in a specific language (e.g. 'en').
+  ///
+  /// Returns a [PlayStoreOpenAppPageAction] instance that can be used to open
+  /// the specified app's page in the Google Play Store.
+  static PlayStoreOpenAppPageAction openAppPage({
     required final String packageName,
     final String? referrer,
-    final String? hl,
-  }) {
-    final parameters = <String, String>{
-      'packageName': packageName,
+    final String? language,
+  }) =>
+      PlayStoreOpenAppPageAction(
+        packageName: packageName,
+        referrer: referrer,
+        language: language,
+      );
+}
+
+/// An action to open a specific app's page in the Google Play Store.
+///
+/// This class extends [PlayStore] and implements multiple interfaces to provide
+/// comprehensive functionality for opening app pages in the Play Store with
+/// fallback support.
+class PlayStoreOpenAppPageAction extends PlayStore
+    implements UniversalLinkAppAction, Fallbackable, StoreOpenAppPageAction {
+  /// Creates a new [PlayStoreOpenAppPageAction] instance.
+  ///
+  /// Parameters:
+  /// - [packageName]: The package name of the app to open in the Play Store.
+  /// - [referrer]: Optional referrer parameter for tracking.
+  /// - [language]: Optional language code to display the store page in a specific language.
+  PlayStoreOpenAppPageAction({
+    required this.packageName,
+    this.referrer,
+    this.language,
+  });
+
+  /// The package name of the app to open in the Play Store.
+  final String packageName;
+
+  /// Optional referrer parameter for tracking.
+  final String? referrer;
+
+  /// Optional language code to display the store page in a specific language.
+  final String? language;
+
+  /// The universal link URL for opening the app's page in the Play Store.
+  ///
+  /// This URL can be used on any platform to open the app's page in a web browser
+  /// if the Play Store app is not available.
+  @override
+  Uri get universalLink {
+    final queryParameters = <String, String>{
+      'id': packageName,
+      if (referrer != null) 'referrer': referrer!,
+      if (language != null) 'hl': language!,
     };
-
-    if (referrer != null) {
-      parameters['referrer'] = referrer;
-    }
-
-    if (hl != null) {
-      parameters['hl'] = hl;
-    }
-
-    return PlayStoreAction(
-      PlayStoreActionType.openAppPage,
-      parameters: parameters,
+    return Uri(
+      scheme: 'https',
+      host: 'play.google.com',
+      path: 'store/apps/details',
+      queryParameters: queryParameters,
     );
   }
 
-  /// Opens the review page for a specific app
+  /// The fallback link to use when the Play Store app cannot be opened.
   ///
-  /// [packageName] is the package name of the app to open (e.g., 'com.example.app')
-  /// [referrer] is an optional parameter for tracking the source of the install (optional)
-  /// [hl] is an optional parameter for specifying the language (e.g., 'en', 'fr', 'de')
-  static PlayStoreAction openAppReviewPage({
-    required final String packageName,
-    final String? referrer,
-    final String? hl,
-  }) {
-    final parameters = <String, String>{
-      'packageName': packageName,
-    };
-
-    if (referrer != null) {
-      parameters['referrer'] = referrer;
-    }
-
-    if (hl != null) {
-      parameters['hl'] = hl;
-    }
-
-    return PlayStoreAction(
-      PlayStoreActionType.openAppReviewPage,
-      parameters: parameters,
-    );
-  }
+  /// This returns the same URL as [universalLink] to open the app's page in a web browser.
+  @override
+  Uri get fallbackLink => universalLink;
 }

@@ -1,117 +1,161 @@
+import 'package:deeplink_x/src/apps/app_stores/ios_app_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/mac_app_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/microsoft_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
 import 'package:deeplink_x/src/apps/downloadable_apps/whatsapp.dart';
-import 'package:deeplink_x/src/core/enums/platform_type.dart';
+import 'package:deeplink_x/src/core/interfaces/app_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/app_link_app_action_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/downloadable_app_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/fallbackable_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('WhatsApp Actions', () {
-    late PlatformType platformType;
-
-    setUpAll(() {
-      platformType = PlatformType.android;
-    });
-
-    test('open action generates correct URIs', () async {
+    test('open action creates WhatsApp instance with correct properties', () {
       final action = WhatsApp.open();
-      final uris = await action.getUris(platformType);
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'whatsapp://');
-      expect(uris[1].toString(), 'https://wa.me');
+      // As App
+      expect(action.customScheme, 'whatsapp');
+      expect(action.androidPackageName, 'com.whatsapp');
+      expect(action.website.toString(), 'https://www.whatsapp.com');
+
+      // As DownloadableApp
+      expect(action.fallbackToStore, false);
+      expect(action.storeActions.length, 4);
     });
 
-    test('chat action generates correct URIs', () async {
-      final action = WhatsApp.chat('1234567890', text: 'Hello World');
-      final uris = await action.getUris(platformType);
+    test('open action creates WhatsApp instance with correct type', () {
+      final action = WhatsApp.open();
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'whatsapp://send?phone=1234567890&text=Hello+World');
-      expect(uris[1].toString(), 'https://wa.me/1234567890?text=Hello+World');
+      expect(action, isInstanceOf<App>());
+      expect(action, isInstanceOf<DownloadableApp>());
     });
 
-    test('chat action without text generates correct URIs', () async {
-      final action = WhatsApp.chat('1234567890');
-      final uris = await action.getUris(platformType);
+    test('chat action creates correct type', () {
+      final action = WhatsApp.chat(
+        phoneNumber: '1234567890',
+        message: 'Hello World',
+      );
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'whatsapp://send?phone=1234567890');
-      expect(uris[1].toString(), 'https://wa.me/1234567890');
+      expect(action, isInstanceOf<App>());
+      expect(action, isInstanceOf<DownloadableApp>());
+      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
     });
 
-    test('share action generates correct URIs', () async {
-      final action = WhatsApp.share('Hello World');
-      final uris = await action.getUris(platformType);
+    test('chat action creates correct URIs', () {
+      final action = WhatsApp.chat(
+        phoneNumber: '1234567890',
+        message: 'Hello World',
+      );
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'whatsapp://send?text=Hello+World');
-      expect(uris[1].toString(), 'https://wa.me?text=Hello+World');
+      expect(
+        action.appLink.toString(),
+        'whatsapp://send?phone=1234567890&text=Hello+World',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://wa.me/1234567890?text=Hello+World',
+      );
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on Android platform', () async {
-      final action = WhatsApp.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.android);
+    test('chat action without text creates correct URIs', () {
+      final action = WhatsApp.chat(
+        phoneNumber: '1234567890',
+      );
 
-      expect(uris.length, 3);
-      expect(uris[0].toString(), 'whatsapp://');
-      expect(uris[1].toString(), 'market://details?id=com.whatsapp');
-      expect(uris[2].toString(), 'https://wa.me');
+      expect(
+        action.appLink.toString(),
+        'whatsapp://send?phone=1234567890',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://wa.me/1234567890',
+      );
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on iOS platform', () async {
-      final action = WhatsApp.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.ios);
+    test('shareText action creates correct type', () {
+      final action = WhatsApp.shareText(
+        text: 'Hello World',
+      );
 
-      expect(uris.length, 3);
-      expect(uris[0].toString(), 'whatsapp://');
-      expect(uris[1].toString(), 'itms-apps://itunes.apple.com/app/whatsapp-messenger/id310633997?mt=8');
-      expect(uris[2].toString(), 'https://wa.me');
+      expect(action, isInstanceOf<App>());
+      expect(action, isInstanceOf<DownloadableApp>());
+      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on macOS platform', () async {
-      final action = WhatsApp.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.macos);
+    test('shareText action creates correct URIs', () {
+      final action = WhatsApp.shareText(
+        text: 'Hello World',
+      );
 
-      expect(uris.length, 3);
-      expect(uris[0].toString(), 'whatsapp://');
-      expect(uris[1].toString(), 'macappstore://itunes.apple.com/app/mac/whatsapp-messenger/id310633997?mt=12');
-      expect(uris[2].toString(), 'https://wa.me');
+      expect(
+        action.appLink.toString(),
+        'whatsapp://send?text=Hello+World',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://wa.me?text=Hello+World',
+      );
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on Windows platform', () async {
-      final action = WhatsApp.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.windows);
+    test('open action with fallbackToStore creates WhatsApp instance with correct properties', () {
+      final action = WhatsApp.open(fallbackToStore: true);
 
-      expect(uris.length, 3);
-      expect(uris[0].toString(), 'whatsapp://');
-      expect(uris[1].toString(), 'ms-windows-store://pdp/?ProductId=9nksqgp7f2nh');
-      expect(uris[2].toString(), 'https://wa.me');
+      // As App
+      expect(action.customScheme, 'whatsapp');
+      expect(action.androidPackageName, 'com.whatsapp');
+      expect(action.website.toString(), 'https://www.whatsapp.com');
+
+      // As DownloadableApp
+      expect(action.fallbackToStore, true);
+      expect(action.storeActions.length, 4);
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on Linux platform', () async {
-      final action = WhatsApp.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.linux);
+    test('store actions have correct properties', () {
+      final whatsapp = WhatsApp();
+      final storeActions = whatsapp.storeActions;
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'whatsapp://');
-      expect(uris[1].toString(), 'https://wa.me');
+      // Play Store action
+      final playStoreAction = storeActions[0] as PlayStoreOpenAppPageAction;
+      expect(playStoreAction.packageName, 'com.whatsapp');
+
+      // iOS App Store action
+      final iosStoreAction = storeActions[1] as IOSAppStoreOpenAppPageAction;
+      expect(iosStoreAction.appId, '310633997');
+      expect(iosStoreAction.appName, 'whatsapp-messenger');
+
+      // Microsoft Store action
+      final microsoftStoreAction = storeActions[2] as MicrosoftStoreOpenAppPageAction;
+      expect(microsoftStoreAction.productId, '9nksqgp7f2nh');
+
+      // Mac App Store action
+      final macStoreAction = storeActions[3] as MacAppStoreOpenAppPageAction;
+      expect(macStoreAction.appId, '310633997');
+      expect(macStoreAction.appName, 'whatsapp-messenger');
     });
 
-    test('open action generates correct URIs when fallBackToStore is true on Web platform', () async {
-      final action = WhatsApp.open(fallBackToStore: true);
-      final uris = await action.getUris(PlatformType.web);
+    test('chat action stores parameters correctly', () {
+      final action = WhatsApp.chat(
+        phoneNumber: '1234567890',
+        message: 'Hello World',
+        fallbackToStore: true,
+      );
 
-      expect(uris.length, 2);
-      expect(uris[0].toString(), 'whatsapp://');
-      expect(uris[1].toString(), 'https://wa.me');
+      expect(action.phoneNumber, '1234567890');
+      expect(action.message, 'Hello World');
+      expect(action.fallbackToStore, true);
     });
 
-    test('parameters are correctly stored for chat action', () {
-      final action = WhatsApp.chat('1234567890', text: 'Hello World');
-      expect(action.parameters, {'phoneNumber': '1234567890', 'text': 'Hello World'});
-    });
+    test('shareText action stores parameters correctly', () {
+      final action = WhatsApp.shareText(
+        text: 'Hello World',
+        fallbackToStore: true,
+      );
 
-    test('parameters are correctly stored for share action', () {
-      final action = WhatsApp.share('Hello World');
-      expect(action.parameters, {'text': 'Hello World'});
+      expect(action.text, 'Hello World');
+      expect(action.fallbackToStore, true);
     });
   });
 }

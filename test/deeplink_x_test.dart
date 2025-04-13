@@ -2,44 +2,28 @@ import 'package:deeplink_x/deeplink_x.dart'; // Make sure to import the deeplink
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-enum DummyActionType implements ActionTypeEnum {
-  open;
-}
+// Mock interfaces
+class MockApp extends Mock implements App {}
 
-class DummyAppAction extends AppAction {
-  DummyAppAction() : super(actionType: DummyActionType.open);
+class MockAppAction extends Mock implements AppAction {}
 
-  @override
-  Future<Uri> getNativeUri() async => Uri(scheme: 'test', host: 'test');
+class MockDownloadableApp extends Mock implements DownloadableApp {}
 
-  @override
-  Future<Uri> getFallbackUri() async => Uri(scheme: 'https', host: 'test');
-}
+class MockStoreApp extends Mock implements StoreApp {}
 
-class DummyStoreAppAction extends StoreAppAction {
-  DummyStoreAppAction() : super(actionType: DummyActionType.open, platform: PlatformType.android);
+class MockStoreOpenAppPageAction extends Mock implements StoreOpenAppPageAction {}
 
-  @override
-  Future<Uri> getNativeUri() async => Uri(scheme: 'test', host: 'test');
+class MockAppLinkAppAction extends Mock implements AppLinkAppAction {}
 
-  @override
-  Future<Uri> getFallbackUri() async => Uri(scheme: 'https', host: 'test');
-}
+class MockFallbackable extends Mock implements Fallbackable {}
 
-class DummyDownloadableAppAction extends DownloadableAppAction {
-  DummyDownloadableAppAction()
-      : super(actionType: DummyActionType.open, fallBackToStore: false, supportedStoresActions: []);
+class MockUniversalLinkAppAction extends Mock implements UniversalLinkAppAction {}
 
-  @override
-  Future<Uri> getNativeUri() async => Uri(scheme: 'test', host: 'test');
-
-  @override
-  Future<Uri> getFallbackUri() async => Uri(scheme: 'https', host: 'test');
-}
+class MockIntentAppLinkAction extends Mock implements IntentAppLinkAction {}
 
 class MockDeeplinkX extends Mock implements DeeplinkX {}
 
-// Tests apis exposed correctly
+// Tests APIs exposed correctly
 void main() {
   late MockDeeplinkX deeplinkX;
 
@@ -47,68 +31,69 @@ void main() {
     deeplinkX = MockDeeplinkX();
 
     when(() => deeplinkX.launchAction(any())).thenAnswer((final _) async => true);
-    when(() => deeplinkX.canLaunch(any())).thenAnswer((final _) async => true);
+    when(() => deeplinkX.isAppInstalled(any())).thenAnswer((final _) async => true);
+    when(() => deeplinkX.launchApp(any())).thenAnswer((final _) async => true);
   });
 
   setUpAll(() {
-    registerFallbackValue(DummyAppAction());
+    registerFallbackValue(MockAppAction());
   });
 
   group('Exposed Api Access Check:', () {
     group('Apps:', () {
       test('Instagram', () {
         final action = Instagram.open();
-        expect(action, isA<AppAction>());
+        expect(action, isA<App>());
       });
 
       test('Telegram', () {
         final action = Telegram.open();
-        expect(action, isA<AppAction>());
+        expect(action, isA<App>());
       });
 
       test('WhatsApp', () {
         final action = WhatsApp.open();
-        expect(action, isA<AppAction>());
+        expect(action, isA<App>());
       });
 
       test('LinkedIn', () {
-        final action = WhatsApp.open();
-        expect(action, isA<AppAction>());
+        final action = LinkedIn.open();
+        expect(action, isA<App>());
       });
 
       test('IOSAppStore', () {
-        const action = IOSAppStore.open;
-        expect(action, isA<AppAction>());
+        final action = IOSAppStore.open();
+        expect(action, isA<App>());
       });
 
       test('PlayStore', () {
-        const action = PlayStore.open;
-        expect(action, isA<AppAction>());
+        final action = PlayStore.open();
+        expect(action, isA<App>());
       });
 
       test('HuaweiAppGalleryStore', () {
         final action = HuaweiAppGalleryStore.openAppPage(packageName: 'packageName', appId: 'appId');
-        expect(action, isA<AppAction>());
+        expect(action, isA<App>());
       });
 
       test('CafeBazaarStore', () {
-        const action = CafeBazaarStore.open;
-        expect(action, isA<AppAction>());
+        final action = CafeBazaarStore.open();
+        expect(action, isA<App>());
       });
 
       test('MyketStore', () {
-        const action = MyketStore.open;
-        expect(action, isA<AppAction>());
+        final action = MyketStore.open();
+        expect(action, isA<App>());
       });
 
       test('MacAppStore', () {
-        const action = MacAppStore.open;
-        expect(action, isA<AppAction>());
+        final action = MacAppStore.open();
+        expect(action, isA<App>());
       });
 
       test('MicrosoftStore', () {
-        const action = MicrosoftStore.open;
-        expect(action, isA<AppAction>());
+        final action = MicrosoftStore.open();
+        expect(action, isA<App>());
       });
     });
 
@@ -121,13 +106,90 @@ void main() {
 
     group('Public methods:', () {
       test('launchAction', () async {
-        final result = await deeplinkX.launchAction(DummyAppAction());
+        final result = await deeplinkX.launchAction(MockAppAction());
         expect(result, true);
       });
 
-      test('canLaunch', () async {
-        final result = await deeplinkX.canLaunch(DummyAppAction());
+      test('isAppInstalled', () async {
+        final result = await deeplinkX.isAppInstalled(MockAppAction());
         expect(result, true);
+      });
+
+      test('launchApp', () async {
+        when(() => deeplinkX.launchApp(any())).thenAnswer((final _) async => true);
+        final result = await deeplinkX.launchApp(MockAppAction());
+        expect(result, true);
+      });
+    });
+
+    group('Interfaces:', () {
+      test('App', () {
+        final mock = MockApp();
+        when(() => mock.customScheme).thenReturn('test');
+        when(() => mock.androidPackageName).thenReturn('com.test.app');
+        when(() => mock.website).thenReturn(Uri.parse('https://test.com'));
+
+        expect(mock.customScheme, 'test');
+        expect(mock.androidPackageName, 'com.test.app');
+        expect(mock.website.toString(), 'https://test.com');
+      });
+
+      test('AppAction', () {
+        final mock = MockAppAction();
+        expect(mock, isA<AppAction>());
+      });
+
+      test('DownloadableApp', () {
+        final mock = MockDownloadableApp();
+        when(() => mock.fallbackToStore).thenReturn(true);
+        when(() => mock.storeActions).thenReturn([]);
+
+        expect(mock.fallbackToStore, true);
+        expect(mock.storeActions, isEmpty);
+      });
+
+      test('StoreApp', () {
+        final mock = MockStoreApp();
+        when(() => mock.platform).thenReturn(PlatformType.android);
+
+        expect(mock.platform, PlatformType.android);
+      });
+
+      test('AppLinkAppAction', () {
+        final mock = MockAppLinkAppAction();
+        when(() => mock.appLink).thenReturn(Uri.parse('test://test'));
+
+        expect(mock.appLink.toString(), 'test://test');
+      });
+
+      test('Fallbackable', () {
+        final mock = MockFallbackable();
+        when(() => mock.fallbackLink).thenReturn(Uri.parse('https://test.com'));
+
+        expect(mock.fallbackLink.toString(), 'https://test.com');
+      });
+
+      test('UniversalLinkAppAction', () {
+        final mock = MockUniversalLinkAppAction();
+        when(() => mock.universalLink).thenReturn(Uri.parse('https://test.com/universal'));
+
+        expect(mock.universalLink.toString(), 'https://test.com/universal');
+      });
+
+      test('IntentAppLinkAction', () {
+        final mock = MockIntentAppLinkAction();
+        final androidIntentOptions = AndroidIntentOption(
+          action: 'android.intent.action.VIEW',
+          package: 'com.test.app',
+          data: Uri.parse('test://test').toString(),
+        );
+        when(() => mock.androidIntentOptions).thenReturn(androidIntentOptions);
+        when(() => mock.appLink).thenReturn(Uri.parse('test://test'));
+
+        expect(mock.androidIntentOptions.action, 'android.intent.action.VIEW');
+        expect(mock.androidIntentOptions.package, 'com.test.app');
+        expect(mock.androidIntentOptions.data.toString(), 'test://test');
+        expect(mock.appLink.toString(), 'test://test');
       });
     });
   });

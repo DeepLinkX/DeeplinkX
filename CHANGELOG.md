@@ -1,3 +1,18 @@
+## 1.0.0
+* First major release
+* More reliable deeplinks:
+  *  App Links
+  *  Universal Links
+  *  Android Intent call 
+* New methods:
+  *  Redirect To Store
+  *  Launch App
+  *  Is App Installed
+* Added ability to ignore fallback to web or store when native app is not installed
+* Changed required permissions for Android:
+  * Instead of adding intent filter query, we now use package query to check if app is installed
+  * Checkout each app's documentation for required permissions 
+
 ## 0.1.3
 * Improved README
   * Used complete Github links instead of relative paths 

@@ -4,16 +4,32 @@ DeeplinkX provides support for Instagram deep linking actions.
 
 ## Available Actions
 
-### Open Instagram App
+### Launch Instagram App
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(Instagram.open);
+
+// Simple launch
+await deeplinkX.launchApp(Instagram.open());
+
+// Launch with store fallback if not installed
+await deeplinkX.launchApp(Instagram.open(fallBackToStore: true));
+
+// Launch with fallback disabled
+await deeplinkX.launchApp(Instagram.open(), disableFallback: true);
 ```
 
-### Open Instagram Profile
+### Launch Instagram Profile Action
 ```dart
 final deeplinkX = DeeplinkX();
+
+// Simple action
 await deeplinkX.launchAction(Instagram.openProfile('username'));
+
+// Action with store fallback if not installed
+await deeplinkX.launchAction(Instagram.openProfile('username', fallBackToStore: true));
+
+// Action with fallback disabled
+await deeplinkX.launchAction(Instagram.openProfile('username'), disableFallback: true);
 ```
 
 ## Parameter Validations
@@ -56,16 +72,13 @@ Add the following to your `ios/Runner/Info.plist`:
 Add the following to your `android/app/src/main/AndroidManifest.xml` inside the `<queries>` tag:
 ```xml
 <queries>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="instagram" />
-    </intent>
-    <!-- Play store fallback -->
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="market" />
-    </intent>
-    <!-- Web fallback -->
+    <!-- For Instagram app -->
+    <package android:name="com.instagram.android" />
+    
+    <!-- For Play Store fallback (if using fallbackToStore) -->
+    <package android:name="com.android.vending" />
+    
+    <!-- For web fallback (required) -->
     <intent>
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="https" />
@@ -80,10 +93,12 @@ DeeplinkX uses the following URL schemes for Instagram:
 ### Native App Deep Links
 When Instagram is installed, the following scheme is used:
 - `instagram://` - Native Instagram URL scheme
+- For profiles: `instagram://user?username={username}`
 
 ### Web Fallback URLs
 When Instagram is not installed, DeeplinkX automatically falls back to:
-- `https://instagram.com` - Official Instagram web URL
+- `https://www.instagram.com` - Official Instagram web URL
+- For profiles: `https://www.instagram.com/{username}`
 
 ## Supported Fallback Stores
 When the Instagram app is not installed, DeeplinkX can redirect users to download Instagram from the following app stores:
@@ -95,7 +110,7 @@ To enable fallback to app stores, use the `fallBackToStore` parameter:
 
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(Instagram.open(fallBackToStore: true));
+await deeplinkX.launchApp(Instagram.open(fallBackToStore: true));
 ```
 
 ## Fallback Behavior
@@ -104,3 +119,18 @@ DeeplinkX follows this sequence when handling Instagram deeplinks:
 1. First, it attempts to launch the Instagram app if it's installed on the device.
 2. If the Instagram app is not installed and `fallBackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
 3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the Instagram web interface in the default browser.
+4. You can disable all fallbacks by setting `disableFallback: true` in the launch methods.
+
+## Fallback Support for Actions
+
+| Action      | Store Fallback | Web Fallback |
+| ----------- | -------------- | ------------ |
+| open        | ✅              | ✅            |
+| openProfile | ✅              | ✅            |
+
+## Check If Instagram Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(Instagram());
+```

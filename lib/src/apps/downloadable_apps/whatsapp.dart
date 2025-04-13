@@ -1,182 +1,190 @@
-import 'package:deeplink_x/src/apps/app_stores/app_stores.dart';
-import 'package:deeplink_x/src/core/app_actions/downloadable_app_action.dart';
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/src.dart';
 
-/// WhatsApp-specific action types that define available deeplink actions
-enum WhatsAppActionType implements ActionTypeEnum {
-  /// Opens the WhatsApp app
-  open,
-
-  /// Opens a chat with a specific phone number
-  chat,
-
-  /// Shares content via WhatsApp
-  share,
-}
-
-/// WhatsApp action implementation for handling WhatsApp-specific deeplinks
-class WhatsAppAction extends DownloadableAppAction {
-  /// Creates a new WhatsApp action
-  ///
-  /// [type] specifies the type of action to perform (e.g., open app, chat)
-  /// [fallBackToStore] determines if the action should redirect to app store when app isn't installed
-  /// [parameters] contains any additional data needed for the action (e.g., phone number for chat)
-  /// [actionType] is internally set to [type] for action handling
-  /// [supportedStoresActions] is set to predefined [storesActions] for store handling
-  WhatsAppAction(
-    this.type, {
-    required super.fallBackToStore,
-    super.parameters,
-  }) : super(
-          actionType: type,
-          supportedStoresActions: storesActions,
-        );
-
-  /// Base URI for WhatsApp app deeplinks
-  static const baseUrl = 'whatsapp://';
-
-  /// Base URI for WhatsApp web fallback
-  static const fallBackUri = 'https://wa.me';
-
-  /// The type of WhatsApp action to perform
-  final WhatsAppActionType type;
-
-  /// List of store actions for downloading/opening WhatsApp across different platforms
-  ///
-  /// Contains actions for:
-  /// - Play Store
-  /// - iOS App Store
-  /// - Microsoft Store
-  /// - Mac App Store
-  static final List<StoreAppAction> storesActions = [
-    PlayStore.openAppPage(packageName: 'com.whatsapp'),
-    IOSAppStore.openAppPage(appId: '310633997', appName: 'whatsapp-messenger'),
-    MicrosoftStore.openAppPage(productId: '9nksqgp7f2nh'),
-    MacAppStore.openAppPage(appId: '310633997', appName: 'whatsapp-messenger'),
-  ];
-
-  @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case WhatsAppActionType.open:
-        return Uri.parse(baseUrl);
-      case WhatsAppActionType.chat:
-        final phoneNumber = parameters!['phoneNumber'];
-        final text = parameters!['text'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'phone': phoneNumber!};
-
-        if (text != null) {
-          queryParams['text'] = text;
-        }
-
-        return Uri.parse(baseUrl).replace(
-          host: 'send',
-          queryParameters: queryParams,
-        );
-      case WhatsAppActionType.share:
-        final text = parameters!['text'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'text': text!};
-
-        return Uri.parse(baseUrl).replace(
-          host: 'send',
-          queryParameters: queryParams,
-        );
-    }
-  }
-
-  @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case WhatsAppActionType.open:
-        return Uri.parse(fallBackUri);
-      case WhatsAppActionType.chat:
-        final phoneNumber = parameters!['phoneNumber'];
-        final text = parameters!['text'];
-
-        // Build query parameters
-        final queryParams = <String, String>{};
-
-        if (text != null) {
-          queryParams['text'] = text;
-        }
-
-        return Uri.parse(fallBackUri).replace(
-          path: phoneNumber,
-          queryParameters: queryParams.isNotEmpty ? queryParams : null,
-        );
-      case WhatsAppActionType.share:
-        final text = parameters!['text'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'text': text!};
-
-        return Uri.parse(fallBackUri).replace(
-          queryParameters: queryParams,
-        );
-    }
-  }
-}
-
-/// Factory class for creating WhatsApp deeplink actions
+/// WhatsApp application.
 ///
-/// This class provides convenient factory methods for creating common WhatsApp
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for WhatsApp-specific action creation.
-class WhatsApp {
-  WhatsApp._();
+/// This class implements the [DownloadableApp] interface to provide capabilities
+/// for interacting with the WhatsApp app on various platforms.
+class WhatsApp extends App implements DownloadableApp {
+  /// Creates a new [WhatsApp] instance.
+  ///
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the WhatsApp app is not installed. Default is false.
+  WhatsApp({this.fallbackToStore = false});
 
-  /// Opens the WhatsApp app
-  static WhatsAppAction open({
-    final bool fallBackToStore = false,
+  /// Creates an action to open the WhatsApp app.
+  ///
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the WhatsApp app is not installed. Default is false.
+  ///
+  /// Returns a [WhatsApp] instance that can be used to open the WhatsApp app.
+  factory WhatsApp.open({final bool fallbackToStore = false}) => WhatsApp(fallbackToStore: fallbackToStore);
+
+  /// A list of actions to open the WhatsApp app's page in various app stores.
+  @override
+  List<StoreOpenAppPageAction> get storeActions => [
+        PlayStore.openAppPage(packageName: 'com.whatsapp'),
+        IOSAppStore.openAppPage(appId: '310633997', appName: 'whatsapp-messenger'),
+        MicrosoftStore.openAppPage(productId: '9nksqgp7f2nh'),
+        MacAppStore.openAppPage(appId: '310633997', appName: 'whatsapp-messenger'),
+      ];
+
+  /// The Android package name for the WhatsApp app.
+  @override
+  String get androidPackageName => 'com.whatsapp';
+
+  /// The custom URL scheme for the WhatsApp app.
+  @override
+  String get customScheme => 'whatsapp';
+
+  /// Whether to automatically redirect to app stores when the WhatsApp app is not installed.
+  @override
+  bool fallbackToStore;
+
+  /// The web URL for WhatsApp.
+  @override
+  Uri get website => Uri.parse('https://www.whatsapp.com');
+
+  /// Creates an action to start a chat with a specific phone number in the WhatsApp app.
+  ///
+  /// Parameters:
+  /// - [phoneNumber]: The phone number to chat with (including country code without '+') (e.g. '1234567890').
+  /// - [message]: Optional pre-filled message to send (e.g. 'Hello, how are you?').
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the WhatsApp app is not installed. Default is false.
+  ///
+  /// Returns a [WhatsAppChatAction] instance that can be used to start a chat
+  /// with the specified phone number in the WhatsApp app.
+  static WhatsAppChatAction chat({
+    required final String phoneNumber,
+    final String? message,
+    final bool fallbackToStore = false,
   }) =>
-      WhatsAppAction(
-        WhatsAppActionType.open,
-        fallBackToStore: fallBackToStore,
+      WhatsAppChatAction(
+        phoneNumber: phoneNumber,
+        message: message,
+        fallbackToStore: fallbackToStore,
       );
 
-  /// Opens a chat with a specific phone number
+  /// Creates an action to share text via the WhatsApp app.
   ///
-  /// [phoneNumber] is the phone number to chat with. Must include country code without '+' or spaces
-  /// (e.g., '1234567890' for US number +1 234 567 890, '447911123456' for UK number +44 7911 123456).
+  /// Parameters:
+  /// - [text]: The text to share (e.g. 'Check out this link: https://example.com').
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the WhatsApp app is not installed. Default is false.
   ///
-  /// [text] optional pre-filled message text to send in the chat
+  /// Returns a [WhatsAppShareTextAction] instance that can be used to
+  /// share text via the WhatsApp app.
+  static WhatsAppShareTextAction shareText({
+    required final String text,
+    final bool fallbackToStore = false,
+  }) =>
+      WhatsAppShareTextAction(
+        text: text,
+        fallbackToStore: fallbackToStore,
+      );
+}
+
+/// An action to start a chat with a specific phone number in the WhatsApp app.
+///
+/// This class extends [WhatsApp] and implements multiple interfaces to provide
+/// comprehensive functionality for starting chats with fallback support.
+class WhatsAppChatAction extends WhatsApp implements AppLinkAppAction, Fallbackable {
+  /// Creates a new [WhatsAppChatAction] instance.
   ///
-  /// [fallBackToStore] determines if the action should redirect to app store when WhatsApp isn't installed
-  static WhatsAppAction chat(
-    final String phoneNumber, {
-    final String? text,
-    final bool fallBackToStore = false,
-  }) {
-    final parameters = <String, String>{
-      'phoneNumber': phoneNumber,
+  /// Parameters:
+  /// - [phoneNumber]: The phone number to chat with (including country code without '+').
+  /// - [message]: Optional pre-filled message to send.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the WhatsApp app is not installed.
+  WhatsAppChatAction({
+    required this.phoneNumber,
+    required this.message,
+    required super.fallbackToStore,
+  });
+
+  /// The phone number to chat with (including country code without '+').
+  final String phoneNumber;
+
+  /// Optional pre-filled message to send.
+  final String? message;
+
+  /// The app link URL for starting a chat with the specified phone number in the WhatsApp app.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{
+      'phone': phoneNumber,
+      if (message != null) 'text': message!,
     };
-
-    if (text != null) {
-      parameters['text'] = text;
-    }
-
-    return WhatsAppAction(
-      WhatsAppActionType.chat,
-      parameters: parameters,
-      fallBackToStore: fallBackToStore,
+    return Uri(
+      scheme: 'whatsapp',
+      host: 'send',
+      queryParameters: queryParameters,
     );
   }
 
-  /// Shares content via WhatsApp
+  /// The fallback link to use when the WhatsApp app cannot be opened.
   ///
-  /// [text] is the text content to share
-  static WhatsAppAction share(
-    final String text, {
-    final bool fallBackToStore = false,
-  }) =>
-      WhatsAppAction(
-        WhatsAppActionType.share,
-        parameters: {'text': text},
-        fallBackToStore: fallBackToStore,
-      );
+  /// This URL opens the WhatsApp click-to-chat web interface.
+  @override
+  Uri get fallbackLink {
+    final queryParameters = <String, String>{
+      if (message != null) 'text': message!,
+    };
+    return Uri(
+      scheme: 'https',
+      host: 'wa.me',
+      path: phoneNumber,
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+    );
+  }
+}
+
+/// An action to share text via the WhatsApp app.
+///
+/// This class extends [WhatsApp] and implements multiple interfaces to provide
+/// comprehensive functionality for sharing text with fallback support.
+class WhatsAppShareTextAction extends WhatsApp implements AppLinkAppAction, Fallbackable {
+  /// Creates a new [WhatsAppShareTextAction] instance.
+  ///
+  /// Parameters:
+  /// - [text]: The text to share.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the WhatsApp app is not installed.
+  WhatsAppShareTextAction({
+    required this.text,
+    required super.fallbackToStore,
+  });
+
+  /// The text to share.
+  final String text;
+
+  /// The app link URL for sharing text via the WhatsApp app.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{
+      'text': text,
+    };
+    return Uri(
+      scheme: 'whatsapp',
+      host: 'send',
+      queryParameters: queryParameters,
+    );
+  }
+
+  /// The fallback link to use when the WhatsApp app cannot be opened.
+  ///
+  /// This URL opens the WhatsApp click-to-chat web interface.
+  @override
+  Uri get fallbackLink {
+    final queryParameters = <String, String>{
+      'text': text,
+    };
+    return Uri(
+      scheme: 'https',
+      host: 'wa.me',
+      queryParameters: queryParameters,
+    );
+  }
 }

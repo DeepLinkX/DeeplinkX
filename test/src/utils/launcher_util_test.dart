@@ -1,2 +1,3 @@
-// TODO: Add tests for the LauncherUtil class
-void main() {}
+void main() {
+  // TODO: write tests
+}

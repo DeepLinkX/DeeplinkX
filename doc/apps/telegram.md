@@ -4,43 +4,76 @@ DeeplinkX provides comprehensive support for Telegram deep linking actions.
 
 ## Available Actions
 
-### Open Telegram App
+### Launch Telegram App
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(Telegram.open);
+
+// Simple launch
+await deeplinkX.launchApp(Telegram.open());
+
+// Launch with store fallback if not installed
+await deeplinkX.launchApp(Telegram.open(fallBackToStore: true));
+
+// Launch with fallback disabled
+await deeplinkX.launchApp(Telegram.open(), disableFallback: true);
 ```
 
-### Open Profile by Username
+### Launch Profile Action
 ```dart
 final deeplinkX = DeeplinkX();
+
+// Simple action
 await deeplinkX.launchAction(Telegram.openProfile('username'));
-```
-[Official Documentation](https://core.telegram.org/api/links#public-username-links)
 
-### Open Profile by Phone Number
+// Action with store fallback if not installed
+await deeplinkX.launchAction(Telegram.openProfile('username', fallBackToStore: true));
+
+// Action with fallback disabled
+await deeplinkX.launchAction(Telegram.openProfile('username'), disableFallback: true);
+```
+
+### Launch Profile by Phone Number Action
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(Telegram.openProfilePhoneNumber('1234567890'));
-```
-[Official Documentation](https://core.telegram.org/api/links#phone-number-links)
 
-### Send Message by Username
+// Simple action
+await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890'));
+
+// Action with store fallback if not installed
+await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890', fallBackToStore: true));
+
+// Action with fallback disabled
+await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890'), disableFallback: true);
+```
+
+### Launch Send Message Action
 ```dart
 final deeplinkX = DeeplinkX();
+
+// Simple action
+await deeplinkX.launchAction(Telegram.sendMessage(
+  username: 'username',
+  message: 'Hello!',
+));
+
+// Action with store fallback if not installed
 await deeplinkX.launchAction(
-  Telegram.sendMessage('username', 'Hello!'),
+  Telegram.sendMessage(
+    username: 'username',
+    message: 'Hello!',
+    fallBackToStore: true,
+  ),
+);
+
+// Action with fallback disabled
+await deeplinkX.launchAction(
+  Telegram.sendMessage(
+    username: 'username',
+    message: 'Hello!',
+  ),
+  disableFallback: true,
 );
 ```
-[Official Documentation](https://core.telegram.org/api/links#public-username-links)
-
-### Send Message by Phone Number
-```dart
-final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(
-  Telegram.sendMessagePhoneNumber('1234567890', 'Hello!'),
-);
-```
-[Official Documentation](https://core.telegram.org/api/links#phone-number-links)
 
 ## Parameter Validations
 
@@ -109,21 +142,14 @@ Add the following to your `ios/Runner/Info.plist`:
 Add the following to your `android/app/src/main/AndroidManifest.xml` inside the `<queries>` tag:
 ```xml
 <queries>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="tg" />
-    </intent>
-    <!-- Play store fallback -->
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="market" />
-    </intent>
-    <!-- Huawei AppGallery store fallback -->
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="appmarket" android:host="details" />
-    </intent>
-    <!-- Web fallback -->
+    <!-- For Telegram app -->
+    <package android:name="org.telegram.messenger" />
+    
+    <!-- For store fallbacks (if using fallbackToStore) -->
+    <package android:name="com.android.vending" /> <!-- Google Play Store -->
+    <package android:name="com.huawei.appmarket" /> <!-- Huawei AppGallery -->
+    
+    <!-- For web fallback (required) -->
     <intent>
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="https" />
@@ -148,10 +174,16 @@ DeeplinkX uses the following URL schemes for Telegram:
 ### Native App Deep Links
 When Telegram is installed, the following scheme is used:
 - `tg://` - Native Telegram URL scheme
+- For profiles: `tg://resolve?domain={username}&profile`
+- For profiles by phone: `tg://resolve?phone={phoneNumber}&profile`
+- For messages: `tg://resolve?domain={username}&text={encodedMessage}`
 
 ### Web Fallback URLs
 When Telegram is not installed, DeeplinkX automatically falls back to:
-- `https://t.me` - Official Telegram web URL 
+- `https://t.me` - Official Telegram web URL
+- For profiles: `https://t.me/{username}?profile`
+- For profiles by phone: `https://t.me/+{phoneNumber}?profile`
+- For messages: `https://t.me/{username}?text={encodedMessage}`
 
 ## Supported Fallback Stores
 When the Telegram app is not installed, DeeplinkX can redirect users to download Telegram from the following app stores:
@@ -166,7 +198,7 @@ To enable fallback to app stores, use the `fallBackToStore` parameter:
 
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(Telegram.open(fallBackToStore: true));
+await deeplinkX.launchApp(Telegram.open(fallBackToStore: true));
 ```
 
 ## Fallback Behavior
@@ -175,3 +207,21 @@ DeeplinkX follows this sequence when handling Telegram deeplinks:
 1. First, it attempts to launch the Telegram app if it's installed on the device.
 2. If the Telegram app is not installed and `fallBackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store, Google Play Store, Mac App Store, or Microsoft Store).
 3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the Telegram web interface in the default browser.
+4. You can disable all fallbacks by setting `disableFallback: true` in the launch methods.
+
+## Fallback Support for Actions
+
+| Action             | Store Fallback | Web Fallback |
+| ------------------ | -------------- | ------------ |
+| open               | ✅              | ✅            |
+| openProfile        | ✅              | ✅            |
+| openProfileByPhone | ✅              | ✅            |
+| sendMessage        | ✅              | ✅            |
+| sendMessageByPhone | ✅              | ✅            |
+
+## Check If Telegram Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(Telegram());
+```

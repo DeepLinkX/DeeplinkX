@@ -1,80 +1,93 @@
 import 'package:deeplink_x/src/apps/app_stores/myket_store.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
+import 'package:deeplink_x/src/core/interfaces/app_link_app_action_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/fallbackable_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/store_app_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/store_open_app_page_action_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('MyketAction', () {
-    test('open action returns correct URIs', () async {
-      const action = MyketAction(MyketActionType.open);
-      final nativeUri = await action.getNativeUri();
-      final fallbackUri = await action.getFallbackUri();
+  group('Myket Store Actions', () {
+    test('open action creates MyketStore instance with correct properties', () {
+      final action = MyketStore.open();
 
-      expect(nativeUri.toString(), 'myket://main');
-      expect(fallbackUri.toString(), 'https://myket.ir');
+      // As Store
+      expect(action.platform, PlatformType.android);
+
+      // As App
+      expect(action.customScheme, 'myket');
+      expect(action.androidPackageName, 'ir.mservices.market');
+      expect(action.website.toString(), 'https://myket.ir');
     });
 
-    test('openAppPage action returns correct URIs', () async {
-      const packageName = 'com.example.app';
-      const referrer = 'utm_source=test';
-      const action = MyketAction(
-        MyketActionType.openAppPage,
-        parameters: {
-          'packageName': packageName,
-          'referrer': referrer,
-        },
-      );
+    test('open action creates MyketStore instance with correct type', () {
+      final action = MyketStore.open();
 
-      final nativeUri = await action.getNativeUri();
-      final fallbackUri = await action.getFallbackUri();
-
-      expect(nativeUri.toString(), 'myket://details?id=com.example.app&referrer=utm_source%3Dtest');
-      expect(fallbackUri.toString(), 'https://myket.ir/app/com.example.app?referrer=utm_source%3Dtest');
+      expect(action, isInstanceOf<StoreApp>());
     });
 
-    test('rateApp action returns correct URIs', () async {
-      const packageName = 'com.example.app';
-      const action = MyketAction(
-        MyketActionType.rateApp,
-        parameters: {
-          'packageName': packageName,
-        },
-      );
-
-      final nativeUri = await action.getNativeUri();
-      final fallbackUri = await action.getFallbackUri();
-
-      expect(nativeUri.toString(), 'myket://comment?id=com.example.app');
-      expect(fallbackUri.toString(), 'https://myket.ir/app/com.example.app#reviews');
-    });
-  });
-
-  group('MyketStore', () {
-    test('open returns correct action', () {
-      const action = MyketStore.open;
-      expect(action.type, MyketActionType.open);
-      expect(action.parameters, null);
-    });
-
-    test('openAppPage returns correct action', () {
-      const packageName = 'com.example.app';
-      const referrer = 'utm_source=test';
+    test('openAppPage action creates correct type', () {
       final action = MyketStore.openAppPage(
-        packageName: packageName,
-        referrer: referrer,
+        packageName: 'com.example.app',
       );
 
-      expect(action.type, MyketActionType.openAppPage);
-      expect(action.parameters!['packageName'], packageName);
-      expect(action.parameters!['referrer'], referrer);
+      expect(action, isInstanceOf<StoreOpenAppPageAction>());
+      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
     });
 
-    test('rateApp returns correct action', () {
-      const packageName = 'com.example.app';
-      final action = MyketStore.rateApp(
-        packageName: packageName,
+    test('openAppPage action creates correct URIs', () {
+      final action = MyketStore.openAppPage(
+        packageName: 'com.example.app',
       );
 
-      expect(action.type, MyketActionType.rateApp);
-      expect(action.parameters!['packageName'], packageName);
+      expect(action.appLink.toString(), 'myket://details?id=com.example.app');
+      expect(action.fallbackLink.toString(), 'https://myket.ir/app/com.example.app');
+    });
+
+    test('openAppPage action with referrer creates correct URIs', () {
+      final action = MyketStore.openAppPage(
+        packageName: 'com.example.app',
+        referrer: 'utm_source=test',
+      );
+
+      expect(
+        action.appLink.toString(),
+        'myket://details?id=com.example.app&referrer=utm_source%3Dtest',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://myket.ir/app/com.example.app?referrer=utm_source%3Dtest',
+      );
+    });
+
+    test('rateApp action creates correct URIs', () {
+      final action = MyketStore.rateApp(
+        packageName: 'com.example.app',
+      );
+
+      expect(
+        action.appLink.toString(),
+        'myket://comment?id=com.example.app',
+      );
+    });
+
+    test('openAppPage action stores parameters correctly', () {
+      final action = MyketStore.openAppPage(
+        packageName: 'com.example.app',
+        referrer: 'utm_source=test',
+      );
+
+      expect(action.packageName, 'com.example.app');
+      expect(action.referrer, 'utm_source=test');
+    });
+
+    test('rateApp action stores parameters correctly', () {
+      final action = MyketStore.rateApp(
+        packageName: 'com.example.app',
+      );
+
+      expect(action.packageName, 'com.example.app');
     });
   });
 }

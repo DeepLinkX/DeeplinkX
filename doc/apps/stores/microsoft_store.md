@@ -4,27 +4,42 @@ DeeplinkX provides support for opening the Microsoft Store and specific app page
 
 ## Available Actions
 
-### Open Microsoft Store
+### Launch Microsoft Store
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(MicrosoftStore.open);
+
+// Simple launch
+await deeplinkX.launchApp(MicrosoftStore.open());
+
+// Launch with fallback disabled
+await deeplinkX.launchApp(MicrosoftStore.open(), disableFallback: true);
 ```
 
-### Open App Page
+### Launch Microsoft Store App Page Action
 ```dart
 final deeplinkX = DeeplinkX();
+
+// Simple action
 await deeplinkX.launchAction(MicrosoftStore.openAppPage(
-  productId: '9WZDNCRFHVJL',  // Microsoft Edge product ID
-  language: 'en-US',          // Optional: language code
+  productId: '9WZDNCRFHVJL',  // Example: Microsoft Edge
 ));
+
+// Action with fallback disabled
+await deeplinkX.launchAction(
+  MicrosoftStore.openAppPage(
+    productId: '9WZDNCRFHVJL',
+  ),
+  disableFallback: true,
+);
 ```
 
-### Open App Review Page
+### Launch App Review Page Action
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(MicrosoftStore.openAppReviewPage(
+await deeplinkX.launchAction(MicrosoftStore.rateApp(
   productId: '9WZDNCRFHVJL',  // Microsoft Edge product ID
   language: 'en-US',          // Optional: language code
+  countryCode: 'US',          // Optional: country code
 ));
 ```
 
@@ -43,6 +58,7 @@ Example valid product IDs:
 
 ### Optional Parameters
 - **language**: Language code for the store page (e.g., 'en-US', 'fr-FR', 'de-DE')
+- **countryCode**: Country code to specify a country-specific store (e.g., 'US', 'GB', 'DE')
 
 ## Platform-Specific Configuration
 
@@ -68,3 +84,18 @@ DeeplinkX follows this sequence when handling Microsoft Store deeplinks:
 
 1. First, it attempts to launch the Microsoft Store app if it's installed on the device.
 2. If the Microsoft Store app is not installed or the device is not running windows, DeeplinkX will automatically fall back to opening the Microsoft Store web interface in the default browser.
+
+## Fallback Support for Actions
+
+| Action      | Web Fallback |
+| ----------- | ------------ |
+| open        | ✅            |
+| openAppPage | ✅            |
+| rateApp     | ❌            |
+
+## Check If Microsoft Store Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(MicrosoftStore());
+```

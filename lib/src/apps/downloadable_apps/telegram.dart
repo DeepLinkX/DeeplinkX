@@ -1,118 +1,142 @@
-import 'package:deeplink_x/src/apps/app_stores/app_stores.dart';
-import 'package:deeplink_x/src/core/app_actions/downloadable_app_action.dart';
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
+import 'package:deeplink_x/src/src.dart';
 
-/// Telegram-specific action types that define available deeplink actions
-enum TelegramActionType implements ActionTypeEnum {
-  /// Opens the Telegram app
-  open,
-
-  /// Opens a specific Telegram profile by username
-  openProfile,
-
-  /// Opens a specific Telegram profile by phone number
-  openProfilePhoneNumber,
-
-  /// Sends a message to a specific user by username
-  sendMessage,
-
-  /// Sends a message to a specific user by phone number
-  sendMessagePhoneNumber,
-}
-
-/// Telegram action implementation for handling Telegram-specific deeplinks
-class TelegramAction extends DownloadableAppAction {
-  /// Creates a new Telegram action
+/// Telegram application.
+///
+/// This class implements the [DownloadableApp] interface to provide capabilities
+/// for interacting with the Telegram app on various platforms.
+class Telegram extends App implements DownloadableApp {
+  /// Creates a new [Telegram] instance.
   ///
-  /// [type] specifies the type of action to perform
-  /// [fallBackToStore] determines if the action should redirect to app store when app isn't installed
-  /// [parameters] contains any additional data needed for the action (e.g., username for profile)
-  /// [actionType] is internally set to [type] for action handling
-  /// [supportedStoresActions] is set to predefined [storesActions] for store handling
-  TelegramAction(
-    this.type, {
-    required super.fallBackToStore,
-    super.parameters,
-  }) : super(
-          actionType: type,
-          supportedStoresActions: storesActions,
-        );
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed. Default is false.
+  Telegram({this.fallbackToStore = false});
 
-  /// Base URI for Telegram app deeplinks
-  static const baseUrl = 'tg://';
-
-  /// Base URI for Telegram web fallback
-  static const fallBackUri = 'https://t.me';
-
-  /// List of store actions for downloading/opening Telegram across different platforms
+  /// Creates an action to open the Telegram app.
   ///
-  /// Contains actions for:
-  /// - Play Store
-  /// - iOS App Store
-  /// - Microsoft Store
-  /// - Mac App Store
-  static final List<StoreAppAction> storesActions = [
-    PlayStore.openAppPage(packageName: 'org.telegram.messenger'),
-    HuaweiAppGalleryStore.openAppPage(packageName: 'org.telegram.messenger', appId: 'C101184875'),
-    IOSAppStore.openAppPage(appId: '686449807', appName: 'telegram-messenger'),
-    MicrosoftStore.openAppPage(productId: '9nztwsqntd0s'),
-    MacAppStore.openAppPage(appId: '747648890', appName: 'telegram'),
-  ];
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed. Default is false.
+  ///
+  /// Returns a [Telegram] instance that can be used to open the Telegram app.
+  factory Telegram.open({final bool fallbackToStore = false}) => Telegram(fallbackToStore: fallbackToStore);
 
-  /// The type of Telegram action to perform
-  final TelegramActionType type;
-
+  /// A list of actions to open the Telegram app's page in various app stores.
   @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case TelegramActionType.open:
-        return Uri.parse(baseUrl);
-      case TelegramActionType.openProfile:
-        final username = parameters!['username'];
-        return Uri.parse('${baseUrl}resolve?domain=$username&profile');
-      case TelegramActionType.openProfilePhoneNumber:
-        final phoneNumber = parameters!['phoneNumber'];
-        return Uri.parse('${baseUrl}resolve?phone=$phoneNumber&profile');
-      case TelegramActionType.sendMessage:
-        final username = parameters!['username'];
-        final message = parameters!['message']!;
-        final encodedMessage = _getEncodedMessage(message);
-        return Uri.parse('${baseUrl}resolve?domain=$username&text=$encodedMessage');
-      case TelegramActionType.sendMessagePhoneNumber:
-        final phoneNumber = parameters!['phoneNumber'];
-        final message = parameters!['message']!;
-        final encodedMessage = _getEncodedMessage(message);
-        return Uri.parse('${baseUrl}resolve?phone=$phoneNumber&text=$encodedMessage');
-    }
-  }
+  List<StoreOpenAppPageAction> get storeActions => [
+        PlayStore.openAppPage(packageName: 'org.telegram.messenger'),
+        HuaweiAppGalleryStore.openAppPage(packageName: 'org.telegram.messenger', appId: 'C101184875'),
+        IOSAppStore.openAppPage(appId: '686449807', appName: 'telegram-messenger'),
+        MicrosoftStore.openAppPage(productId: '9nztwsqntd0s'),
+        MacAppStore.openAppPage(appId: '747648890', appName: 'telegram'),
+      ];
 
+  /// The Android package name for the Telegram app.
   @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case TelegramActionType.open:
-        return Uri.parse(fallBackUri);
-      case TelegramActionType.openProfile:
-        final username = parameters!['username'];
-        return Uri.parse('$fallBackUri/$username?profile');
-      case TelegramActionType.openProfilePhoneNumber:
-        final phoneNumber = parameters!['phoneNumber'];
-        return Uri.parse('$fallBackUri/+$phoneNumber?profile');
-      case TelegramActionType.sendMessage:
-        final username = parameters!['username'];
-        final message = parameters!['message']!;
-        final encodedMessage = _getEncodedMessage(message);
-        return Uri.parse('$fallBackUri/$username?text=$encodedMessage');
-      case TelegramActionType.sendMessagePhoneNumber:
-        final phoneNumber = parameters!['phoneNumber'];
-        final message = parameters!['message']!;
-        final encodedMessage = _getEncodedMessage(message);
-        return Uri.parse('$fallBackUri/+$phoneNumber?text=$encodedMessage');
-    }
-  }
+  String get androidPackageName => 'org.telegram.messenger';
 
+  /// The custom URL scheme for the Telegram app.
+  @override
+  String get customScheme => 'tg';
+
+  /// Whether to automatically redirect to app stores when the Telegram app is not installed.
+  @override
+  bool fallbackToStore;
+
+  /// The web URL for Telegram.
+  @override
+  Uri get website => Uri.parse('https://telegram.org');
+
+  /// Creates an action to open a specific profile in the Telegram app.
+  ///
+  /// Parameters:
+  /// - [username]: The username of the profile to open (e.g. 'telegram').
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed. Default is false.
+  ///
+  /// Returns a [TelegramOpenProfileAction] instance that can be used to open
+  /// the specified profile in the Telegram app.
+  static TelegramOpenProfileAction openProfile({
+    required final String username,
+    final bool fallbackToStore = false,
+  }) =>
+      TelegramOpenProfileAction(
+        username: username,
+        fallbackToStore: fallbackToStore,
+      );
+
+  /// Creates an action to open a specific profile by phone number in the Telegram app.
+  ///
+  /// Parameters:
+  /// - [phoneNumber]: The phone number of the profile to open (e.g. '1234567890').
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed. Default is false.
+  ///
+  /// Returns a [TelegramOpenProfileByPhoneNumberAction] instance that can be used to open
+  /// the specified profile in the Telegram app.
+  static TelegramOpenProfileByPhoneNumberAction openProfileByPhoneNumber({
+    required final String phoneNumber,
+    final bool fallbackToStore = false,
+  }) =>
+      TelegramOpenProfileByPhoneNumberAction(
+        phoneNumber: phoneNumber,
+        fallbackToStore: fallbackToStore,
+      );
+
+  /// Creates an action to send a message to a specific user in the Telegram app.
+  ///
+  /// Parameters:
+  /// - [username]: The username of the recipient (e.g. 'telegram').
+  /// - [message]: The message to send (e.g. 'Hello, how are you?').
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed. Default is false.
+  ///
+  /// Returns a [TelegramSendMessageAction] instance that can be used to send
+  /// a message to the specified user in the Telegram app.
+  static TelegramSendMessageAction sendMessage({
+    required final String username,
+    required final String message,
+    final bool fallbackToStore = false,
+  }) =>
+      TelegramSendMessageAction(
+        username: username,
+        message: message,
+        fallbackToStore: fallbackToStore,
+      );
+
+  /// Creates an action to send a message to a specific user by phone number in the Telegram app.
+  ///
+  /// Parameters:
+  /// - [phoneNumber]: The phone number of the recipient (e.g. '1234567890').
+  /// - [message]: The message to send (e.g. 'Hello, how are you?').
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed. Default is false.
+  ///
+  /// Returns a [TelegramSendMessageByPhoneNumberAction] instance that can be used to send
+  /// a message to the specified user in the Telegram app.
+  static TelegramSendMessageByPhoneNumberAction sendMessageByPhoneNumber({
+    required final String phoneNumber,
+    required final String message,
+    final bool fallbackToStore = false,
+  }) =>
+      TelegramSendMessageByPhoneNumberAction(
+        phoneNumber: phoneNumber,
+        message: message,
+        fallbackToStore: fallbackToStore,
+      );
+
+  /// Encodes a message for use in Telegram deep links.
+  ///
+  /// This method ensures messages are properly formatted, especially if they
+  /// begin with '@' which could trigger inline queries.
+  ///
+  /// Parameters:
+  /// - [message]: The message to encode.
+  ///
+  /// Returns an encoded string suitable for use in Telegram deep links.
   String _getEncodedMessage(final String message) {
     String encodedMessage = message;
+
     if (encodedMessage.startsWith('@')) {
       encodedMessage = ' $encodedMessage'; // Prepend whitespace to avoid triggering inline query
     }
@@ -121,86 +145,144 @@ class TelegramAction extends DownloadableAppAction {
   }
 }
 
-/// Factory class for creating Telegram deeplink actions
+/// An action to open a specific profile in the Telegram app.
 ///
-/// This class provides convenient factory methods for creating common Telegram
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for Telegram-specific action creation.
-class Telegram {
-  Telegram._();
-
-  /// Opens the Telegram app
-  static TelegramAction open({
-    final bool fallBackToStore = false,
-  }) =>
-      TelegramAction(
-        TelegramActionType.open,
-        fallBackToStore: fallBackToStore,
-      );
-
-  /// Opens a specific Telegram profile by username
+/// This class extends [Telegram] and implements multiple interfaces to provide
+/// comprehensive functionality for opening profiles with fallback support.
+class TelegramOpenProfileAction extends Telegram implements AppLinkAppAction, Fallbackable {
+  /// Creates a new [TelegramOpenProfileAction] instance.
   ///
-  /// [username] is the Telegram username to open
-  static TelegramAction openProfile(
-    final String username, {
-    final bool fallBackToStore = false,
-  }) =>
-      TelegramAction(
-        TelegramActionType.openProfile,
-        parameters: {'username': username},
-        fallBackToStore: fallBackToStore,
-      );
+  /// Parameters:
+  /// - [username]: The username of the profile to open.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed.
+  TelegramOpenProfileAction({
+    required this.username,
+    required super.fallbackToStore,
+  });
 
-  /// Opens a specific Telegram profile by phone number
-  ///
-  /// [phoneNumber] is the Telegram phone number to open. Must include country code
-  /// (e.g., '1234567890' for US number, '447911123456' for UK number).
-  /// Do not include '+' or spaces in the phone number.
-  static TelegramAction openProfilePhoneNumber(
-    final String phoneNumber, {
-    final bool fallBackToStore = false,
-  }) =>
-      TelegramAction(
-        TelegramActionType.openProfilePhoneNumber,
-        parameters: {'phoneNumber': phoneNumber},
-        fallBackToStore: fallBackToStore,
-      );
+  /// The username of the profile to open.
+  final String username;
 
-  /// Sends a message to a specific user by username
-  ///
-  /// [username] is the Telegram username to send message to
-  /// [message] is the text to pre-fill in the message input
-  static TelegramAction sendMessage(
-    final String username,
-    final String message, {
-    final bool fallBackToStore = false,
-  }) =>
-      TelegramAction(
-        TelegramActionType.sendMessage,
-        parameters: {
-          'username': username,
-          'message': message,
-        },
-        fallBackToStore: fallBackToStore,
-      );
+  /// The app link URL for opening the specified profile in the Telegram app.
+  @override
+  Uri get appLink => Uri.parse('tg://resolve?domain=$username&profile');
 
-  /// Sends a message to a specific user by phone number
+  /// The fallback link to use when the Telegram app cannot be opened.
   ///
-  /// [phoneNumber] is the Telegram phone number to send message to. Must include country code
-  /// (e.g., '1234567890' for US number, '447911123456' for UK number).
-  /// Do not include '+' or spaces in the phone number.
-  /// [message] is the text to pre-fill in the message input
-  static TelegramAction sendMessagePhoneNumber(
-    final String phoneNumber,
-    final String message, {
-    final bool fallBackToStore = false,
-  }) =>
-      TelegramAction(
-        TelegramActionType.sendMessagePhoneNumber,
-        parameters: {
-          'phoneNumber': phoneNumber,
-          'message': message,
-        },
-        fallBackToStore: fallBackToStore,
-      );
+  /// This URL opens the specified profile on the Telegram web interface.
+  @override
+  Uri get fallbackLink => Uri.parse('https://t.me/$username?profile');
+}
+
+/// An action to open a specific profile by phone number in the Telegram app.
+///
+/// This class extends [Telegram] and implements multiple interfaces to provide
+/// comprehensive functionality for opening profiles with fallback support.
+class TelegramOpenProfileByPhoneNumberAction extends Telegram implements AppLinkAppAction, Fallbackable {
+  /// Creates a new [TelegramOpenProfileByPhoneNumberAction] instance.
+  ///
+  /// Parameters:
+  /// - [phoneNumber]: The phone number of the profile to open.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed.
+  TelegramOpenProfileByPhoneNumberAction({
+    required this.phoneNumber,
+    required super.fallbackToStore,
+  });
+
+  /// The phone number of the profile to open.
+  final String phoneNumber;
+
+  /// The app link URL for opening the specified profile by phone number in the Telegram app.
+  @override
+  Uri get appLink => Uri.parse('tg://resolve?phone=$phoneNumber&profile');
+
+  /// The fallback link to use when the Telegram app cannot be opened.
+  ///
+  /// This URL opens the specified profile on the Telegram web interface.
+  @override
+  Uri get fallbackLink => Uri.parse('https://t.me/+$phoneNumber?profile');
+}
+
+/// An action to send a message to a specific user in the Telegram app.
+///
+/// This class extends [Telegram] and implements multiple interfaces to provide
+/// comprehensive functionality for sending messages with fallback support.
+class TelegramSendMessageAction extends Telegram implements AppLinkAppAction, Fallbackable {
+  /// Creates a new [TelegramSendMessageAction] instance.
+  ///
+  /// Parameters:
+  /// - [username]: The username of the recipient.
+  /// - [message]: The message to send.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed.
+  TelegramSendMessageAction({
+    required this.username,
+    required this.message,
+    required super.fallbackToStore,
+  });
+
+  /// The username of the recipient.
+  final String username;
+
+  /// The message to send.
+  final String message;
+
+  /// The app link URL for sending a message to the specified user in the Telegram app.
+  @override
+  Uri get appLink {
+    final encodedMessage = _getEncodedMessage(message);
+    return Uri.parse('tg://resolve?domain=$username&text=$encodedMessage');
+  }
+
+  /// The fallback link to use when the Telegram app cannot be opened.
+  ///
+  /// This URL opens the chat with the specified user on the Telegram web interface.
+  @override
+  Uri get fallbackLink {
+    final encodedMessage = _getEncodedMessage(message);
+    return Uri.parse('https://t.me/$username?text=$encodedMessage');
+  }
+}
+
+/// An action to send a message to a specific user by phone number in the Telegram app.
+///
+/// This class extends [Telegram] and implements multiple interfaces to provide
+/// comprehensive functionality for sending messages with fallback support.
+class TelegramSendMessageByPhoneNumberAction extends Telegram implements AppLinkAppAction, Fallbackable {
+  /// Creates a new [TelegramSendMessageByPhoneNumberAction] instance.
+  ///
+  /// Parameters:
+  /// - [phoneNumber]: The phone number of the recipient.
+  /// - [message]: The message to send.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Telegram app is not installed.
+  TelegramSendMessageByPhoneNumberAction({
+    required this.phoneNumber,
+    required this.message,
+    required super.fallbackToStore,
+  });
+
+  /// The phone number of the recipient.
+  final String phoneNumber;
+
+  /// The message to send.
+  final String message;
+
+  /// The app link URL for sending a message to the specified user by phone number in the Telegram app.
+  @override
+  Uri get appLink {
+    final encodedMessage = _getEncodedMessage(message);
+    return Uri.parse('tg://resolve?phone=$phoneNumber&text=$encodedMessage');
+  }
+
+  /// The fallback link to use when the Telegram app cannot be opened.
+  ///
+  /// This URL opens the chat with the specified user on the Telegram web interface.
+  @override
+  Uri get fallbackLink {
+    final encodedMessage = _getEncodedMessage(message);
+    return Uri.parse('https://t.me/+$phoneNumber?text=$encodedMessage');
+  }
 }

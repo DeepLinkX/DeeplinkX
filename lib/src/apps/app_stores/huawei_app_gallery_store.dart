@@ -1,130 +1,119 @@
-import 'dart:core';
+import 'package:deeplink_x/src/core/core.dart';
 
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_type.dart';
-
-/// Huawei AppGallery-specific action types that define available deeplink actions
-enum HuaweiAppGalleryActionType implements ActionTypeEnum {
-  /// Opens a specific app page in the Huawei AppGallery
-  openAppPage,
-}
-
-/// Huawei AppGallery action implementation for handling Huawei AppGallery-specific deeplinks
-class HuaweiAppGalleryAction extends StoreAppAction {
-  /// Creates a new Huawei AppGallery action
-  ///
-  /// [type] specifies the type of action to perform
-  /// [parameters] contains any additional data needed for the action
-  const HuaweiAppGalleryAction(
-    this.type, {
-    super.parameters,
-  }) : super(actionType: type, platform: platformType);
-
-  /// The native platform type
-  static const platformType = PlatformType.android;
-
-  /// Base URI for Huawei AppGallery app deeplinks
-  static const baseUrl = 'appmarket://details';
-
-  /// Base URI for Huawei AppGallery web fallback
-  static const fallBackUri = 'https://appgallery.huawei.com';
-
-  /// The type of Huawei AppGallery action to perform
-  final HuaweiAppGalleryActionType type;
-
-  @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case HuaweiAppGalleryActionType.openAppPage:
-        final packageName = parameters!['packageName'];
-        final referrer = parameters!['referrer'];
-        final locale = parameters!['locale'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'id': packageName!};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        if (locale != null) {
-          queryParams['locale'] = locale;
-        }
-
-        // Native app URI
-        return Uri.parse(baseUrl).replace(
-          queryParameters: queryParams,
-        );
-    }
-  }
-
-  @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case HuaweiAppGalleryActionType.openAppPage:
-        final appId = parameters!['appId'];
-        final referrer = parameters!['referrer'];
-        final locale = parameters!['locale'];
-
-        // Build query parameters
-        final queryParams = <String, String>{};
-
-        if (referrer != null) {
-          queryParams['referrer'] = referrer;
-        }
-
-        if (locale != null) {
-          queryParams['locale'] = locale;
-        }
-
-        return Uri.parse(fallBackUri).replace(
-          path: '/app/$appId',
-          queryParameters: queryParams.isNotEmpty ? queryParams : null,
-        );
-    }
-  }
-}
-
-/// Factory class for creating Huawei AppGallery deeplink actions
+/// Huawei AppGallery store application.
 ///
-/// This class provides convenient factory methods for creating common Huawei AppGallery
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for Huawei AppGallery-specific action creation.
-class HuaweiAppGalleryStore {
-  HuaweiAppGalleryStore._();
+/// This class implements the [StoreApp] interface to provide capabilities
+/// for interacting with the Huawei AppGallery store on Android devices.
+class HuaweiAppGalleryStore implements StoreApp {
+  /// Creates a new [HuaweiAppGalleryStore] instance.
+  HuaweiAppGalleryStore();
 
-  /// Opens a specific app page in the Huawei AppGallery
+  /// Creates an action to open the Huawei AppGallery.
   ///
-  /// [packageName] is the package name of the app to open (e.g., 'com.example.app')
-  /// [appId] is the app ID of the app to open (e.g., 'C100000000')
-  /// [referrer] is an optional parameter for tracking the source of the install (optional)
-  /// [locale] is an optional parameter for specifying the language and region (e.g., 'en_US', 'zh_CN')
+  /// Returns a [HuaweiAppGalleryStore] instance that can be used to open the Huawei AppGallery app.
+  factory HuaweiAppGalleryStore.open() => HuaweiAppGalleryStore();
+
+  /// The platform this store app is associated with (Android).
+  @override
+  PlatformType platform = PlatformType.android;
+
+  /// The Android package name for the Huawei AppGallery app.
+  @override
+  String? get androidPackageName => 'com.huawei.appmarket';
+
+  /// The custom URL scheme for the Huawei AppGallery app.
+  @override
+  String get customScheme => 'appmarket';
+
+  /// The web URL for the Huawei AppGallery store.
+  @override
+  Uri get website => Uri.parse('https://appgallery.huawei.com');
+
+  /// Creates an action to open a specific app's page in the Huawei AppGallery store.
   ///
-  /// The [packageName] is used for native app deeplinks while [appId] is used for web fallback.
-  /// Both are required to ensure proper functionality across platforms.
-  static HuaweiAppGalleryAction openAppPage({
+  /// Parameters:
+  /// - [packageName]: The package name of the app to open in the AppGallery store.
+  /// - [appId]: The unique identifier for the app in the AppGallery store.
+  /// - [referrer]: Optional referrer parameter for tracking (e.g. 'utm_source=test_app').
+  /// - [locale]: Optional locale parameter to specify language (e.g. 'en_US').
+  ///
+  /// Returns a [HuaweiAppGalleryStoreOpenAppPageAction] instance that can be used to open
+  /// the specified app's page in the Huawei AppGallery store.
+  static HuaweiAppGalleryStoreOpenAppPageAction openAppPage({
     required final String packageName,
     required final String appId,
     final String? referrer,
     final String? locale,
-  }) {
-    final parameters = <String, String>{
-      'appId': appId,
-      'packageName': packageName,
+  }) =>
+      HuaweiAppGalleryStoreOpenAppPageAction(
+        packageName: packageName,
+        appId: appId,
+        referrer: referrer,
+        locale: locale,
+      );
+}
+
+/// An action to open a specific app's page in the Huawei AppGallery store.
+///
+/// This class extends [HuaweiAppGalleryStore] and implements multiple interfaces to provide
+/// comprehensive functionality for opening app pages with fallback support.
+class HuaweiAppGalleryStoreOpenAppPageAction extends HuaweiAppGalleryStore
+    implements AppLinkAppAction, Fallbackable, StoreOpenAppPageAction {
+  /// Creates a new [HuaweiAppGalleryStoreOpenAppPageAction] instance.
+  ///
+  /// Parameters:
+  /// - [packageName]: The package name of the app to open in the AppGallery store.
+  /// - [appId]: The unique identifier for the app in the AppGallery store.
+  /// - [referrer]: Optional referrer parameter for tracking.
+  /// - [locale]: Optional locale parameter to specify language.
+  HuaweiAppGalleryStoreOpenAppPageAction({
+    required this.packageName,
+    required this.appId,
+    this.referrer,
+    this.locale,
+  });
+
+  /// The package name of the app to open in the AppGallery store.
+  final String packageName;
+
+  /// The unique identifier for the app in the AppGallery store.
+  final String appId;
+
+  /// Optional referrer parameter for tracking.
+  final String? referrer;
+
+  /// Optional locale parameter to specify language.
+  final String? locale;
+
+  /// The app link URL for opening the specified app in the Huawei AppGallery app.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{
+      'id': packageName,
+      if (referrer != null) 'referrer': referrer!,
+      if (locale != null) 'locale': locale!,
     };
+    return Uri(
+      scheme: 'appmarket',
+      host: 'details',
+      queryParameters: queryParameters,
+    );
+  }
 
-    if (referrer != null) {
-      parameters['referrer'] = referrer;
-    }
-
-    if (locale != null) {
-      parameters['locale'] = locale;
-    }
-
-    return HuaweiAppGalleryAction(
-      HuaweiAppGalleryActionType.openAppPage,
-      parameters: parameters,
+  /// The fallback link to use when the Huawei AppGallery app cannot be opened.
+  ///
+  /// This URL opens the app's page on the Huawei AppGallery website.
+  @override
+  Uri get fallbackLink {
+    final queryParameters = <String, String>{
+      if (referrer != null) 'referrer': referrer!,
+      if (locale != null) 'locale': locale!,
+    };
+    return Uri(
+      scheme: 'https',
+      host: 'appgallery.huawei.com',
+      path: 'app/$appId',
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
     );
   }
 }

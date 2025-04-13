@@ -4,40 +4,57 @@ DeeplinkX provides support for opening the iOS App Store and specific app pages,
 
 ## Available Actions
 
-### Open App Store
+### Launch iOS App Store
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(IOSAppStore.open);
+
+// Simple launch
+await deeplinkX.launchApp(IOSAppStore.open());
+
+// Launch with fallback disabled
+await deeplinkX.launchApp(IOSAppStore.open(), disableFallback: true);
 ```
 
-### Open App Page
+### Launch App Page Action
 ```dart
 final deeplinkX = DeeplinkX();
+
+// Simple action
 await deeplinkX.launchAction(IOSAppStore.openAppPage(
   appId: '284882215',  // Facebook app ID
   appName: 'facebook',
   country: 'us',       // Optional: two-letter country code
 ));
+
+// Action with fallback disabled
+await deeplinkX.launchAction(
+  IOSAppStore.openAppPage(
+    appId: '284882215',
+    appName: 'facebook',
+  ),
+  disableFallback: true,
+);
 ```
 
-### Open App Review Page
+### Launch App Review Page Action
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(IOSAppStore.openReview(
+
+// Simple action
+await deeplinkX.launchAction(IOSAppStore.rateApp(
   appId: '284882215',  // Facebook app ID
   appName: 'facebook',
   country: 'us',       // Optional: two-letter country code
 ));
-```
 
-### Open App iMessage Extension
-```dart
-final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(IOSAppStore.openMessagesExtension(
-  appId: '284882215',  // Facebook app ID
-  appName: 'facebook',
-  country: 'us',       // Optional: two-letter country code
-));
+// Action with fallback disabled
+await deeplinkX.launchAction(
+  IOSAppStore.rateApp(
+    appId: '284882215',
+    appName: 'facebook',
+  ),
+  disableFallback: true,
+);
 ```
 
 ## Parameter Validations
@@ -95,10 +112,14 @@ DeeplinkX uses the following URL schemes for iOS App Store:
 ### Native App Deep Links
 When on iOS, the following scheme is used:
 - `itms-apps://` - Primary iOS App Store URL scheme
+- For app pages: `itms-apps://itunes.apple.com/app/id{appId}`
+- For reviews: `itms-apps://itunes.apple.com/app/id{appId}?action=write-review`
 
 ### Web Fallback URLs
 When on other platforms or when native schemes fail:
 - `https://apps.apple.com` - Official App Store web URL
+- For app pages: `https://apps.apple.com/{country}/app/{appName}/id{appId}`
+- For reviews: `https://apps.apple.com/{country}/app/{appName}/id{appId}?action=write-review`
 
 ## Official Documentation
 - [Apple Developer Documentation - Universal Links](https://developer.apple.com/documentation/uikit/inter-process_communication/allowing_apps_and_websites_to_link_to_your_content)
@@ -110,3 +131,21 @@ DeeplinkX follows this sequence when handling iOS App Store deeplinks:
 
 1. First, it attempts to launch the iOS App Store app if it's installed on the device.
 2. If the iOS App Store app is not installed or the device is not running iOS, DeeplinkX will automatically fall back to opening the iOS App Store web interface in the default browser.
+3. You can disable fallbacks by setting `disableFallback: true` in the launch methods.
+
+## Fallback Support for Actions
+
+| Action      | Web Fallback |
+| ----------- | ------------ |
+| open        | ✅            |
+| openAppPage | ✅            |
+| rateApp     | ❌            |
+
+Note: Store apps are not considered "fallbackable" in the traditional sense since they are the fallback targets for other apps. However, they do have web fallback behaviors when the store app itself cannot be launched.
+
+## Check If iOS App Store Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(IOSAppStore());
+```

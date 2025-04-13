@@ -31,60 +31,30 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-    <!-- Required to query activities that can process text, see:
-         https://developer.android.com/training/package-visibility and
-         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
-
-         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
-        <!-- For http/https fallback links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="http" />
-        </intent>
+        <!-- LinkedIn -->
+        <package android:name="com.linkedin.android" />
+        <!-- Instagram -->
+        <package android:name="com.instagram.android" />
+        <!-- WhatsApp -->
+        <package android:name="com.whatsapp" />
+        <!-- Telegram -->
+        <package android:name="org.telegram.messenger" />
+
+        <!-- For store apps -->
+        <!-- Google Play Store -->
+        <package android:name="com.android.vending" />
+        <!-- Huawei AppGallery -->
+        <package android:name="com.huawei.appmarket" />
+        <!-- Cafe Bazaar Store -->
+        <package android:name="com.farsitel.bazaar" />
+        <!-- Myket Store -->
+        <package android:name="ir.mservices.market" />
+
+        <!-- For web fallbacks (required) -->
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="https" />
-        </intent>
-        <!-- For Instagram deep links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="instagram" />
-        </intent>
-        <!-- For Telegram deep links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="tg" />
-        </intent>
-        <!-- For WhatsApp deep links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="whatsapp" />
-        </intent>
-        <!-- For LinkedIn deep links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="linkedin" />
-        </intent>
-        <!-- For Play store deep links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="market" />
-        </intent>
-        <!-- For Huawei app gallery deep links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="appmarket" android:host="details" />
-        </intent>
-        <!-- For Cafe Bazaar store deep links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="bazaar" android:host="home" />
-        </intent>
-        <!-- For Myket store deep links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="myket" android:host="main" />
         </intent>
     </queries>
 </manifest>

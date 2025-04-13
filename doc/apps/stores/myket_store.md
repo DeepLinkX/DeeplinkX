@@ -1,45 +1,61 @@
-# Myket Store
+# Myket Store Deeplinks
 
-Myket is a popular Android app store in Iran. This document describes how to use the DeeplinkX plugin to create deeplinks for the Myket store.
+DeeplinkX provides support for opening the Myket app store and specific app pages, including app details and reviews.
 
 ## Available Actions
 
-### Open Myket
-
-Opens the Myket app.
-
+### Launch Myket Store
 ```dart
-await deeplinkX.launchAction(MyketStore.open);
+final deeplinkX = DeeplinkX();
+
+// Simple launch
+await deeplinkX.launchApp(MyketStore.open());
+
+// Launch with fallback disabled
+await deeplinkX.launchApp(MyketStore.open(), disableFallback: true);
 ```
 
-### Open App Page
-
-Opens a specific app page in the Myket store.
-
+### Launch Myket App Page Action
 ```dart
+final deeplinkX = DeeplinkX();
+
+// Simple action
+await deeplinkX.launchAction(MyketStore.openAppPage(
+  packageName: 'com.example.app',
+  referrer: 'utm_source=deeplink_x',  // Optional
+));
+
+// Action with fallback disabled
 await deeplinkX.launchAction(
   MyketStore.openAppPage(
     packageName: 'com.example.app',
-    referrer: 'utm_source=your_app', // Optional
   ),
+  disableFallback: true,
 );
 ```
 
-### Rate app
-Opens the rating page for a specific app in the Myket store.
-
+### Launch App Review Page Action
 ```dart
+final deeplinkX = DeeplinkX();
+
+// Simple action
+await deeplinkX.launchAction(MyketStore.rateApp(
+  packageName: 'com.example.app',
+));
+
+// Action with fallback disabled
 await deeplinkX.launchAction(
   MyketStore.rateApp(
     packageName: 'com.example.app',
   ),
+  disableFallback: true,
 );
 ```
 
 ## Parameters
 
-- `packageName`: The package name of the app to open (e.g., 'com.example.app')
-- `referrer`: An optional parameter for tracking the source of the install
+- `packageName` (required): The package name of the app to open (e.g., 'com.example.app')
+- `referrer` (optional): A parameter for tracking the source of the install
 
 ## Platform-Specific Configuration
 
@@ -47,10 +63,7 @@ await deeplinkX.launchAction(
 Add the following to your `android/app/src/main/AndroidManifest.xml` inside the `<queries>` tag:
 ```xml
 <queries>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="myket" android:host="main" />
-    </intent>
+    <package android:name="ir.mservices.market" />
     <intent>
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="https" />
@@ -58,16 +71,36 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
 </queries>
 ```
 
-## URI Formats
+## URL Schemes
 
-### Native URIs
+### Native App URIs
 
-- Open Myket: `myket://main`
-- Open App Page: `myket://details?id=[packageName]&referrer=[referrer]`
-- Open App Review Page: `myket://comment?id=[packageName]`
+- Open App Page: `myket://details?id=com.example.app`
+- Rate App: `myket://comment?id=com.example.app`
 
-### Fallback URIs
+### Web Fallback URIs
 
-- Open Myket: `https://myket.ir`
-- Open App Page: `https://myket.ir/app/[packageName]?referrer=[referrer]`
-- Open App Review Page: `https://myket.ir/app/[packageName]?referrer=[referrer]#reviews`
+- Open App Page: `https://myket.ir/app/com.example.app`
+
+## Fallback Behavior
+
+DeeplinkX follows this sequence when handling Myket deeplinks:
+
+1. First, it attempts to launch the Myket app if it's installed on the device.
+2. If the Myket app is not installed or the device is not running Android, it will automatically fall back to opening the Myket web interface in the default browser.
+3. You can disable fallbacks by setting `disableFallback: true` in the launch methods.
+
+## Fallback Support for Actions
+
+| Action      | Web Fallback |
+| ----------- | ------------ |
+| open        | ✅            |
+| openAppPage | ✅            |
+| rateApp     | ❌            |
+
+## Check If Myket Store Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(MyketStore());
+```

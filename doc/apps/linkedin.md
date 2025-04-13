@@ -4,16 +4,70 @@ DeeplinkX provides support for LinkedIn deep linking actions.
 
 ## Available Actions
 
-### Open LinkedIn Profile
+### Launch LinkedIn App
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(LinkedIn.openProfile('profile-id'));
+
+// Simple launch
+await deeplinkX.launchApp(LinkedIn.open());
+
+// Launch with store fallback if not installed
+await deeplinkX.launchApp(LinkedIn.open(fallBackToStore: true));
+
+// Launch with fallback disabled
+await deeplinkX.launchApp(LinkedIn.open(), disableFallback: true);
 ```
 
-### Open LinkedIn Company Page
+### Launch Profile Action
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(LinkedIn.openCompany('company-id'));
+
+// Simple action
+await deeplinkX.launchAction(LinkedIn.openProfile(
+  profileId: 'johndoe',
+));
+
+// Action with store fallback if not installed
+await deeplinkX.launchAction(
+  LinkedIn.openProfile(
+    profileId: 'johndoe',
+    fallBackToStore: true,
+  ),
+);
+
+// Action with fallback disabled
+await deeplinkX.launchAction(
+  LinkedIn.openProfile(
+    profileId: 'johndoe',
+  ),
+  disableFallback: true,
+);
+```
+
+### Launch Company Page Action
+```dart
+final deeplinkX = DeeplinkX();
+
+// Simple action
+await deeplinkX.launchAction(LinkedIn.openCompany(
+  companyId: 'company-id',
+));
+
+// Action with store fallback if not installed
+await deeplinkX.launchAction(
+  LinkedIn.openCompany(
+    companyId: 'company-id',
+    fallBackToStore: true,
+  ),
+);
+
+// Action with fallback disabled
+await deeplinkX.launchAction(
+  LinkedIn.openCompany(
+    companyId: 'company-id',
+  ),
+  disableFallback: true,
+);
 ```
 
 ## Parameter Validations
@@ -41,16 +95,13 @@ Add the following to your `ios/Runner/Info.plist`:
 Add the following to your `android/app/src/main/AndroidManifest.xml` inside the `<queries>` tag:
 ```xml
 <queries>
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="linkedin" />
-    </intent>
-    <!-- Play store fallback -->
-    <intent>
-        <action android:name="android.intent.action.VIEW" />
-        <data android:scheme="market" />
-    </intent>
-    <!-- Web fallback -->
+    <!-- For LinkedIn app -->
+    <package android:name="com.linkedin.android" />
+    
+    <!-- For Play Store fallback (if using fallbackToStore) -->
+    <package android:name="com.android.vending" />
+    
+    <!-- For web fallback (required for universal links) -->
     <intent>
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="https" />
@@ -75,17 +126,34 @@ When the LinkedIn app is not installed, DeeplinkX can redirect users to download
 
 - iOS App Store
 - Google Play Store
+- Microsoft Store
 
 To enable fallback to app stores, use the `fallBackToStore` parameter:
 
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchAction(LinkedIn.openCompany('company-id', fallBackToStore: true));
+await deeplinkX.launchApp(LinkedIn.open(fallBackToStore: true));
 ```
 
 ## Fallback Behavior
-DeeplinkX follows this sequence when handling LinkedIn deeplinks:
+LinkedIn uses universal links, which work seamlessly across platforms:
 
-1. First, it attempts to launch the LinkedIn app if it's installed on the device.
-2. If the LinkedIn app is not installed and `fallBackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
-3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the LinkedIn web interface in the default browser.
+1. First, it attempts to open the LinkedIn app if it's installed on the device using universal links.
+2. If the LinkedIn app is not installed and `fallbackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store, Google Play Store, or Microsoft Store).
+3. If no supported store is available for the current platform or the store app cannot be launched, it will automatically fall back to opening the URL in a web browser, as LinkedIn uses universal links.
+4. You can disable all fallbacks by setting `disableFallback: true` in the launch methods.
+
+## Fallback Support for Actions
+
+| Action      | Store Fallback | Web Fallback |
+| ----------- | -------------- | ------------ |
+| open        | ✅              | ✅            |
+| openProfile | ✅              | ✅            |
+| openCompany | ✅              | ✅            |
+
+## Check If LinkedIn Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(LinkedIn());
+```

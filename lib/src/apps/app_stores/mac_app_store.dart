@@ -1,293 +1,265 @@
-import 'dart:core';
+import 'package:deeplink_x/src/core/core.dart';
 
-import 'package:deeplink_x/src/core/app_actions/store_app_action.dart';
-import 'package:deeplink_x/src/core/enums/action_type_enum.dart';
-import 'package:deeplink_x/src/core/enums/platform_type.dart';
-
-/// Mac App Store-specific action types that define available deeplink actions
-enum MacAppStoreActionType implements ActionTypeEnum {
-  /// Opens the Mac App Store app
-  open,
-
-  /// Opens a specific app page in the Mac App Store
-  openAppPage,
-
-  /// Opens the review page for a specific app
-  openReview,
-}
-
-/// Mac App Store action implementation for handling Mac App Store-specific deeplinks
-class MacAppStoreAction extends StoreAppAction {
-  /// Creates a new Mac App Store action
-  ///
-  /// [type] specifies the type of action to perform
-  /// [parameters] contains any additional data needed for the action
-  const MacAppStoreAction(
-    this.type, {
-    super.parameters,
-  }) : super(actionType: type, platform: platformType);
-
-  /// The native platform type
-  static const platformType = PlatformType.macos;
-
-  /// Base URI for Mac App Store app deeplinks
-  static const baseUrl = 'macappstore://itunes.apple.com';
-
-  /// Base URI for Mac App Store web fallback
-  static const fallBackUri = 'https://apps.apple.com/app/mac';
-
-  /// The type of Mac App Store action to perform
-  final MacAppStoreActionType type;
-
-  @override
-  Future<Uri> getNativeUri() async {
-    switch (type) {
-      case MacAppStoreActionType.open:
-        return Uri.parse(baseUrl);
-      case MacAppStoreActionType.openAppPage:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-        final campaignToken = parameters!['ct'];
-        final providerToken = parameters!['pt'];
-        final affiliateToken = parameters!['at'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'mt': mediaType!};
-
-        if (campaignToken != null) {
-          queryParams['ct'] = campaignToken;
-        }
-        if (providerToken != null) {
-          queryParams['pt'] = providerToken;
-        }
-        if (affiliateToken != null) {
-          queryParams['at'] = affiliateToken;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add('mac');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Native app URI
-        return Uri.parse(baseUrl).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-      case MacAppStoreActionType.openReview:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-
-        // Add action=write-review parameter
-        final queryParams = <String, String>{'action': 'write-review', 'mt': mediaType!};
-
-        // Add other parameters if provided
-        if (parameters!['ct'] != null) {
-          queryParams['ct'] = parameters!['ct']!;
-        }
-        if (parameters!['pt'] != null) {
-          queryParams['pt'] = parameters!['pt']!;
-        }
-        if (parameters!['at'] != null) {
-          queryParams['at'] = parameters!['at']!;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add('mac');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Native app URI for review
-        return Uri.parse(baseUrl).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-    }
-  }
-
-  @override
-  Future<Uri> getFallbackUri() async {
-    switch (type) {
-      case MacAppStoreActionType.open:
-        return Uri.parse(fallBackUri);
-      case MacAppStoreActionType.openAppPage:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-        final campaignToken = parameters!['ct'];
-        final providerToken = parameters!['pt'];
-        final affiliateToken = parameters!['at'];
-
-        // Build query parameters
-        final queryParams = <String, String>{'mt': mediaType!};
-
-        if (campaignToken != null) {
-          queryParams['ct'] = campaignToken;
-        }
-        if (providerToken != null) {
-          queryParams['pt'] = providerToken;
-        }
-        if (affiliateToken != null) {
-          queryParams['at'] = affiliateToken;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add('mac');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Web fallback URI
-        return Uri.parse(fallBackUri).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-      case MacAppStoreActionType.openReview:
-        final appId = parameters!['appId'];
-        final appName = parameters!['appName'];
-        final country = parameters!['country'];
-        final mediaType = parameters!['mt'];
-
-        // Add action=write-review parameter
-        final queryParams = <String, String>{'action': 'write-review', 'mt': mediaType!};
-
-        // Add other parameters if provided
-        if (parameters!['ct'] != null) {
-          queryParams['ct'] = parameters!['ct']!;
-        }
-        if (parameters!['pt'] != null) {
-          queryParams['pt'] = parameters!['pt']!;
-        }
-        if (parameters!['at'] != null) {
-          queryParams['at'] = parameters!['at']!;
-        }
-
-        final pathSegments = <String>[];
-        if (country != null) {
-          pathSegments.add(country);
-        }
-        pathSegments.add('app');
-        pathSegments.add('mac');
-        pathSegments.add(appName!);
-        pathSegments.add('id$appId');
-
-        // Web fallback URI for review
-        return Uri.parse(fallBackUri).replace(
-          pathSegments: pathSegments,
-          queryParameters: queryParams,
-        );
-    }
-  }
-}
-
-/// Factory class for creating Mac App Store deeplink actions
+/// Mac App Store application.
 ///
-/// This class provides convenient factory methods for creating common Mac App Store
-/// deeplink actions. While it only contains static members, this is intentional
-/// as it serves as a namespace for Mac App Store-specific action creation.
-class MacAppStore {
-  MacAppStore._();
+/// This class implements the [StoreApp] interface to provide capabilities
+/// for interacting with the Mac App Store on macOS devices.
+class MacAppStore implements StoreApp {
+  /// Creates a new [MacAppStore] instance.
+  MacAppStore();
 
-  /// Opens the Mac App Store app
-  static const MacAppStoreAction open = MacAppStoreAction(MacAppStoreActionType.open);
-
-  /// Opens a specific app page in the Mac App Store
+  /// Creates an action to open the Mac App Store.
   ///
-  /// [appId] is the Mac App Store ID of the app to open. Must be a valid numeric ID
-  /// between 1 and 10 digits long (e.g., '497799835' for Xcode).
-  /// [appName] is the app name slug for the web URL
-  /// [country] is the two-letter country code (optional)
-  /// [mediaType] specifies the type of content (default: '12' for macOS apps)
-  /// [campaignToken] is used to track campaigns (optional)
-  /// [providerToken] is a numeric identifier for your team/developer (optional)
-  /// [affiliateToken] is used for Apple's affiliate tracking (optional)
-  static MacAppStoreAction openAppPage({
+  /// Returns a [MacAppStore] instance that can be used to open the Mac App Store.
+  factory MacAppStore.open() => MacAppStore();
+
+  /// The platform this store app is associated with (macOS).
+  @override
+  PlatformType platform = PlatformType.macos;
+
+  /// The Android package name for the Mac App Store (not applicable for macOS).
+  @override
+  String? get androidPackageName => null;
+
+  /// The custom URL scheme for the Mac App Store.
+  @override
+  String get customScheme => 'macappstore';
+
+  /// The web URL for the Mac App Store.
+  @override
+  Uri get website => Uri.parse('https://www.apple.com/app-store/');
+
+  /// Creates an action to open a specific app's page in the Mac App Store.
+  ///
+  /// Parameters:
+  /// - [appId]: The App Store ID of the app to open.
+  /// - [appName]: The name of the app to open.
+  /// - [mediaType]: The media type identifier (default is '12' for apps) (e.g. '12' for apps, '11' for macOS apps).
+  /// - [country]: Optional two-letter country code to specify a country-specific store (e.g. 'us').
+  /// - [campaignToken]: Optional campaign token for tracking (e.g. 'campaign123').
+  /// - [providerToken]: Optional provider token for affiliate programs (e.g. 'provider456').
+  /// - [affiliateToken]: Optional affiliate token for affiliate programs (e.g. 'affiliate789').
+  ///
+  /// Returns a [MacAppStoreOpenAppPageAction] instance that can be used to open
+  /// the specified app's page in the Mac App Store.
+  static MacAppStoreOpenAppPageAction openAppPage({
     required final String appId,
     required final String appName,
-    final String? country,
     final String mediaType = '12',
+    final String? country,
     final String? campaignToken,
     final String? providerToken,
     final String? affiliateToken,
-  }) {
-    final parameters = <String, String>{
-      'appId': appId,
-      'appName': appName,
+  }) =>
+      MacAppStoreOpenAppPageAction(
+        appId: appId,
+        appName: appName,
+        mediaType: mediaType,
+        country: country,
+        campaignToken: campaignToken,
+        providerToken: providerToken,
+        affiliateToken: affiliateToken,
+      );
+
+  /// Creates an action to rate a specific app in the Mac App Store.
+  ///
+  /// Parameters:
+  /// - [appId]: The App Store ID of the app to rate.
+  /// - [appName]: The name of the app to rate.
+  /// - [mediaType]: The media type identifier (default is '12' for ratings) (e.g. '12' for ratings, '11' for macOS apps).
+  /// - [country]: Optional two-letter country code to specify a country-specific store (e.g. 'us').
+  /// - [campaignToken]: Optional campaign token for tracking (e.g. 'campaign123').
+  /// - [providerToken]: Optional provider token for affiliate programs (e.g. 'provider456').
+  /// - [affiliateToken]: Optional affiliate token for affiliate programs (e.g. 'affiliate789').
+  ///
+  /// Returns a [MacAppStoreRateAppAction] instance that can be used to open
+  /// the app's rating page in the Mac App Store.
+  static MacAppStoreRateAppAction rateApp({
+    required final String appId,
+    required final String appName,
+    final String mediaType = '12',
+    final String? country,
+    final String? campaignToken,
+    final String? providerToken,
+    final String? affiliateToken,
+  }) =>
+      MacAppStoreRateAppAction(
+        appId: appId,
+        appName: appName,
+        mediaType: mediaType,
+        country: country,
+        campaignToken: campaignToken,
+        providerToken: providerToken,
+        affiliateToken: affiliateToken,
+      );
+}
+
+/// An action to open a specific app's page in the Mac App Store.
+///
+/// This class extends [MacAppStore] and implements multiple interfaces to provide
+/// comprehensive functionality for opening app pages with fallback support.
+class MacAppStoreOpenAppPageAction extends MacAppStore
+    implements AppLinkAppAction, Fallbackable, StoreOpenAppPageAction {
+  /// Creates a new [MacAppStoreOpenAppPageAction] instance.
+  ///
+  /// Parameters:
+  /// - [appId]: The App Store ID of the app to open.
+  /// - [appName]: The name of the app to open.
+  /// - [mediaType]: The media type identifier.
+  /// - [country]: Optional two-letter country code to specify a country-specific store.
+  /// - [campaignToken]: Optional campaign token for tracking.
+  /// - [providerToken]: Optional provider token for affiliate programs.
+  /// - [affiliateToken]: Optional affiliate token for affiliate programs.
+  MacAppStoreOpenAppPageAction({
+    required this.appId,
+    required this.appName,
+    required this.mediaType,
+    this.country,
+    this.campaignToken,
+    this.providerToken,
+    this.affiliateToken,
+  });
+
+  /// The App Store ID of the app to open.
+  final String appId;
+
+  /// The name of the app to open.
+  final String appName;
+
+  /// The media type identifier.
+  final String mediaType;
+
+  /// Optional two-letter country code to specify a country-specific store.
+  final String? country;
+
+  /// Optional campaign token for tracking.
+  final String? campaignToken;
+
+  /// Optional provider token for affiliate programs.
+  final String? providerToken;
+
+  /// Optional affiliate token for affiliate programs.
+  final String? affiliateToken;
+
+  /// The app link URL for opening the specified app in the Mac App Store.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{
       'mt': mediaType,
+      if (campaignToken != null) 'ct': campaignToken!,
+      if (providerToken != null) 'pt': providerToken!,
+      if (affiliateToken != null) 'at': affiliateToken!,
     };
-
-    if (country != null) {
-      parameters['country'] = country;
-    }
-    if (campaignToken != null) {
-      parameters['ct'] = campaignToken;
-    }
-    if (providerToken != null) {
-      parameters['pt'] = providerToken;
-    }
-    if (affiliateToken != null) {
-      parameters['at'] = affiliateToken;
-    }
-
-    return MacAppStoreAction(
-      MacAppStoreActionType.openAppPage,
-      parameters: parameters,
+    final pathSegments = <String>[
+      if (country != null) ...[country!],
+      'app',
+      'mac',
+      appName,
+      'id$appId',
+    ];
+    return Uri(
+      scheme: 'macappstore',
+      host: 'itunes.apple.com',
+      pathSegments: pathSegments,
+      queryParameters: queryParameters,
     );
   }
 
-  /// Opens the review page for a specific app in the Mac App Store
+  /// The fallback link to use when the Mac App Store app cannot be opened.
   ///
-  /// [appId] is the Mac App Store ID of the app to open. Must be a valid numeric ID
-  /// between 1 and 10 digits long (e.g., '497799835' for Xcode).
-  /// [appName] is the app name slug for the web URL
-  /// [country] is the two-letter country code (optional)
-  /// [mediaType] specifies the type of content (default: '12' for macOS apps)
-  /// [campaignToken] is used to track campaigns (optional)
-  /// [providerToken] is a numeric identifier for your team/developer (optional)
-  /// [affiliateToken] is used for Apple's affiliate tracking (optional)
-  static MacAppStoreAction openReview({
-    required final String appId,
-    required final String appName,
-    final String? country,
-    final String mediaType = '12',
-    final String? campaignToken,
-    final String? providerToken,
-    final String? affiliateToken,
-  }) {
-    final parameters = <String, String>{'appId': appId, 'appName': appName, 'mt': mediaType};
+  /// This URL opens the app's page on the Apple App Store website.
+  @override
+  Uri get fallbackLink {
+    final queryParameters = <String, String>{
+      'mt': mediaType,
+      if (campaignToken != null) 'ct': campaignToken!,
+      if (providerToken != null) 'pt': providerToken!,
+      if (affiliateToken != null) 'at': affiliateToken!,
+    };
+    final pathSegments = <String>[
+      if (country != null) ...[country!],
+      'app',
+      'mac',
+      appName,
+      'id$appId',
+    ];
+    return Uri(
+      scheme: 'https',
+      host: 'apps.apple.com',
+      pathSegments: pathSegments,
+      queryParameters: queryParameters,
+    );
+  }
+}
 
-    if (country != null) {
-      parameters['country'] = country;
-    }
-    if (campaignToken != null) {
-      parameters['ct'] = campaignToken;
-    }
-    if (providerToken != null) {
-      parameters['pt'] = providerToken;
-    }
-    if (affiliateToken != null) {
-      parameters['at'] = affiliateToken;
-    }
+/// An action to rate a specific app in the Mac App Store.
+///
+/// This class extends [MacAppStore] and implements [AppLinkAppAction] to provide
+/// functionality for opening the rating page of an app in the Mac App Store.
+class MacAppStoreRateAppAction extends MacAppStore implements AppLinkAppAction {
+  /// Creates a new [MacAppStoreRateAppAction] instance.
+  ///
+  /// Parameters:
+  /// - [appId]: The App Store ID of the app to rate.
+  /// - [appName]: The name of the app to rate.
+  /// - [mediaType]: The media type identifier.
+  /// - [country]: Optional two-letter country code to specify a country-specific store.
+  /// - [campaignToken]: Optional campaign token for tracking.
+  /// - [providerToken]: Optional provider token for affiliate programs.
+  /// - [affiliateToken]: Optional affiliate token for affiliate programs.
+  MacAppStoreRateAppAction({
+    required this.appId,
+    required this.appName,
+    required this.mediaType,
+    this.country,
+    this.campaignToken,
+    this.providerToken,
+    this.affiliateToken,
+  });
 
-    return MacAppStoreAction(
-      MacAppStoreActionType.openReview,
-      parameters: parameters,
+  /// The App Store ID of the app to rate.
+  final String appId;
+
+  /// The name of the app to rate.
+  final String appName;
+
+  /// The media type identifier.
+  final String mediaType;
+
+  /// Optional two-letter country code to specify a country-specific store.
+  final String? country;
+
+  /// Optional campaign token for tracking.
+  final String? campaignToken;
+
+  /// Optional provider token for affiliate programs.
+  final String? providerToken;
+
+  /// Optional affiliate token for affiliate programs.
+  final String? affiliateToken;
+
+  /// The app link URL for opening the app's rating page in the Mac App Store.
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{
+      'mt': mediaType,
+      'action': 'write-review',
+      if (campaignToken != null) 'ct': campaignToken!,
+      if (providerToken != null) 'pt': providerToken!,
+      if (affiliateToken != null) 'at': affiliateToken!,
+    };
+    final pathSegments = <String>[
+      if (country != null) ...[country!],
+      'app',
+      'mac',
+      appName,
+      'id$appId',
+    ];
+    return Uri(
+      scheme: 'macappstore',
+      host: 'itunes.apple.com',
+      pathSegments: pathSegments,
+      queryParameters: queryParameters,
     );
   }
 }
