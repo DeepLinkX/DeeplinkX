@@ -6,11 +6,12 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 
 ## Features
 
-- Easy to use
-- Type-safe API for external deeplinks
-- Multi-platform support
+- Launch deeplink actions within apps
+- Launch apps without specific actions
+- Redirect to app stores to update apps
+- Check if external app is installed on the device
 - Smart fallback system
-- Support popular stores and apps
+- Support popular stores and apps including Facebook, Instagram, LinkedIn, WhatsApp, and Telegram
 
 ## Usage
 
