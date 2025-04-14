@@ -1,6 +1,6 @@
 # DeeplinkX
 
-A lightweight Flutter plugin for type-safe handling of external deeplinks with built-in support for popular apps. Features smart fallback to app stores and web URLs across all major platforms.
+Easy to use Flutter plugin for type-safe handling of external deeplinks with built-in support for popular apps. Features smart fallback to app stores and web URLs across all major platforms.
 
 > **Naming Note**: 'X' in DeeplinkX stands for external.
 
@@ -10,56 +10,90 @@ A lightweight Flutter plugin for type-safe handling of external deeplinks with b
 - Type-safe API for external deeplinks
 - Multi-platform support
 - Smart fallback system
-- No native platform codes
+- Support popular stores and apps
 
 ## Usage
+
+First, import the package and create an instance:
 
 ```dart
 import 'package:deeplink_x/deeplink_x.dart';
 
 void main() {
   final deeplinkX = DeeplinkX();
-
-  // Launch App Actions
-  final isActionLaunched = await deeplinkX.launchAction(Telegram.openProfile('username'));
-  deeplinkX.launchAction(Telegram.openProfile('username', fallBackToStore: true));
-  deeplinkX.launchAction(Telegram.openProfile('username'), disableFallback: true);
-
-  // Launch Apps
-  final isLaunched = await deeplinkX.launchApp(Instagram.open());
-  deeplinkX.launchApp(Instagram.open(fallBackToStore: true));
-  deeplinkX.launchApp(Instagram.open(), disableFallback: true);
-
-  // Check App Is Installed
-  final isInstalled = await deeplinkX.isAppInstalled(LinkedIn());
-
-  // Redirect to store (Update app use case)
-  // Redirect to appropriate store based on platform
-  final isRedirected = await deeplinkX.redirectToStore(
-    storeActions: [
-      AppStore.openAppPage(appId: '389801252'),  // iOS App Store
-      PlayStore.openAppPage(packageName: 'com.instagram.android'),  // Google Play Store
-      HuaweiAppGalleryStore.openAppPage(appId: 'C101162369'),  // Huawei AppGallery Store
-    ],
-  );
+  
+  // Use the methods below
 }
+```
+
+### Launch App Actions
+
+Execute specific actions within apps:
+
+```dart
+// Basic usage
+final isActionLaunched = await deeplinkX.launchAction(Telegram.openProfile('username'));
+
+// With store fallback (redirects to store if app not installed)
+deeplinkX.launchAction(Telegram.openProfile('username', fallBackToStore: true));
+
+// Disable all fallbacks
+deeplinkX.launchAction(Telegram.openProfile('username'), disableFallback: true);
+```
+
+### Launch Apps
+
+Simply open apps without specific actions:
+
+```dart
+// Basic usage
+final isLaunched = await deeplinkX.launchApp(Instagram.open());
+
+// With store fallback
+deeplinkX.launchApp(Instagram.open(fallBackToStore: true));
+
+// Disable all fallbacks
+deeplinkX.launchApp(Instagram.open(), disableFallback: true);
+```
+
+### Check If App Is Installed
+
+Verify if a specific app is installed on the device:
+
+```dart
+final isInstalled = await deeplinkX.isAppInstalled(LinkedIn());
+```
+
+### Redirect To Store
+
+Redirect users to appropriate app stores based on their platform:
+
+```dart
+// Redirect to appropriate store based on current platform
+final isRedirected = await deeplinkX.redirectToStore(
+  storeActions: [
+    AppStore.openAppPage(appId: '389801252'),  // iOS App Store
+    PlayStore.openAppPage(packageName: 'com.instagram.android'),  // Google Play Store
+    HuaweiAppGalleryStore.openAppPage(appId: 'C101162369'),  // Huawei AppGallery Store
+  ],
+);
 ```
 
 ## Supported Apps And Actions
 
-| Category    | App                     | Supported Actions                                                  |
-| ----------- | ----------------------- | ------------------------------------------------------------------ |
-| Stores      | iOS App Store           | • Launch app<br>• Open app page<br>• Rate app                      |
-| Stores      | Mac App Store           | • Launch app<br>• Open app page<br>• Rate app                      |
-| Stores      | Microsoft Store         | • Launch app<br>• Open app page<br>• Rate app                      |
-| Stores      | Google Play Store       | • Launch app<br>• Open app page                                    |
-| Stores      | Huawei AppGallery Store | • Launch app<br>• Open app page                                    |
-| Stores      | Cafe Bazaar Store       | • Launch app<br>• Open app page                                    |
-| Stores      | Myket Store             | • Launch app<br>• Open app page<br>• Rate app                      |
-| Social Apps | Telegram                | • Launch app<br>• Open profile by username/phone<br>• Send message |
-| Social Apps | Instagram               | • Launch app<br>• Open profile by username                         |
-| Social Apps | WhatsApp                | • Launch app<br>• Chat with phone number<br>• Share text content   |
-| Business    | LinkedIn                | • Launch app<br>• Open profile page<br>• Open company page         |
+| Category    | App                     | Supported Actions                                  |
+| ----------- | ----------------------- | -------------------------------------------------- |
+| Stores      | iOS App Store           | • Open app page<br>• Rate app                      |
+| Stores      | Mac App Store           | • Open app page<br>• Rate app                      |
+| Stores      | Microsoft Store         | • Open app page<br>• Rate app                      |
+| Stores      | Google Play Store       | • Open app page                                    |
+| Stores      | Huawei AppGallery Store | • Open app page                                    |
+| Stores      | Cafe Bazaar Store       | • Open app page                                    |
+| Stores      | Myket Store             | • Open app page<br>• Rate app                      |
+| Social Apps | Telegram                | • Open profile by username/phone<br>• Send message |
+| Social Apps | Instagram               | • Open profile by username                         |
+| Social Apps | WhatsApp                | • Chat with phone number<br>• Share text content   |
+| Business    | LinkedIn                | • Open profile page<br>• Open company page         |
 
 ## Documentation
 
