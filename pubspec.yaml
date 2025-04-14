@@ -7,8 +7,9 @@ issue_tracker: https://github.com/ParhamHatan/DeeplinkX/issues
 documentation: https://pub.dev/documentation/deeplink_x/latest/deeplink_x/
 
 topics:
-  - deeplink
+  - app-links
   - external-deeplink
+  - universal-links
   - custom-url-schemes
   - open-store
 
