@@ -1,3 +1,15 @@
+## 1.0.1
+* Added Facebook app with following actions:
+  * Open app
+  * Open profile by username action
+  * Open profile by profile ID action
+  * Open page action
+  * Open group action
+  * Open event action
+* Added platform support for apps for checking if app is installed
+* Fixed some bugs
+
+
 ## 1.0.0
 * First major release
 * More reliable deeplinks:
