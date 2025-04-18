@@ -39,6 +39,19 @@ class Telegram extends App implements DownloadableApp {
   @override
   String get customScheme => 'tg';
 
+  /// The MacOS bundle identifier for the Telegram app.
+  @override
+  String get macosBundleIdentifier => 'ru.keepcoder.Telegram';
+
+  /// The platforms that the Telegram app supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [
+        PlatformType.ios,
+        PlatformType.android,
+        PlatformType.windows,
+        PlatformType.macos,
+      ];
+
   /// Whether to automatically redirect to app stores when the Telegram app is not installed.
   @override
   bool fallbackToStore;

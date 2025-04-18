@@ -36,6 +36,14 @@ class Instagram extends App implements DownloadableApp {
   @override
   String get customScheme => 'instagram';
 
+  /// The MacOS bundle identifier for the Instagram app.
+  @override
+  String? macosBundleIdentifier;
+
+  /// The platforms that the Instagram app supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android];
+
   /// Whether to automatically redirect to app stores when the Instagram app is not installed.
   @override
   bool fallbackToStore;

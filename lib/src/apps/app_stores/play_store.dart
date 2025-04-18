@@ -25,6 +25,14 @@ class PlayStore implements StoreApp {
   @override
   String get customScheme => 'market';
 
+  /// The MacOS bundle identifier for the Google Play Store (not applicable for Android).
+  @override
+  String? get macosBundleIdentifier => null;
+
+  /// The platforms that the Google Play Store supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [PlatformType.android];
+
   /// The web URL for the Google Play Store.
   @override
   Uri get website => Uri.parse('https://play.google.com/store/apps');

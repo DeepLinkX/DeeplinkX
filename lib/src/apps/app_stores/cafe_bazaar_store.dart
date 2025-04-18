@@ -5,7 +5,7 @@ import 'package:deeplink_x/src/core/core.dart';
 /// This class implements the [StoreApp] interface to provide capabilities
 /// for interacting with the Cafe Bazaar store on Android devices. Cafe Bazaar
 /// is a popular app store in Iran.
-class CafeBazaarStore extends StoreApp {
+class CafeBazaarStore implements StoreApp {
   /// Creates a new [CafeBazaarStore] instance.
   CafeBazaarStore();
 
@@ -25,6 +25,14 @@ class CafeBazaarStore extends StoreApp {
   /// The custom URL scheme for the Cafe Bazaar app (not applicable for other platforms).
   @override
   String? customScheme;
+
+  /// The MacOS bundle identifier for the Cafe Bazaar app (not applicable for Android).
+  @override
+  String? get macosBundleIdentifier => null;
+
+  /// The platforms that the Cafe Bazaar app supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [PlatformType.android];
 
   /// The web URL for the Cafe Bazaar store.
   @override

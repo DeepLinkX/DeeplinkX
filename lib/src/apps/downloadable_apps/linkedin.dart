@@ -36,6 +36,14 @@ class LinkedIn extends App implements DownloadableApp {
   @override
   String get customScheme => 'linkedin';
 
+  /// The MacOS bundle identifier for the LinkedIn app.
+  @override
+  String? macosBundleIdentifier;
+
+  /// The platforms that the LinkedIn app supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android];
+
   /// Whether to automatically redirect to app stores when the LinkedIn app is not installed.
   @override
   bool fallbackToStore;

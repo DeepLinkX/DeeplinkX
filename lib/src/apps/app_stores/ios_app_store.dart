@@ -25,6 +25,14 @@ class IOSAppStore implements StoreApp {
   @override
   String get customScheme => 'itms-apps';
 
+  /// The MacOS bundle identifier for the iOS App Store (not applicable for iOS).
+  @override
+  String? get macosBundleIdentifier => null;
+
+  /// The platforms that the iOS App Store supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [PlatformType.ios];
+
   /// The web URL for the Apple App Store.
   @override
   Uri get website => Uri.parse('https://www.apple.com/app-store/');

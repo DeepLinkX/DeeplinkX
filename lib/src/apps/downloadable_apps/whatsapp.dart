@@ -38,6 +38,19 @@ class WhatsApp extends App implements DownloadableApp {
   @override
   String get customScheme => 'whatsapp';
 
+  /// The MacOS bundle identifier for the WhatsApp app.
+  @override
+  String? get macosBundleIdentifier => 'net.whatsapp.WhatsApp';
+
+  /// The platforms that the WhatsApp app supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [
+        PlatformType.ios,
+        PlatformType.android,
+        PlatformType.windows,
+        PlatformType.macos,
+      ];
+
   /// Whether to automatically redirect to app stores when the WhatsApp app is not installed.
   @override
   bool fallbackToStore;

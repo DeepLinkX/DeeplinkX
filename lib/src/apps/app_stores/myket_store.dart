@@ -22,6 +22,14 @@ class MyketStore implements StoreApp {
   @override
   String get androidPackageName => 'ir.mservices.market';
 
+  /// The MacOS bundle identifier for the Myket app (not applicable for Android).
+  @override
+  String? get macosBundleIdentifier => null;
+
+  /// The platforms that the Myket app supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [PlatformType.android];
+
   /// The custom URL scheme for the Myket app.
   @override
   String get customScheme => 'myket';

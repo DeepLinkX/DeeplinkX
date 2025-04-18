@@ -25,6 +25,14 @@ class MacAppStore implements StoreApp {
   @override
   String get customScheme => 'macappstore';
 
+  /// The MacOS bundle identifier for the Mac App Store.
+  @override
+  String? get macosBundleIdentifier => 'com.apple.AppStore';
+
+  /// The platforms that the Mac App Store supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [PlatformType.macos];
+
   /// The web URL for the Mac App Store.
   @override
   Uri get website => Uri.parse('https://www.apple.com/app-store/');

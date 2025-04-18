@@ -21,6 +21,14 @@ class HuaweiAppGalleryStore implements StoreApp {
   @override
   String? get androidPackageName => 'com.huawei.appmarket';
 
+  /// The MacOS bundle identifier for the Huawei AppGallery app (not applicable for Android).
+  @override
+  String? get macosBundleIdentifier => null;
+
+  /// The platforms that the Huawei AppGallery supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [PlatformType.android];
+
   /// The custom URL scheme for the Huawei AppGallery app.
   @override
   String get customScheme => 'appmarket';

@@ -25,6 +25,14 @@ class MicrosoftStore implements StoreApp {
   @override
   String get customScheme => 'ms-windows-store';
 
+  /// The MacOS bundle identifier for the Microsoft Store (not applicable for Windows).
+  @override
+  String? get macosBundleIdentifier => null;
+
+  /// The platforms that the Microsoft Store supports.
+  @override
+  List<PlatformType> get supportedPlatforms => [PlatformType.windows];
+
   /// The web URL for the Microsoft Store.
   @override
   Uri get website => Uri.parse('https://apps.microsoft.com/home');
