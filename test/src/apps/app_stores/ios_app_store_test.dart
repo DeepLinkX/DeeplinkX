@@ -18,6 +18,9 @@ void main() {
       expect(action.customScheme, 'itms-apps');
       expect(action.androidPackageName, null);
       expect(action.website.toString(), 'https://www.apple.com/app-store/');
+      expect(action.supportedPlatforms, contains(PlatformType.ios));
+      expect(action.supportedPlatforms.length, 1);
+      expect(action.macosBundleIdentifier, null);
     });
 
     test('open action creates IOSAppStore instance with correct type', () {

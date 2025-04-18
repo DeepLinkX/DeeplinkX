@@ -128,10 +128,22 @@ void main() {
         when(() => mock.customScheme).thenReturn('test');
         when(() => mock.androidPackageName).thenReturn('com.test.app');
         when(() => mock.website).thenReturn(Uri.parse('https://test.com'));
+        when(() => mock.macosBundleIdentifier).thenReturn('com.test.app');
+
+        when(() => mock.supportedPlatforms).thenReturn([
+          PlatformType.android,
+          PlatformType.ios,
+          PlatformType.web,
+        ]);
 
         expect(mock.customScheme, 'test');
         expect(mock.androidPackageName, 'com.test.app');
         expect(mock.website.toString(), 'https://test.com');
+        expect(mock.macosBundleIdentifier, 'com.test.app');
+        expect(mock.supportedPlatforms, contains(PlatformType.android));
+        expect(mock.supportedPlatforms, contains(PlatformType.ios));
+        expect(mock.supportedPlatforms, contains(PlatformType.web));
+        expect(mock.supportedPlatforms.length, 3);
       });
 
       test('AppAction', () {

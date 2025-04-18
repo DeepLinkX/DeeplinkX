@@ -19,6 +19,9 @@ void main() {
       expect(action.customScheme, null);
       expect(action.androidPackageName, 'com.farsitel.bazaar');
       expect(action.website.toString(), 'https://cafebazaar.ir');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms.length, 1);
+      expect(action.macosBundleIdentifier, null);
     });
 
     test('open action creates CafeBazaarStore instance with correct type', () {

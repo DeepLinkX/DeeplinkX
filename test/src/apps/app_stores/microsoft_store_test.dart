@@ -18,6 +18,9 @@ void main() {
       expect(action.customScheme, 'ms-windows-store');
       expect(action.androidPackageName, null);
       expect(action.website.toString(), 'https://apps.microsoft.com/home');
+      expect(action.supportedPlatforms, contains(PlatformType.windows));
+      expect(action.supportedPlatforms.length, 1);
+      expect(action.macosBundleIdentifier, null);
     });
 
     test('open action creates MicrosoftStore instance with correct type', () {

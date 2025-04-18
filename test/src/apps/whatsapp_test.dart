@@ -3,6 +3,7 @@ import 'package:deeplink_x/src/apps/app_stores/mac_app_store.dart';
 import 'package:deeplink_x/src/apps/app_stores/microsoft_store.dart';
 import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
 import 'package:deeplink_x/src/apps/downloadable_apps/whatsapp.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:deeplink_x/src/core/interfaces/app_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/app_link_app_action_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/downloadable_app_interface.dart';
@@ -18,6 +19,12 @@ void main() {
       expect(action.customScheme, 'whatsapp');
       expect(action.androidPackageName, 'com.whatsapp');
       expect(action.website.toString(), 'https://www.whatsapp.com');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms, contains(PlatformType.ios));
+      expect(action.supportedPlatforms, contains(PlatformType.macos));
+      expect(action.supportedPlatforms, contains(PlatformType.windows));
+      expect(action.supportedPlatforms.length, 4);
+      expect(action.macosBundleIdentifier, 'net.whatsapp.WhatsApp');
 
       // As DownloadableApp
       expect(action.fallbackToStore, false);

@@ -4,6 +4,7 @@ import 'package:deeplink_x/src/apps/app_stores/mac_app_store.dart';
 import 'package:deeplink_x/src/apps/app_stores/microsoft_store.dart';
 import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
 import 'package:deeplink_x/src/apps/downloadable_apps/telegram.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:deeplink_x/src/core/interfaces/app_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/app_link_app_action_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/downloadable_app_interface.dart';
@@ -19,6 +20,13 @@ void main() {
       expect(action.customScheme, 'tg');
       expect(action.androidPackageName, 'org.telegram.messenger');
       expect(action.website.toString(), 'https://telegram.org');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms, contains(PlatformType.ios));
+      expect(action.supportedPlatforms, contains(PlatformType.macos));
+      expect(action.supportedPlatforms, contains(PlatformType.windows));
+      expect(action.supportedPlatforms, contains(PlatformType.linux));
+      expect(action.supportedPlatforms.length, 5);
+      expect(action.macosBundleIdentifier, 'ru.keepcoder.Telegram');
 
       // As DownloadableApp
       expect(action.fallbackToStore, false);
@@ -147,6 +155,13 @@ void main() {
       expect(action.customScheme, 'tg');
       expect(action.androidPackageName, 'org.telegram.messenger');
       expect(action.website.toString(), 'https://telegram.org');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms, contains(PlatformType.ios));
+      expect(action.supportedPlatforms, contains(PlatformType.macos));
+      expect(action.supportedPlatforms, contains(PlatformType.windows));
+      expect(action.supportedPlatforms, contains(PlatformType.linux));
+      expect(action.supportedPlatforms.length, 5);
+      expect(action.macosBundleIdentifier, 'ru.keepcoder.Telegram');
 
       // As DownloadableApp
       expect(action.fallbackToStore, true);

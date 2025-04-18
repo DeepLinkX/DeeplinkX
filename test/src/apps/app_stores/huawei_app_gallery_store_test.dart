@@ -18,6 +18,9 @@ void main() {
       expect(action.customScheme, 'appmarket');
       expect(action.androidPackageName, 'com.huawei.appmarket');
       expect(action.website.toString(), 'https://appgallery.huawei.com');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms.length, 1);
+      expect(action.macosBundleIdentifier, null);
     });
 
     test('open action creates HuaweiAppGalleryStore instance with correct type', () {

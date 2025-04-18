@@ -18,6 +18,9 @@ void main() {
       expect(action.customScheme, 'macappstore');
       expect(action.androidPackageName, null);
       expect(action.website.toString(), 'https://www.apple.com/app-store/');
+      expect(action.supportedPlatforms, contains(PlatformType.macos));
+      expect(action.supportedPlatforms.length, 1);
+      expect(action.macosBundleIdentifier, 'com.apple.AppStore');
     });
 
     test('open action creates MacAppStore instance with correct type', () {

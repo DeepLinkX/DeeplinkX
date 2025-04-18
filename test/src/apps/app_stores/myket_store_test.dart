@@ -18,6 +18,9 @@ void main() {
       expect(action.customScheme, 'myket');
       expect(action.androidPackageName, 'ir.mservices.market');
       expect(action.website.toString(), 'https://myket.ir');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms.length, 1);
+      expect(action.macosBundleIdentifier, null);
     });
 
     test('open action creates MyketStore instance with correct type', () {

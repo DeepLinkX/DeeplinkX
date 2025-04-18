@@ -1,6 +1,7 @@
 import 'package:deeplink_x/src/apps/app_stores/ios_app_store.dart';
 import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
 import 'package:deeplink_x/src/apps/downloadable_apps/linkedin.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:deeplink_x/src/core/interfaces/app_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/downloadable_app_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/fallbackable_interface.dart';
@@ -16,6 +17,10 @@ void main() {
       expect(action.customScheme, 'linkedin');
       expect(action.androidPackageName, 'com.linkedin.android');
       expect(action.website.toString(), 'https://www.linkedin.com');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms, contains(PlatformType.ios));
+      expect(action.supportedPlatforms.length, 2);
+      expect(action.macosBundleIdentifier, null);
 
       // As DownloadableApp
       expect(action.fallbackToStore, false);
@@ -88,6 +93,10 @@ void main() {
       expect(action.customScheme, 'linkedin');
       expect(action.androidPackageName, 'com.linkedin.android');
       expect(action.website.toString(), 'https://www.linkedin.com');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms, contains(PlatformType.ios));
+      expect(action.supportedPlatforms.length, 2);
+      expect(action.macosBundleIdentifier, null);
 
       // As DownloadableApp
       expect(action.fallbackToStore, true);

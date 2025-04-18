@@ -1,6 +1,7 @@
 import 'package:deeplink_x/src/apps/app_stores/ios_app_store.dart';
 import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
 import 'package:deeplink_x/src/apps/downloadable_apps/instagram.dart';
+import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:deeplink_x/src/core/interfaces/app_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/app_link_app_action_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/downloadable_app_interface.dart';
@@ -16,6 +17,10 @@ void main() {
       expect(action.customScheme, 'instagram');
       expect(action.androidPackageName, 'com.instagram.android');
       expect(action.website.toString(), 'https://www.instagram.com');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms, contains(PlatformType.ios));
+      expect(action.supportedPlatforms.length, 2);
+      expect(action.macosBundleIdentifier, null);
 
       // As DownloadableApp
       expect(action.fallbackToStore, false);
@@ -62,6 +67,10 @@ void main() {
       expect(action.customScheme, 'instagram');
       expect(action.androidPackageName, 'com.instagram.android');
       expect(action.website.toString(), 'https://www.instagram.com');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms, contains(PlatformType.ios));
+      expect(action.supportedPlatforms.length, 2);
+      expect(action.macosBundleIdentifier, null);
 
       // As DownloadableApp
       expect(action.fallbackToStore, true);

@@ -18,6 +18,9 @@ void main() {
       expect(action.customScheme, 'market');
       expect(action.androidPackageName, 'com.android.vending');
       expect(action.website.toString(), 'https://play.google.com/store/apps');
+      expect(action.supportedPlatforms, contains(PlatformType.android));
+      expect(action.supportedPlatforms.length, 1);
+      expect(action.macosBundleIdentifier, null);
     });
 
     test('open action creates PlayStore instance with correct type', () {
