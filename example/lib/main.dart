@@ -55,11 +55,19 @@ class _MyAppState extends State<MyApp> {
   final _linkedInJobsKeywordsController = TextEditingController(text: 'software developer');
   final _linkedInShareController = TextEditingController(text: 'Check out this awesome content!');
 
+  // Facebook controllers
+  final _facebookIdController = TextEditingController(text: '123456789'); // Example: Facebook user ID
+  final _facebookUsernameController = TextEditingController(text: 'johndoe'); // Example: Facebook username
+  final _facebookPageIdController = TextEditingController(text: 'examplepage'); // Example: Facebook page ID
+  final _facebookGroupIdController = TextEditingController(text: '869653691215417'); // Example: Facebook group ID
+  final _facebookEventIdController = TextEditingController(text: '1599696570680586'); // Example: Facebook event ID
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
   bool _whatsappFallBackToStore = true;
   bool _linkedInFallBackToStore = true;
+  bool _facebookFallBackToStore = true;
 
   @override
   void dispose() {
@@ -89,6 +97,11 @@ class _MyAppState extends State<MyApp> {
     _linkedInCompanyController.dispose();
     _linkedInJobsKeywordsController.dispose();
     _linkedInShareController.dispose();
+    _facebookIdController.dispose();
+    _facebookUsernameController.dispose();
+    _facebookPageIdController.dispose();
+    _facebookGroupIdController.dispose();
+    _facebookEventIdController.dispose();
     super.dispose();
   }
 
@@ -96,7 +109,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(final BuildContext context) => MaterialApp(
     theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
     home: DefaultTabController(
-      length: 11,
+      length: 12,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('DeeplinkX Example'),
@@ -107,6 +120,7 @@ class _MyAppState extends State<MyApp> {
               Tab(text: 'Telegram'),
               Tab(text: 'WhatsApp'),
               Tab(text: 'LinkedIn'),
+              Tab(text: 'Facebook'),
               Tab(text: 'iOS App Store'),
               Tab(text: 'Play Store'),
               Tab(text: 'Mac App Store'),
@@ -123,6 +137,7 @@ class _MyAppState extends State<MyApp> {
             _buildTelegramTab(),
             _buildWhatsAppTab(),
             _buildLinkedInTab(),
+            _buildFacebookTab(),
             _buildAppStoreTab(),
             _buildPlayStoreTab(),
             _buildMacAppStoreTab(),
@@ -221,6 +236,158 @@ class _MyAppState extends State<MyApp> {
         _buildWhatsAppActions(),
       ],
     ),
+  );
+
+  Widget _buildFacebookTab() => SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+            const SizedBox(width: 8),
+            Switch(
+              value: _facebookFallBackToStore,
+              onChanged: (final value) => setState(() => _facebookFallBackToStore = value),
+            ),
+            const Expanded(
+              child: Text(
+                'When enabled, redirects to app store if Facebook is not installed',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const Text('Facebook Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        _buildFacebookActions(),
+      ],
+    ),
+  );
+
+  Widget _buildFacebookActions() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      ElevatedButton(
+        onPressed: () async {
+          await _deeplinkX.launchApp(Facebook.open(fallbackToStore: _facebookFallBackToStore));
+        },
+        child: const Text('Open Facebook App'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Profile Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _facebookIdController,
+        decoration: const InputDecoration(
+          labelText: 'Facebook ID',
+          hintText: 'Enter Facebook numeric ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_facebookIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Facebook.openProfileById(id: _facebookIdController.text, fallbackToStore: _facebookFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Facebook Profile by ID'),
+      ),
+      const SizedBox(height: 16),
+      TextField(
+        controller: _facebookUsernameController,
+        decoration: const InputDecoration(
+          labelText: 'Facebook Username',
+          hintText: 'Enter Facebook username',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_facebookUsernameController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Facebook.openProfileByUsername(
+                username: _facebookUsernameController.text,
+                fallbackToStore: _facebookFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Open Facebook Profile by Username'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Page Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _facebookPageIdController,
+        decoration: const InputDecoration(
+          labelText: 'Facebook Page ID',
+          hintText: 'Enter Facebook page ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_facebookPageIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Facebook.openPage(pageId: _facebookPageIdController.text, fallbackToStore: _facebookFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Facebook Page'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Group Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _facebookGroupIdController,
+        decoration: const InputDecoration(
+          labelText: 'Facebook Group ID',
+          hintText: 'Enter Facebook group ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_facebookGroupIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Facebook.openGroup(groupId: _facebookGroupIdController.text, fallbackToStore: _facebookFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Facebook Group'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Event Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _facebookEventIdController,
+        decoration: const InputDecoration(
+          labelText: 'Facebook Event ID',
+          hintText: 'Enter Facebook event ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_facebookEventIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Facebook.openEvent(eventId: _facebookEventIdController.text, fallbackToStore: _facebookFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Facebook Event'),
+      ),
+    ],
   );
 
   Widget _buildLinkedInTab() => SingleChildScrollView(

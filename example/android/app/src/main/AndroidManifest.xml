@@ -40,6 +40,8 @@
         <package android:name="com.whatsapp" />
         <!-- Telegram -->
         <package android:name="org.telegram.messenger" />
+        <!-- Facebook -->
+        <package android:name="com.facebook.katana" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->
