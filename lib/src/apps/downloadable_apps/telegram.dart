@@ -50,6 +50,7 @@ class Telegram extends App implements DownloadableApp {
         PlatformType.android,
         PlatformType.windows,
         PlatformType.macos,
+        PlatformType.linux,
       ];
 
   /// Whether to automatically redirect to app stores when the Telegram app is not installed.
