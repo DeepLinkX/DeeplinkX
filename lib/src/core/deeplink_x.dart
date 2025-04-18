@@ -44,16 +44,25 @@ class DeeplinkX {
           }
 
           if (action.appLink != null) {
-            return await _launcherUtil.launchUrl(action.appLink!);
+            final isLaunched = await _launcherUtil.launchUrl(action.appLink!);
+            if (isLaunched) {
+              return true;
+            }
           }
         }
 
         if (action is AppLinkAppAction) {
-          return await _launcherUtil.launchUrl(action.appLink);
+          final isLaunched = await _launcherUtil.launchUrl(action.appLink);
+          if (isLaunched) {
+            return true;
+          }
         }
 
         if (action is UniversalLinkAppAction) {
-          return await _launcherUtil.launchUrl(action.universalLink);
+          final isLaunched = await _launcherUtil.launchUrl(action.universalLink);
+          if (isLaunched) {
+            return true;
+          }
         }
       }
     } on PlatformException catch (_) {
