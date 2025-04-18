@@ -51,16 +51,14 @@ class LauncherUtil {
   Future<bool> launchApp(final App app) async {
     try {
       if (currentPlatform == PlatformType.android && app.androidPackageName != null) {
-        await launchAndroidApp(app.androidPackageName!);
+        return await launchAppByPackageName(app.androidPackageName!);
       } else if (app.customScheme != null) {
-        await launchExternalApp(app.customScheme!);
+        return await launchAppByScheme(app.customScheme!);
       }
-      return true;
+      return false;
     } on PlatformException catch (_) {
-      // TODO: Log
       return false;
     } on Exception catch (_) {
-      // TODO: Log
       return false;
     }
   }
@@ -73,22 +71,26 @@ class LauncherUtil {
   /// Returns a [Future<bool>] indicating whether the application is installed.
   /// Returns `true` if the application is installed, `false` otherwise.
   Future<bool> isAppInstalled(final App app) async {
+    // if (!app.supportedPlatforms.contains(currentPlatform)) {
+    //   return false;
+    // }
+
     try {
       if (currentPlatform == PlatformType.android) {
-        if (app.androidPackageName != null) {
-          return await isAndroidAppInstalled(app.androidPackageName!);
-        }
+        assert(app.androidPackageName != null, 'androidPackageName is required for android');
+        return await isAppInstalledByPackageName(app.androidPackageName!);
       } else {
-        if (app.customScheme != null) {
-          return await isExternalAppInstalled(app.customScheme!);
+        if (currentPlatform == PlatformType.macos) {
+          assert(app.macosBundleIdentifier != null, 'macosBundleIdentifier is required for macos');
+          return await isAppInstalledByPackageName(app.macosBundleIdentifier!);
+        } else if (app.customScheme != null) {
+          return await isAppInstalledByScheme(app.customScheme!);
         }
       }
       return false;
     } on PlatformException catch (_) {
-      // TODO: Log
       return false;
     } on Exception catch (_) {
-      // TODO: Log
       return false;
     }
   }
@@ -96,29 +98,35 @@ class LauncherUtil {
   /// Launches an Android application specified by its package name.
   ///
   /// Takes a [String] representing the package name of the application to launch.
+  ///
+  /// Returns a [Future<bool>] indicating whether the application was successfully launched.
   @visibleForTesting
-  Future<void> launchAndroidApp(final String packageName) async =>
-      LauncherUtilPlatform.instance.launchAndroidApp(packageName);
+  Future<bool> launchAppByPackageName(final String packageName) async =>
+      LauncherUtilPlatform.instance.launchAppByPackageName(packageName);
 
   /// Launches an application using a custom URL scheme.
   ///
   /// Takes a [String] representing the custom scheme to launch.
-  @visibleForTesting
-  Future<void> launchExternalApp(final String scheme) async => LauncherUtilPlatform.instance.launchApp(scheme);
-
-  /// Checks if an Android application is installed on the device.
   ///
-  /// Takes a [String] representing the package name of the application.
+  /// Returns a [Future<bool>] indicating whether the application was successfully launched.
+  @visibleForTesting
+  Future<bool> launchAppByScheme(final String scheme) async => LauncherUtilPlatform.instance.launchAppByScheme(scheme);
+
+  /// Checks if an application is installed on the device by its package name.
+  ///
+  /// Takes a [String] representing the package name of the application to check.
+  ///
   /// Returns a [Future<bool>] indicating whether the application is installed.
   @visibleForTesting
-  Future<bool> isAndroidAppInstalled(final String packageName) async =>
-      LauncherUtilPlatform.instance.isAndroidAppInstalled(packageName);
+  Future<bool> isAppInstalledByPackageName(final String packageName) async =>
+      LauncherUtilPlatform.instance.isAppInstalledByPackageName(packageName);
 
-  /// Checks if an application is installed using a custom URL scheme.
+  /// Checks if an application is installed on the device by its custom URL scheme.
   ///
-  /// Takes a [String] representing the custom scheme.
+  /// Takes a [String] representing the custom scheme to check.
+  ///
   /// Returns a [Future<bool>] indicating whether the application is installed.
   @visibleForTesting
-  Future<bool> isExternalAppInstalled(final String scheme) async =>
-      LauncherUtilPlatform.instance.isAppInstalled(scheme);
+  Future<bool> isAppInstalledByScheme(final String scheme) async =>
+      LauncherUtilPlatform.instance.isAppInstalledByScheme(scheme);
 }
