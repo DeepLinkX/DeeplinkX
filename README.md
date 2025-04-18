@@ -82,19 +82,20 @@ final isRedirected = await deeplinkX.redirectToStore(
 
 ## Supported Apps And Actions
 
-| Category    | App                     | Supported Actions                                  |
-| ----------- | ----------------------- | -------------------------------------------------- |
-| Stores      | iOS App Store           | • Open app page<br>• Rate app                      |
-| Stores      | Mac App Store           | • Open app page<br>• Rate app                      |
-| Stores      | Microsoft Store         | • Open app page<br>• Rate app                      |
-| Stores      | Google Play Store       | • Open app page                                    |
-| Stores      | Huawei AppGallery Store | • Open app page                                    |
-| Stores      | Cafe Bazaar Store       | • Open app page                                    |
-| Stores      | Myket Store             | • Open app page<br>• Rate app                      |
-| Social Apps | Telegram                | • Open profile by username/phone<br>• Send message |
-| Social Apps | Instagram               | • Open profile by username                         |
-| Social Apps | WhatsApp                | • Chat with phone number<br>• Share text content   |
-| Business    | LinkedIn                | • Open profile page<br>• Open company page         |
+| Category    | App                     | Supported Actions                                                                                 |
+| ----------- | ----------------------- | ------------------------------------------------------------------------------------------------- |
+| Stores      | iOS App Store           | • Open app page<br>• Rate app                                                                     |
+| Stores      | Mac App Store           | • Open app page<br>• Rate app                                                                     |
+| Stores      | Microsoft Store         | • Open app page<br>• Rate app                                                                     |
+| Stores      | Google Play Store       | • Open app page                                                                                   |
+| Stores      | Huawei AppGallery Store | • Open app page                                                                                   |
+| Stores      | Cafe Bazaar Store       | • Open app page                                                                                   |
+| Stores      | Myket Store             | • Open app page<br>• Rate app                                                                     |
+| Social Apps | Telegram                | • Open profile by username/phone<br>• Send message                                                |
+| Social Apps | Instagram               | • Open profile by username                                                                        |
+| Social Apps | WhatsApp                | • Chat with phone number<br>• Share text content                                                  |
+| Social Apps | Facebook                | • Open profile by ID<br>• Open profile by username<br>• Open page<br>• Open group<br>• Open event |
+| Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
 ## Documentation
 
@@ -107,6 +108,7 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [Huawei AppGalley Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/huawei_app_gallery_store.md)
 - [Cafe Bazaar Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/cafe_bazaar_store.md)
 - [Myket Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/myket_store.md)
+- [Facebook](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/facebook.md)
 - [Instagram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/instagram.md)
 - [Telegram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/telegram.md)
 - [WhatsApp](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/whatsapp.md)
