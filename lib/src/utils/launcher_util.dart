@@ -71,9 +71,9 @@ class LauncherUtil {
   /// Returns a [Future<bool>] indicating whether the application is installed.
   /// Returns `true` if the application is installed, `false` otherwise.
   Future<bool> isAppInstalled(final App app) async {
-    // if (!app.supportedPlatforms.contains(currentPlatform)) {
-    //   return false;
-    // }
+    if (!app.supportedPlatforms.contains(currentPlatform)) {
+      return false;
+    }
 
     try {
       if (currentPlatform == PlatformType.android) {
