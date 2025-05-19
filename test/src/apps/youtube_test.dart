@@ -1,13 +1,4 @@
 import 'package:deeplink_x/deeplink_x.dart';
-import 'package:deeplink_x/src/apps/app_stores/ios_app_store.dart';
-import 'package:deeplink_x/src/apps/app_stores/microsoft_store.dart';
-import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
-import 'package:deeplink_x/src/apps/downloadable_apps/youtube.dart';
-import 'package:deeplink_x/src/core/enums/platform_type.dart';
-import 'package:deeplink_x/src/core/interfaces/app_interface.dart';
-import 'package:deeplink_x/src/core/interfaces/app_link_app_action_interface.dart';
-import 'package:deeplink_x/src/core/interfaces/downloadable_app_interface.dart';
-import 'package:deeplink_x/src/core/interfaces/fallbackable_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
