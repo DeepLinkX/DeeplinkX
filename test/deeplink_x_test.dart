@@ -61,6 +61,16 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Facebook', () {
+        final action = Facebook.open();
+        expect(action, isA<App>());
+      });
+
+      test('Youtube', () {
+        final action = YouTube.open();
+        expect(action, isA<App>());
+      });
+
       test('IOSAppStore', () {
         final action = IOSAppStore.open();
         expect(action, isA<App>());

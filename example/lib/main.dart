@@ -62,12 +62,25 @@ class _MyAppState extends State<MyApp> {
   final _facebookGroupIdController = TextEditingController(text: '869653691215417'); // Example: Facebook group ID
   final _facebookEventIdController = TextEditingController(text: '1599696570680586'); // Example: Facebook event ID
 
+  // YouTube controllers
+  final _youtubeVideoIdController = TextEditingController(text: 'dQw4w9WgXcQ'); // Example: YouTube video ID
+  final _youtubeChannelIdController = TextEditingController(
+    text: 'UCq-Fj5jknLsUf-MWSy4_brA',
+  ); // Example: YouTube channel ID
+  final _youtubePlaylistIdController = TextEditingController(
+    text: 'PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI',
+  ); // Example: YouTube playlist ID
+  final _youtubeSearchQueryController = TextEditingController(
+    text: 'flutter tutorial',
+  ); // Example: YouTube search query
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
   bool _whatsappFallBackToStore = true;
   bool _linkedInFallBackToStore = true;
   bool _facebookFallBackToStore = true;
+  bool _youtubeFallBackToStore = true;
 
   @override
   void dispose() {
@@ -102,6 +115,10 @@ class _MyAppState extends State<MyApp> {
     _facebookPageIdController.dispose();
     _facebookGroupIdController.dispose();
     _facebookEventIdController.dispose();
+    _youtubeVideoIdController.dispose();
+    _youtubeChannelIdController.dispose();
+    _youtubePlaylistIdController.dispose();
+    _youtubeSearchQueryController.dispose();
     super.dispose();
   }
 
@@ -109,7 +126,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(final BuildContext context) => MaterialApp(
     theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
     home: DefaultTabController(
-      length: 12,
+      length: 13,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('DeeplinkX Example'),
@@ -121,6 +138,7 @@ class _MyAppState extends State<MyApp> {
               Tab(text: 'WhatsApp'),
               Tab(text: 'LinkedIn'),
               Tab(text: 'Facebook'),
+              Tab(text: 'YouTube'),
               Tab(text: 'iOS App Store'),
               Tab(text: 'Play Store'),
               Tab(text: 'Mac App Store'),
@@ -138,6 +156,7 @@ class _MyAppState extends State<MyApp> {
             _buildWhatsAppTab(),
             _buildLinkedInTab(),
             _buildFacebookTab(),
+            _buildYouTubeTab(),
             _buildAppStoreTab(),
             _buildPlayStoreTab(),
             _buildMacAppStoreTab(),
@@ -1156,6 +1175,141 @@ class _MyAppState extends State<MyApp> {
         _buildMyketActions(),
       ],
     ),
+  );
+
+  Widget _buildYouTubeTab() => SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+            const SizedBox(width: 8),
+            Switch(
+              value: _youtubeFallBackToStore,
+              onChanged: (final value) => setState(() => _youtubeFallBackToStore = value),
+            ),
+            const Expanded(
+              child: Text(
+                'When enabled, redirects to app store if YouTube is not installed',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const Text('YouTube Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        _buildYouTubeActions(),
+      ],
+    ),
+  );
+
+  Widget _buildYouTubeActions() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      ElevatedButton(
+        onPressed: () async {
+          await _deeplinkX.launchApp(YouTube.open(fallbackToStore: _youtubeFallBackToStore));
+        },
+        child: const Text('Open YouTube App'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Video Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _youtubeVideoIdController,
+        decoration: const InputDecoration(
+          labelText: 'Video ID',
+          hintText: 'Enter YouTube video ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_youtubeVideoIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              YouTube.openVideo(videoId: _youtubeVideoIdController.text, fallbackToStore: _youtubeFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open YouTube Video'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Channel Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _youtubeChannelIdController,
+        decoration: const InputDecoration(
+          labelText: 'Channel ID',
+          hintText: 'Enter YouTube channel ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_youtubeChannelIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              YouTube.openChannel(
+                channelId: _youtubeChannelIdController.text,
+                fallbackToStore: _youtubeFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Open YouTube Channel'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Playlist Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _youtubePlaylistIdController,
+        decoration: const InputDecoration(
+          labelText: 'Playlist ID',
+          hintText: 'Enter YouTube playlist ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_youtubePlaylistIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              YouTube.openPlaylist(
+                playlistId: _youtubePlaylistIdController.text,
+                fallbackToStore: _youtubeFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Open YouTube Playlist'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Search Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _youtubeSearchQueryController,
+        decoration: const InputDecoration(
+          labelText: 'Search Query',
+          hintText: 'Enter search query',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_youtubeSearchQueryController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              YouTube.search(query: _youtubeSearchQueryController.text, fallbackToStore: _youtubeFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Search on YouTube'),
+      ),
+    ],
   );
 
   Widget _buildMyketActions() => Column(

@@ -1,3 +1,13 @@
+## 1.0.2
+* Added YouTube app with following actions:
+  * Open app
+  * Open video action
+  * Open channel action
+  * Open playlist action
+  * Search action
+* Added documentation for YouTube deeplinks
+* Updated example app with YouTube tab
+
 ## 1.0.1
 * Added Facebook app with following actions:
   * Open app

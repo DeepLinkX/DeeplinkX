@@ -42,6 +42,8 @@
         <package android:name="org.telegram.messenger" />
         <!-- Facebook -->
         <package android:name="com.facebook.katana" />
+        <!-- YouTube -->
+        <package android:name="com.google.android.youtube" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->
