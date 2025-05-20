@@ -11,7 +11,7 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 - Redirect to app stores to update apps
 - Check if external app is installed on the device
 - Smart fallback system
-- Support popular stores and apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, and YouTube
+- Support popular stores and apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, and YouTube
 
 ## Usage
 
@@ -102,6 +102,7 @@ final isRedirected = await deeplinkX.redirectToStore(
 | Social Apps | Instagram               | • Open profile by username                                                                        |
 | Social Apps | WhatsApp                | • Chat with phone number<br>• Share text content                                                  |
 | Social Apps | Facebook                | • Open profile by ID<br>• Open profile by username<br>• Open page<br>• Open group<br>• Open event |
+| Social Apps | Twitter                 | • Open profile by username<br>• Open tweet by ID<br>• Search                                      |
 | Social Apps | YouTube                 | • Open video<br>• Open channel<br>• Open playlist<br>• Search                                     |
 | Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
@@ -121,6 +122,7 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [Telegram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/telegram.md)
 - [WhatsApp](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/whatsapp.md)
 - [LinkedIn](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/linkedin.md)
+- [Twitter](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/twitter.md)
 - [YouTube](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/youtube.md)
 
 ## URL Scheme Handling

@@ -1,3 +1,12 @@
+## 1.0.3
+* Added Twitter (X) app with following actions:
+  * Open app
+  * Open Profile Action
+  * Open Tweet Action
+  * Search action
+* Added documentation for Twitter deeplinks
+* Updated example app with Twitter tab
+
 ## 1.0.2
 * Added YouTube app with following actions:
   * Open app

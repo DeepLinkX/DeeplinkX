@@ -74,6 +74,11 @@ class _MyAppState extends State<MyApp> {
     text: 'flutter tutorial',
   ); // Example: YouTube search query
 
+  // Twitter controllers
+  final _twitterUsernameController = TextEditingController(text: 'twitter'); // Example: Twitter username
+  final _twitterTweetIdController = TextEditingController(text: '1234567890'); // Example: Twitter tweet ID
+  final _twitterSearchQueryController = TextEditingController(text: 'flutter tutorial'); // Example: Twitter search query
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
@@ -81,6 +86,7 @@ class _MyAppState extends State<MyApp> {
   bool _linkedInFallBackToStore = true;
   bool _facebookFallBackToStore = true;
   bool _youtubeFallBackToStore = true;
+  bool _twitterFallBackToStore = true;
 
   @override
   void dispose() {
@@ -119,6 +125,9 @@ class _MyAppState extends State<MyApp> {
     _youtubeChannelIdController.dispose();
     _youtubePlaylistIdController.dispose();
     _youtubeSearchQueryController.dispose();
+    _twitterUsernameController.dispose();
+    _twitterTweetIdController.dispose();
+    _twitterSearchQueryController.dispose();
     super.dispose();
   }
 
@@ -126,7 +135,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(final BuildContext context) => MaterialApp(
     theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
     home: DefaultTabController(
-      length: 13,
+      length: 14,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('DeeplinkX Example'),
@@ -139,6 +148,7 @@ class _MyAppState extends State<MyApp> {
               Tab(text: 'LinkedIn'),
               Tab(text: 'Facebook'),
               Tab(text: 'YouTube'),
+              Tab(text: 'Twitter'),
               Tab(text: 'iOS App Store'),
               Tab(text: 'Play Store'),
               Tab(text: 'Mac App Store'),
@@ -157,6 +167,7 @@ class _MyAppState extends State<MyApp> {
             _buildLinkedInTab(),
             _buildFacebookTab(),
             _buildYouTubeTab(),
+            _buildTwitterTab(),
             _buildAppStoreTab(),
             _buildPlayStoreTab(),
             _buildMacAppStoreTab(),
@@ -1363,6 +1374,113 @@ class _MyAppState extends State<MyApp> {
           }
         },
         child: const Text('Rate app'),
+      ),
+    ],
+  );
+
+  Widget _buildTwitterTab() => SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+            const SizedBox(width: 8),
+            Switch(
+              value: _twitterFallBackToStore,
+              onChanged: (final value) => setState(() => _twitterFallBackToStore = value),
+            ),
+            const Expanded(
+              child: Text(
+                'When enabled, redirects to app store if Twitter is not installed',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const Text('Twitter Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        _buildTwitterActions(),
+      ],
+    ),
+  );
+
+  Widget _buildTwitterActions() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      ElevatedButton(
+        onPressed: () async {
+          await _deeplinkX.launchApp(Twitter.open(fallbackToStore: _twitterFallBackToStore));
+        },
+        child: const Text('Open Twitter App'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Profile Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _twitterUsernameController,
+        decoration: const InputDecoration(
+          labelText: 'Twitter Username',
+          hintText: 'Enter Twitter username',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_twitterUsernameController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Twitter.openProfile(username: _twitterUsernameController.text, fallbackToStore: _twitterFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Twitter Profile'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Tweet Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _twitterTweetIdController,
+        decoration: const InputDecoration(
+          labelText: 'Tweet ID',
+          hintText: 'Enter Twitter tweet ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_twitterTweetIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Twitter.openTweet(tweetId: _twitterTweetIdController.text, fallbackToStore: _twitterFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Tweet'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Search Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _twitterSearchQueryController,
+        decoration: const InputDecoration(
+          labelText: 'Search Query',
+          hintText: 'Enter Twitter search query',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_twitterSearchQueryController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Twitter.search(query: _twitterSearchQueryController.text, fallbackToStore: _twitterFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Search Twitter'),
       ),
     ],
   );

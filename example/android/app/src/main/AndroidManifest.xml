@@ -44,6 +44,8 @@
         <package android:name="com.facebook.katana" />
         <!-- YouTube -->
         <package android:name="com.google.android.youtube" />
+        <!-- Twitter -->
+        <package android:name="com.twitter.android" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->

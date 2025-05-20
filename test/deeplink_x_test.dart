@@ -71,6 +71,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Twitter', () {
+        final action = Twitter.open();
+        expect(action, isA<App>());
+      });
+
       test('IOSAppStore', () {
         final action = IOSAppStore.open();
         expect(action, isA<App>());
@@ -128,6 +133,12 @@ void main() {
       test('launchApp', () async {
         when(() => deeplinkX.launchApp(any())).thenAnswer((final _) async => true);
         final result = await deeplinkX.launchApp(MockAppAction());
+        expect(result, true);
+      });
+
+      test('redirectToStore', () async {
+        when(() => deeplinkX.redirectToStore(storeActions: any(named: 'storeActions'))).thenAnswer((final _) async => true);
+        final result = await deeplinkX.redirectToStore(storeActions: [MockStoreOpenAppPageAction()]);
         expect(result, true);
       });
     });
