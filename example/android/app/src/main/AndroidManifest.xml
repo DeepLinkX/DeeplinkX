@@ -46,6 +46,8 @@
         <package android:name="com.google.android.youtube" />
         <!-- Twitter -->
         <package android:name="com.twitter.android" />
+        <!-- Pinterest -->
+        <package android:name="com.pinterest" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->

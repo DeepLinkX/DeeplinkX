@@ -76,6 +76,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Pinterest', () {
+        final action = Pinterest.open();
+        expect(action, isA<App>());
+      });
+
       test('IOSAppStore', () {
         final action = IOSAppStore.open();
         expect(action, isA<App>());

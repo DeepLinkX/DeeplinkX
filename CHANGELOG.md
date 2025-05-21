@@ -1,3 +1,13 @@
+## 1.0.4
+* Added Pinterest app with following actions:
+  * Open app
+  * Open Profile Action
+  * Open Pin Action
+  * Open Board Action
+  * Search action
+* Added documentation for Pinterest deeplinks
+* Updated example app with Pinterest tab
+
 ## 1.0.3
 * Added Twitter (X) app with following actions:
   * Open app

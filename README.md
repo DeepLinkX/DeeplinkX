@@ -102,8 +102,9 @@ final isRedirected = await deeplinkX.redirectToStore(
 | Social Apps | Instagram               | • Open profile by username                                                                        |
 | Social Apps | WhatsApp                | • Chat with phone number<br>• Share text content                                                  |
 | Social Apps | Facebook                | • Open profile by ID<br>• Open profile by username<br>• Open page<br>• Open group<br>• Open event |
-| Social Apps | Twitter                 | • Open profile by username<br>• Open tweet by ID<br>• Search                                      |
 | Social Apps | YouTube                 | • Open video<br>• Open channel<br>• Open playlist<br>• Search                                     |
+| Social Apps | Twitter                 | • Open profile by username<br>• Open tweet by ID<br>• Search                                      |
+| Social Apps | Pinterest               | • Open profile by username<br>• Open board by ID<br>• Search                                      |
 | Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
 ## Documentation
@@ -122,8 +123,9 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [Telegram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/telegram.md)
 - [WhatsApp](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/whatsapp.md)
 - [LinkedIn](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/linkedin.md)
-- [Twitter](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/twitter.md)
 - [YouTube](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/youtube.md)
+- [Twitter](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/twitter.md)
+- [Pinterest](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/pinterest.md)
 
 ## URL Scheme Handling
 

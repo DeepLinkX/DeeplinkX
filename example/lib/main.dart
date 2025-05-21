@@ -77,7 +77,20 @@ class _MyAppState extends State<MyApp> {
   // Twitter controllers
   final _twitterUsernameController = TextEditingController(text: 'twitter'); // Example: Twitter username
   final _twitterTweetIdController = TextEditingController(text: '1234567890'); // Example: Twitter tweet ID
-  final _twitterSearchQueryController = TextEditingController(text: 'flutter tutorial'); // Example: Twitter search query
+  final _twitterSearchQueryController = TextEditingController(
+    text: 'flutter tutorial',
+  ); // Example: Twitter search query
+
+  // Pinterest controllers
+  final _pinterestUsernameController = TextEditingController(text: 'pinterest'); // Example: Pinterest username
+  final _pinterestPinIdController = TextEditingController(text: '1120622319784769688'); // Example: Pinterest pin ID
+  final _pinterestSearchQueryController = TextEditingController(
+    text: 'flutter tutorial',
+  ); // Example: Pinterest search query
+  final _pinterestBoardUsernameController = TextEditingController(
+    text: 'inarikaiyo',
+  ); // Example: inarikaiyo username for board
+  final _pinterestBoardController = TextEditingController(text: 'anime-couple'); // Example: inarikaiyo board
 
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
@@ -87,6 +100,7 @@ class _MyAppState extends State<MyApp> {
   bool _facebookFallBackToStore = true;
   bool _youtubeFallBackToStore = true;
   bool _twitterFallBackToStore = true;
+  bool _pinterestFallBackToStore = true;
 
   @override
   void dispose() {
@@ -128,6 +142,11 @@ class _MyAppState extends State<MyApp> {
     _twitterUsernameController.dispose();
     _twitterTweetIdController.dispose();
     _twitterSearchQueryController.dispose();
+    _pinterestUsernameController.dispose();
+    _pinterestPinIdController.dispose();
+    _pinterestSearchQueryController.dispose();
+    _pinterestBoardUsernameController.dispose();
+    _pinterestBoardController.dispose();
     super.dispose();
   }
 
@@ -135,7 +154,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(final BuildContext context) => MaterialApp(
     theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
     home: DefaultTabController(
-      length: 14,
+      length: 15,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('DeeplinkX Example'),
@@ -149,6 +168,7 @@ class _MyAppState extends State<MyApp> {
               Tab(text: 'Facebook'),
               Tab(text: 'YouTube'),
               Tab(text: 'Twitter'),
+              Tab(text: 'Pinterest'),
               Tab(text: 'iOS App Store'),
               Tab(text: 'Play Store'),
               Tab(text: 'Mac App Store'),
@@ -168,6 +188,7 @@ class _MyAppState extends State<MyApp> {
             _buildFacebookTab(),
             _buildYouTubeTab(),
             _buildTwitterTab(),
+            _buildPinterestTab(),
             _buildAppStoreTab(),
             _buildPlayStoreTab(),
             _buildMacAppStoreTab(),
@@ -1481,6 +1502,151 @@ class _MyAppState extends State<MyApp> {
           }
         },
         child: const Text('Search Twitter'),
+      ),
+    ],
+  );
+
+  Widget _buildPinterestTab() => SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+            const SizedBox(width: 8),
+            Switch(
+              value: _pinterestFallBackToStore,
+              onChanged: (final value) => setState(() => _pinterestFallBackToStore = value),
+            ),
+            const Expanded(
+              child: Text(
+                'When enabled, redirects to app store if Pinterest is not installed',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const Text('Pinterest Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        _buildPinterestActions(),
+      ],
+    ),
+  );
+
+  Widget _buildPinterestActions() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      ElevatedButton(
+        onPressed: () async {
+          await _deeplinkX.launchApp(Pinterest.open(fallbackToStore: _pinterestFallBackToStore));
+        },
+        child: const Text('Open Pinterest App'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Profile Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _pinterestUsernameController,
+        decoration: const InputDecoration(
+          labelText: 'Pinterest Username',
+          hintText: 'Enter Pinterest username',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_pinterestUsernameController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Pinterest.openProfile(
+                username: _pinterestUsernameController.text,
+                fallbackToStore: _pinterestFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Open Pinterest Profile'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Pin Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _pinterestPinIdController,
+        decoration: const InputDecoration(
+          labelText: 'Pin ID',
+          hintText: 'Enter Pinterest pin ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_pinterestPinIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Pinterest.openPin(pinId: _pinterestPinIdController.text, fallbackToStore: _pinterestFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Pin'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Search Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _pinterestSearchQueryController,
+        decoration: const InputDecoration(
+          labelText: 'Search Query',
+          hintText: 'Enter Pinterest search query',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_pinterestSearchQueryController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Pinterest.search(query: _pinterestSearchQueryController.text, fallbackToStore: _pinterestFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Search Pinterest'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Board Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _pinterestBoardUsernameController,
+        decoration: const InputDecoration(
+          labelText: 'Board Owner Username',
+          hintText: 'Enter Pinterest username (board owner)',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _pinterestBoardController,
+        decoration: const InputDecoration(
+          labelText: 'Board',
+          hintText: 'Enter board (lower-case, hyphenated)',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_pinterestBoardUsernameController.text.isNotEmpty && _pinterestBoardController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Pinterest.openBoard(
+                username: _pinterestBoardUsernameController.text,
+                board: _pinterestBoardController.text,
+                fallbackToStore: _pinterestFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Open Pinterest Board'),
       ),
     ],
   );
