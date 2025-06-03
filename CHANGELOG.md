@@ -1,3 +1,11 @@
+## 1.0.5
+* Added TikTok app with following actions:
+  * Open app
+  * Open Profile Action
+  * Open Video Action
+* Added documentation for TikTok deeplinks
+* Updated example app with TikTok tab
+
 ## 1.0.4
 * Added Pinterest app with following actions:
   * Open app

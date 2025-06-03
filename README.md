@@ -105,6 +105,7 @@ final isRedirected = await deeplinkX.redirectToStore(
 | Social Apps | YouTube                 | • Open video<br>• Open channel<br>• Open playlist<br>• Search                                     |
 | Social Apps | Twitter                 | • Open profile by username<br>• Open tweet by ID<br>• Search                                      |
 | Social Apps | Pinterest               | • Open profile by username<br>• Open board by ID<br>• Search                                      |
+| Social Apps | TikTok                  | • Open profile by username<br>• Open video by ID                                                  |
 | Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
 ## Documentation
@@ -126,6 +127,7 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [YouTube](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/youtube.md)
 - [Twitter](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/twitter.md)
 - [Pinterest](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/pinterest.md)
+- [TikTok](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/tiktok.md)
 
 ## URL Scheme Handling
 

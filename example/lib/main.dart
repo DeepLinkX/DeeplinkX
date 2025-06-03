@@ -92,6 +92,10 @@ class _MyAppState extends State<MyApp> {
   ); // Example: inarikaiyo username for board
   final _pinterestBoardController = TextEditingController(text: 'anime-couple'); // Example: inarikaiyo board
 
+  // TikTok controllers
+  final _tiktokUsernameController = TextEditingController(text: 'tiktok'); // Example: TikTok username
+  final _tiktokVideoIdController = TextEditingController(text: '7189387326583078190'); // Example: TikTok video ID
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
@@ -101,6 +105,7 @@ class _MyAppState extends State<MyApp> {
   bool _youtubeFallBackToStore = true;
   bool _twitterFallBackToStore = true;
   bool _pinterestFallBackToStore = true;
+  bool _tiktokFallBackToStore = true;
 
   @override
   void dispose() {
@@ -147,6 +152,8 @@ class _MyAppState extends State<MyApp> {
     _pinterestSearchQueryController.dispose();
     _pinterestBoardUsernameController.dispose();
     _pinterestBoardController.dispose();
+    _tiktokUsernameController.dispose();
+    _tiktokVideoIdController.dispose();
     super.dispose();
   }
 
@@ -154,7 +161,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(final BuildContext context) => MaterialApp(
     theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
     home: DefaultTabController(
-      length: 15,
+      length: 16,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('DeeplinkX Example'),
@@ -169,6 +176,7 @@ class _MyAppState extends State<MyApp> {
               Tab(text: 'YouTube'),
               Tab(text: 'Twitter'),
               Tab(text: 'Pinterest'),
+              Tab(text: 'TikTok'),
               Tab(text: 'iOS App Store'),
               Tab(text: 'Play Store'),
               Tab(text: 'Mac App Store'),
@@ -189,6 +197,7 @@ class _MyAppState extends State<MyApp> {
             _buildYouTubeTab(),
             _buildTwitterTab(),
             _buildPinterestTab(),
+            _buildTikTokTab(),
             _buildAppStoreTab(),
             _buildPlayStoreTab(),
             _buildMacAppStoreTab(),
@@ -1647,6 +1656,91 @@ class _MyAppState extends State<MyApp> {
           }
         },
         child: const Text('Open Pinterest Board'),
+      ),
+    ],
+  );
+
+  Widget _buildTikTokTab() => SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+            const SizedBox(width: 8),
+            Switch(
+              value: _tiktokFallBackToStore,
+              onChanged: (final value) => setState(() => _tiktokFallBackToStore = value),
+            ),
+            const Expanded(
+              child: Text(
+                'When enabled, redirects to app store if TikTok is not installed',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const Text('TikTok Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        _buildTikTokActions(),
+      ],
+    ),
+  );
+
+  Widget _buildTikTokActions() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      ElevatedButton(
+        onPressed: () async {
+          await _deeplinkX.launchApp(TikTok.open(fallbackToStore: _tiktokFallBackToStore));
+        },
+        child: const Text('Open TikTok App'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Profile Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _tiktokUsernameController,
+        decoration: const InputDecoration(
+          labelText: 'TikTok Username',
+          hintText: 'Enter TikTok username',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_tiktokUsernameController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              TikTok.openProfile(username: _tiktokUsernameController.text, fallbackToStore: _tiktokFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open TikTok Profile'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Video Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _tiktokVideoIdController,
+        decoration: const InputDecoration(
+          labelText: 'Video ID',
+          hintText: 'Enter TikTok video ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_tiktokVideoIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              TikTok.openVideo(videoId: _tiktokVideoIdController.text, fallbackToStore: _tiktokFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Video'),
       ),
     ],
   );

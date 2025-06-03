@@ -76,6 +76,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('TikTok', () {
+        final action = TikTok.open();
+        expect(action, isA<App>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());
@@ -142,7 +147,8 @@ void main() {
       });
 
       test('redirectToStore', () async {
-        when(() => deeplinkX.redirectToStore(storeActions: any(named: 'storeActions'))).thenAnswer((final _) async => true);
+        when(() => deeplinkX.redirectToStore(storeActions: any(named: 'storeActions')))
+            .thenAnswer((final _) async => true);
         final result = await deeplinkX.redirectToStore(storeActions: [MockStoreOpenAppPageAction()]);
         expect(result, true);
       });
