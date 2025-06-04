@@ -3,6 +3,7 @@
   * Open app
   * Open Profile Action
   * Open Video Action
+  * Open Tag Action
 * Added documentation for TikTok deeplinks
 * Updated example app with TikTok tab
 
