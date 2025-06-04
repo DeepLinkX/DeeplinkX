@@ -58,6 +58,26 @@ await deeplinkX.launchAction(
 );
 ```
 
+### Open Tag Action
+```dart
+final deeplinkX = DeeplinkX();
+
+// Simple action
+await deeplinkX.launchAction(TikTok.openTag(tagName: 'flutter')); // TikTok tag name
+
+// Action with store fallback if not installed
+await deeplinkX.launchAction(TikTok.openTag(
+  tagName: 'flutter', // TikTok tag name
+  fallBackToStore: true,
+));
+
+// Action with fallback disabled
+await deeplinkX.launchAction(
+  TikTok.openTag(tagName: 'flutter'), // TikTok tag name
+  disableFallback: true,
+);
+```
+
 ## Parameter Validations
 
 ### Username Validation
@@ -79,6 +99,17 @@ Example invalid usernames:
 TikTok video IDs must follow these rules:
 - Must be a valid numeric string
 - Cannot be empty
+
+### Tag Name Validation
+TikTok tag names must follow these rules:
+- Cannot contain spaces (use single words or hashtags without the # symbol)
+- Cannot contain special characters
+- Should be alphanumeric
+
+Example valid tag names:
+- `flutter`
+- `coding`
+- `dance`
 
 ## Platform-Specific Configuration
 
@@ -119,12 +150,14 @@ When TikTok is installed, the following scheme is used:
 - `tiktok://` - Native TikTok URL scheme
 - For profiles: `tiktok://user?username={username}`
 - For videos: `tiktok://video?id={videoId}`
+- For tags: `tiktok://tag?name={tagName}`
 
 ### Web Fallback URLs
 When TikTok is not installed, DeeplinkX automatically falls back to:
 - `https://www.tiktok.com` - Official TikTok web URL
 - For profiles: `https://www.tiktok.com/@{username}`
 - For videos: `https://www.tiktok.com/video/{videoId}`
+- For tags: `https://www.tiktok.com/tag/{tagName}`
 
 ## Supported Fallback Stores
 When the TikTok app is not installed, DeeplinkX can redirect users to download TikTok from the following app stores:
@@ -154,3 +187,4 @@ DeeplinkX follows this sequence when handling TikTok deeplinks:
 | open        | ✅              | ✅            |
 | openProfile | ✅              | ✅            |
 | openVideo   | ✅              | ✅            |
+| openTag     | ✅              | ✅            |

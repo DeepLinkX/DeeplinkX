@@ -94,7 +94,8 @@ class _MyAppState extends State<MyApp> {
 
   // TikTok controllers
   final _tiktokUsernameController = TextEditingController(text: 'tiktok'); // Example: TikTok username
-  final _tiktokVideoIdController = TextEditingController(text: '7189387326583078190'); // Example: TikTok video ID
+  final _tiktokVideoIdController = TextEditingController(text: '7511774168241704222'); // Example: TikTok video ID
+  final _tiktokTagController = TextEditingController(text: 'flutter'); // Example: TikTok tag
 
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
@@ -154,6 +155,7 @@ class _MyAppState extends State<MyApp> {
     _pinterestBoardController.dispose();
     _tiktokUsernameController.dispose();
     _tiktokVideoIdController.dispose();
+    _tiktokTagController.dispose();
     super.dispose();
   }
 
@@ -1732,15 +1734,50 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       const SizedBox(height: 8),
+      TextField(
+        controller: _tiktokUsernameController,
+        decoration: const InputDecoration(
+          labelText: 'Username',
+          hintText: 'Enter username of video owner',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
       ElevatedButton(
         onPressed: () async {
-          if (_tiktokVideoIdController.text.isNotEmpty) {
+          if (_tiktokVideoIdController.text.isNotEmpty && _tiktokUsernameController.text.isNotEmpty) {
             await _deeplinkX.launchAction(
-              TikTok.openVideo(videoId: _tiktokVideoIdController.text, fallbackToStore: _tiktokFallBackToStore),
+              TikTok.openVideo(
+                videoId: _tiktokVideoIdController.text,
+                username: _tiktokUsernameController.text,
+                fallbackToStore: _tiktokFallBackToStore,
+              ),
             );
           }
         },
         child: const Text('Open Video'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Tag Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _tiktokTagController,
+        decoration: const InputDecoration(
+          labelText: 'Tag Name',
+          hintText: 'Enter TikTok tag name',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_tiktokTagController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              TikTok.openTag(tagName: _tiktokTagController.text, fallbackToStore: _tiktokFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Tag'),
       ),
     ],
   );

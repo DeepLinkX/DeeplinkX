@@ -48,6 +48,8 @@
         <package android:name="com.twitter.android" />
         <!-- Pinterest -->
         <package android:name="com.pinterest" />
+        <!-- TikTok -->
+        <package android:name="com.zhiliaoapp.musically" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->

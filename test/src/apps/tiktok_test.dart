@@ -3,9 +3,9 @@ import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
 import 'package:deeplink_x/src/apps/downloadable_apps/tiktok.dart';
 import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:deeplink_x/src/core/interfaces/app_interface.dart';
-import 'package:deeplink_x/src/core/interfaces/app_link_app_action_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/downloadable_app_interface.dart';
 import 'package:deeplink_x/src/core/interfaces/fallbackable_interface.dart';
+import 'package:deeplink_x/src/core/interfaces/universal_link_app_action_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -41,7 +41,7 @@ void main() {
 
       expect(action, isInstanceOf<App>());
       expect(action, isInstanceOf<DownloadableApp>());
-      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<UniversalLinkAppAction>());
       expect(action, isInstanceOf<Fallbackable>());
     });
 
@@ -51,8 +51,8 @@ void main() {
       );
 
       expect(
-        action.appLink.toString(),
-        'tiktok://user?username=tiktok',
+        action.universalLink.toString(),
+        'https://www.tiktok.com/@tiktok',
       );
       expect(
         action.fallbackLink.toString(),
@@ -63,26 +63,28 @@ void main() {
     test('openVideo action creates correct type', () {
       final action = TikTok.openVideo(
         videoId: '7189387326583078190',
+        username: 'tiktok',
       );
 
       expect(action, isInstanceOf<App>());
       expect(action, isInstanceOf<DownloadableApp>());
-      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<UniversalLinkAppAction>());
       expect(action, isInstanceOf<Fallbackable>());
     });
 
     test('openVideo action creates correct URIs', () {
       final action = TikTok.openVideo(
         videoId: '7189387326583078190',
+        username: 'tiktok',
       );
 
       expect(
-        action.appLink.toString(),
-        'tiktok://video?id=7189387326583078190',
+        action.universalLink.toString(),
+        'https://www.tiktok.com/@tiktok/video/7189387326583078190',
       );
       expect(
         action.fallbackLink.toString(),
-        'https://www.tiktok.com/video/7189387326583078190',
+        'https://www.tiktok.com/@tiktok/video/7189387326583078190',
       );
     });
 
@@ -123,10 +125,47 @@ void main() {
 
       final videoAction = TikTok.openVideo(
         videoId: '7189387326583078190',
+        username: 'tiktok',
         fallbackToStore: true,
       );
       expect(videoAction.videoId, '7189387326583078190');
+      expect(videoAction.userName, 'tiktok');
       expect(videoAction.fallbackToStore, true);
+    });
+
+    test('openTag action creates correct type', () {
+      final action = TikTok.openTag(
+        tagName: 'flutter',
+      );
+
+      expect(action, isInstanceOf<App>());
+      expect(action, isInstanceOf<DownloadableApp>());
+      expect(action, isInstanceOf<UniversalLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
+    });
+
+    test('openTag action creates correct URIs', () {
+      final action = TikTok.openTag(
+        tagName: 'flutter',
+      );
+
+      expect(
+        action.universalLink.toString(),
+        'https://www.tiktok.com/tag/flutter',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://www.tiktok.com/tag/flutter',
+      );
+    });
+
+    test('tag action stores parameters correctly with fallbackToStore', () {
+      final tagAction = TikTok.openTag(
+        tagName: 'flutter',
+        fallbackToStore: true,
+      );
+      expect(tagAction.tagName, 'flutter');
+      expect(tagAction.fallbackToStore, true);
     });
   });
 }

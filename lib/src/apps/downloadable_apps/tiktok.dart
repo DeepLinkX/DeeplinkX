@@ -71,6 +71,7 @@ class TikTok extends App implements DownloadableApp {
   ///
   /// Parameters:
   /// - [videoId]: The ID of the video to open.
+  /// - [username]: The username of the video to open.
   /// - [fallbackToStore]: Whether to automatically redirect to app stores when
   ///   the TikTok app is not installed.
   ///
@@ -78,16 +79,36 @@ class TikTok extends App implements DownloadableApp {
   /// the specified video in the TikTok app.
   static TikTokOpenVideoAction openVideo({
     required final String videoId,
+    required final String username,
     final bool fallbackToStore = false,
   }) =>
-      TikTokOpenVideoAction(videoId: videoId, fallbackToStore: fallbackToStore);
+      TikTokOpenVideoAction(
+        videoId: videoId,
+        userName: username,
+        fallbackToStore: fallbackToStore,
+      );
+
+  /// Creates an action to open a specific tag in the TikTok app.
+  ///
+  /// Parameters:
+  /// - [tagName]: The name of the tag to open.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the TikTok app is not installed.
+  ///
+  /// Returns a [TikTokOpenTagAction] instance that can be used to open
+  /// the specified tag in the TikTok app.
+  static TikTokOpenTagAction openTag({
+    required final String tagName,
+    final bool fallbackToStore = false,
+  }) =>
+      TikTokOpenTagAction(tagName: tagName, fallbackToStore: fallbackToStore);
 }
 
 /// An action to open a specific profile in the TikTok app.
 ///
 /// This class extends [TikTok] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class TikTokOpenProfileAction extends TikTok implements AppLinkAppAction, Fallbackable {
+class TikTokOpenProfileAction extends TikTok implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [TikTokOpenProfileAction] instance.
   ///
   /// Parameters:
@@ -102,59 +123,90 @@ class TikTokOpenProfileAction extends TikTok implements AppLinkAppAction, Fallba
   /// The username of the profile to open.
   final String username;
 
-  /// The app link URL for opening the specified profile in the TikTok app.
+  /// The universal link URL for opening the specified profile in the TikTok app.
   @override
-  Uri get appLink => Uri(
-        scheme: 'tiktok',
-        host: 'user',
-        queryParameters: {'username': username},
+  Uri get universalLink => Uri(
+        scheme: 'https',
+        host: 'www.tiktok.com',
+        path: '@$username',
       );
 
   /// The fallback link to use when the TikTok app cannot be opened.
   ///
   /// This URL opens the specified profile on the TikTok website.
   @override
-  Uri get fallbackLink => Uri(
-        scheme: 'https',
-        host: 'www.tiktok.com',
-        path: '@$username',
-      );
+  Uri get fallbackLink => universalLink;
 }
 
 /// An action to open a specific video in the TikTok app.
 ///
 /// This class extends [TikTok] and implements multiple interfaces to provide
 /// comprehensive functionality for opening videos with fallback support.
-class TikTokOpenVideoAction extends TikTok implements AppLinkAppAction, Fallbackable {
+class TikTokOpenVideoAction extends TikTok implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [TikTokOpenVideoAction] instance.
   ///
   /// Parameters:
   /// - [videoId]: The ID of the video to open.
+  /// - [userName]: The username of the video to open.
   /// - [fallbackToStore]: Whether to automatically redirect to app stores when
   ///   the TikTok app is not installed.
   TikTokOpenVideoAction({
     required this.videoId,
+    required this.userName,
     required super.fallbackToStore,
   });
 
   /// The ID of the video to open.
   final String videoId;
 
-  /// The app link URL for opening the specified video in the TikTok app.
+  /// The username of the video to open.
+  final String userName;
+
+  /// The universal link URL for opening the specified video in the TikTok app.
   @override
-  Uri get appLink => Uri(
-        scheme: 'tiktok',
-        host: 'video',
-        queryParameters: {'id': videoId},
+  Uri get universalLink => Uri(
+        scheme: 'https',
+        host: 'www.tiktok.com',
+        pathSegments: ['@$userName', 'video', videoId],
       );
 
   /// The fallback link to use when the TikTok app cannot be opened.
   ///
   /// This URL opens the specified video on the TikTok website.
   @override
-  Uri get fallbackLink => Uri(
+  Uri get fallbackLink => universalLink;
+}
+
+/// An action to open a specific tag in the TikTok app.
+///
+/// This class extends [TikTok] and implements multiple interfaces to provide
+/// comprehensive functionality for opening tags with fallback support.
+class TikTokOpenTagAction extends TikTok implements UniversalLinkAppAction, Fallbackable {
+  /// Creates a new [TikTokOpenTagAction] instance.
+  ///
+  /// Parameters:
+  /// - [tagName]: The name of the tag to open.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the TikTok app is not installed.
+  TikTokOpenTagAction({
+    required this.tagName,
+    required super.fallbackToStore,
+  });
+
+  /// The name of the tag to open.
+  final String tagName;
+
+  /// The universal link URL for opening the specified tag in the TikTok app.
+  @override
+  Uri get universalLink => Uri(
         scheme: 'https',
         host: 'www.tiktok.com',
-        pathSegments: ['video', videoId],
+        pathSegments: ['tag', tagName],
       );
+
+  /// The fallback link to use when the TikTok app cannot be opened.
+  ///
+  /// This URL opens the specified tag on the TikTok website.
+  @override
+  Uri get fallbackLink => universalLink;
 }
