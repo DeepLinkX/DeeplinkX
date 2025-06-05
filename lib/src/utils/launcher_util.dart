@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_catches_without_on_clauses, avoid_catching_errors
+
 import 'package:deeplink_x/src/core/enums/platform_type.dart';
 import 'package:deeplink_x/src/core/interfaces/app_interface.dart';
 import 'package:deeplink_x_platform_interface/deeplink_x_platform_interface.dart';
@@ -22,6 +24,7 @@ class LauncherUtil {
   /// This field stores the platform type (e.g., Android, iOS) on which
   /// the application is running. It's used to determine platform-specific
   /// behaviors for URL and app launching operations.
+  @visibleForTesting
   final PlatformType currentPlatform;
 
   /// Launches a URL using the platform-specific implementation.
@@ -50,15 +53,16 @@ class LauncherUtil {
   /// `false` otherwise.
   Future<bool> launchApp(final App app) async {
     try {
-      if (currentPlatform == PlatformType.android && app.androidPackageName != null) {
+      if (currentPlatform == PlatformType.android) {
         return await launchAppByPackageName(app.androidPackageName!);
-      } else if (app.customScheme != null) {
+      } else {
         return await launchAppByScheme(app.customScheme!);
       }
-      return false;
     } on PlatformException catch (_) {
       return false;
     } on Exception catch (_) {
+      return false;
+    } catch (_) {
       return false;
     }
   }
@@ -91,6 +95,10 @@ class LauncherUtil {
     } on PlatformException catch (_) {
       return false;
     } on Exception catch (_) {
+      return false;
+    } on AssertionError catch (_) {
+      rethrow;
+    } catch (_) {
       return false;
     }
   }
