@@ -53,9 +53,10 @@
 			<string>whatsapp</string>
 			<string>linkedin</string>
 			<string>youtube</string>
-			<string>twitter</string>
-			<string>pinterest</string>
-			<string>tiktok</string>
-		</array>
-	</dict>
+                        <string>twitter</string>
+                        <string>pinterest</string>
+                        <string>tiktok</string>
+                        <string>zoomus</string>
+                </array>
+        </dict>
 </plist>

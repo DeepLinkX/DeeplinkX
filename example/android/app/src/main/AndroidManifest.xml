@@ -50,6 +50,8 @@
         <package android:name="com.pinterest" />
         <!-- TikTok -->
         <package android:name="com.zhiliaoapp.musically" />
+        <!-- Zoom -->
+        <package android:name="us.zoom.videomeetings" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->
