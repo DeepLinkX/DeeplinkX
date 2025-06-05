@@ -188,3 +188,10 @@ DeeplinkX follows this sequence when handling TikTok deeplinks:
 | openProfile | ✅              | ✅            |
 | openVideo   | ✅              | ✅            |
 | openTag     | ✅              | ✅            |
+
+## Check If TikTok Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(TikTok());
+```

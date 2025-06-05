@@ -183,3 +183,10 @@ DeeplinkX follows this sequence when handling Twitter deeplinks:
 | openProfile | ✅              | ✅            |
 | openTweet   | ✅              | ✅            |
 | search      | ✅              | ✅            |
+
+## Check If Twitter Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(Twitter());
+```
