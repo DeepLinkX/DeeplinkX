@@ -199,3 +199,5 @@ linter:
     use_test_throws_matchers: true
     use_to_and_as_if_applicable: true
     void_checks: true
+    strict_top_level_inference: true
+    unnecessary_underscores: true
