@@ -12,7 +12,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchApp(Facebook.open());
 
 // Launch with store fallback if not installed
-await deeplinkX.launchApp(Facebook.open(fallBackToStore: true));
+await deeplinkX.launchApp(Facebook.open(fallbackToStore: true));
 
 // Launch with fallback disabled
 await deeplinkX.launchApp(Facebook.open(), disableFallback: true);
@@ -28,7 +28,7 @@ await deeplinkX.launchAction(Facebook.openProfileById(id: 'profileId')); // Face
 // Action with store fallback if not installed
 await deeplinkX.launchAction(Facebook.openProfileById(
   id: 'profileId', // Facebook numeric ID (e.g. '123456789')
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -48,7 +48,7 @@ await deeplinkX.launchAction(Facebook.openProfileByUsername(username: 'username'
 // Action with store fallback if not installed
 await deeplinkX.launchAction(Facebook.openProfileByUsername(
   username: 'username', // Facebook username (e.g. 'zuck' for Mark Zuckerberg)
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -68,7 +68,7 @@ await deeplinkX.launchAction(Facebook.openPage(pageId: 'pageId')); // Facebook p
 // Action with store fallback if not installed
 await deeplinkX.launchAction(Facebook.openPage(
   pageId: 'pageId', // Facebook page ID (e.g. 'facebookapp' for Facebook's official page)
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -88,7 +88,7 @@ await deeplinkX.launchAction(Facebook.openGroup(groupId: 'groupId')); // Faceboo
 // Action with store fallback if not installed
 await deeplinkX.launchAction(Facebook.openGroup(
   groupId: 'groupId', // Facebook group ID (e.g. '231104380821004' for Flutter Community group)
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -108,7 +108,7 @@ await deeplinkX.launchAction(Facebook.openEvent(eventId: 'eventId')); // Faceboo
 // Action with store fallback if not installed
 await deeplinkX.launchAction(Facebook.openEvent(
   eventId: 'eventId', // Facebook event ID (e.g. '10155945715431729' for F8 Conference)
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled

@@ -12,7 +12,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchApp(Twitter.open());
 
 // Launch with store fallback if not installed
-await deeplinkX.launchApp(Twitter.open(fallBackToStore: true));
+await deeplinkX.launchApp(Twitter.open(fallbackToStore: true));
 
 // Launch with fallback disabled
 await deeplinkX.launchApp(Twitter.open(), disableFallback: true);
@@ -28,7 +28,7 @@ await deeplinkX.launchAction(Twitter.openProfile(username: 'twitter')); // Twitt
 // Action with store fallback if not installed
 await deeplinkX.launchAction(Twitter.openProfile(
   username: 'twitter', // Twitter username
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -48,7 +48,7 @@ await deeplinkX.launchAction(Twitter.openTweet(tweetId: '1234567890')); // Twitt
 // Action with store fallback if not installed
 await deeplinkX.launchAction(Twitter.openTweet(
   tweetId: '1234567890', // Twitter tweet ID
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -68,7 +68,7 @@ await deeplinkX.launchAction(Twitter.search(query: 'flutter')); // Search query
 // Action with store fallback if not installed
 await deeplinkX.launchAction(Twitter.search(
   query: 'flutter', // Search query
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -160,18 +160,18 @@ When the Twitter app is not installed, DeeplinkX can redirect users to download 
 - iOS App Store
 - Google Play Store
 
-To enable fallback to app stores, use the `fallBackToStore` parameter:
+To enable fallback to app stores, use the `fallbackToStore` parameter:
 
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchApp(Twitter.open(fallBackToStore: true));
+await deeplinkX.launchApp(Twitter.open(fallbackToStore: true));
 ```
 
 ## Fallback Behavior
 DeeplinkX follows this sequence when handling Twitter deeplinks:
 
 1. First, it attempts to launch the Twitter app if it's installed on the device.
-2. If the Twitter app is not installed and `fallBackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
+2. If the Twitter app is not installed and `fallbackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
 3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the Twitter web interface in the default browser.
 4. You can disable all fallbacks by setting `disableFallback: true` in the launch methods.
 
