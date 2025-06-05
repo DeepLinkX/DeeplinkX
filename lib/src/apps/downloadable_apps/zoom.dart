@@ -2,14 +2,26 @@ import 'package:deeplink_x/src/src.dart';
 
 /// Zoom application.
 ///
-/// Provides deeplink support for joining and starting Zoom meetings.
+/// This class implements the [DownloadableApp] interface to provide capabilities
+/// for interacting with the Zoom app on various platforms.
 class Zoom extends App implements DownloadableApp {
   /// Creates a new [Zoom] instance.
+  ///
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Zoom app is not installed. Default is false.
   Zoom({this.fallbackToStore = false});
 
   /// Creates an action to open the Zoom app.
-  factory Zoom.open({bool fallbackToStore = false}) => Zoom(fallbackToStore: fallbackToStore);
+  ///
+  /// Parameters:
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Zoom app is not installed. Default is false.
+  ///
+  /// Returns a [Zoom] instance that can be used to open the Zoom app.
+  factory Zoom.open({final bool fallbackToStore = false}) => Zoom(fallbackToStore: fallbackToStore);
 
+  /// A list of actions to open the Zoom app's page in various app stores.
   @override
   List<StoreOpenAppPageAction> get storeActions => [
         PlayStore.openAppPage(packageName: 'us.zoom.videomeetings'),
@@ -17,15 +29,19 @@ class Zoom extends App implements DownloadableApp {
         MacAppStore.openAppPage(appId: '546505307', appName: 'zoom.us'),
       ];
 
+  /// The Android package name for the Zoom app.
   @override
   String get androidPackageName => 'us.zoom.videomeetings';
 
+  /// The custom URL scheme for the Zoom app.
   @override
   String get customScheme => 'zoomus';
 
+  /// The MacOS bundle identifier for the Zoom app.
   @override
   String get macosBundleIdentifier => 'us.zoom.Zoom';
 
+  /// The platforms that the Zoom app supports.
   @override
   List<PlatformType> get supportedPlatforms => [
         PlatformType.android,
@@ -33,18 +49,30 @@ class Zoom extends App implements DownloadableApp {
         PlatformType.macos,
       ];
 
+  /// Whether to automatically redirect to app stores when the Zoom app is not installed.
   @override
   bool fallbackToStore;
 
+  /// The web URL for Zoom.
   @override
   Uri get website => Uri.parse('https://zoom.us');
 
   /// Creates an action to join a Zoom meeting.
+  ///
+  /// Parameters:
+  /// - [meetingId]: The ID of the meeting to join.
+  /// - [password]: Optional password for the meeting.
+  /// - [displayName]: Optional display name to use when joining the meeting.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Zoom app is not installed. Default is false.
+  ///
+  /// Returns a [ZoomJoinMeetingAction] instance that can be used to join
+  /// the specified meeting in the Zoom app.
   static ZoomJoinMeetingAction joinMeeting({
-    required String meetingId,
-    String? password,
-    String? displayName,
-    bool fallbackToStore = false,
+    required final String meetingId,
+    final String? password,
+    final String? displayName,
+    final bool fallbackToStore = false,
   }) =>
       ZoomJoinMeetingAction(
         meetingId: meetingId,
@@ -54,11 +82,21 @@ class Zoom extends App implements DownloadableApp {
       );
 
   /// Creates an action to start a Zoom meeting.
+  ///
+  /// Parameters:
+  /// - [meetingId]: The ID of the meeting to start.
+  /// - [password]: Optional password for the meeting.
+  /// - [displayName]: Optional display name to use when starting the meeting.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Zoom app is not installed. Default is false.
+  ///
+  /// Returns a [ZoomStartMeetingAction] instance that can be used to start
+  /// the specified meeting in the Zoom app.
   static ZoomStartMeetingAction startMeeting({
-    required String meetingId,
-    String? password,
-    String? displayName,
-    bool fallbackToStore = false,
+    required final String meetingId,
+    final String? password,
+    final String? displayName,
+    final bool fallbackToStore = false,
   }) =>
       ZoomStartMeetingAction(
         meetingId: meetingId,
@@ -68,19 +106,36 @@ class Zoom extends App implements DownloadableApp {
       );
 }
 
-/// Action to join a Zoom meeting.
+/// An action to join a Zoom meeting.
+///
+/// This class extends [Zoom] and implements multiple interfaces to provide
+/// comprehensive functionality for joining meetings with fallback support.
 class ZoomJoinMeetingAction extends Zoom implements AppLinkAppAction, Fallbackable {
+  /// Creates a new [ZoomJoinMeetingAction] instance.
+  ///
+  /// Parameters:
+  /// - [meetingId]: The ID of the meeting to join.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Zoom app is not installed.
+  /// - [password]: Optional password for the meeting.
+  /// - [displayName]: Optional display name to use when joining the meeting.
   ZoomJoinMeetingAction({
     required this.meetingId,
+    required super.fallbackToStore,
     this.password,
     this.displayName,
-    required super.fallbackToStore,
   });
 
+  /// The ID of the meeting to join.
   final String meetingId;
+
+  /// Optional password for the meeting.
   final String? password;
+
+  /// Optional display name to use when joining the meeting.
   final String? displayName;
 
+  /// The app link URL for joining the specified meeting in the Zoom app.
   @override
   Uri get appLink => Uri(
         scheme: 'zoomus',
@@ -88,35 +143,55 @@ class ZoomJoinMeetingAction extends Zoom implements AppLinkAppAction, Fallbackab
         path: 'join',
         queryParameters: {
           'confno': meetingId,
-          if (password != null) 'pwd': password!,
-          if (displayName != null) 'uname': displayName!,
+          if (password != null) 'pwd': password,
+          if (displayName != null) 'uname': displayName,
         },
       );
 
+  /// The fallback link to use when the Zoom app cannot be opened.
+  ///
+  /// This URL opens the specified meeting on the Zoom web interface.
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
         host: 'zoom.us',
         pathSegments: ['j', meetingId],
         queryParameters: {
-          if (password != null) 'pwd': password!,
+          if (password != null) 'pwd': password,
         },
       );
 }
 
-/// Action to start a Zoom meeting.
+/// An action to start a Zoom meeting.
+///
+/// This class extends [Zoom] and implements multiple interfaces to provide
+/// comprehensive functionality for starting meetings with fallback support.
 class ZoomStartMeetingAction extends Zoom implements AppLinkAppAction, Fallbackable {
+  /// Creates a new [ZoomStartMeetingAction] instance.
+  ///
+  /// Parameters:
+  /// - [meetingId]: The ID of the meeting to start.
+  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
+  ///   the Zoom app is not installed.
+  /// - [password]: Optional password for the meeting.
+  /// - [displayName]: Optional display name to use when starting the meeting.
   ZoomStartMeetingAction({
     required this.meetingId,
+    required super.fallbackToStore,
     this.password,
     this.displayName,
-    required super.fallbackToStore,
   });
 
+  /// The ID of the meeting to start.
   final String meetingId;
+
+  /// Optional password for the meeting.
   final String? password;
+
+  /// Optional display name to use when starting the meeting.
   final String? displayName;
 
+  /// The app link URL for starting the specified meeting in the Zoom app.
   @override
   Uri get appLink => Uri(
         scheme: 'zoomus',
@@ -124,18 +199,21 @@ class ZoomStartMeetingAction extends Zoom implements AppLinkAppAction, Fallbacka
         path: 'start',
         queryParameters: {
           'confno': meetingId,
-          if (password != null) 'pwd': password!,
-          if (displayName != null) 'uname': displayName!,
+          if (password != null) 'pwd': password,
+          if (displayName != null) 'uname': displayName,
         },
       );
 
+  /// The fallback link to use when the Zoom app cannot be opened.
+  ///
+  /// This URL opens the specified meeting on the Zoom web interface.
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
         host: 'zoom.us',
         pathSegments: ['j', meetingId],
         queryParameters: {
-          if (password != null) 'pwd': password!,
+          if (password != null) 'pwd': password,
         },
       );
 }
