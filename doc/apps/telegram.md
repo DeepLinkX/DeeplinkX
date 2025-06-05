@@ -12,7 +12,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchApp(Telegram.open());
 
 // Launch with store fallback if not installed
-await deeplinkX.launchApp(Telegram.open(fallBackToStore: true));
+await deeplinkX.launchApp(Telegram.open(fallbackToStore: true));
 
 // Launch with fallback disabled
 await deeplinkX.launchApp(Telegram.open(), disableFallback: true);
@@ -26,7 +26,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchAction(Telegram.openProfile('username'));
 
 // Action with store fallback if not installed
-await deeplinkX.launchAction(Telegram.openProfile('username', fallBackToStore: true));
+await deeplinkX.launchAction(Telegram.openProfile('username', fallbackToStore: true));
 
 // Action with fallback disabled
 await deeplinkX.launchAction(Telegram.openProfile('username'), disableFallback: true);
@@ -40,7 +40,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890'));
 
 // Action with store fallback if not installed
-await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890', fallBackToStore: true));
+await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890', fallbackToStore: true));
 
 // Action with fallback disabled
 await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890'), disableFallback: true);
@@ -61,7 +61,7 @@ await deeplinkX.launchAction(
   Telegram.sendMessage(
     username: 'username',
     message: 'Hello!',
-    fallBackToStore: true,
+    fallbackToStore: true,
   ),
 );
 
@@ -194,18 +194,18 @@ When the Telegram app is not installed, DeeplinkX can redirect users to download
 - Mac App Store
 - Microsoft Store
 
-To enable fallback to app stores, use the `fallBackToStore` parameter:
+To enable fallback to app stores, use the `fallbackToStore` parameter:
 
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchApp(Telegram.open(fallBackToStore: true));
+await deeplinkX.launchApp(Telegram.open(fallbackToStore: true));
 ```
 
 ## Fallback Behavior
 DeeplinkX follows this sequence when handling Telegram deeplinks:
 
 1. First, it attempts to launch the Telegram app if it's installed on the device.
-2. If the Telegram app is not installed and `fallBackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store, Google Play Store, Mac App Store, or Microsoft Store).
+2. If the Telegram app is not installed and `fallbackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store, Google Play Store, Mac App Store, or Microsoft Store).
 3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the Telegram web interface in the default browser.
 4. You can disable all fallbacks by setting `disableFallback: true` in the launch methods.
 

@@ -12,7 +12,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchApp(LinkedIn.open());
 
 // Launch with store fallback if not installed
-await deeplinkX.launchApp(LinkedIn.open(fallBackToStore: true));
+await deeplinkX.launchApp(LinkedIn.open(fallbackToStore: true));
 
 // Launch with fallback disabled
 await deeplinkX.launchApp(LinkedIn.open(), disableFallback: true);
@@ -31,7 +31,7 @@ await deeplinkX.launchAction(LinkedIn.openProfile(
 await deeplinkX.launchAction(
   LinkedIn.openProfile(
     profileId: 'johndoe',
-    fallBackToStore: true,
+    fallbackToStore: true,
   ),
 );
 
@@ -57,7 +57,7 @@ await deeplinkX.launchAction(LinkedIn.openCompany(
 await deeplinkX.launchAction(
   LinkedIn.openCompany(
     companyId: 'company-id',
-    fallBackToStore: true,
+    fallbackToStore: true,
   ),
 );
 
@@ -128,11 +128,11 @@ When the LinkedIn app is not installed, DeeplinkX can redirect users to download
 - Google Play Store
 - Microsoft Store
 
-To enable fallback to app stores, use the `fallBackToStore` parameter:
+To enable fallback to app stores, use the `fallbackToStore` parameter:
 
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchApp(LinkedIn.open(fallBackToStore: true));
+await deeplinkX.launchApp(LinkedIn.open(fallbackToStore: true));
 ```
 
 ## Fallback Behavior
