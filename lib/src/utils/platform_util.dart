@@ -10,7 +10,7 @@ class PlatformUtil {
   ///
   /// Since this class only contains static methods and has no instance state,
   /// it can be instantiated as a const object.
-  PlatformUtil({final String? platfromName}) : _platformName = platfromName ?? defaultTargetPlatform.name;
+  PlatformUtil({final String? platformName}) : _platformName = platformName ?? defaultTargetPlatform.name;
 
   final String _platformName;
 
