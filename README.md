@@ -1,5 +1,7 @@
 # DeeplinkX
 
+[![Coverage Status](https://coveralls.io/repos/github/DeepLinkX/DeeplinkX/badge.svg)](https://coveralls.io/github/DeepLinkX/DeeplinkX)
+
 Easy to use Flutter plugin for type-safe handling of external deeplinks with built-in support for popular apps. Features smart fallback to app stores and web URLs across all major platforms.
 
 > **Naming Note**: 'X' in DeeplinkX stands for external.
