@@ -1,6 +1,12 @@
 # DeeplinkX
 
+[![pub package](https://img.shields.io/pub/v/deeplink_x.svg)](https://pub.dev/packages/deeplink_x)
 [![Coverage Status](https://coveralls.io/repos/github/DeepLinkX/DeeplinkX/badge.svg)](https://coveralls.io/github/DeepLinkX/DeeplinkX)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Issues](https://img.shields.io/github/issues/DeepLinkX/DeeplinkX)](https://github.com/DeepLinkX/DeeplinkX/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/DeepLinkX/DeeplinkX?style=social)](https://github.com/DeepLinkX/DeeplinkX/stargazers)
+[![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20%7C%20macOS%20%7C%20Windows%20%7C%20Linux%20%7C%20Web-blue.svg)](https://flutter.dev)
+
 
 Easy to use Flutter plugin for type-safe handling of external deeplinks with built-in support for popular apps. Features smart fallback to app stores and web URLs across all major platforms.
 
