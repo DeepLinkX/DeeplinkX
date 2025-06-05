@@ -124,8 +124,25 @@ To handle YouTube deeplinks on iOS, add the following to your `Info.plist`:
 ```
 
 ## Supported Fallback Stores
-When the LinkedIn app is not installed, DeeplinkX can redirect users to download LinkedIn from the following app stores:
+When the YouTube app is not installed, DeeplinkX can redirect users to download YouTube from the following app stores:
 
 - iOS App Store
 - Google Play Store
 - Microsoft Store
+
+## Fallback Behavior
+
+DeeplinkX follows this sequence when handling YouTube deeplinks:
+
+1. First, it attempts to launch the YouTube app if it's installed on the device.
+2. If the YouTube app is not installed and `fallbackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
+3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the YouTube web interface in the default browser.
+4. You can disable all fallbacks by setting `disableFallback: true` in the launch methods.
+
+## Check If YouTube Is Installed
+
+```dart
+final deeplinkX = DeeplinkX();
+final isInstalled = await deeplinkX.isAppInstalled(YouTube());
+```
+

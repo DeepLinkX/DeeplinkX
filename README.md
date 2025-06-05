@@ -36,32 +36,24 @@ Check out [Documentation section](#documentation)
 
 ### Launch App Actions
 
-Execute specific actions within apps:
+Execute a deeplink action and optionally fall back to the store if the app isn't installed:
 
 ```dart
-// Basic usage
-final isActionLaunched = await deeplinkX.launchAction(Telegram.openProfile('username'));
-
-// With store fallback (redirects to store if app not installed)
-deeplinkX.launchAction(Telegram.openProfile('username', fallBackToStore: true));
-
-// Disable all fallbacks
-deeplinkX.launchAction(Telegram.openProfile('username'), disableFallback: true);
+final launched = await deeplinkX.launchAction(
+  Telegram.openProfile('username', fallBackToStore: true),
+);
+// Set `disableFallback: true` to suppress store and web fallbacks.
 ```
 
 ### Launch Apps
 
-Simply open apps without specific actions:
+Open an app without specifying an action:
 
 ```dart
-// Basic usage
-final isLaunched = await deeplinkX.launchApp(Instagram.open());
-
-// With store fallback
-deeplinkX.launchApp(Instagram.open(fallBackToStore: true));
-
-// Disable all fallbacks
-deeplinkX.launchApp(Instagram.open(), disableFallback: true);
+final launched = await deeplinkX.launchApp(
+  Instagram.open(fallBackToStore: true),
+);
+// Use `disableFallback: true` to skip store and web fallbacks.
 ```
 
 ### Check If App Is Installed
@@ -137,14 +129,13 @@ DeeplinkX uses a three-tier approach for compatibility:
 2. **Store Fallback**: Redirects to app stores when apps aren't installed (with `fallBackToStore: true`)
 3. **Web Fallback**: Redirects to web URLs when neither app nor store is available
 
-Most app actions (like opening profiles, sending messages) support all three fallback levels:
+Most actions support store or web fallbacks when the target app is missing:
 
 ```dart
-// With store fallback enabled
-await deeplinkX.launchAction(Instagram.open(fallBackToStore: true));
-
-// With fallback disabled
-await deeplinkX.launchAction(Instagram.open(), disableFallback: true);
+await deeplinkX.launchAction(
+  Instagram.open(fallBackToStore: true),
+);
+// Pass `disableFallback: true` to prevent store and web redirects.
 ```
 
 For detailed URL schemes and fallback behavior, see each app's documentation.
