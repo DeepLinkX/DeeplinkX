@@ -1,5 +1,13 @@
 # DeeplinkX
 
+[![pub package](https://img.shields.io/pub/v/deeplink_x.svg)](https://pub.dev/packages/deeplink_x)
+[![Coverage Status](https://coveralls.io/repos/github/DeepLinkX/DeeplinkX/badge.svg)](https://coveralls.io/github/DeepLinkX/DeeplinkX)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub Issues](https://img.shields.io/github/issues/DeepLinkX/DeeplinkX)](https://github.com/DeepLinkX/DeeplinkX/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/DeepLinkX/DeeplinkX?style=social)](https://github.com/DeepLinkX/DeeplinkX/stargazers)
+[![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20%7C%20macOS%20%7C%20Windows%20%7C%20Linux%20%7C%20Web-blue.svg)](https://flutter.dev)
+
+
 Easy to use Flutter plugin for type-safe handling of external deeplinks with built-in support for popular apps. Features smart fallback to app stores and web URLs across all major platforms.
 
 > **Naming Note**: 'X' in DeeplinkX stands for external.
@@ -37,32 +45,24 @@ Check out [Documentation section](#documentation)
 
 ### Launch App Actions
 
-Execute specific actions within apps:
+Execute a deeplink action and optionally fall back to the store if the app isn't installed:
 
 ```dart
-// Basic usage
-final isActionLaunched = await deeplinkX.launchAction(Telegram.openProfile('username'));
-
-// With store fallback (redirects to store if app not installed)
-deeplinkX.launchAction(Telegram.openProfile('username', fallBackToStore: true));
-
-// Disable all fallbacks
-deeplinkX.launchAction(Telegram.openProfile('username'), disableFallback: true);
+final launched = await deeplinkX.launchAction(
+  Telegram.openProfile('username', fallBackToStore: true),
+);
+// Set `disableFallback: true` to suppress store and web fallbacks.
 ```
 
 ### Launch Apps
 
-Simply open apps without specific actions:
+Open an app without specifying an action:
 
 ```dart
-// Basic usage
-final isLaunched = await deeplinkX.launchApp(Instagram.open());
-
-// With store fallback
-deeplinkX.launchApp(Instagram.open(fallBackToStore: true));
-
-// Disable all fallbacks
-deeplinkX.launchApp(Instagram.open(), disableFallback: true);
+final launched = await deeplinkX.launchApp(
+  Instagram.open(fallBackToStore: true),
+);
+// Use `disableFallback: true` to skip store and web fallbacks.
 ```
 
 ### Check If App Is Installed
@@ -106,8 +106,8 @@ final isRedirected = await deeplinkX.redirectToStore(
 | Social Apps | YouTube                 | • Open video<br>• Open channel<br>• Open playlist<br>• Search                                     |
 | Social Apps | Twitter                 | • Open profile by username<br>• Open tweet by ID<br>• Search                                      |
 | Social Apps | Pinterest               | • Open profile by username<br>• Open board by ID<br>• Search                                      |
-| Social Apps | TikTok                  | • Open profile by username<br>• Open video by ID                                                  |
-| Social Apps | Zoom                    | • Join meeting by ID<br>• Start meeting                                                    |
+| Social Apps | TikTok                  | • Open profile by username<br>• Open video<br>• Open Tag                                          |
+| Social Apps | Zoom                    | • Join meeting by ID<br>• Start meeting                                                           |
 | Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
 ## Documentation
@@ -140,14 +140,13 @@ DeeplinkX uses a three-tier approach for compatibility:
 2. **Store Fallback**: Redirects to app stores when apps aren't installed (with `fallBackToStore: true`)
 3. **Web Fallback**: Redirects to web URLs when neither app nor store is available
 
-Most app actions (like opening profiles, sending messages) support all three fallback levels:
+Most actions support store or web fallbacks when the target app is missing:
 
 ```dart
-// With store fallback enabled
-await deeplinkX.launchAction(Instagram.open(fallBackToStore: true));
-
-// With fallback disabled
-await deeplinkX.launchAction(Instagram.open(), disableFallback: true);
+await deeplinkX.launchAction(
+  Instagram.open(fallBackToStore: true),
+);
+// Pass `disableFallback: true` to prevent store and web redirects.
 ```
 
 For detailed URL schemes and fallback behavior, see each app's documentation.
