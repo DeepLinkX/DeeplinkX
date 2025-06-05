@@ -116,7 +116,7 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [Mac App Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/mac_app_store.md)
 - [Microsoft Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/microsoft_store.md)
 - [Play Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/play_store.md)
-- [Huawei AppGalley Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/huawei_app_gallery_store.md)
+- [Huawei AppGallery Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/huawei_app_gallery_store.md)
 - [Cafe Bazaar Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/cafe_bazaar_store.md)
 - [Myket Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/myket_store.md)
 - [Facebook](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/facebook.md)
