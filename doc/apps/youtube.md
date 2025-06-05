@@ -12,7 +12,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchApp(YouTube.open());
 
 // Launch with store fallback if not installed
-await deeplinkX.launchApp(YouTube.open(fallBackToStore: true));
+await deeplinkX.launchApp(YouTube.open(fallbackToStore: true));
 
 // Launch with fallback disabled
 await deeplinkX.launchApp(YouTube.open(), disableFallback: true);
@@ -28,7 +28,7 @@ await deeplinkX.launchAction(YouTube.openVideo(videoId: 'dQw4w9WgXcQ')); // YouT
 // Action with store fallback if not installed
 await deeplinkX.launchAction(YouTube.openVideo(
   videoId: 'dQw4w9WgXcQ', // YouTube video ID
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -48,7 +48,7 @@ await deeplinkX.launchAction(YouTube.openChannel(channelId: 'UCq-Fj5jknLsUf-MWSy
 // Action with store fallback if not installed
 await deeplinkX.launchAction(YouTube.openChannel(
   channelId: 'UCq-Fj5jknLsUf-MWSy4_brA', // YouTube channel ID
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -68,7 +68,7 @@ await deeplinkX.launchAction(YouTube.openPlaylist(playlistId: 'PLFgquLnL59alCl_2
 // Action with store fallback if not installed
 await deeplinkX.launchAction(YouTube.openPlaylist(
   playlistId: 'PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI', // YouTube playlist ID
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled
@@ -88,7 +88,7 @@ await deeplinkX.launchAction(YouTube.search(query: 'flutter tutorial')); // Sear
 // Action with store fallback if not installed
 await deeplinkX.launchAction(YouTube.search(
   query: 'flutter tutorial', // Search query
-  fallBackToStore: true,
+  fallbackToStore: true,
 ));
 
 // Action with fallback disabled

@@ -12,7 +12,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchApp(Instagram.open());
 
 // Launch with store fallback if not installed
-await deeplinkX.launchApp(Instagram.open(fallBackToStore: true));
+await deeplinkX.launchApp(Instagram.open(fallbackToStore: true));
 
 // Launch with fallback disabled
 await deeplinkX.launchApp(Instagram.open(), disableFallback: true);
@@ -26,7 +26,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchAction(Instagram.openProfile('username'));
 
 // Action with store fallback if not installed
-await deeplinkX.launchAction(Instagram.openProfile('username', fallBackToStore: true));
+await deeplinkX.launchAction(Instagram.openProfile('username', fallbackToStore: true));
 
 // Action with fallback disabled
 await deeplinkX.launchAction(Instagram.openProfile('username'), disableFallback: true);
@@ -106,18 +106,18 @@ When the Instagram app is not installed, DeeplinkX can redirect users to downloa
 - iOS App Store
 - Google Play Store
 
-To enable fallback to app stores, use the `fallBackToStore` parameter:
+To enable fallback to app stores, use the `fallbackToStore` parameter:
 
 ```dart
 final deeplinkX = DeeplinkX();
-await deeplinkX.launchApp(Instagram.open(fallBackToStore: true));
+await deeplinkX.launchApp(Instagram.open(fallbackToStore: true));
 ```
 
 ## Fallback Behavior
 DeeplinkX follows this sequence when handling Instagram deeplinks:
 
 1. First, it attempts to launch the Instagram app if it's installed on the device.
-2. If the Instagram app is not installed and `fallBackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
+2. If the Instagram app is not installed and `fallbackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
 3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the Instagram web interface in the default browser.
 4. You can disable all fallbacks by setting `disableFallback: true` in the launch methods.
 

@@ -15,7 +15,7 @@ await deeplinkX.launchApp(Pinterest.open());
 With fallback to app store:
 
 ```dart
-await deeplinkX.launchApp(Pinterest.open(fallBackToStore: true));
+await deeplinkX.launchApp(Pinterest.open(fallbackToStore: true));
 ```
 
 Without fallback:
@@ -183,7 +183,7 @@ When Pinterest is not installed, DeeplinkX automatically falls back to:
 When the Pinterest app is not installed, DeeplinkX can redirect users to download Pinterest from the following app stores:
 
 ```dart
-await deeplinkX.launchApp(Pinterest.open(fallBackToStore: true));
+await deeplinkX.launchApp(Pinterest.open(fallbackToStore: true));
 ```
 
 ## Fallback Behavior
@@ -191,5 +191,5 @@ await deeplinkX.launchApp(Pinterest.open(fallBackToStore: true));
 DeeplinkX follows this sequence when handling Pinterest deeplinks:
 
 1. First, it attempts to launch the Pinterest app if it's installed on the device.
-2. If the Pinterest app is not installed and `fallBackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
+2. If the Pinterest app is not installed and `fallbackToStore` is set to `true`, it will redirect to the appropriate app store based on the user's platform (iOS App Store or Google Play Store).
 3. If no supported store is available for the current platform or the store app cannot be launched, it will fall back to opening the Pinterest web interface in the default browser. 
