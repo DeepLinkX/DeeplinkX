@@ -67,7 +67,7 @@ class DeeplinkX {
       }
     } on PlatformException catch (_) {
     } on Exception catch (_) {
-    // ignore: avoid_catches_without_on_clauses
+      // ignore: avoid_catches_without_on_clauses
     } catch (_) {}
 
     // Primary link failed, so we try fallback

@@ -107,7 +107,7 @@ final isRedirected = await deeplinkX.redirectToStore(
 | Social Apps | Twitter                 | • Open profile by username<br>• Open tweet by ID<br>• Search                                      |
 | Social Apps | Pinterest               | • Open profile by username<br>• Open board by ID<br>• Search                                      |
 | Social Apps | TikTok                  | • Open profile by username<br>• Open video<br>• Open Tag                                          |
-| Social Apps | Zoom                    | • Join meeting by ID<br>• Start meeting                                                           |
+| Social Apps | Zoom                    | • Join meeting by ID                                                                              |
 | Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
 ## Documentation

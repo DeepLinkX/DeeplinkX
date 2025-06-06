@@ -35,16 +35,6 @@ await deeplinkX.launchAction(Zoom.joinMeeting(
 ));
 ```
 
-### Start Meeting Action
-```dart
-final deeplinkX = DeeplinkX();
-
-await deeplinkX.launchAction(Zoom.startMeeting(
-  meetingId: '123456789',
-  password: 'abc123',
-));
-```
-
 ## Platform-Specific Configuration
 
 ### iOS
@@ -93,19 +83,18 @@ DeeplinkX uses the following URL schemes for Zoom:
 When Zoom is installed, the following scheme is used:
 - `zoomus://` - Native Zoom URL scheme
 - Join meeting: `zoomus://zoom.us/join?confno={meetingId}&pwd={password}`
-- Start meeting: `zoomus://zoom.us/start?confno={meetingId}&pwd={password}`
 
 ### Web Fallback URLs
 When Zoom is not installed, DeeplinkX automatically falls back to:
 - `https://zoom.us` - Official Zoom web URL
-- Join or start meeting: `https://zoom.us/j/{meetingId}?pwd={password}`
+- Join meeting: `https://zoom.us/j/{meetingId}?pwd={password}`
 
 ## Supported Fallback Stores
 When the Zoom app is not installed, DeeplinkX can redirect users to download Zoom from the following app stores:
 
 - iOS App Store
 - Google Play Store
-- Mac App Store
+- Microsoft Store
 
 To enable fallback to app stores, use the `fallbackToStore` parameter:
 ```dart
@@ -123,11 +112,10 @@ DeeplinkX follows this sequence when handling Zoom deeplinks:
 
 ## Fallback Support for Actions
 
-| Action       | Store Fallback | Web Fallback |
-| ------------ | -------------- | ------------ |
-| open         | ✅              | ✅            |
-| joinMeeting  | ✅              | ✅            |
-| startMeeting | ✅              | ✅            |
+| Action      | Store Fallback | Web Fallback |
+| ----------- | -------------- | ------------ |
+| open        | ✅              | ✅            |
+| joinMeeting | ✅              | ✅            |
 
 ## Check If Zoom Is Installed
 ```dart

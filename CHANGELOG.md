@@ -2,7 +2,6 @@
 * Added Zoom app with following actions:
   * Open app
   * Join Meeting Action
-  * Start Meeting Action
 * Added documentation for Zoom deeplinks
 * Updated example app with Zoom tab
 

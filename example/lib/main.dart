@@ -100,6 +100,7 @@ class _MyAppState extends State<MyApp> {
   // Zoom controllers
   final _zoomMeetingIdController = TextEditingController(text: '123456789');
   final _zoomPasswordController = TextEditingController(text: 'abc123');
+  final _zoomDisplayNameController = TextEditingController(text: 'John Doe');
 
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
@@ -163,6 +164,7 @@ class _MyAppState extends State<MyApp> {
     _tiktokTagController.dispose();
     _zoomMeetingIdController.dispose();
     _zoomPasswordController.dispose();
+    _zoomDisplayNameController.dispose();
     super.dispose();
   }
 
@@ -1830,6 +1832,8 @@ class _MyAppState extends State<MyApp> {
         child: const Text('Open Zoom App'),
       ),
       const SizedBox(height: 16),
+      const Text('Join Meeting', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
       TextField(
         controller: _zoomMeetingIdController,
         decoration: const InputDecoration(
@@ -1848,6 +1852,15 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       const SizedBox(height: 8),
+      TextField(
+        controller: _zoomDisplayNameController,
+        decoration: const InputDecoration(
+          labelText: 'Display Name (optional)',
+          hintText: 'Enter your display name',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
       ElevatedButton(
         onPressed: () async {
           if (_zoomMeetingIdController.text.isNotEmpty) {
@@ -1855,27 +1868,13 @@ class _MyAppState extends State<MyApp> {
               Zoom.joinMeeting(
                 meetingId: _zoomMeetingIdController.text,
                 password: _zoomPasswordController.text.isNotEmpty ? _zoomPasswordController.text : null,
+                displayName: _zoomDisplayNameController.text.isNotEmpty ? _zoomDisplayNameController.text : null,
                 fallbackToStore: _zoomFallBackToStore,
               ),
             );
           }
         },
         child: const Text('Join Meeting'),
-      ),
-      const SizedBox(height: 8),
-      ElevatedButton(
-        onPressed: () async {
-          if (_zoomMeetingIdController.text.isNotEmpty) {
-            await _deeplinkX.launchAction(
-              Zoom.startMeeting(
-                meetingId: _zoomMeetingIdController.text,
-                password: _zoomPasswordController.text.isNotEmpty ? _zoomPasswordController.text : null,
-                fallbackToStore: _zoomFallBackToStore,
-              ),
-            );
-          }
-        },
-        child: const Text('Start Meeting'),
       ),
     ],
   );

@@ -1,5 +1,5 @@
 import 'package:deeplink_x/src/apps/app_stores/ios_app_store.dart';
-import 'package:deeplink_x/src/apps/app_stores/mac_app_store.dart';
+import 'package:deeplink_x/src/apps/app_stores/microsoft_store.dart';
 import 'package:deeplink_x/src/apps/app_stores/play_store.dart';
 import 'package:deeplink_x/src/apps/downloadable_apps/zoom.dart';
 import 'package:deeplink_x/src/core/enums/platform_type.dart';
@@ -21,8 +21,10 @@ void main() {
       expect(action.supportedPlatforms, contains(PlatformType.android));
       expect(action.supportedPlatforms, contains(PlatformType.ios));
       expect(action.supportedPlatforms, contains(PlatformType.macos));
-      expect(action.supportedPlatforms.length, 3);
-      expect(action.macosBundleIdentifier, 'us.zoom.Zoom');
+      expect(action.supportedPlatforms, contains(PlatformType.windows));
+      expect(action.supportedPlatforms, contains(PlatformType.linux));
+      expect(action.supportedPlatforms.length, 5);
+      expect(action.macosBundleIdentifier, 'us.zoom.xos');
 
       // As DownloadableApp
       expect(action.fallbackToStore, false);
@@ -58,25 +60,37 @@ void main() {
       );
     });
 
-    test('startMeeting action creates correct type', () {
-      final action = Zoom.startMeeting(meetingId: '123');
-
-      expect(action, isInstanceOf<App>());
-      expect(action, isInstanceOf<DownloadableApp>());
-      expect(action, isInstanceOf<AppLinkAppAction>());
-      expect(action, isInstanceOf<Fallbackable>());
-    });
-
-    test('startMeeting action creates correct URIs', () {
-      final action = Zoom.startMeeting(meetingId: '123', password: 'abc');
+    test('joinMeeting action with display name creates correct URIs', () {
+      final action = Zoom.joinMeeting(
+        meetingId: '123',
+        password: 'abc',
+        displayName: 'John Doe',
+      );
 
       expect(
         action.appLink.toString(),
-        'zoomus://zoom.us/start?confno=123&pwd=abc',
+        'zoomus://zoom.us/join?confno=123&pwd=abc&uname=John+Doe',
       );
       expect(
         action.fallbackLink.toString(),
-        'https://zoom.us/j/123?pwd=abc',
+        'https://zoom.us/j/123?pwd=abc&uname=John+Doe',
+      );
+    });
+
+    test('joinMeeting action with special characters in display name creates correct URIs', () {
+      final action = Zoom.joinMeeting(
+        meetingId: '123',
+        password: 'abc',
+        displayName: 'John & Jane',
+      );
+
+      expect(
+        action.appLink.toString(),
+        'zoomus://zoom.us/join?confno=123&pwd=abc&uname=John+%26+Jane',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://zoom.us/j/123?pwd=abc&uname=John+%26+Jane',
       );
     });
 
@@ -107,29 +121,21 @@ void main() {
       expect(iosStoreAction.appName, 'zoom-cloud-meetings');
 
       // Mac App Store action
-      final macStoreAction = storeActions[2] as MacAppStoreOpenAppPageAction;
-      expect(macStoreAction.appId, '546505307');
-      expect(macStoreAction.appName, 'zoom.us');
+      final macStoreAction = storeActions[2] as MicrosoftStoreOpenAppPageAction;
+      expect(macStoreAction.productId, 'xp99j3kp4xz4vv');
     });
 
     test('actions store parameters correctly with fallbackToStore', () {
       final joinAction = Zoom.joinMeeting(
         meetingId: '123',
         password: 'abc',
+        displayName: 'John Doe',
         fallbackToStore: true,
       );
       expect(joinAction.meetingId, '123');
       expect(joinAction.password, 'abc');
+      expect(joinAction.displayName, 'John Doe');
       expect(joinAction.fallbackToStore, true);
-
-      final startAction = Zoom.startMeeting(
-        meetingId: '123',
-        password: 'abc',
-        fallbackToStore: true,
-      );
-      expect(startAction.meetingId, '123');
-      expect(startAction.password, 'abc');
-      expect(startAction.fallbackToStore, true);
     });
   });
 }
