@@ -26,7 +26,6 @@ class Zoom extends App implements DownloadableApp {
   List<StoreOpenAppPageAction> get storeActions => [
         PlayStore.openAppPage(packageName: 'us.zoom.videomeetings'),
         IOSAppStore.openAppPage(appId: '546505307', appName: 'zoom-cloud-meetings'),
-        MacAppStore.openAppPage(appId: '546505307', appName: 'zoom.us'),
       ];
 
   /// The Android package name for the Zoom app.
