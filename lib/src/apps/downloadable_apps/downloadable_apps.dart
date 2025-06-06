@@ -7,3 +7,4 @@ export 'tiktok.dart';
 export 'twitter.dart';
 export 'whatsapp.dart';
 export 'youtube.dart';
+export 'zoom.dart';

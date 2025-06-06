@@ -97,6 +97,11 @@ class _MyAppState extends State<MyApp> {
   final _tiktokVideoIdController = TextEditingController(text: '7511774168241704222'); // Example: TikTok video ID
   final _tiktokTagController = TextEditingController(text: 'flutter'); // Example: TikTok tag
 
+  // Zoom controllers
+  final _zoomMeetingIdController = TextEditingController(text: '123456789');
+  final _zoomPasswordController = TextEditingController(text: 'abc123');
+  final _zoomDisplayNameController = TextEditingController(text: 'John Doe');
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
@@ -107,6 +112,7 @@ class _MyAppState extends State<MyApp> {
   bool _twitterFallBackToStore = true;
   bool _pinterestFallBackToStore = true;
   bool _tiktokFallBackToStore = true;
+  bool _zoomFallBackToStore = true;
 
   @override
   void dispose() {
@@ -156,6 +162,9 @@ class _MyAppState extends State<MyApp> {
     _tiktokUsernameController.dispose();
     _tiktokVideoIdController.dispose();
     _tiktokTagController.dispose();
+    _zoomMeetingIdController.dispose();
+    _zoomPasswordController.dispose();
+    _zoomDisplayNameController.dispose();
     super.dispose();
   }
 
@@ -163,7 +172,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(final BuildContext context) => MaterialApp(
     theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
     home: DefaultTabController(
-      length: 16,
+      length: 17,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('DeeplinkX Example'),
@@ -179,6 +188,7 @@ class _MyAppState extends State<MyApp> {
               Tab(text: 'Twitter'),
               Tab(text: 'Pinterest'),
               Tab(text: 'TikTok'),
+              Tab(text: 'Zoom'),
               Tab(text: 'iOS App Store'),
               Tab(text: 'Play Store'),
               Tab(text: 'Mac App Store'),
@@ -200,6 +210,7 @@ class _MyAppState extends State<MyApp> {
             _buildTwitterTab(),
             _buildPinterestTab(),
             _buildTikTokTab(),
+            _buildZoomTab(),
             _buildAppStoreTab(),
             _buildPlayStoreTab(),
             _buildMacAppStoreTab(),
@@ -1778,6 +1789,92 @@ class _MyAppState extends State<MyApp> {
           }
         },
         child: const Text('Open Tag'),
+      ),
+    ],
+  );
+
+  Widget _buildZoomTab() => SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+            const SizedBox(width: 8),
+            Switch(
+              value: _zoomFallBackToStore,
+              onChanged: (final value) => setState(() => _zoomFallBackToStore = value),
+            ),
+            const Expanded(
+              child: Text(
+                'When enabled, redirects to app store if Zoom is not installed',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const Text('Zoom Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        _buildZoomActions(),
+      ],
+    ),
+  );
+
+  Widget _buildZoomActions() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      ElevatedButton(
+        onPressed: () async {
+          await _deeplinkX.launchApp(Zoom.open(fallbackToStore: _zoomFallBackToStore));
+        },
+        child: const Text('Open Zoom App'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Join Meeting', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _zoomMeetingIdController,
+        decoration: const InputDecoration(
+          labelText: 'Meeting ID',
+          hintText: 'Enter meeting ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _zoomPasswordController,
+        decoration: const InputDecoration(
+          labelText: 'Password (optional)',
+          hintText: 'Enter meeting password',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _zoomDisplayNameController,
+        decoration: const InputDecoration(
+          labelText: 'Display Name (optional)',
+          hintText: 'Enter your display name',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_zoomMeetingIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Zoom.joinMeeting(
+                meetingId: _zoomMeetingIdController.text,
+                password: _zoomPasswordController.text.isNotEmpty ? _zoomPasswordController.text : null,
+                displayName: _zoomDisplayNameController.text.isNotEmpty ? _zoomDisplayNameController.text : null,
+                fallbackToStore: _zoomFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Join Meeting'),
       ),
     ],
   );

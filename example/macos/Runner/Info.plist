@@ -31,8 +31,9 @@
 	<key>LSApplicationQueriesSchemes</key>
 		<array>
     	<string>whatsapp</string>
-    	<string>tg</string>
-    	<string>macappstore</string>
-	</array>
+        <string>tg</string>
+        <string>macappstore</string>
+        <string>zoomus</string>
+        </array>
 </dict>
 </plist>

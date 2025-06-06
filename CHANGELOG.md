@@ -1,3 +1,10 @@
+## 1.0.6
+* Added Zoom app with following actions:
+  * Open app
+  * Join Meeting Action
+* Added documentation for Zoom deeplinks
+* Updated example app with Zoom tab
+
 ## 1.0.5
 * Added TikTok app with following actions:
   * Open app
