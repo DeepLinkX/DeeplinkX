@@ -1,4 +1,6 @@
-## 1.0.6
+## 1.1.0
+* Now DeeplinkX is more reliable for 100% test coverage
+* Bug Fixes
 * Added Zoom app with following actions:
   * Open app
   * Join Meeting Action
