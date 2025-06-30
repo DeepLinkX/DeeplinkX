@@ -19,7 +19,8 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 - Redirect to app stores to update apps
 - Check if external app is installed on the device
 - Smart fallback system
-- Support popular stores and apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, Pinterest, TikTok, Zoom, and Slack
+- Support popular stores including Google PlayStore, iOS AppStore, Mac AppStore, Microsoft Store, Huawei AppGallery, Myket, Cafe Bazaar
+- Support popular apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, TikTok, Pinterest, Zoom, and Slack
 
 ## Usage
 
