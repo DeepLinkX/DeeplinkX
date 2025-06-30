@@ -1,3 +1,12 @@
+## 1.1.1
+* Added Slack app with following actions:
+  * Open app
+  * Open Team Action
+  * Open Channel Action
+  * Open User Action
+* Added documentation for Slack deeplinks
+* Updated example app with Slack tab
+
 ## 1.1.0
 * Now DeeplinkX is more reliable for 100% test coverage
 * Bug Fixes
