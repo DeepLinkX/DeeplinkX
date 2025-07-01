@@ -86,9 +86,7 @@ void main() {
       );
     });
 
-    test(
-        'open action with fallbackToStore creates LinkedIn instance with correct properties',
-        () {
+    test('open action with fallbackToStore creates LinkedIn instance with correct properties', () {
       final action = LinkedIn.open(fallbackToStore: true);
 
       // As App

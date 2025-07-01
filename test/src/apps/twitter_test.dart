@@ -113,9 +113,7 @@ void main() {
       );
     });
 
-    test(
-        'open action with fallbackToStore creates Twitter instance with correct properties',
-        () {
+    test('open action with fallbackToStore creates Twitter instance with correct properties', () {
       final action = Twitter.open(fallbackToStore: true);
 
       // As App

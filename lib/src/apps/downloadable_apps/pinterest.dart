@@ -19,8 +19,7 @@ class Pinterest extends App implements DownloadableApp {
   ///   the Pinterest app is not installed. Default is false.
   ///
   /// Returns a [Pinterest] instance that can be used to open the Pinterest app.
-  factory Pinterest.open({final bool fallbackToStore = false}) =>
-      Pinterest(fallbackToStore: fallbackToStore);
+  factory Pinterest.open({final bool fallbackToStore = false}) => Pinterest(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the Pinterest app's page in various app stores.
   @override
@@ -43,8 +42,7 @@ class Pinterest extends App implements DownloadableApp {
 
   /// The platforms that the Pinterest app supports.
   @override
-  List<PlatformType> get supportedPlatforms =>
-      [PlatformType.ios, PlatformType.android];
+  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android];
 
   /// Whether to automatically redirect to app stores when the Pinterest app is not installed.
   @override
@@ -128,8 +126,7 @@ class Pinterest extends App implements DownloadableApp {
 ///
 /// This class extends [Pinterest] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class PinterestOpenProfileAction extends Pinterest
-    implements AppLinkAppAction, Fallbackable {
+class PinterestOpenProfileAction extends Pinterest implements AppLinkAppAction, Fallbackable {
   /// Creates a new [PinterestOpenProfileAction] instance.
   ///
   /// Parameters:
@@ -167,8 +164,7 @@ class PinterestOpenProfileAction extends Pinterest
 ///
 /// This class extends [Pinterest] and implements multiple interfaces to provide
 /// comprehensive functionality for opening pins with fallback support.
-class PinterestOpenPinAction extends Pinterest
-    implements AppLinkAppAction, Fallbackable {
+class PinterestOpenPinAction extends Pinterest implements AppLinkAppAction, Fallbackable {
   /// Creates a new [PinterestOpenPinAction] instance.
   ///
   /// Parameters:
@@ -206,8 +202,7 @@ class PinterestOpenPinAction extends Pinterest
 ///
 /// This class extends [Pinterest] and implements multiple interfaces to provide
 /// comprehensive functionality for searching with fallback support.
-class PinterestSearchAction extends Pinterest
-    implements AppLinkAppAction, Fallbackable {
+class PinterestSearchAction extends Pinterest implements AppLinkAppAction, Fallbackable {
   /// Creates a new [PinterestSearchAction] instance.
   ///
   /// Parameters:
@@ -247,8 +242,7 @@ class PinterestSearchAction extends Pinterest
 ///
 /// This class extends [Pinterest] and implements multiple interfaces to provide
 /// comprehensive functionality for opening boards with fallback support.
-class PinterestOpenBoardAction extends Pinterest
-    implements AppLinkAppAction, Fallbackable {
+class PinterestOpenBoardAction extends Pinterest implements AppLinkAppAction, Fallbackable {
   /// Creates a new [PinterestOpenBoardAction] instance.
   ///
   /// Parameters:

@@ -19,8 +19,7 @@ class Facebook extends App implements DownloadableApp {
   ///   the Facebook app is not installed. Default is false.
   ///
   /// Returns a [Facebook] instance that can be used to open the Facebook app.
-  factory Facebook.open({final bool fallbackToStore = false}) =>
-      Facebook(fallbackToStore: fallbackToStore);
+  factory Facebook.open({final bool fallbackToStore = false}) => Facebook(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the Facebook app's page in various app stores.
   @override
@@ -44,8 +43,7 @@ class Facebook extends App implements DownloadableApp {
 
   /// The platforms that the Facebook app supports.
   @override
-  List<PlatformType> get supportedPlatforms =>
-      [PlatformType.ios, PlatformType.android, PlatformType.windows];
+  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android, PlatformType.windows];
 
   /// Whether to automatically redirect to app stores when the Facebook app is not installed.
   @override
@@ -150,8 +148,7 @@ class Facebook extends App implements DownloadableApp {
 ///
 /// This class extends [Facebook] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class FacebookOpenProfileByIdAction extends Facebook
-    implements AppLinkAppAction, Fallbackable {
+class FacebookOpenProfileByIdAction extends Facebook implements AppLinkAppAction, Fallbackable {
   /// Creates a new [FacebookOpenProfileByIdAction] instance.
   ///
   /// Parameters:
@@ -189,8 +186,7 @@ class FacebookOpenProfileByIdAction extends Facebook
 ///
 /// This class extends [Facebook] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class FacebookOpenProfileByUsernameAction extends Facebook
-    implements UniversalLinkAppAction, Fallbackable {
+class FacebookOpenProfileByUsernameAction extends Facebook implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [FacebookOpenProfileByUsernameAction] instance.
   ///
   /// Parameters:
@@ -224,8 +220,7 @@ class FacebookOpenProfileByUsernameAction extends Facebook
 ///
 /// This class extends [Facebook] and implements multiple interfaces to provide
 /// comprehensive functionality for opening pages with fallback support.
-class FacebookOpenPageAction extends Facebook
-    implements UniversalLinkAppAction, Fallbackable {
+class FacebookOpenPageAction extends Facebook implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [FacebookOpenPageAction] instance.
   ///
   /// Parameters:
@@ -259,8 +254,7 @@ class FacebookOpenPageAction extends Facebook
 ///
 /// This class extends [Facebook] and implements multiple interfaces to provide
 /// comprehensive functionality for opening groups with fallback support.
-class FacebookOpenGroupAction extends Facebook
-    implements UniversalLinkAppAction, Fallbackable {
+class FacebookOpenGroupAction extends Facebook implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [FacebookOpenGroupAction] instance.
   ///
   /// Parameters:
@@ -294,8 +288,7 @@ class FacebookOpenGroupAction extends Facebook
 ///
 /// This class extends [Facebook] and implements multiple interfaces to provide
 /// comprehensive functionality for opening events with fallback support.
-class FacebookOpenEventAction extends Facebook
-    implements UniversalLinkAppAction, Fallbackable {
+class FacebookOpenEventAction extends Facebook implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [FacebookOpenEventAction] instance.
   ///
   /// Parameters:

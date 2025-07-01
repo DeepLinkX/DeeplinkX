@@ -30,8 +30,7 @@ class LauncherUtil {
   /// Launches a URL using the platform-specific implementation.
   ///
   /// Returns a [Future<bool>] indicating whether the URL was successfully launched.
-  Future<bool> launchUrl(final Uri uri) async =>
-      LauncherUtilPlatform.instance.launchUrl(uri);
+  Future<bool> launchUrl(final Uri uri) async => LauncherUtilPlatform.instance.launchUrl(uri);
 
   /// Launches an Android intent with the specified options.
   ///
@@ -125,8 +124,7 @@ class LauncherUtil {
   ///
   /// Returns a [Future<bool>] indicating whether the application was successfully launched.
   @visibleForTesting
-  Future<bool> launchAppByScheme(final String scheme) async =>
-      LauncherUtilPlatform.instance.launchAppByScheme(scheme);
+  Future<bool> launchAppByScheme(final String scheme) async => LauncherUtilPlatform.instance.launchAppByScheme(scheme);
 
   /// Checks if an application is installed on the device by its package name.
   ///

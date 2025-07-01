@@ -19,8 +19,7 @@ class Zoom extends App implements DownloadableApp {
   ///   the Zoom app is not installed. Default is false.
   ///
   /// Returns a [Zoom] instance that can be used to open the Zoom app.
-  factory Zoom.open({final bool fallbackToStore = false}) =>
-      Zoom(fallbackToStore: fallbackToStore);
+  factory Zoom.open({final bool fallbackToStore = false}) => Zoom(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the Zoom app's page in various app stores.
   @override
@@ -92,8 +91,7 @@ class Zoom extends App implements DownloadableApp {
 ///
 /// This class extends [Zoom] and implements multiple interfaces to provide
 /// comprehensive functionality for joining meetings with fallback support.
-class ZoomJoinMeetingAction extends Zoom
-    implements AppLinkAppAction, Fallbackable {
+class ZoomJoinMeetingAction extends Zoom implements AppLinkAppAction, Fallbackable {
   /// Creates a new [ZoomJoinMeetingAction] instance.
   ///
   /// Parameters:

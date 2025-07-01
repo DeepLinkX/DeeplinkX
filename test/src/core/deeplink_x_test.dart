@@ -12,8 +12,7 @@ class MockDownloadableApp extends Mock implements DownloadableApp {}
 
 class MockIntentAction extends Mock implements IntentAppLinkAction {}
 
-class MockFallbackableIntentAction extends Mock
-    implements IntentAppLinkAction, Fallbackable {}
+class MockFallbackableIntentAction extends Mock implements IntentAppLinkAction, Fallbackable {}
 
 class MockUniversalLinkAction extends Mock implements UniversalLinkAppAction {}
 
@@ -21,11 +20,9 @@ class MockAppLinkAction extends Mock implements AppLinkAppAction {}
 
 class MockFallbackAction extends Mock implements AppAction, Fallbackable {}
 
-class MockDownloadableAction extends Mock
-    implements AppAction, DownloadableApp {}
+class MockDownloadableAction extends Mock implements AppAction, DownloadableApp {}
 
-class MockStoreAction extends Mock
-    implements StoreOpenAppPageAction, UniversalLinkAppAction {}
+class MockStoreAction extends Mock implements StoreOpenAppPageAction, UniversalLinkAppAction {}
 
 void main() {
   late DeeplinkX deeplinkX;
@@ -38,14 +35,10 @@ void main() {
       platformType: PlatformType.android,
     );
 
-    when(() => mockLauncherUtil.isAppInstalled(any()))
-        .thenAnswer((final _) async => true);
-    when(() => mockLauncherUtil.launchApp(any()))
-        .thenAnswer((final _) async => true);
-    when(() => mockLauncherUtil.launchUrl(any()))
-        .thenAnswer((final _) async => true);
-    when(() => mockLauncherUtil.launchIntent(any()))
-        .thenAnswer((final _) async => true);
+    when(() => mockLauncherUtil.isAppInstalled(any())).thenAnswer((final _) async => true);
+    when(() => mockLauncherUtil.launchApp(any())).thenAnswer((final _) async => true);
+    when(() => mockLauncherUtil.launchUrl(any())).thenAnswer((final _) async => true);
+    when(() => mockLauncherUtil.launchIntent(any())).thenAnswer((final _) async => true);
   });
 
   setUpAll(() {
@@ -78,21 +71,18 @@ void main() {
       verify(() => mockLauncherUtil.launchApp(app)).called(1);
     });
 
-    test('redirects to store when not installed when app is downloadable',
-        () async {
+    test('redirects to store when not installed when app is downloadable', () async {
       final app = MockDownloadableApp();
       final store = MockStoreAction();
       final storeLink = Uri.parse('https://store');
 
-      when(() => mockLauncherUtil.isAppInstalled(app))
-          .thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.isAppInstalled(app)).thenAnswer((final _) async => false);
 
       when(() => app.fallbackToStore).thenReturn(true);
       when(() => app.storeActions).thenReturn([store]);
       when(() => store.platform).thenReturn(PlatformType.android);
       when(() => store.universalLink).thenReturn(storeLink);
-      when(() => mockLauncherUtil.launchUrl(storeLink))
-          .thenAnswer((final _) async => true);
+      when(() => mockLauncherUtil.launchUrl(storeLink)).thenAnswer((final _) async => true);
 
       final result = await deeplinkX.launchApp(app);
 
@@ -104,13 +94,11 @@ void main() {
       verifyNever(() => mockLauncherUtil.launchUrl(app.website));
     });
 
-    test('opens website when not installed when app is not downloadable',
-        () async {
+    test('opens website when not installed when app is not downloadable', () async {
       final app = MockApp();
       final website = Uri.parse('https://website');
 
-      when(() => mockLauncherUtil.isAppInstalled(app))
-          .thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.isAppInstalled(app)).thenAnswer((final _) async => false);
       when(() => app.website).thenReturn(website);
 
       final result = await deeplinkX.launchApp(app);
@@ -124,8 +112,7 @@ void main() {
     test('returns false when fallback disabled', () async {
       final launcher = MockLauncherUtil();
       final app = MockApp();
-      when(() => launcher.isAppInstalled(app))
-          .thenAnswer((final _) async => false);
+      when(() => launcher.isAppInstalled(app)).thenAnswer((final _) async => false);
       final deeplinkX = DeeplinkX(
         launcherUtil: launcher,
         platformType: PlatformType.android,
@@ -154,8 +141,7 @@ void main() {
       final action = MockIntentAction();
       const options = AndroidIntentOption(action: 'action');
       final appLink = Uri.parse('scheme://path');
-      when(() => mockLauncherUtil.launchIntent(options))
-          .thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.launchIntent(options)).thenAnswer((final _) async => false);
       when(() => action.androidIntentOptions).thenReturn(options);
       when(() => action.appLink).thenReturn(appLink);
 
@@ -207,10 +193,8 @@ void main() {
       final store = MockStoreAction();
       final storeLink = Uri.parse('https://store');
 
-      when(() => mockLauncherUtil.isAppInstalled(action))
-          .thenAnswer((final _) async => false);
-      when(() => mockLauncherUtil.isAppInstalled(store))
-          .thenAnswer((final _) async => true);
+      when(() => mockLauncherUtil.isAppInstalled(action)).thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.isAppInstalled(store)).thenAnswer((final _) async => true);
 
       when(() => action.fallbackToStore).thenReturn(true);
       when(() => action.storeActions).thenReturn([store]);
@@ -227,12 +211,10 @@ void main() {
     test('returns false when fallback disabled and not installed', () async {
       final action = MockAppLinkAction();
 
-      when(() => mockLauncherUtil.isAppInstalled(action))
-          .thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.isAppInstalled(action)).thenAnswer((final _) async => false);
       when(() => action.appLink).thenReturn(Uri.parse('scheme://app'));
 
-      final result =
-          await deeplinkX.launchAction(action, disableFallback: true);
+      final result = await deeplinkX.launchAction(action, disableFallback: true);
 
       expect(result, isFalse);
       verifyNever(() => mockLauncherUtil.launchUrl(any()));
@@ -243,8 +225,7 @@ void main() {
       const options = AndroidIntentOption(action: 'action');
       final fallbackUri = Uri.parse('fallback://');
 
-      when(() => mockLauncherUtil.launchIntent(options))
-          .thenThrow(PlatformException(code: 'err'));
+      when(() => mockLauncherUtil.launchIntent(options)).thenThrow(PlatformException(code: 'err'));
 
       when(() => action.androidIntentOptions).thenReturn(options);
       when(() => action.fallbackLink).thenReturn(fallbackUri);
@@ -259,8 +240,7 @@ void main() {
       final action = MockIntentAction();
       const options = AndroidIntentOption(action: 'action');
 
-      when(() => mockLauncherUtil.launchIntent(options))
-          .thenThrow(Exception('err'));
+      when(() => mockLauncherUtil.launchIntent(options)).thenThrow(Exception('err'));
 
       when(() => action.androidIntentOptions).thenReturn(options);
 
@@ -273,8 +253,7 @@ void main() {
       final action = MockIntentAction();
       const options = AndroidIntentOption(action: 'action');
 
-      when(() => mockLauncherUtil.launchIntent(options))
-          .thenThrow(UnimplementedError('err'));
+      when(() => mockLauncherUtil.launchIntent(options)).thenThrow(UnimplementedError('err'));
 
       when(() => action.androidIntentOptions).thenReturn(options);
 
@@ -296,8 +275,7 @@ void main() {
       when(() => first.universalLink).thenReturn(link1);
       when(() => second.universalLink).thenReturn(link2);
 
-      final result =
-          await deeplinkX.redirectToStore(storeActions: [first, second]);
+      final result = await deeplinkX.redirectToStore(storeActions: [first, second]);
 
       expect(result, isTrue);
       verify(() => mockLauncherUtil.launchUrl(link1)).called(1);
@@ -315,11 +293,9 @@ void main() {
       when(() => first.universalLink).thenReturn(link1);
       when(() => second.universalLink).thenReturn(link2);
 
-      when(() => mockLauncherUtil.launchUrl(link1))
-          .thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.launchUrl(link1)).thenAnswer((final _) async => false);
 
-      final result =
-          await deeplinkX.redirectToStore(storeActions: [first, second]);
+      final result = await deeplinkX.redirectToStore(storeActions: [first, second]);
 
       expect(result, isTrue);
       verify(() => mockLauncherUtil.launchUrl(link1)).called(1);

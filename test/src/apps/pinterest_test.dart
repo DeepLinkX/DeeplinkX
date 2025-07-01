@@ -112,9 +112,7 @@ void main() {
       );
     });
 
-    test(
-        'open action with fallbackToStore creates Pinterest instance with correct properties',
-        () {
+    test('open action with fallbackToStore creates Pinterest instance with correct properties', () {
       final action = Pinterest.open(fallbackToStore: true);
 
       // As App
@@ -192,8 +190,7 @@ void main() {
       );
     });
 
-    test('openBoard action stores parameters correctly with fallbackToStore',
-        () {
+    test('openBoard action stores parameters correctly with fallbackToStore', () {
       final action = Pinterest.openBoard(
         username: 'pinterest',
         board: 'my-board',

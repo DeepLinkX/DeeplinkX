@@ -167,9 +167,7 @@ void main() {
       );
     });
 
-    test(
-        'open action with fallbackToStore creates Facebook instance with correct properties',
-        () {
+    test('open action with fallbackToStore creates Facebook instance with correct properties', () {
       final action = Facebook.open(fallbackToStore: true);
 
       // As App
@@ -196,8 +194,7 @@ void main() {
       expect(iosStoreAction.appName, 'facebook');
 
       // Microsoft Store action
-      final microsoftStoreAction =
-          storeActions[2] as MicrosoftStoreOpenAppPageAction;
+      final microsoftStoreAction = storeActions[2] as MicrosoftStoreOpenAppPageAction;
       expect(microsoftStoreAction.productId, '9wzdncrfj2wl');
     });
 

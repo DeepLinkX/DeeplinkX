@@ -8,9 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Huawei AppGallery Actions', () {
-    test(
-        'open action creates HuaweiAppGalleryStore instance with correct properties',
-        () {
+    test('open action creates HuaweiAppGalleryStore instance with correct properties', () {
       final action = HuaweiAppGalleryStore.open();
 
       // As Store
@@ -25,8 +23,7 @@ void main() {
       expect(action.macosBundleIdentifier, null);
     });
 
-    test('open action creates HuaweiAppGalleryStore instance with correct type',
-        () {
+    test('open action creates HuaweiAppGalleryStore instance with correct type', () {
       final action = HuaweiAppGalleryStore.open();
 
       expect(action, isInstanceOf<StoreApp>());

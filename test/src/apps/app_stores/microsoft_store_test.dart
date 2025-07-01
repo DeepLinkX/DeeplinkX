@@ -8,8 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Microsoft Store Actions', () {
-    test('open action creates MicrosoftStore instance with correct properties',
-        () {
+    test('open action creates MicrosoftStore instance with correct properties', () {
       final action = MicrosoftStore.open();
 
       // As Store
@@ -71,9 +70,7 @@ void main() {
       );
     });
 
-    test(
-        'openAppPage action with language and country code parameters creates correct URIs',
-        () {
+    test('openAppPage action with language and country code parameters creates correct URIs', () {
       final action = MicrosoftStore.openAppPage(
         productId: '9WZDNCRFHVJL',
         language: 'en-us',
@@ -121,9 +118,7 @@ void main() {
       );
     });
 
-    test(
-        'rateApp action with language and country code parameters creates correct URIs',
-        () {
+    test('rateApp action with language and country code parameters creates correct URIs', () {
       final action = MicrosoftStore.rateApp(
         productId: '9WZDNCRFHVJL',
         language: 'en-us',

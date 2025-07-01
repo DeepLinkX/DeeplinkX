@@ -88,9 +88,7 @@ void main() {
       );
     });
 
-    test(
-        'open action with fallbackToStore creates TikTok instance with correct properties',
-        () {
+    test('open action with fallbackToStore creates TikTok instance with correct properties', () {
       final action = TikTok.open(fallbackToStore: true);
 
       // As App

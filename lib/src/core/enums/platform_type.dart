@@ -41,8 +41,7 @@ enum PlatformType {
   /// final platform = PlatformType.fromOperatingSystem('ios'); // Returns PlatformType.ios
   /// final unknown = PlatformType.fromOperatingSystem('unknown'); // Returns PlatformType.web
   /// ```
-  static PlatformType fromOperatingSystem(final String os) =>
-      PlatformType.values.firstWhere(
+  static PlatformType fromOperatingSystem(final String os) => PlatformType.values.firstWhere(
         (final e) => e.value == os,
         orElse: () => PlatformType.web,
       );

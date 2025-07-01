@@ -11,15 +11,13 @@ class MockDownloadableApp extends Mock implements DownloadableApp {}
 
 class MockStoreApp extends Mock implements StoreApp {}
 
-class MockStoreOpenAppPageAction extends Mock
-    implements StoreOpenAppPageAction {}
+class MockStoreOpenAppPageAction extends Mock implements StoreOpenAppPageAction {}
 
 class MockAppLinkAppAction extends Mock implements AppLinkAppAction {}
 
 class MockFallbackable extends Mock implements Fallbackable {}
 
-class MockUniversalLinkAppAction extends Mock
-    implements UniversalLinkAppAction {}
+class MockUniversalLinkAppAction extends Mock implements UniversalLinkAppAction {}
 
 class MockIntentAppLinkAction extends Mock implements IntentAppLinkAction {}
 
@@ -32,10 +30,8 @@ void main() {
   setUp(() {
     deeplinkX = MockDeeplinkX();
 
-    when(() => deeplinkX.launchAction(any()))
-        .thenAnswer((final _) async => true);
-    when(() => deeplinkX.isAppInstalled(any()))
-        .thenAnswer((final _) async => true);
+    when(() => deeplinkX.launchAction(any())).thenAnswer((final _) async => true);
+    when(() => deeplinkX.isAppInstalled(any())).thenAnswer((final _) async => true);
     when(() => deeplinkX.launchApp(any())).thenAnswer((final _) async => true);
   });
 
@@ -158,8 +154,7 @@ void main() {
       });
 
       test('launchApp', () async {
-        when(() => deeplinkX.launchApp(any()))
-            .thenAnswer((final _) async => true);
+        when(() => deeplinkX.launchApp(any())).thenAnswer((final _) async => true);
         final result = await deeplinkX.launchApp(MockAppAction());
         expect(result, true);
       });
@@ -170,8 +165,7 @@ void main() {
             storeActions: any(named: 'storeActions'),
           ),
         ).thenAnswer((final _) async => true);
-        final result = await deeplinkX
-            .redirectToStore(storeActions: [MockStoreOpenAppPageAction()]);
+        final result = await deeplinkX.redirectToStore(storeActions: [MockStoreOpenAppPageAction()]);
         expect(result, true);
       });
     });
@@ -237,8 +231,7 @@ void main() {
 
       test('UniversalLinkAppAction', () {
         final mock = MockUniversalLinkAppAction();
-        when(() => mock.universalLink)
-            .thenReturn(Uri.parse('https://test.com/universal'));
+        when(() => mock.universalLink).thenReturn(Uri.parse('https://test.com/universal'));
 
         expect(mock.universalLink.toString(), 'https://test.com/universal');
       });

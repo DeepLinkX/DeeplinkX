@@ -107,9 +107,7 @@ void main() {
       );
     });
 
-    test(
-        'open action with fallbackToStore creates WhatsApp instance with correct properties',
-        () {
+    test('open action with fallbackToStore creates WhatsApp instance with correct properties', () {
       final action = WhatsApp.open(fallbackToStore: true);
 
       // As App
@@ -136,8 +134,7 @@ void main() {
       expect(iosStoreAction.appName, 'whatsapp-messenger');
 
       // Microsoft Store action
-      final microsoftStoreAction =
-          storeActions[2] as MicrosoftStoreOpenAppPageAction;
+      final microsoftStoreAction = storeActions[2] as MicrosoftStoreOpenAppPageAction;
       expect(microsoftStoreAction.productId, '9nksqgp7f2nh');
 
       // Mac App Store action
