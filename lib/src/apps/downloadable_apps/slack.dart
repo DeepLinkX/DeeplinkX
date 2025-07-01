@@ -80,14 +80,22 @@ class SlackOpenTeamAction extends Slack implements AppLinkAppAction, Fallbackabl
   final String teamId;
 
   @override
-  Uri get appLink => Uri(scheme: 'slack', host: 'open', queryParameters: {'team': teamId});
+  Uri get appLink => Uri(
+        scheme: 'slack',
+        host: 'open',
+        queryParameters: {
+          'team': teamId,
+        },
+      );
 
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
-        host: 'slack.com',
-        path: 'app_redirect',
-        queryParameters: {'team': teamId},
+        host: 'app.slack.com',
+        pathSegments: [
+          'client',
+          teamId,
+        ],
       );
 }
 
@@ -119,12 +127,12 @@ class SlackOpenChannelAction extends Slack implements AppLinkAppAction, Fallback
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
-        host: 'slack.com',
-        path: 'app_redirect',
-        queryParameters: {
-          'team': teamId,
-          'channel': channelId,
-        },
+        host: 'app.slack.com',
+        pathSegments: [
+          'client',
+          teamId,
+          channelId,
+        ],
       );
 }
 
@@ -158,11 +166,11 @@ class SlackOpenUserAction extends Slack implements AppLinkAppAction, Fallbackabl
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
-        host: 'slack.com',
-        path: 'app_redirect',
-        queryParameters: {
-          'team': teamId,
-          'channel': userId,
-        },
+        host: 'app.slack.com',
+        pathSegments: [
+          'client',
+          teamId,
+          userId,
+        ],
       );
 }

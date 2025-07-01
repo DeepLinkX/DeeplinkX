@@ -104,9 +104,9 @@ When Slack is installed, the following scheme is used:
 
 ### Web Fallback URLs
 When Slack is not installed, DeeplinkX automatically falls back to:
-- `https://slack.com/app_redirect?team={teamId}`
-- For channels: `https://slack.com/app_redirect?team={teamId}&channel={channelId}`
-- For users: `https://slack.com/app_redirect?team={teamId}&channel={userId}`
+- `https://app.slack.com/client/{teamId}`
+- For channels: `https://app.slack.com/client/{teamId}/{channelId}`
+- For users: `https://app.slack.com/client/{teamId}/{userId}`
 
 ## Supported Fallback Stores
 When the Slack app is not installed, DeeplinkX can redirect users to download Slack from the following app stores:
