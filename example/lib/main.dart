@@ -1954,6 +1954,15 @@ class _MyAppState extends State<MyApp> {
       const Text('Open Channel', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
       const SizedBox(height: 8),
       TextField(
+        controller: _slackTeamIdController,
+        decoration: const InputDecoration(
+          labelText: 'Team ID',
+          hintText: 'Enter team ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      TextField(
         controller: _slackChannelIdController,
         decoration: const InputDecoration(
           labelText: 'Channel ID',
@@ -1978,6 +1987,15 @@ class _MyAppState extends State<MyApp> {
       ),
       const SizedBox(height: 16),
       const Text('Open User', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _slackTeamIdController,
+        decoration: const InputDecoration(
+          labelText: 'Team ID',
+          hintText: 'Enter team ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
       const SizedBox(height: 8),
       TextField(
         controller: _slackUserIdController,
