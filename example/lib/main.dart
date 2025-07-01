@@ -102,6 +102,11 @@ class _MyAppState extends State<MyApp> {
   final _zoomPasswordController = TextEditingController(text: 'abc123');
   final _zoomDisplayNameController = TextEditingController(text: 'John Doe');
 
+  // Slack controllers
+  final _slackTeamIdController = TextEditingController(text: 'T123456');
+  final _slackChannelIdController = TextEditingController(text: 'C123456');
+  final _slackUserIdController = TextEditingController(text: 'U123456');
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
@@ -113,6 +118,7 @@ class _MyAppState extends State<MyApp> {
   bool _pinterestFallBackToStore = true;
   bool _tiktokFallBackToStore = true;
   bool _zoomFallBackToStore = true;
+  bool _slackFallBackToStore = true;
 
   @override
   void dispose() {
@@ -165,6 +171,9 @@ class _MyAppState extends State<MyApp> {
     _zoomMeetingIdController.dispose();
     _zoomPasswordController.dispose();
     _zoomDisplayNameController.dispose();
+    _slackTeamIdController.dispose();
+    _slackChannelIdController.dispose();
+    _slackUserIdController.dispose();
     super.dispose();
   }
 
@@ -172,7 +181,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(final BuildContext context) => MaterialApp(
     theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
     home: DefaultTabController(
-      length: 17,
+      length: 18,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('DeeplinkX Example'),
@@ -189,6 +198,7 @@ class _MyAppState extends State<MyApp> {
               Tab(text: 'Pinterest'),
               Tab(text: 'TikTok'),
               Tab(text: 'Zoom'),
+              Tab(text: 'Slack'),
               Tab(text: 'iOS App Store'),
               Tab(text: 'Play Store'),
               Tab(text: 'Mac App Store'),
@@ -211,6 +221,7 @@ class _MyAppState extends State<MyApp> {
             _buildPinterestTab(),
             _buildTikTokTab(),
             _buildZoomTab(),
+            _buildSlackTab(),
             _buildAppStoreTab(),
             _buildPlayStoreTab(),
             _buildMacAppStoreTab(),
@@ -1875,6 +1886,139 @@ class _MyAppState extends State<MyApp> {
           }
         },
         child: const Text('Join Meeting'),
+      ),
+    ],
+  );
+
+  Widget _buildSlackTab() => SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+            const SizedBox(width: 8),
+            Switch(
+              value: _slackFallBackToStore,
+              onChanged: (final value) => setState(() => _slackFallBackToStore = value),
+            ),
+            const Expanded(
+              child: Text(
+                'When enabled, redirects to app store if Slack is not installed',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const Text('Slack Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        _buildSlackActions(),
+      ],
+    ),
+  );
+
+  Widget _buildSlackActions() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      ElevatedButton(
+        onPressed: () async {
+          await _deeplinkX.launchApp(Slack.open(fallbackToStore: _slackFallBackToStore));
+        },
+        child: const Text('Open Slack App'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Open Team', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _slackTeamIdController,
+        decoration: const InputDecoration(
+          labelText: 'Team ID',
+          hintText: 'Enter team ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_slackTeamIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Slack.openTeam(teamId: _slackTeamIdController.text, fallbackToStore: _slackFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Open Team'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Open Channel', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _slackTeamIdController,
+        decoration: const InputDecoration(
+          labelText: 'Team ID',
+          hintText: 'Enter team ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _slackChannelIdController,
+        decoration: const InputDecoration(
+          labelText: 'Channel ID',
+          hintText: 'Enter channel ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_slackTeamIdController.text.isNotEmpty && _slackChannelIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Slack.openChannel(
+                teamId: _slackTeamIdController.text,
+                channelId: _slackChannelIdController.text,
+                fallbackToStore: _slackFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Open Channel'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Open User', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _slackTeamIdController,
+        decoration: const InputDecoration(
+          labelText: 'Team ID',
+          hintText: 'Enter team ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _slackUserIdController,
+        decoration: const InputDecoration(
+          labelText: 'User ID',
+          hintText: 'Enter user ID',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_slackTeamIdController.text.isNotEmpty && _slackUserIdController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              Slack.openUser(
+                teamId: _slackTeamIdController.text,
+                userId: _slackUserIdController.text,
+                fallbackToStore: _slackFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Open User'),
       ),
     ],
   );

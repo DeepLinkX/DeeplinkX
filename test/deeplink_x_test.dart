@@ -86,6 +86,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Slack', () {
+        final action = Slack.open();
+        expect(action, isA<App>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());
