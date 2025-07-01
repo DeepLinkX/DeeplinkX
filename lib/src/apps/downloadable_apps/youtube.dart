@@ -19,7 +19,8 @@ class YouTube extends App implements DownloadableApp {
   ///   the YouTube app is not installed. Default is false.
   ///
   /// Returns a [YouTube] instance that can be used to open the YouTube app.
-  factory YouTube.open({final bool fallbackToStore = false}) => YouTube(fallbackToStore: fallbackToStore);
+  factory YouTube.open({final bool fallbackToStore = false}) =>
+      YouTube(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the YouTube app's page in various app stores.
   @override
@@ -43,7 +44,8 @@ class YouTube extends App implements DownloadableApp {
 
   /// The platforms that the YouTube app supports.
   @override
-  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android, PlatformType.windows];
+  List<PlatformType> get supportedPlatforms =>
+      [PlatformType.ios, PlatformType.android, PlatformType.windows];
 
   /// Whether to automatically redirect to app stores when the YouTube app is not installed.
   @override
@@ -130,7 +132,8 @@ class YouTube extends App implements DownloadableApp {
 ///
 /// This class extends [YouTube] and implements multiple interfaces to provide
 /// comprehensive functionality for opening videos with fallback support.
-class YouTubeOpenVideoAction extends YouTube implements UniversalLinkAppAction, Fallbackable {
+class YouTubeOpenVideoAction extends YouTube
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [YouTubeOpenVideoAction] instance.
   ///
   /// Parameters:
@@ -163,7 +166,8 @@ class YouTubeOpenVideoAction extends YouTube implements UniversalLinkAppAction, 
 ///
 /// This class extends [YouTube] and implements multiple interfaces to provide
 /// comprehensive functionality for opening channels with fallback support.
-class YouTubeOpenChannelAction extends YouTube implements UniversalLinkAppAction, Fallbackable {
+class YouTubeOpenChannelAction extends YouTube
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [YouTubeOpenChannelAction] instance.
   ///
   /// Parameters:
@@ -195,7 +199,8 @@ class YouTubeOpenChannelAction extends YouTube implements UniversalLinkAppAction
 ///
 /// This class extends [YouTube] and implements multiple interfaces to provide
 /// comprehensive functionality for opening playlists with fallback support.
-class YouTubeOpenPlaylistAction extends YouTube implements UniversalLinkAppAction, Fallbackable {
+class YouTubeOpenPlaylistAction extends YouTube
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [YouTubeOpenPlaylistAction] instance.
   ///
   /// Parameters:
@@ -228,7 +233,8 @@ class YouTubeOpenPlaylistAction extends YouTube implements UniversalLinkAppActio
 ///
 /// This class extends [YouTube] and implements multiple interfaces to provide
 /// comprehensive functionality for searching with fallback support.
-class YouTubeSearchAction extends YouTube implements UniversalLinkAppAction, Fallbackable {
+class YouTubeSearchAction extends YouTube
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [YouTubeSearchAction] instance.
   ///
   /// Parameters:

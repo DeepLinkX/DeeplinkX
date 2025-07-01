@@ -7,7 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockLauncherUtilPlatform extends Mock with MockPlatformInterfaceMixin implements LauncherUtilPlatform {}
+class MockLauncherUtilPlatform extends Mock
+    with MockPlatformInterfaceMixin
+    implements LauncherUtilPlatform {}
 
 class MockApp extends Mock implements App {}
 
@@ -48,7 +50,8 @@ void main() {
 
     test('throws when platform throws', () {
       final uri = Uri.parse('https://example.com');
-      when(() => platform.launchUrl(uri)).thenThrow(PlatformException(code: 'error'));
+      when(() => platform.launchUrl(uri))
+          .thenThrow(PlatformException(code: 'error'));
 
       final util = LauncherUtil(PlatformType.android);
 
@@ -86,11 +89,15 @@ void main() {
     });
 
     test('throws when platform throws on Android', () {
-      when(() => platform.launchIntent(options)).thenThrow(PlatformException(code: 'error'));
+      when(() => platform.launchIntent(options))
+          .thenThrow(PlatformException(code: 'error'));
 
       final util = LauncherUtil(PlatformType.android);
 
-      expect(() => util.launchIntent(options), throwsA(isA<PlatformException>()));
+      expect(
+        () => util.launchIntent(options),
+        throwsA(isA<PlatformException>()),
+      );
     });
   });
 
@@ -102,26 +109,38 @@ void main() {
       when(() => app.customScheme).thenReturn(null);
       when(() => app.macosBundleIdentifier).thenReturn(null);
       when(() => app.website).thenReturn(Uri.parse('https://example.com'));
-      when(() => platform.isAppInstalledByPackageName('com.example')).thenAnswer((final _) async => true);
+      when(() => platform.isAppInstalledByPackageName('com.example'))
+          .thenAnswer((final _) async => true);
 
       final util = LauncherUtil(PlatformType.android);
       final result = await util.isAppInstalled(app);
 
       expect(result, true);
-      verify(() => platform.isAppInstalledByPackageName('com.example')).called(1);
+      verify(() => platform.isAppInstalledByPackageName('com.example'))
+          .called(1);
     });
 
     test('uses scheme check on other platforms', () async {
       final app = MockApp();
-      when(() => app.supportedPlatforms)
-          .thenReturn([PlatformType.ios, PlatformType.web, PlatformType.windows, PlatformType.linux]);
+      when(() => app.supportedPlatforms).thenReturn([
+        PlatformType.ios,
+        PlatformType.web,
+        PlatformType.windows,
+        PlatformType.linux,
+      ]);
       when(() => app.customScheme).thenReturn('scheme');
       when(() => app.androidPackageName).thenReturn(null);
       when(() => app.macosBundleIdentifier).thenReturn(null);
       when(() => app.website).thenReturn(Uri.parse('https://example.com'));
-      when(() => platform.isAppInstalledByScheme('scheme')).thenAnswer((final _) async => false);
+      when(() => platform.isAppInstalledByScheme('scheme'))
+          .thenAnswer((final _) async => false);
 
-      for (final platformType in [PlatformType.ios, PlatformType.web, PlatformType.windows, PlatformType.linux]) {
+      for (final platformType in [
+        PlatformType.ios,
+        PlatformType.web,
+        PlatformType.windows,
+        PlatformType.linux,
+      ]) {
         final util = LauncherUtil(platformType);
         final result = await util.isAppInstalled(app);
 
@@ -137,7 +156,8 @@ void main() {
       when(() => app.androidPackageName).thenReturn(null);
       when(() => app.customScheme).thenReturn(null);
       when(() => app.website).thenReturn(Uri.parse('https://example.com'));
-      when(() => platform.isAppInstalledByPackageName('com.macos')).thenAnswer((final _) async => true);
+      when(() => platform.isAppInstalledByPackageName('com.macos'))
+          .thenAnswer((final _) async => true);
 
       final util = LauncherUtil(PlatformType.macos);
       final result = await util.isAppInstalled(app);
@@ -168,7 +188,8 @@ void main() {
       when(() => app.customScheme).thenReturn(null);
       when(() => app.macosBundleIdentifier).thenReturn(null);
       when(() => app.website).thenReturn(Uri.parse('https://example.com'));
-      when(() => platform.isAppInstalledByPackageName('com.example')).thenThrow(PlatformException(code: 'error'));
+      when(() => platform.isAppInstalledByPackageName('com.example'))
+          .thenThrow(PlatformException(code: 'error'));
 
       final util = LauncherUtil(PlatformType.android);
       final result = await util.isAppInstalled(app);
@@ -210,7 +231,8 @@ void main() {
       when(() => app.customScheme).thenReturn(null);
 
       final util = LauncherUtil(PlatformType.android);
-      when(() => platform.launchAppByPackageName('com.example')).thenAnswer((final _) async => true);
+      when(() => platform.launchAppByPackageName('com.example'))
+          .thenAnswer((final _) async => true);
 
       final result = await util.launchApp(app);
 
@@ -231,7 +253,8 @@ void main() {
         PlatformType.linux,
       ]) {
         final util = LauncherUtil(platformType);
-        when(() => platform.launchAppByScheme('scheme')).thenAnswer((final _) async => true);
+        when(() => platform.launchAppByScheme('scheme'))
+            .thenAnswer((final _) async => true);
 
         final result = await util.launchApp(app);
 
@@ -240,11 +263,13 @@ void main() {
       }
     });
 
-    test('returns false when platform call throws platform exception', () async {
+    test('returns false when platform call throws platform exception',
+        () async {
       final app = MockApp();
       when(() => app.androidPackageName).thenReturn('com.example');
       when(() => app.customScheme).thenReturn(null);
-      when(() => platform.launchAppByPackageName('com.example')).thenThrow(PlatformException(code: 'error'));
+      when(() => platform.launchAppByPackageName('com.example'))
+          .thenThrow(PlatformException(code: 'error'));
 
       final util = LauncherUtil(PlatformType.android);
       final result = await util.launchApp(app);
@@ -259,7 +284,8 @@ void main() {
       final app = MockApp();
       when(() => app.androidPackageName).thenReturn('com.example');
       when(() => app.customScheme).thenReturn(null);
-      when(() => platform.launchAppByPackageName('com.example')).thenThrow(UnimplementedError('error'));
+      when(() => platform.launchAppByPackageName('com.example'))
+          .thenThrow(UnimplementedError('error'));
 
       final util = LauncherUtil(PlatformType.android);
       final result = await util.launchApp(app);
@@ -270,7 +296,8 @@ void main() {
 
   group('launchAppByPackageName', () {
     test('delegates to platform', () async {
-      when(() => platform.launchAppByPackageName('pkg')).thenAnswer((final _) async => true);
+      when(() => platform.launchAppByPackageName('pkg'))
+          .thenAnswer((final _) async => true);
 
       final util = LauncherUtil(PlatformType.android);
       final result = await util.launchAppByPackageName('pkg');
@@ -282,7 +309,8 @@ void main() {
 
   group('launchAppByScheme', () {
     test('delegates to platform', () async {
-      when(() => platform.launchAppByScheme('scheme')).thenAnswer((final _) async => true);
+      when(() => platform.launchAppByScheme('scheme'))
+          .thenAnswer((final _) async => true);
 
       final util = LauncherUtil(PlatformType.android);
       final result = await util.launchAppByScheme('scheme');

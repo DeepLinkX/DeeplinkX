@@ -148,7 +148,9 @@ void main() {
       );
     });
 
-    test('open action with fallbackToStore creates Telegram instance with correct properties', () {
+    test(
+        'open action with fallbackToStore creates Telegram instance with correct properties',
+        () {
       final action = Telegram.open(fallbackToStore: true);
 
       // As App
@@ -177,7 +179,8 @@ void main() {
       expect(playStoreAction.packageName, 'org.telegram.messenger');
 
       // Huawei App Gallery action
-      final huaweiStoreAction = storeActions[1] as HuaweiAppGalleryStoreOpenAppPageAction;
+      final huaweiStoreAction =
+          storeActions[1] as HuaweiAppGalleryStoreOpenAppPageAction;
       expect(huaweiStoreAction.packageName, 'org.telegram.messenger');
       expect(huaweiStoreAction.appId, 'C101184875');
 
@@ -187,7 +190,8 @@ void main() {
       expect(iosStoreAction.appName, 'telegram-messenger');
 
       // Microsoft Store action
-      final microsoftStoreAction = storeActions[3] as MicrosoftStoreOpenAppPageAction;
+      final microsoftStoreAction =
+          storeActions[3] as MicrosoftStoreOpenAppPageAction;
       expect(microsoftStoreAction.productId, '9nztwsqntd0s');
 
       // Mac App Store action

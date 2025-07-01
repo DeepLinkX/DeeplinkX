@@ -19,15 +19,22 @@ class WhatsApp extends App implements DownloadableApp {
   ///   the WhatsApp app is not installed. Default is false.
   ///
   /// Returns a [WhatsApp] instance that can be used to open the WhatsApp app.
-  factory WhatsApp.open({final bool fallbackToStore = false}) => WhatsApp(fallbackToStore: fallbackToStore);
+  factory WhatsApp.open({final bool fallbackToStore = false}) =>
+      WhatsApp(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the WhatsApp app's page in various app stores.
   @override
   List<StoreOpenAppPageAction> get storeActions => [
         PlayStore.openAppPage(packageName: 'com.whatsapp'),
-        IOSAppStore.openAppPage(appId: '310633997', appName: 'whatsapp-messenger'),
+        IOSAppStore.openAppPage(
+          appId: '310633997',
+          appName: 'whatsapp-messenger',
+        ),
         MicrosoftStore.openAppPage(productId: '9nksqgp7f2nh'),
-        MacAppStore.openAppPage(appId: '310633997', appName: 'whatsapp-messenger'),
+        MacAppStore.openAppPage(
+          appId: '310633997',
+          appName: 'whatsapp-messenger',
+        ),
       ];
 
   /// The Android package name for the WhatsApp app.
@@ -103,7 +110,8 @@ class WhatsApp extends App implements DownloadableApp {
 ///
 /// This class extends [WhatsApp] and implements multiple interfaces to provide
 /// comprehensive functionality for starting chats with fallback support.
-class WhatsAppChatAction extends WhatsApp implements AppLinkAppAction, Fallbackable {
+class WhatsAppChatAction extends WhatsApp
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [WhatsAppChatAction] instance.
   ///
   /// Parameters:
@@ -158,7 +166,8 @@ class WhatsAppChatAction extends WhatsApp implements AppLinkAppAction, Fallbacka
 ///
 /// This class extends [WhatsApp] and implements multiple interfaces to provide
 /// comprehensive functionality for sharing text with fallback support.
-class WhatsAppShareTextAction extends WhatsApp implements AppLinkAppAction, Fallbackable {
+class WhatsAppShareTextAction extends WhatsApp
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [WhatsAppShareTextAction] instance.
   ///
   /// Parameters:

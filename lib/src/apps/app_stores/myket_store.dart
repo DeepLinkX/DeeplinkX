@@ -74,7 +74,8 @@ class MyketStore implements StoreApp {
 ///
 /// This class extends [MyketStore] and implements multiple interfaces to provide
 /// comprehensive functionality for opening app pages with fallback support.
-class MyketStoreOpenAppPageAction extends MyketStore implements AppLinkAppAction, Fallbackable, StoreOpenAppPageAction {
+class MyketStoreOpenAppPageAction extends MyketStore
+    implements AppLinkAppAction, Fallbackable, StoreOpenAppPageAction {
   /// Creates a new [MyketStoreOpenAppPageAction] instance.
   ///
   /// Parameters:

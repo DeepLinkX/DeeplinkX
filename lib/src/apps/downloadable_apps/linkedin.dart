@@ -19,13 +19,17 @@ class LinkedIn extends App implements DownloadableApp {
   ///   the LinkedIn app is not installed. Default is false.
   ///
   /// Returns a [LinkedIn] instance that can be used to open the LinkedIn app.
-  factory LinkedIn.open({final bool fallbackToStore = false}) => LinkedIn(fallbackToStore: fallbackToStore);
+  factory LinkedIn.open({final bool fallbackToStore = false}) =>
+      LinkedIn(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the LinkedIn app's page in various app stores.
   @override
   List<StoreOpenAppPageAction> get storeActions => [
         PlayStore.openAppPage(packageName: 'com.linkedin.android'),
-        IOSAppStore.openAppPage(appId: '288429040', appName: 'linkedin-network-job-finder'),
+        IOSAppStore.openAppPage(
+          appId: '288429040',
+          appName: 'linkedin-network-job-finder',
+        ),
       ];
 
   /// The Android package name for the LinkedIn app.
@@ -42,7 +46,8 @@ class LinkedIn extends App implements DownloadableApp {
 
   /// The platforms that the LinkedIn app supports.
   @override
-  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android];
+  List<PlatformType> get supportedPlatforms =>
+      [PlatformType.ios, PlatformType.android];
 
   /// Whether to automatically redirect to app stores when the LinkedIn app is not installed.
   @override
@@ -93,7 +98,8 @@ class LinkedIn extends App implements DownloadableApp {
 ///
 /// This class extends [LinkedIn] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class LinkedInOpenProfileAction extends LinkedIn implements UniversalLinkAppAction, Fallbackable {
+class LinkedInOpenProfileAction extends LinkedIn
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [LinkedInOpenProfileAction] instance.
   ///
   /// Parameters:
@@ -130,7 +136,8 @@ class LinkedInOpenProfileAction extends LinkedIn implements UniversalLinkAppActi
 ///
 /// This class extends [LinkedIn] and implements multiple interfaces to provide
 /// comprehensive functionality for opening company pages with fallback support.
-class LinkedInOpenCompanyAction extends LinkedIn implements UniversalLinkAppAction, Fallbackable {
+class LinkedInOpenCompanyAction extends LinkedIn
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [LinkedInOpenCompanyAction] instance.
   ///
   /// Parameters:

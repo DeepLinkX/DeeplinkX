@@ -8,7 +8,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Huawei AppGallery Actions', () {
-    test('open action creates HuaweiAppGalleryStore instance with correct properties', () {
+    test(
+        'open action creates HuaweiAppGalleryStore instance with correct properties',
+        () {
       final action = HuaweiAppGalleryStore.open();
 
       // As Store
@@ -23,7 +25,8 @@ void main() {
       expect(action.macosBundleIdentifier, null);
     });
 
-    test('open action creates HuaweiAppGalleryStore instance with correct type', () {
+    test('open action creates HuaweiAppGalleryStore instance with correct type',
+        () {
       final action = HuaweiAppGalleryStore.open();
 
       expect(action, isInstanceOf<StoreApp>());
@@ -46,8 +49,14 @@ void main() {
         packageName: 'com.example.app',
       );
 
-      expect(action.appLink.toString(), 'appmarket://details?id=com.example.app');
-      expect(action.fallbackLink.toString(), 'https://appgallery.huawei.com/app/C100000000');
+      expect(
+        action.appLink.toString(),
+        'appmarket://details?id=com.example.app',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://appgallery.huawei.com/app/C100000000',
+      );
     });
 
     test('openAppPage action with referrer creates correct URIs', () {

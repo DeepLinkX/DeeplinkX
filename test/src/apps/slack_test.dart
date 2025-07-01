@@ -38,21 +38,30 @@ void main() {
       final action = Slack.openTeam(teamId: 'T123');
 
       expect(action.appLink.toString(), 'slack://open?team=T123');
-      expect(action.fallbackLink.toString(), 'https://app.slack.com/client/T123');
+      expect(
+        action.fallbackLink.toString(),
+        'https://app.slack.com/client/T123',
+      );
     });
 
     test('openChannel action creates correct URIs', () {
       final action = Slack.openChannel(teamId: 'T123', channelId: 'C456');
 
       expect(action.appLink.toString(), 'slack://channel?team=T123&id=C456');
-      expect(action.fallbackLink.toString(), 'https://app.slack.com/client/T123/C456');
+      expect(
+        action.fallbackLink.toString(),
+        'https://app.slack.com/client/T123/C456',
+      );
     });
 
     test('openUser action creates correct URIs', () {
       final action = Slack.openUser(teamId: 'T123', userId: 'U789');
 
       expect(action.appLink.toString(), 'slack://user?team=T123&id=U789');
-      expect(action.fallbackLink.toString(), 'https://app.slack.com/client/T123/U789');
+      expect(
+        action.fallbackLink.toString(),
+        'https://app.slack.com/client/T123/U789',
+      );
     });
 
     test('store actions have correct properties', () {

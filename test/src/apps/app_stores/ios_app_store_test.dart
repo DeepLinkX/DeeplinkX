@@ -8,7 +8,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('iOS App Store Actions', () {
-    test('open action creates IOSAppStore instance with correct properties', () {
+    test('open action creates IOSAppStore instance with correct properties',
+        () {
       final action = IOSAppStore.open();
 
       // As Store
@@ -56,7 +57,9 @@ void main() {
       );
     });
 
-    test('openAppPage action with country and tracking parameters creates correct URIs', () {
+    test(
+        'openAppPage action with country and tracking parameters creates correct URIs',
+        () {
       final action = IOSAppStore.openAppPage(
         appId: '123456789',
         appName: 'testapp',

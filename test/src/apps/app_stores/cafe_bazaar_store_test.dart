@@ -9,7 +9,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Cafe Bazaar Store Actions', () {
-    test('open action creates CafeBazaarStore instance with correct properties', () {
+    test('open action creates CafeBazaarStore instance with correct properties',
+        () {
       final action = CafeBazaarStore.open();
 
       // As Store
@@ -55,7 +56,10 @@ void main() {
         ),
       );
       expect(action.appLink, null);
-      expect(action.fallbackLink.toString(), 'https://cafebazaar.ir/app/com.example.app');
+      expect(
+        action.fallbackLink.toString(),
+        'https://cafebazaar.ir/app/com.example.app',
+      );
     });
 
     test('openAppPage action with referrer creates correct URIs', () {
@@ -68,7 +72,8 @@ void main() {
         action.androidIntentOptions,
         const AndroidIntentOption(
           action: 'action_view',
-          data: 'bazaar://details?id=com.example.app&referrer=utm_source%3Dtest_app',
+          data:
+              'bazaar://details?id=com.example.app&referrer=utm_source%3Dtest_app',
           package: 'com.farsitel.bazaar',
           flags: [0x10000000], // Intent.FLAG_ACTIVITY_NEW_TASK
         ),

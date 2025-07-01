@@ -19,14 +19,21 @@ class Telegram extends App implements DownloadableApp {
   ///   the Telegram app is not installed. Default is false.
   ///
   /// Returns a [Telegram] instance that can be used to open the Telegram app.
-  factory Telegram.open({final bool fallbackToStore = false}) => Telegram(fallbackToStore: fallbackToStore);
+  factory Telegram.open({final bool fallbackToStore = false}) =>
+      Telegram(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the Telegram app's page in various app stores.
   @override
   List<StoreOpenAppPageAction> get storeActions => [
         PlayStore.openAppPage(packageName: 'org.telegram.messenger'),
-        HuaweiAppGalleryStore.openAppPage(packageName: 'org.telegram.messenger', appId: 'C101184875'),
-        IOSAppStore.openAppPage(appId: '686449807', appName: 'telegram-messenger'),
+        HuaweiAppGalleryStore.openAppPage(
+          packageName: 'org.telegram.messenger',
+          appId: 'C101184875',
+        ),
+        IOSAppStore.openAppPage(
+          appId: '686449807',
+          appName: 'telegram-messenger',
+        ),
         MicrosoftStore.openAppPage(productId: '9nztwsqntd0s'),
         MacAppStore.openAppPage(appId: '747648890', appName: 'telegram'),
       ];
@@ -152,7 +159,8 @@ class Telegram extends App implements DownloadableApp {
     String encodedMessage = message;
 
     if (encodedMessage.startsWith('@')) {
-      encodedMessage = ' $encodedMessage'; // Prepend whitespace to avoid triggering inline query
+      encodedMessage =
+          ' $encodedMessage'; // Prepend whitespace to avoid triggering inline query
     }
 
     return Uri.encodeComponent(encodedMessage);
@@ -163,7 +171,8 @@ class Telegram extends App implements DownloadableApp {
 ///
 /// This class extends [Telegram] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class TelegramOpenProfileAction extends Telegram implements AppLinkAppAction, Fallbackable {
+class TelegramOpenProfileAction extends Telegram
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [TelegramOpenProfileAction] instance.
   ///
   /// Parameters:
@@ -193,7 +202,8 @@ class TelegramOpenProfileAction extends Telegram implements AppLinkAppAction, Fa
 ///
 /// This class extends [Telegram] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class TelegramOpenProfileByPhoneNumberAction extends Telegram implements AppLinkAppAction, Fallbackable {
+class TelegramOpenProfileByPhoneNumberAction extends Telegram
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [TelegramOpenProfileByPhoneNumberAction] instance.
   ///
   /// Parameters:
@@ -223,7 +233,8 @@ class TelegramOpenProfileByPhoneNumberAction extends Telegram implements AppLink
 ///
 /// This class extends [Telegram] and implements multiple interfaces to provide
 /// comprehensive functionality for sending messages with fallback support.
-class TelegramSendMessageAction extends Telegram implements AppLinkAppAction, Fallbackable {
+class TelegramSendMessageAction extends Telegram
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [TelegramSendMessageAction] instance.
   ///
   /// Parameters:
@@ -264,7 +275,8 @@ class TelegramSendMessageAction extends Telegram implements AppLinkAppAction, Fa
 ///
 /// This class extends [Telegram] and implements multiple interfaces to provide
 /// comprehensive functionality for sending messages with fallback support.
-class TelegramSendMessageByPhoneNumberAction extends Telegram implements AppLinkAppAction, Fallbackable {
+class TelegramSendMessageByPhoneNumberAction extends Telegram
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [TelegramSendMessageByPhoneNumberAction] instance.
   ///
   /// Parameters:

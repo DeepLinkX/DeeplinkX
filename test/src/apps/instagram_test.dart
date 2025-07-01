@@ -60,7 +60,9 @@ void main() {
       );
     });
 
-    test('open action with fallbackToStore creates Instagram instance with correct properties', () {
+    test(
+        'open action with fallbackToStore creates Instagram instance with correct properties',
+        () {
       final action = Instagram.open(fallbackToStore: true);
 
       // As App

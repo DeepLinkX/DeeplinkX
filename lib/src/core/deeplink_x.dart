@@ -33,12 +33,16 @@ class DeeplinkX {
   /// Returns a [Future<bool>] that completes with:
   /// * `true` if the action was successfully launched
   /// * `false` if the action could not be launched or no URIs were available
-  Future<bool> launchAction(final AppAction action, {final bool disableFallback = false}) async {
+  Future<bool> launchAction(
+    final AppAction action, {
+    final bool disableFallback = false,
+  }) async {
     try {
       final bool isAppInstalled = await this.isAppInstalled(action);
       if (isAppInstalled) {
         if (action is IntentAppLinkAction) {
-          final isLaunched = await _launcherUtil.launchIntent(action.androidIntentOptions);
+          final isLaunched =
+              await _launcherUtil.launchIntent(action.androidIntentOptions);
           if (isLaunched) {
             return true;
           }
@@ -59,7 +63,8 @@ class DeeplinkX {
         }
 
         if (action is UniversalLinkAppAction) {
-          final isLaunched = await _launcherUtil.launchUrl(action.universalLink);
+          final isLaunched =
+              await _launcherUtil.launchUrl(action.universalLink);
           if (isLaunched) {
             return true;
           }
@@ -78,7 +83,8 @@ class DeeplinkX {
     if (action is DownloadableApp) {
       final downloadableApp = action as DownloadableApp;
       if (downloadableApp.fallbackToStore) {
-        final isRedirected = await redirectToStore(storeActions: downloadableApp.storeActions);
+        final isRedirected =
+            await redirectToStore(storeActions: downloadableApp.storeActions);
 
         if (isRedirected) {
           return true;
@@ -102,7 +108,8 @@ class DeeplinkX {
   /// Returns a [Future<bool>] that completes with:
   /// * `true` if the app is installed
   /// * `false` if the app is not installed
-  Future<bool> isAppInstalled(final App app) async => _launcherUtil.isAppInstalled(app);
+  Future<bool> isAppInstalled(final App app) async =>
+      _launcherUtil.isAppInstalled(app);
 
   /// Launches an app on the device.
   ///
@@ -134,7 +141,8 @@ class DeeplinkX {
 
     if (app is DownloadableApp) {
       if (app.fallbackToStore) {
-        final isRedirected = await redirectToStore(storeActions: app.storeActions);
+        final isRedirected =
+            await redirectToStore(storeActions: app.storeActions);
 
         if (isRedirected) {
           return true;
@@ -174,8 +182,12 @@ class DeeplinkX {
   ///   ],
   /// );
   /// ```
-  Future<bool> redirectToStore({required final List<StoreOpenAppPageAction> storeActions}) async {
-    final stores = storeActions.where((final store) => store.platform == currentPlatform).toList();
+  Future<bool> redirectToStore({
+    required final List<StoreOpenAppPageAction> storeActions,
+  }) async {
+    final stores = storeActions
+        .where((final store) => store.platform == currentPlatform)
+        .toList();
     for (final store in stores) {
       final isLaunched = await launchAction(store, disableFallback: true);
       if (isLaunched) {

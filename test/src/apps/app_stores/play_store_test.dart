@@ -44,8 +44,14 @@ void main() {
         packageName: 'com.example.app',
       );
 
-      expect(action.universalLink.toString(), 'https://play.google.com/store/apps/details?id=com.example.app');
-      expect(action.fallbackLink.toString(), 'https://play.google.com/store/apps/details?id=com.example.app');
+      expect(
+        action.universalLink.toString(),
+        'https://play.google.com/store/apps/details?id=com.example.app',
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://play.google.com/store/apps/details?id=com.example.app',
+      );
     });
 
     test('openAppPage action with referrer creates correct URIs', () {

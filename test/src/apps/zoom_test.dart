@@ -77,7 +77,9 @@ void main() {
       );
     });
 
-    test('joinMeeting action with special characters in display name creates correct URIs', () {
+    test(
+        'joinMeeting action with special characters in display name creates correct URIs',
+        () {
       final action = Zoom.joinMeeting(
         meetingId: '123',
         password: 'abc',
@@ -94,7 +96,9 @@ void main() {
       );
     });
 
-    test('open action with fallbackToStore creates Zoom instance with correct properties', () {
+    test(
+        'open action with fallbackToStore creates Zoom instance with correct properties',
+        () {
       final action = Zoom.open(fallbackToStore: true);
 
       // As App

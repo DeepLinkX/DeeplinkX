@@ -19,7 +19,8 @@ class Twitter extends App implements DownloadableApp {
   ///   the Twitter app is not installed. Default is false.
   ///
   /// Returns a [Twitter] instance that can be used to open the Twitter app.
-  factory Twitter.open({final bool fallbackToStore = false}) => Twitter(fallbackToStore: fallbackToStore);
+  factory Twitter.open({final bool fallbackToStore = false}) =>
+      Twitter(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the Twitter app's page in various app stores.
   @override
@@ -42,7 +43,8 @@ class Twitter extends App implements DownloadableApp {
 
   /// The platforms that the Twitter app supports.
   @override
-  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android];
+  List<PlatformType> get supportedPlatforms =>
+      [PlatformType.ios, PlatformType.android];
 
   /// Whether to automatically redirect to app stores when the Twitter app is not installed.
   @override
@@ -65,7 +67,10 @@ class Twitter extends App implements DownloadableApp {
     required final String username,
     final bool fallbackToStore = false,
   }) =>
-      TwitterOpenProfileAction(username: username, fallbackToStore: fallbackToStore);
+      TwitterOpenProfileAction(
+        username: username,
+        fallbackToStore: fallbackToStore,
+      );
 
   /// Creates an action to open a specific tweet in the Twitter app.
   ///
@@ -80,7 +85,10 @@ class Twitter extends App implements DownloadableApp {
     required final String tweetId,
     final bool fallbackToStore = false,
   }) =>
-      TwitterOpenTweetAction(tweetId: tweetId, fallbackToStore: fallbackToStore);
+      TwitterOpenTweetAction(
+        tweetId: tweetId,
+        fallbackToStore: fallbackToStore,
+      );
 
   /// Creates an action to open the Twitter search in the Twitter app.
   ///
@@ -102,7 +110,8 @@ class Twitter extends App implements DownloadableApp {
 ///
 /// This class extends [Twitter] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class TwitterOpenProfileAction extends Twitter implements AppLinkAppAction, Fallbackable {
+class TwitterOpenProfileAction extends Twitter
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [TwitterOpenProfileAction] instance.
   ///
   /// Parameters:
@@ -140,7 +149,8 @@ class TwitterOpenProfileAction extends Twitter implements AppLinkAppAction, Fall
 ///
 /// This class extends [Twitter] and implements multiple interfaces to provide
 /// comprehensive functionality for opening tweets with fallback support.
-class TwitterOpenTweetAction extends Twitter implements AppLinkAppAction, Fallbackable {
+class TwitterOpenTweetAction extends Twitter
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [TwitterOpenTweetAction] instance.
   ///
   /// Parameters:
@@ -178,7 +188,8 @@ class TwitterOpenTweetAction extends Twitter implements AppLinkAppAction, Fallba
 ///
 /// This class extends [Twitter] and implements multiple interfaces to provide
 /// comprehensive functionality for searching with fallback support.
-class TwitterSearchAction extends Twitter implements UniversalLinkAppAction, Fallbackable {
+class TwitterSearchAction extends Twitter
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [TwitterSearchAction] instance.
   ///
   /// Parameters:

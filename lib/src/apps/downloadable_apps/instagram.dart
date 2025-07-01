@@ -19,7 +19,8 @@ class Instagram extends App implements DownloadableApp {
   ///   the Instagram app is not installed. Default is false.
   ///
   /// Returns an [Instagram] instance that can be used to open the Instagram app.
-  factory Instagram.open({final bool fallbackToStore = false}) => Instagram(fallbackToStore: fallbackToStore);
+  factory Instagram.open({final bool fallbackToStore = false}) =>
+      Instagram(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the Instagram app's page in various app stores.
   @override
@@ -42,7 +43,8 @@ class Instagram extends App implements DownloadableApp {
 
   /// The platforms that the Instagram app supports.
   @override
-  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android];
+  List<PlatformType> get supportedPlatforms =>
+      [PlatformType.ios, PlatformType.android];
 
   /// Whether to automatically redirect to app stores when the Instagram app is not installed.
   @override
@@ -75,7 +77,8 @@ class Instagram extends App implements DownloadableApp {
 ///
 /// This class extends [Instagram] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class InstagramOpenProfileAction extends Instagram implements AppLinkAppAction, Fallbackable {
+class InstagramOpenProfileAction extends Instagram
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [InstagramOpenProfileAction] instance.
   ///
   /// Parameters:

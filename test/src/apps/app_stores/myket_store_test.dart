@@ -45,7 +45,10 @@ void main() {
       );
 
       expect(action.appLink.toString(), 'myket://details?id=com.example.app');
-      expect(action.fallbackLink.toString(), 'https://myket.ir/app/com.example.app');
+      expect(
+        action.fallbackLink.toString(),
+        'https://myket.ir/app/com.example.app',
+      );
     });
 
     test('openAppPage action with referrer creates correct URIs', () {

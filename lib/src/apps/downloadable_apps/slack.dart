@@ -6,7 +6,8 @@ class Slack extends App implements DownloadableApp {
   Slack({this.fallbackToStore = false});
 
   /// Creates an action to open the Slack app.
-  factory Slack.open({final bool fallbackToStore = false}) => Slack(fallbackToStore: fallbackToStore);
+  factory Slack.open({final bool fallbackToStore = false}) =>
+      Slack(fallbackToStore: fallbackToStore);
 
   @override
   List<StoreOpenAppPageAction> get storeActions => [
@@ -72,7 +73,8 @@ class Slack extends App implements DownloadableApp {
 }
 
 /// Action to open a specific team in Slack.
-class SlackOpenTeamAction extends Slack implements AppLinkAppAction, Fallbackable {
+class SlackOpenTeamAction extends Slack
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [SlackOpenTeamAction].
   SlackOpenTeamAction({required this.teamId, required super.fallbackToStore});
 
@@ -100,7 +102,8 @@ class SlackOpenTeamAction extends Slack implements AppLinkAppAction, Fallbackabl
 }
 
 /// Action to open a Slack channel.
-class SlackOpenChannelAction extends Slack implements AppLinkAppAction, Fallbackable {
+class SlackOpenChannelAction extends Slack
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [SlackOpenChannelAction].
   SlackOpenChannelAction({
     required this.teamId,
@@ -139,7 +142,8 @@ class SlackOpenChannelAction extends Slack implements AppLinkAppAction, Fallback
 /// Action to open a Slack direct message.
 ///
 /// Opens a direct message with the given user ID on the specified team.
-class SlackOpenUserAction extends Slack implements AppLinkAppAction, Fallbackable {
+class SlackOpenUserAction extends Slack
+    implements AppLinkAppAction, Fallbackable {
   /// Creates a new [SlackOpenUserAction].
   SlackOpenUserAction({
     required this.teamId,

@@ -132,7 +132,9 @@ void main() {
       );
     });
 
-    test('open action with fallbackToStore creates YouTube instance with correct properties', () {
+    test(
+        'open action with fallbackToStore creates YouTube instance with correct properties',
+        () {
       final action = YouTube.open(fallbackToStore: true);
 
       // As App
@@ -164,7 +166,8 @@ void main() {
       expect(iosStoreAction.appName, 'youtube');
 
       // Microsoft Store action
-      final microsoftStoreAction = storeActions[2] as MicrosoftStoreOpenAppPageAction;
+      final microsoftStoreAction =
+          storeActions[2] as MicrosoftStoreOpenAppPageAction;
       expect(microsoftStoreAction.productId, '9wzdncrfj2wl');
     });
   });

@@ -143,7 +143,8 @@ class MicrosoftStoreOpenAppPageAction extends MicrosoftStore
 ///
 /// This class extends [MicrosoftStore] and implements [AppLinkAppAction] to provide
 /// functionality for opening the rating page of an app in the Microsoft Store.
-class MicrosoftStoreRateAppAction extends MicrosoftStore implements AppLinkAppAction {
+class MicrosoftStoreRateAppAction extends MicrosoftStore
+    implements AppLinkAppAction {
   /// Creates a new [MicrosoftStoreRateAppAction] instance.
   ///
   /// Parameters:

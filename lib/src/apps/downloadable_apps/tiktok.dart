@@ -19,7 +19,8 @@ class TikTok extends App implements DownloadableApp {
   ///   the TikTok app is not installed. Default is false.
   ///
   /// Returns a [TikTok] instance that can be used to open the TikTok app.
-  factory TikTok.open({final bool fallbackToStore = false}) => TikTok(fallbackToStore: fallbackToStore);
+  factory TikTok.open({final bool fallbackToStore = false}) =>
+      TikTok(fallbackToStore: fallbackToStore);
 
   /// A list of actions to open the TikTok app's page in various app stores.
   @override
@@ -42,7 +43,8 @@ class TikTok extends App implements DownloadableApp {
 
   /// The platforms that the TikTok app supports.
   @override
-  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android];
+  List<PlatformType> get supportedPlatforms =>
+      [PlatformType.ios, PlatformType.android];
 
   /// Whether to automatically redirect to app stores when the TikTok app is not installed.
   @override
@@ -65,7 +67,10 @@ class TikTok extends App implements DownloadableApp {
     required final String username,
     final bool fallbackToStore = false,
   }) =>
-      TikTokOpenProfileAction(username: username, fallbackToStore: fallbackToStore);
+      TikTokOpenProfileAction(
+        username: username,
+        fallbackToStore: fallbackToStore,
+      );
 
   /// Creates an action to open a specific video in the TikTok app.
   ///
@@ -108,7 +113,8 @@ class TikTok extends App implements DownloadableApp {
 ///
 /// This class extends [TikTok] and implements multiple interfaces to provide
 /// comprehensive functionality for opening profiles with fallback support.
-class TikTokOpenProfileAction extends TikTok implements UniversalLinkAppAction, Fallbackable {
+class TikTokOpenProfileAction extends TikTok
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [TikTokOpenProfileAction] instance.
   ///
   /// Parameters:
@@ -142,7 +148,8 @@ class TikTokOpenProfileAction extends TikTok implements UniversalLinkAppAction, 
 ///
 /// This class extends [TikTok] and implements multiple interfaces to provide
 /// comprehensive functionality for opening videos with fallback support.
-class TikTokOpenVideoAction extends TikTok implements UniversalLinkAppAction, Fallbackable {
+class TikTokOpenVideoAction extends TikTok
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [TikTokOpenVideoAction] instance.
   ///
   /// Parameters:
@@ -181,7 +188,8 @@ class TikTokOpenVideoAction extends TikTok implements UniversalLinkAppAction, Fa
 ///
 /// This class extends [TikTok] and implements multiple interfaces to provide
 /// comprehensive functionality for opening tags with fallback support.
-class TikTokOpenTagAction extends TikTok implements UniversalLinkAppAction, Fallbackable {
+class TikTokOpenTagAction extends TikTok
+    implements UniversalLinkAppAction, Fallbackable {
   /// Creates a new [TikTokOpenTagAction] instance.
   ///
   /// Parameters:
