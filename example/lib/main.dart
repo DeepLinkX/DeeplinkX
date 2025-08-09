@@ -107,6 +107,20 @@ class _MyAppState extends State<MyApp> {
   final _slackChannelIdController = TextEditingController(text: 'C123456');
   final _slackUserIdController = TextEditingController(text: 'U123456');
 
+  // Google Maps controllers
+  final _googleMapsQueryController = TextEditingController(text: '1600 Amphitheatre Parkway, Mountain View, CA');
+  final _googleMapsLatController = TextEditingController(text: '37.4220');
+  final _googleMapsLngController = TextEditingController(text: '-122.0841');
+  final _googleMapsZoomController = TextEditingController(text: '14');
+  final _googleMapsOriginController = TextEditingController(text: 'Times Square, New York');
+  final _googleMapsDestinationController = TextEditingController(text: 'Statue of Liberty');
+  final _googleMapsStreetLatController = TextEditingController(text: '40.6892');
+  final _googleMapsStreetLngController = TextEditingController(text: '-74.0445');
+  final _googleMapsHeadingController = TextEditingController(text: '210');
+  final _googleMapsPitchController = TextEditingController(text: '10');
+  final _googleMapsFovController = TextEditingController(text: '80');
+  GoogleMapsTravelMode _googleMapsSelectedMode = GoogleMapsTravelMode.driving;
+
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
   bool _telegramFallBackToStore = true;
@@ -119,6 +133,7 @@ class _MyAppState extends State<MyApp> {
   bool _tiktokFallBackToStore = true;
   bool _zoomFallBackToStore = true;
   bool _slackFallBackToStore = true;
+  bool _googleMapsFallBackToStore = true;
 
   @override
   void dispose() {
@@ -174,6 +189,17 @@ class _MyAppState extends State<MyApp> {
     _slackTeamIdController.dispose();
     _slackChannelIdController.dispose();
     _slackUserIdController.dispose();
+    _googleMapsQueryController.dispose();
+    _googleMapsLatController.dispose();
+    _googleMapsLngController.dispose();
+    _googleMapsZoomController.dispose();
+    _googleMapsOriginController.dispose();
+    _googleMapsDestinationController.dispose();
+    _googleMapsStreetLatController.dispose();
+    _googleMapsStreetLngController.dispose();
+    _googleMapsHeadingController.dispose();
+    _googleMapsPitchController.dispose();
+    _googleMapsFovController.dispose();
     super.dispose();
   }
 
@@ -181,7 +207,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(final BuildContext context) => MaterialApp(
     theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
     home: DefaultTabController(
-      length: 18,
+      length: 19,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('DeeplinkX Example'),
@@ -199,6 +225,7 @@ class _MyAppState extends State<MyApp> {
               Tab(text: 'TikTok'),
               Tab(text: 'Zoom'),
               Tab(text: 'Slack'),
+              Tab(text: 'Google Maps'),
               Tab(text: 'iOS App Store'),
               Tab(text: 'Play Store'),
               Tab(text: 'Mac App Store'),
@@ -222,6 +249,7 @@ class _MyAppState extends State<MyApp> {
             _buildTikTokTab(),
             _buildZoomTab(),
             _buildSlackTab(),
+            _buildGoogleMapsTab(),
             _buildAppStoreTab(),
             _buildPlayStoreTab(),
             _buildMacAppStoreTab(),
@@ -2019,6 +2047,223 @@ class _MyAppState extends State<MyApp> {
           }
         },
         child: const Text('Open User'),
+      ),
+    ],
+  );
+
+  Widget _buildGoogleMapsTab() => SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            const Text('Fallback to App Store:', style: TextStyle(fontSize: 16)),
+            const SizedBox(width: 8),
+            Switch(
+              value: _googleMapsFallBackToStore,
+              onChanged: (final value) => setState(() => _googleMapsFallBackToStore = value),
+            ),
+            const Expanded(
+              child: Text(
+                'When enabled, redirects to app store if Google Maps is not installed',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        const Text('Google Maps Actions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 24),
+        _buildGoogleMapsActions(),
+      ],
+    ),
+  );
+
+  Widget _buildGoogleMapsActions() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      ElevatedButton(
+        onPressed: () async {
+          await _deeplinkX.launchApp(GoogleMaps.open(fallbackToStore: _googleMapsFallBackToStore));
+        },
+        child: const Text('Open Google Maps'),
+      ),
+      const SizedBox(height: 16),
+      const Text('View Coordinates', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _googleMapsLatController,
+              decoration: const InputDecoration(labelText: 'Latitude', border: OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: TextField(
+              controller: _googleMapsLngController,
+              decoration: const InputDecoration(labelText: 'Longitude', border: OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _googleMapsZoomController,
+        decoration: const InputDecoration(labelText: 'Zoom (optional)', border: OutlineInputBorder()),
+        keyboardType: TextInputType.number,
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_googleMapsLatController.text.isNotEmpty && _googleMapsLngController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              GoogleMaps.view(
+                latitude: double.parse(_googleMapsLatController.text),
+                longitude: double.parse(_googleMapsLngController.text),
+                zoom: _googleMapsZoomController.text.isNotEmpty ? double.parse(_googleMapsZoomController.text) : null,
+                fallbackToStore: _googleMapsFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('View Map'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Search', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _googleMapsQueryController,
+        decoration: const InputDecoration(
+          labelText: 'Query',
+          hintText: 'Enter location or coordinates',
+          border: OutlineInputBorder(),
+        ),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_googleMapsQueryController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              GoogleMaps.search(query: _googleMapsQueryController.text, fallbackToStore: _googleMapsFallBackToStore),
+            );
+          }
+        },
+        child: const Text('Search Location'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Directions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _googleMapsOriginController,
+        decoration: const InputDecoration(labelText: 'Origin (optional)', border: OutlineInputBorder()),
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        controller: _googleMapsDestinationController,
+        decoration: const InputDecoration(labelText: 'Destination', border: OutlineInputBorder()),
+      ),
+      const SizedBox(height: 8),
+      DropdownButton<GoogleMapsTravelMode>(
+        value: _googleMapsSelectedMode,
+        isExpanded: true,
+        onChanged: (final mode) => setState(() => _googleMapsSelectedMode = mode!),
+        items:
+            GoogleMapsTravelMode.values
+                .map((final mode) => DropdownMenuItem(value: mode, child: Text(mode.name)))
+                .toList(),
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_googleMapsDestinationController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              GoogleMaps.directions(
+                origin: _googleMapsOriginController.text.isNotEmpty ? _googleMapsOriginController.text : null,
+                destination: _googleMapsDestinationController.text,
+                mode: _googleMapsSelectedMode,
+                fallbackToStore: _googleMapsFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Get Directions'),
+      ),
+      const SizedBox(height: 16),
+      const Text('Street View', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 8),
+      Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _googleMapsStreetLatController,
+              decoration: const InputDecoration(labelText: 'Latitude', border: OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: TextField(
+              controller: _googleMapsStreetLngController,
+              decoration: const InputDecoration(labelText: 'Longitude', border: OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 8),
+      Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _googleMapsHeadingController,
+              decoration: const InputDecoration(labelText: 'Heading (optional)', border: OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: TextField(
+              controller: _googleMapsPitchController,
+              decoration: const InputDecoration(labelText: 'Pitch (optional)', border: OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: TextField(
+              controller: _googleMapsFovController,
+              decoration: const InputDecoration(labelText: 'FOV (optional)', border: OutlineInputBorder()),
+              keyboardType: TextInputType.number,
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 8),
+      ElevatedButton(
+        onPressed: () async {
+          if (_googleMapsStreetLatController.text.isNotEmpty && _googleMapsStreetLngController.text.isNotEmpty) {
+            await _deeplinkX.launchAction(
+              GoogleMaps.streetView(
+                latitude: double.parse(_googleMapsStreetLatController.text),
+                longitude: double.parse(_googleMapsStreetLngController.text),
+                heading:
+                    _googleMapsHeadingController.text.isNotEmpty
+                        ? double.parse(_googleMapsHeadingController.text)
+                        : null,
+                pitch:
+                    _googleMapsPitchController.text.isNotEmpty ? double.parse(_googleMapsPitchController.text) : null,
+                fov: _googleMapsFovController.text.isNotEmpty ? double.parse(_googleMapsFovController.text) : null,
+                fallbackToStore: _googleMapsFallBackToStore,
+              ),
+            );
+          }
+        },
+        child: const Text('Open Street View'),
       ),
     ],
   );

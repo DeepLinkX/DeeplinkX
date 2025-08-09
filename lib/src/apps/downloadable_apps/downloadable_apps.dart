@@ -1,4 +1,5 @@
 export 'facebook.dart';
+export 'google_maps.dart';
 export 'instagram.dart';
 export 'linkedin.dart';
 export 'pinterest.dart';

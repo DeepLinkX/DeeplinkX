@@ -54,6 +54,8 @@
         <package android:name="us.zoom.videomeetings" />
         <!-- Slack -->
         <package android:name="com.Slack" />
+        <!-- Google Maps -->
+        <package android:name="com.google.android.apps.maps" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->
