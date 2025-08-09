@@ -6,10 +6,13 @@ import 'package:flutter/foundation.dart';
 /// This class provides methods to determine and work with the current platform
 /// of the application.
 class PlatformUtil {
-  /// Creates a constant instance of [PlatformUtil].
+  /// Creates a new instance of [PlatformUtil].
   ///
-  /// Since this class only contains static methods and has no instance state,
-  /// it can be instantiated as a const object.
+  /// [platformName] is an optional parameter that allows specifying a custom
+  /// platform name. If not provided, the default target platform name is used.
+  ///
+  /// The [PlatformUtil] class is used to determine and work with the current
+  /// platform of the application.
   PlatformUtil({final String? platformName}) : _platformName = platformName ?? defaultTargetPlatform.name;
 
   final String _platformName;
