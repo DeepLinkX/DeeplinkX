@@ -164,6 +164,13 @@ For detailed URL schemes and fallback behavior, see each app's documentation.
   > **Note:** If you enable `fallBackToStore: true` and the custom scheme is changed or deleted (not usually happens), DeeplinkX will redirect users to the app store instead of the fallback web URL. This may interrupt the intended fallback-to-web experience. If you want users to always reach the web fallback when the app is missing or the scheme is invalid, set `fallBackToStore: false`.
 - **Best of Both Worlds:** DeeplinkX combines the speed and directness of custom schemes with the reliability of universal links as a fallback, ensuring your users always reach the intended content in the best way possible.
 
+## Why use DeeplinkX over `url_launcher`?
+- **Automatic Fallbacks:** DeeplinkX can check if an app is installed and automatically fall back to the app store or a web URL if the app is missing. With `url_launcher`, you must handle this logic manually.
+- **Custom Android Intents:** DeeplinkX uses advanced Android intent options, `url_launcher` only supports basic intent launching.
+- **Cross-Platform Consistency:** DeeplinkX works seamlessly across platform, where `url_launcher` may not support certain schemes (e.g., checking can launch deep link of custom schemes on macOS).
+- **Unified API for Many Apps:** DeeplinkX provides a unified, high-level API for dozens of popular apps and stores, so you don't have to research and maintain deep link formats or intent structures yourself.
+- **Less Boilerplate:** With DeeplinkX, you can trigger complex actions (like opening a specific screen in an app, or falling back to the store) with a single method call, instead of writing custom logic for each case.
+
 ## Platform-Specific Configuration
 See respective app documentation for platform-specific configuration.
 
