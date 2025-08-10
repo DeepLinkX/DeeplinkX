@@ -83,10 +83,10 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
 - Directions with coordinates: `https://www.google.com/maps/dir/?api=1&destination={dest_lat},{dest_lng}&origin={origin_lat},{origin_lng}&travelmode={mode}`
 
 ### Web Fallback URLs
-- View coordinates: `https://maps.google.com/?q={lat},{lng}&z={zoom}`
-- Search: `https://maps.google.com/?q={query}`
-- Directions: `https://maps.google.com/?saddr={origin}&daddr={destination}&directionsmode={mode}`
-- Directions with coordinates: `https://maps.google.com/?saddr={origin_lat},{origin_lng}&daddr={dest_lat},{dest_lng}&directionsmode={mode}`
+- View coordinates: `https://www.google.com/maps/@{lat},{lng},{zoom}z`
+- Search: `https://www.google.com/maps/@?api=1&query={query}`
+- Directions: `https://maps.google.com/maps/dir/?destination={destination}&origin={origin}&travelmode={mode}`
+- Directions with coordinates: `https://maps.google.com/maps/dir/?origin={origin_lat},{origin_lng}&destination={dest_lat},{dest_lng}&travelmode={mode}`
 
 ## Supported Fallback Stores
 When the Google Maps app is not installed, DeeplinkX can redirect users to download Google Maps from:
