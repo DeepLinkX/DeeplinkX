@@ -114,8 +114,8 @@ class _MyAppState extends State<MyApp> {
   final _googleMapsZoomController = TextEditingController(text: '14');
   final _googleMapsOriginController = TextEditingController(text: 'Times Square, New York');
   final _googleMapsDestinationController = TextEditingController(text: 'Statue of Liberty');
-  final _googleMapsOriginLatController = TextEditingController(text: '37.4220');
-  final _googleMapsOriginLngController = TextEditingController(text: '-122.0841');
+  final _googleMapsOriginLatController = TextEditingController(text: '37');
+  final _googleMapsOriginLngController = TextEditingController(text: '-122');
   final _googleMapsDestLatController = TextEditingController(text: '37.4220');
   final _googleMapsDestLngController = TextEditingController(text: '-122.0841');
   GoogleMapsTravelMode? _googleMapsSelectedMode = GoogleMapsTravelMode.driving;
