@@ -156,6 +156,14 @@ await deeplinkX.launchAction(
 
 For detailed URL schemes and fallback behavior, see each app's documentation.
 
+## Why Prefer Custom Schemes, App Links or Intent Actions Instead of Universal Links?
+- **Better User Experience:** Custom schemes and app links trigger the app directly, so users don’t see a browser flash or an extra redirect before the app opens. This results in a smoother, more native-feeling experience.
+- **No More Selection Dialogs:** By using custom schemes and Android intents, the app launches directly without showing the "Open with..." dialog, reducing friction and confusion for users.
+- **Safer with Fallbacks:** You can reliably check if an app is installed using custom schemes or package names. If the app isn’t present, DeeplinkX can automatically fall back to the appropriate store or web URL.
+- **Resilient to Changes:** Custom schemes are often unofficial and may change or be removed by the app vendor. DeeplinkX always provides a fallback URL (usually a universal link), so even if the custom scheme changes, users are still redirected to the correct destination.
+  > **Note:** If you enable `fallBackToStore: true` and the custom scheme is changed or deleted (not usually happens), DeeplinkX will redirect users to the app store instead of the fallback web URL. This may interrupt the intended fallback-to-web experience. If you want users to always reach the web fallback when the app is missing or the scheme is invalid, set `fallBackToStore: false`.
+- **Best of Both Worlds:** DeeplinkX combines the speed and directness of custom schemes with the reliability of universal links as a fallback, ensuring your users always reach the intended content in the best way possible.
+
 ## Platform-Specific Configuration
 See respective app documentation for platform-specific configuration.
 
