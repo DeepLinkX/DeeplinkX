@@ -55,7 +55,7 @@ void main() {
       );
       expect(
         action.fallbackLink.toString(),
-        'https://maps.google.com?q=1600+Amphitheatre+Parkway',
+        'https://www.google.com/maps/@?api=1&query=1600+Amphitheatre+Parkway',
       );
       expect(
         action.androidIntentOptions.data,
@@ -94,9 +94,8 @@ void main() {
       expect(action.appLink.queryParameters['center'], '37.422,-122.084');
       expect(double.parse(action.appLink.queryParameters['zoom']!), 15);
 
-      expect(action.fallbackLink.host, 'maps.google.com');
-      expect(action.fallbackLink.queryParameters['q'], '37.422,-122.084');
-      expect(double.parse(action.fallbackLink.queryParameters['z']!), 15);
+      expect(action.fallbackLink.host, 'www.google.com');
+      expect(action.fallbackLink.path, '/maps/@37.422,-122.084,15.0z');
 
       final intentUri = Uri.parse(action.androidIntentOptions.data!);
       expect(intentUri.scheme, 'geo');
@@ -124,9 +123,10 @@ void main() {
       expect(intentUri.queryParameters['origin'], 'Times Square, New York');
       expect(intentUri.queryParameters['travelmode'], 'transit');
 
-      expect(action.fallbackLink.queryParameters['saddr'], 'Times Square, New York');
-      expect(action.fallbackLink.queryParameters['daddr'], 'Statue of Liberty');
-      expect(action.fallbackLink.queryParameters['directionsmode'], 'transit');
+      expect(action.fallbackLink.path, '/maps/dir/');
+      expect(action.fallbackLink.queryParameters['travelmode'], 'transit');
+      expect(action.fallbackLink.queryParameters['destination'], 'Statue of Liberty');
+      expect(action.fallbackLink.queryParameters['origin'], 'Times Square, New York');
     });
 
     test('directionsWithCoords action creates correct URIs', () {
@@ -149,9 +149,10 @@ void main() {
       expect(intentUri.queryParameters['origin'], '40.758,-73.9855');
       expect(intentUri.queryParameters['travelmode'], 'walking');
 
-      expect(action.fallbackLink.queryParameters['saddr'], '40.758,-73.9855');
-      expect(action.fallbackLink.queryParameters['daddr'], '40.6892,-74.0445');
-      expect(action.fallbackLink.queryParameters['directionsmode'], 'walking');
+      expect(action.fallbackLink.path, '/maps/dir/');
+      expect(action.fallbackLink.queryParameters['travelmode'], 'walking');
+      expect(action.fallbackLink.queryParameters['destination'], '40.6892,-74.0445');
+      expect(action.fallbackLink.queryParameters['origin'], '40.758,-73.9855');
     });
   });
 }

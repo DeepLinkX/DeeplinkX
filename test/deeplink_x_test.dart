@@ -147,6 +147,22 @@ void main() {
       });
     });
 
+    group('Models:', () {
+      test('Coordinate', () {
+        const coordinate = Coordinate(latitude: 1, longitude: 2);
+        expect(coordinate, isA<Coordinate>());
+      });
+
+      test('AndroidIntentOption', () {
+        const androidIntentOption = AndroidIntentOption(
+          action: 'android.intent.action.VIEW',
+          package: 'com.test.app',
+          data: '',
+        );
+        expect(androidIntentOption, isA<AndroidIntentOption>());
+      });
+    });
+
     group('Public methods:', () {
       test('launchAction', () async {
         final result = await deeplinkX.launchAction(MockAppAction());

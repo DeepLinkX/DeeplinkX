@@ -94,8 +94,8 @@ class GoogleMaps extends App implements DownloadableApp {
   /// Creates an action to get directions to [destination].
   ///
   /// Parameters:
-  /// - [destination]: The destination address or coordinates.
-  /// - [origin]: Optional starting point address or coordinates.
+  /// - [destination]: The destination address or place name.
+  /// - [origin]: Optional starting point address or place name.
   /// - [mode]: Optional [GoogleMapsTravelMode] for the route.
   /// - [fallbackToStore]: Whether to automatically redirect to app stores when
   ///   the Google Maps app is not installed. Default is false.
@@ -143,16 +143,22 @@ class GoogleMaps extends App implements DownloadableApp {
 /// Travel modes supported by Google Maps directions.
 enum GoogleMapsTravelMode {
   /// Driving route.
-  driving,
+  driving('driving'),
 
   /// Walking route.
-  walking,
+  walking('walking'),
 
   /// Bicycling route.
-  bicycling,
+  bicycling('bicycling'),
 
   /// Public transit route.
-  transit,
+  transit('transit');
+
+  /// Creates a new [GoogleMapsTravelMode] instance.
+  const GoogleMapsTravelMode(this.value);
+
+  /// The value of the travel mode.
+  final String value;
 }
 
 /// An action to search for a location in the Google Maps app.
@@ -195,8 +201,12 @@ class GoogleMapsSearchAction extends GoogleMaps implements IntentAppLinkAction, 
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
-        host: 'maps.google.com',
-        queryParameters: {'q': query},
+        host: 'www.google.com',
+        path: 'maps/@',
+        queryParameters: {
+          'api': '1',
+          'query': query,
+        },
       );
 }
 
@@ -230,7 +240,9 @@ class GoogleMapsViewAction extends GoogleMaps implements IntentAppLinkAction, Ap
         data: Uri(
           scheme: 'geo',
           path: '${coordinate.latitude},${coordinate.longitude}',
-          queryParameters: {if (zoom != null) 'z': zoom!.toString()},
+          queryParameters: {
+            if (zoom != null) 'z': zoom!.toString(),
+          },
         ).toString(),
         package: androidPackageName,
         flags: const [0x10000000],
@@ -239,11 +251,8 @@ class GoogleMapsViewAction extends GoogleMaps implements IntentAppLinkAction, Ap
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
-        host: 'maps.google.com',
-        queryParameters: {
-          'q': coordinate.toString(),
-          if (zoom != null) 'z': zoom!.toString(),
-        },
+        host: 'www.google.com',
+        path: 'maps/@${coordinate.latitude},${coordinate.longitude},${zoom ?? 14}z',
       );
 }
 
@@ -257,10 +266,10 @@ class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkActi
     this.mode,
   });
 
-  /// Destination address or coordinates.
+  /// Destination address or place name.
   final String destination;
 
-  /// Optional origin address or coordinates.
+  /// Optional origin address or place name.
   final String? origin;
 
   /// Optional travel mode.
@@ -272,7 +281,7 @@ class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkActi
         queryParameters: {
           'daddr': destination,
           if (origin != null) 'saddr': origin,
-          if (mode != null) 'directionsmode': _iosMode(mode!),
+          if (mode != null) 'directionsmode': mode!.value,
         },
       );
 
@@ -287,7 +296,7 @@ class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkActi
             'api': '1',
             'destination': destination,
             if (origin != null) 'origin': origin,
-            if (mode != null) 'travelmode': _iosMode(mode!),
+            if (mode != null) 'travelmode': mode!.value,
           },
         ).toString(),
         package: androidPackageName,
@@ -297,12 +306,14 @@ class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkActi
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
-        host: 'maps.google.com',
+        host: 'www.google.com',
+        path: 'maps/dir/',
         queryParameters: {
-          'saddr': origin,
-          'daddr': destination,
-          if (mode != null) 'directionsmode': _iosMode(mode!),
-        }..removeWhere((final _, final v) => v == null),
+          'api': '1',
+          'destination': destination,
+          if (origin != null) 'origin': origin,
+          if (mode != null) 'travelmode': mode!.value,
+        },
       );
 }
 
@@ -332,7 +343,7 @@ class GoogleMapsDirectionsWithCoordsAction extends GoogleMaps
         queryParameters: {
           'daddr': destination.toString(),
           if (origin != null) 'saddr': origin.toString(),
-          if (mode != null) 'directionsmode': _iosMode(mode!),
+          if (mode != null) 'directionsmode': mode!.value,
         },
       );
 
@@ -347,7 +358,7 @@ class GoogleMapsDirectionsWithCoordsAction extends GoogleMaps
             'api': '1',
             'destination': destination.toString(),
             if (origin != null) 'origin': origin.toString(),
-            if (mode != null) 'travelmode': _iosMode(mode!),
+            if (mode != null) 'travelmode': mode!.value,
           },
         ).toString(),
         package: androidPackageName,
@@ -357,24 +368,13 @@ class GoogleMapsDirectionsWithCoordsAction extends GoogleMaps
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
-        host: 'maps.google.com',
+        host: 'www.google.com',
+        path: 'maps/dir/',
         queryParameters: {
-          'saddr': origin?.toString(),
-          'daddr': destination.toString(),
-          if (mode != null) 'directionsmode': _iosMode(mode!),
-        }..removeWhere((final _, final v) => v == null),
+          'api': '1',
+          'destination': destination.toString(),
+          if (origin != null) 'origin': origin.toString(),
+          if (mode != null) 'travelmode': mode!.value,
+        },
       );
-}
-
-String _iosMode(final GoogleMapsTravelMode mode) {
-  switch (mode) {
-    case GoogleMapsTravelMode.driving:
-      return 'driving';
-    case GoogleMapsTravelMode.walking:
-      return 'walking';
-    case GoogleMapsTravelMode.bicycling:
-      return 'bicycling';
-    case GoogleMapsTravelMode.transit:
-      return 'transit';
-  }
 }

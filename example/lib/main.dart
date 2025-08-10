@@ -118,8 +118,8 @@ class _MyAppState extends State<MyApp> {
   final _googleMapsOriginLngController = TextEditingController(text: '-122.0841');
   final _googleMapsDestLatController = TextEditingController(text: '37.4220');
   final _googleMapsDestLngController = TextEditingController(text: '-122.0841');
-  GoogleMapsTravelMode _googleMapsSelectedMode = GoogleMapsTravelMode.driving;
-  GoogleMapsTravelMode _googleMapsCoordsMode = GoogleMapsTravelMode.driving;
+  GoogleMapsTravelMode? _googleMapsSelectedMode = GoogleMapsTravelMode.driving;
+  GoogleMapsTravelMode? _googleMapsCoordsMode = GoogleMapsTravelMode.driving;
 
   // FallBackToStore flags
   bool _instagramFallBackToStore = true;
@@ -2172,9 +2172,11 @@ class _MyAppState extends State<MyApp> {
       DropdownButton<GoogleMapsTravelMode>(
         value: _googleMapsSelectedMode,
         isExpanded: true,
-        onChanged: (final mode) => setState(() => _googleMapsSelectedMode = mode!),
-        items:
-            GoogleMapsTravelMode.values.map((final mode) => DropdownMenuItem(value: mode, child: Text(mode.name))).toList(),
+        onChanged: (final mode) => setState(() => _googleMapsSelectedMode = mode),
+        items: [
+          const DropdownMenuItem<GoogleMapsTravelMode>(child: Text('None')),
+          ...GoogleMapsTravelMode.values.map((final mode) => DropdownMenuItem(value: mode, child: Text(mode.name))),
+        ],
       ),
       const SizedBox(height: 8),
       ElevatedButton(
@@ -2238,9 +2240,11 @@ class _MyAppState extends State<MyApp> {
       DropdownButton<GoogleMapsTravelMode>(
         value: _googleMapsCoordsMode,
         isExpanded: true,
-        onChanged: (final mode) => setState(() => _googleMapsCoordsMode = mode!),
-        items:
-            GoogleMapsTravelMode.values.map((final mode) => DropdownMenuItem(value: mode, child: Text(mode.name))).toList(),
+        onChanged: (final mode) => setState(() => _googleMapsCoordsMode = mode),
+        items: [
+          const DropdownMenuItem<GoogleMapsTravelMode>(child: Text('None')),
+          ...GoogleMapsTravelMode.values.map((final mode) => DropdownMenuItem(value: mode, child: Text(mode.name))),
+        ],
       ),
       const SizedBox(height: 8),
       ElevatedButton(
