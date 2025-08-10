@@ -124,29 +124,5 @@ void main() {
       expect(action.fallbackLink.queryParameters['daddr'], 'Statue of Liberty');
       expect(action.fallbackLink.queryParameters['directionsmode'], 'transit');
     });
-
-    test('street view action creates correct URIs', () {
-      final action = GoogleMaps.streetView(
-        latitude: 40.6892,
-        longitude: -74.0445,
-        heading: 210,
-        pitch: 10,
-        fov: 80,
-      );
-
-      expect(action.appLink.scheme, 'comgooglemaps');
-      expect(action.appLink.queryParameters['mapmode'], 'streetview');
-      expect(action.appLink.queryParameters['center'], '40.6892,-74.0445');
-      expect(double.parse(action.appLink.queryParameters['heading']!), 210);
-      expect(double.parse(action.appLink.queryParameters['pitch']!), 10);
-      expect(double.parse(action.appLink.queryParameters['fov']!), 80);
-
-      final intentUri = Uri.parse(action.androidIntentOptions.data!);
-      expect(intentUri.scheme, 'google.streetview');
-      expect(intentUri.queryParameters['cbll'], '40.6892,-74.0445');
-      expect(intentUri.queryParameters['cbp'], '1,210.0,,10.0,80.0');
-
-      expect(action.fallbackLink.queryParameters['cbll'], '40.6892,-74.0445');
-    });
   });
 }

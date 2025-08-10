@@ -44,19 +44,6 @@ await deeplinkX.launchAction(
 );
 ```
 
-### Street View Action
-```dart
-await deeplinkX.launchAction(
-  GoogleMaps.streetView(
-    latitude: 40.6892,
-    longitude: -74.0445,
-    heading: 210,
-    pitch: 10,
-    fov: 80,
-  ),
-);
-```
-
 ## Platform Configuration
 
 ### iOS
@@ -77,19 +64,16 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
 - View coordinates: `comgooglemaps://?center={lat},{lng}&zoom={zoom}`
 - Search: `comgooglemaps://?q={query}`
 - Directions: `comgooglemaps://?saddr={origin}&daddr={destination}&directionsmode={mode}`
-- Street View: `comgooglemaps://?mapmode=streetview&center={lat},{lng}&heading={heading}&pitch={pitch}&fov={fov}`
 
 ### Android Intent URIs
 - View coordinates: `geo:{lat},{lng}?z={zoom}`
 - Search: `geo:0,0?q={query}`
 - Directions: `https://www.google.com/maps/dir/?api=1&destination={destination}&origin={origin}&travelmode={mode}`
-- Street View: `google.streetview:cbll={lat},{lng}&cbp=1,{heading},,{pitch},{fov}`
 
 ### Web Fallback URLs
 - View coordinates: `https://maps.google.com/?q={lat},{lng}&z={zoom}`
 - Search: `https://maps.google.com/?q={query}`
 - Directions: `https://maps.google.com/?saddr={origin}&daddr={destination}&directionsmode={mode}`
-- Street View: `https://maps.google.com/?cbll={lat},{lng}`
 
 ## Supported Fallback Stores
 When the Google Maps app is not installed, DeeplinkX can redirect users to download Google Maps from:
@@ -114,5 +98,4 @@ Enable fallback with the `fallbackToStore` parameter when launching actions or a
 | View map      | ✔️ | ✔️ |
 | Search        | ✔️ | ✔️ |
 | Directions    | ✔️ | ✔️ |
-| Street View   | ✔️ | ✔️ |
 

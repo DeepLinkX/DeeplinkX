@@ -116,9 +116,6 @@ class _MyAppState extends State<MyApp> {
   final _googleMapsDestinationController = TextEditingController(text: 'Statue of Liberty');
   final _googleMapsStreetLatController = TextEditingController(text: '40.6892');
   final _googleMapsStreetLngController = TextEditingController(text: '-74.0445');
-  final _googleMapsHeadingController = TextEditingController(text: '210');
-  final _googleMapsPitchController = TextEditingController(text: '10');
-  final _googleMapsFovController = TextEditingController(text: '80');
   GoogleMapsTravelMode _googleMapsSelectedMode = GoogleMapsTravelMode.driving;
 
   // FallBackToStore flags
@@ -197,9 +194,6 @@ class _MyAppState extends State<MyApp> {
     _googleMapsDestinationController.dispose();
     _googleMapsStreetLatController.dispose();
     _googleMapsStreetLngController.dispose();
-    _googleMapsHeadingController.dispose();
-    _googleMapsPitchController.dispose();
-    _googleMapsFovController.dispose();
     super.dispose();
   }
 
@@ -2192,78 +2186,6 @@ class _MyAppState extends State<MyApp> {
           }
         },
         child: const Text('Get Directions'),
-      ),
-      const SizedBox(height: 16),
-      const Text('Street View', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-      const SizedBox(height: 8),
-      Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _googleMapsStreetLatController,
-              decoration: const InputDecoration(labelText: 'Latitude', border: OutlineInputBorder()),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: TextField(
-              controller: _googleMapsStreetLngController,
-              decoration: const InputDecoration(labelText: 'Longitude', border: OutlineInputBorder()),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 8),
-      Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _googleMapsHeadingController,
-              decoration: const InputDecoration(labelText: 'Heading (optional)', border: OutlineInputBorder()),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: TextField(
-              controller: _googleMapsPitchController,
-              decoration: const InputDecoration(labelText: 'Pitch (optional)', border: OutlineInputBorder()),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: TextField(
-              controller: _googleMapsFovController,
-              decoration: const InputDecoration(labelText: 'FOV (optional)', border: OutlineInputBorder()),
-              keyboardType: TextInputType.number,
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 8),
-      ElevatedButton(
-        onPressed: () async {
-          if (_googleMapsStreetLatController.text.isNotEmpty && _googleMapsStreetLngController.text.isNotEmpty) {
-            await _deeplinkX.launchAction(
-              GoogleMaps.streetView(
-                latitude: double.parse(_googleMapsStreetLatController.text),
-                longitude: double.parse(_googleMapsStreetLngController.text),
-                heading:
-                    _googleMapsHeadingController.text.isNotEmpty
-                        ? double.parse(_googleMapsHeadingController.text)
-                        : null,
-                pitch:
-                    _googleMapsPitchController.text.isNotEmpty ? double.parse(_googleMapsPitchController.text) : null,
-                fov: _googleMapsFovController.text.isNotEmpty ? double.parse(_googleMapsFovController.text) : null,
-                fallbackToStore: _googleMapsFallBackToStore,
-              ),
-            );
-          }
-        },
-        child: const Text('Open Street View'),
       ),
     ],
   );

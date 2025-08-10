@@ -117,50 +117,27 @@ class GoogleMaps extends App implements DownloadableApp {
         mode: mode,
         fallbackToStore: fallbackToStore,
       );
-
-  /// Creates an action to display Street View imagery.
-  ///
-  /// Parameters:
-  /// - [latitude]: The latitude coordinate.
-  /// - [longitude]: The longitude coordinate.
-  /// - [heading]: Optional heading in degrees from 0 to 360.
-  /// - [pitch]: Optional pitch in degrees from -90 to 90.
-  /// - [fov]: Optional field of view. 1 corresponds roughly to zoom level.
-  /// - [fallbackToStore]: Whether to automatically redirect to app stores when
-  ///   the Google Maps app is not installed. Default is false.
-  ///
-  /// Returns a [GoogleMapsStreetViewAction] instance.
-  static GoogleMapsStreetViewAction streetView({
-    required final double latitude,
-    required final double longitude,
-    final double? heading,
-    final double? pitch,
-    final double? fov,
-    final bool fallbackToStore = false,
-  }) =>
-      GoogleMapsStreetViewAction(
-        latitude: latitude,
-        longitude: longitude,
-        heading: heading,
-        pitch: pitch,
-        fov: fov,
-        fallbackToStore: fallbackToStore,
-      );
 }
 
 /// Travel modes supported by Google Maps directions.
 enum GoogleMapsTravelMode {
   /// Driving route.
-  driving,
+  driving('driving'),
 
   /// Walking route.
-  walking,
+  walking('walking'),
 
   /// Bicycling route.
-  bicycling,
+  bicycling('bicycling'),
 
   /// Public transit route.
-  transit,
+  transit('transit');
+
+  /// Creates a new [GoogleMapsTravelMode] instance.
+  const GoogleMapsTravelMode(this.value);
+
+  /// The value of the travel mode.
+  final String value;
 }
 
 /// An action to search for a location in the Google Maps app.
@@ -297,7 +274,7 @@ class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkActi
         queryParameters: {
           'daddr': destination,
           if (origin != null) 'saddr': origin,
-          if (mode != null) 'directionsmode': _iosMode(mode!),
+          if (mode != null) 'directionsmode': mode!.value,
         },
       );
 
@@ -311,7 +288,7 @@ class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkActi
         'api': '1',
         'destination': destination,
         if (origin != null) 'origin': origin,
-        if (mode != null) 'travelmode': _iosMode(mode!),
+        if (mode != null) 'travelmode': mode!.value,
       },
     );
     return AndroidIntentOption(
@@ -328,88 +305,9 @@ class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkActi
         host: 'maps.google.com',
         path: '',
         queryParameters: {
-          'saddr': origin,
           'daddr': destination,
-          if (mode != null) 'directionsmode': _iosMode(mode!),
-        }..removeWhere((final _, final v) => v == null),
-      );
-}
-
-/// An action to display Street View imagery in the Google Maps app.
-class GoogleMapsStreetViewAction extends GoogleMaps implements IntentAppLinkAction, AppLinkAppAction, Fallbackable {
-  /// Creates a new [GoogleMapsStreetViewAction] instance.
-  GoogleMapsStreetViewAction({
-    required this.latitude,
-    required this.longitude,
-    required super.fallbackToStore,
-    this.heading,
-    this.pitch,
-    this.fov,
-  });
-
-  /// Latitude coordinate.
-  final double latitude;
-
-  /// Longitude coordinate.
-  final double longitude;
-
-  /// Optional heading in degrees from 0 to 360.
-  final double? heading;
-
-  /// Optional pitch in degrees from -90 to 90.
-  final double? pitch;
-
-  /// Optional field of view/zoom level.
-  final double? fov;
-
-  @override
-  Uri get appLink => Uri(
-        scheme: 'comgooglemaps',
-        queryParameters: {
-          'mapmode': 'streetview',
-          'center': '$latitude,$longitude',
-          if (heading != null) 'heading': heading!.toString(),
-          if (pitch != null) 'pitch': pitch!.toString(),
-          if (fov != null) 'fov': fov!.toString(),
+          if (origin != null) 'saddr': origin,
+          if (mode != null) 'directionsmode': mode!.value,
         },
       );
-
-  @override
-  AndroidIntentOption get androidIntentOptions {
-    final dataUri = Uri(
-      scheme: 'google.streetview',
-      queryParameters: {
-        'cbll': '$latitude,$longitude',
-        if (heading != null || pitch != null || fov != null) 'cbp': '1,${heading ?? 0},,${pitch ?? 0},${fov ?? 1}',
-      },
-    );
-    return AndroidIntentOption(
-      action: 'action_view',
-      data: dataUri.toString(),
-      package: androidPackageName,
-      flags: const [0x10000000],
-    );
-  }
-
-  @override
-  Uri get fallbackLink => Uri(
-        scheme: 'https',
-        host: 'maps.google.com',
-        queryParameters: {
-          'cbll': '$latitude,$longitude',
-        },
-      );
-}
-
-String _iosMode(final GoogleMapsTravelMode mode) {
-  switch (mode) {
-    case GoogleMapsTravelMode.driving:
-      return 'driving';
-    case GoogleMapsTravelMode.walking:
-      return 'walking';
-    case GoogleMapsTravelMode.bicycling:
-      return 'bicycling';
-    case GoogleMapsTravelMode.transit:
-      return 'transit';
-  }
 }
