@@ -1,3 +1,13 @@
+## 1.1.2
+* Added Google Maps app with following actions:
+  * Open app
+  * View coordinates action
+  * Search location action
+  * Directions action
+  * Directions with coordinates action
+* Added documentation for Google Maps deeplinks
+* Updated example app with Google Maps tab
+
 ## 1.1.1
 * Added Slack app with following actions:
   * Open app

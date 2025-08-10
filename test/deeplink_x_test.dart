@@ -91,6 +91,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('GoogleMaps', () {
+        final action = GoogleMaps.open();
+        expect(action, isA<App>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());

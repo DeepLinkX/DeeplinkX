@@ -57,7 +57,8 @@
 			<string>pinterest</string>
 			<string>tiktok</string>
 			<string>zoomus</string>
-			<string>slack</string>
-		</array>
-	</dict>
+                        <string>slack</string>
+                        <string>comgooglemaps</string>
+                </array>
+        </dict>
 </plist>
