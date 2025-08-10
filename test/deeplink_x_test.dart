@@ -91,6 +91,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('GoogleMaps', () {
+        final action = GoogleMaps.open();
+        expect(action, isA<App>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());
@@ -139,6 +144,22 @@ void main() {
       test('PlatformType', () {
         const platform = PlatformType.android;
         expect(platform, isA<PlatformType>());
+      });
+    });
+
+    group('Models:', () {
+      test('Coordinate', () {
+        const coordinate = Coordinate(latitude: 1, longitude: 2);
+        expect(coordinate, isA<Coordinate>());
+      });
+
+      test('AndroidIntentOption', () {
+        const androidIntentOption = AndroidIntentOption(
+          action: 'android.intent.action.VIEW',
+          package: 'com.test.app',
+          data: '',
+        );
+        expect(androidIntentOption, isA<AndroidIntentOption>());
       });
     });
 
