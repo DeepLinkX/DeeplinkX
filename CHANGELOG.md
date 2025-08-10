@@ -93,7 +93,7 @@
 
 ## 0.1.3
 * Improved README
-  * Used complete Github links instead of relative paths 
+  * Used complete GitHub links instead of relative paths 
 
 ## 0.1.2
 * Added support for LinkedIn deeplinks:
