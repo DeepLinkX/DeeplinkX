@@ -2,7 +2,7 @@ name: Build & Deploy Example Web
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - "example/**"
       - "packages/**"
