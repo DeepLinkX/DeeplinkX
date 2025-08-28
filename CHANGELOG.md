@@ -1,3 +1,8 @@
+## 1.1.3
+* Improved example app visibility with list-based navigation
+* Split example into multiple files for easier reading
+* Added dedicated pages for all remaining apps and app stores
+
 ## 1.1.2
 * Added Google Maps app with following actions:
   * Open app
