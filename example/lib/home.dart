@@ -21,114 +21,38 @@ import 'package:flutter/material.dart';
 
 /// Simple model describing an example page.
 class _DemoItem {
-  const _DemoItem({required this.title, required this.logoUrl, required this.builder});
+  const _DemoItem({required this.title, required this.assetName, required this.builder});
 
   final String title;
-  final String logoUrl;
+  final String assetName;
   final WidgetBuilder builder;
 }
 
 // List of application demos.
 final _apps = <_DemoItem>[
-  _DemoItem(
-    title: 'Instagram',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=instagram.com',
-    builder: (_) => const InstagramPage(),
-  ),
-  _DemoItem(
-    title: 'Telegram',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=telegram.org',
-    builder: (_) => const TelegramPage(),
-  ),
-  _DemoItem(
-    title: 'WhatsApp',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=whatsapp.com',
-    builder: (_) => const WhatsAppPage(),
-  ),
-  _DemoItem(
-    title: 'Facebook',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=facebook.com',
-    builder: (_) => const FacebookPage(),
-  ),
-  _DemoItem(
-    title: 'LinkedIn',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=linkedin.com',
-    builder: (_) => const LinkedInPage(),
-  ),
-  _DemoItem(
-    title: 'YouTube',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=youtube.com',
-    builder: (_) => const YouTubePage(),
-  ),
-  _DemoItem(
-    title: 'Twitter',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=twitter.com',
-    builder: (_) => const TwitterPage(),
-  ),
-  _DemoItem(
-    title: 'Pinterest',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=pinterest.com',
-    builder: (_) => const PinterestPage(),
-  ),
-  _DemoItem(
-    title: 'TikTok',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=tiktok.com',
-    builder: (_) => const TikTokPage(),
-  ),
-  _DemoItem(
-    title: 'Zoom',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=zoom.us',
-    builder: (_) => const ZoomPage(),
-  ),
-  _DemoItem(
-    title: 'Slack',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=slack.com',
-    builder: (_) => const SlackPage(),
-  ),
-  _DemoItem(
-    title: 'Google Maps',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=maps.google.com',
-    builder: (_) => const GoogleMapsPage(),
-  ),
+  _DemoItem(title: 'Instagram', assetName: 'assets/instagram.png', builder: (_) => const InstagramPage()),
+  _DemoItem(title: 'Telegram', assetName: 'assets/telegram.png', builder: (_) => const TelegramPage()),
+  _DemoItem(title: 'WhatsApp', assetName: 'assets/whatsapp.png', builder: (_) => const WhatsAppPage()),
+  _DemoItem(title: 'Facebook', assetName: 'assets/facebook.png', builder: (_) => const FacebookPage()),
+  _DemoItem(title: 'LinkedIn', assetName: 'assets/linkedin.png', builder: (_) => const LinkedInPage()),
+  _DemoItem(title: 'YouTube', assetName: 'assets/youtube.png', builder: (_) => const YouTubePage()),
+  _DemoItem(title: 'Twitter', assetName: 'assets/twitter.png', builder: (_) => const TwitterPage()),
+  _DemoItem(title: 'Pinterest', assetName: 'assets/pinterest.png', builder: (_) => const PinterestPage()),
+  _DemoItem(title: 'TikTok', assetName: 'assets/tiktok.png', builder: (_) => const TikTokPage()),
+  _DemoItem(title: 'Zoom', assetName: 'assets/zoom.png', builder: (_) => const ZoomPage()),
+  _DemoItem(title: 'Slack', assetName: 'assets/slack.png', builder: (_) => const SlackPage()),
+  _DemoItem(title: 'Google Maps', assetName: 'assets/google_maps.png', builder: (_) => const GoogleMapsPage()),
 ];
 
 // List of store demos.
 final _stores = <_DemoItem>[
-  _DemoItem(
-    title: 'Play Store',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=play.google.com',
-    builder: (_) => const PlayStorePage(),
-  ),
-  _DemoItem(
-    title: 'iOS App Store',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=apple.com',
-    builder: (_) => const IOSAppStorePage(),
-  ),
-  _DemoItem(
-    title: 'Mac App Store',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=apple.com',
-    builder: (_) => const MacAppStorePage(),
-  ),
-  _DemoItem(
-    title: 'Microsoft Store',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=microsoft.com',
-    builder: (_) => const MicrosoftStorePage(),
-  ),
-  _DemoItem(
-    title: 'Huawei AppGallery',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=huawei.com',
-    builder: (_) => const HuaweiAppGalleryPage(),
-  ),
-  _DemoItem(
-    title: 'Cafe Bazaar',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=cafebazaar.ir',
-    builder: (_) => const CafeBazaarPage(),
-  ),
-  _DemoItem(
-    title: 'Myket',
-    logoUrl: 'https://www.google.com/s2/favicons?sz=64&domain_url=myket.ir',
-    builder: (_) => const MyketPage(),
-  ),
+  _DemoItem(title: 'Play Store', assetName: 'assets/google_play.png', builder: (_) => const PlayStorePage()),
+  _DemoItem(title: 'iOS App Store', assetName: 'assets/apple.png', builder: (_) => const IOSAppStorePage()),
+  _DemoItem(title: 'Mac App Store', assetName: 'assets/apple.png', builder: (_) => const MacAppStorePage()),
+  _DemoItem(title: 'Microsoft Store', assetName: 'assets/microsoft.png', builder: (_) => const MicrosoftStorePage()),
+  _DemoItem(title: 'Huawei AppGallery', assetName: 'assets/huawei.png', builder: (_) => const HuaweiAppGalleryPage()),
+  _DemoItem(title: 'Cafe Bazaar', assetName: 'assets/cafe_bazaar.png', builder: (_) => const CafeBazaarPage()),
+  _DemoItem(title: 'Myket', assetName: 'assets/myket.png', builder: (_) => const MyketPage()),
 ];
 
 List<_DemoItem> get _allItems => <_DemoItem>[..._apps, ..._stores];
@@ -211,7 +135,7 @@ class _HomePageState extends State<HomePage> {
           actions: [IconButton(icon: const Icon(Icons.grid_view), onPressed: _toggle)],
           bottom: TabBar(
             isScrollable: true,
-            tabs: [for (final item in items) Tab(icon: _Logo(url: item.logoUrl), text: item.title)],
+            tabs: [for (final item in items) Tab(icon: _Logo(assetName: item.assetName), text: item.title)],
           ),
         ),
         body: TabBarView(children: [for (final item in items) item.builder(context)]),
@@ -234,7 +158,7 @@ class _GridItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _Logo(url: item.logoUrl, size: 40),
+            _Logo(assetName: item.assetName, size: 40),
             const SizedBox(height: 8),
             Text(item.title, textAlign: TextAlign.center),
           ],
@@ -245,14 +169,14 @@ class _GridItem extends StatelessWidget {
 }
 
 class _Logo extends StatelessWidget {
-  const _Logo({required this.url, this.size = 24});
+  const _Logo({required this.assetName, this.size = 24});
 
-  final String url;
+  final String assetName;
   final double size;
 
   @override
-  Widget build(final BuildContext context) => Image.network(
-    url,
+  Widget build(final BuildContext context) => Image.asset(
+    assetName,
     height: size,
     width: size,
     errorBuilder: (final context, final error, final stackTrace) => Icon(Icons.broken_image, size: size),
