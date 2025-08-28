@@ -25,6 +25,10 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 - Support popular stores including Google PlayStore, iOS AppStore, Mac AppStore, Microsoft Store, Huawei AppGallery, Myket, Cafe Bazaar
 - Support popular apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, TikTok, Pinterest, Zoom, Slack, and Google Maps
 
+## Demo
+
+Try the live demo: [https://deeplinkx.github.io/DeeplinkX/](https://deeplinkx.github.io/DeeplinkX/)
+
 ## Usage
 
 First, import the package and create an instance:
@@ -93,27 +97,27 @@ final isRedirected = await deeplinkX.redirectToStore(
 
 ## Supported Apps And Actions
 
-| Category    | App                    | Supported Actions |
-| ----------- | ---------------------- | ----------------- |
-| Stores      | iOS App Store          | • Open app page<br>• Rate app |
-| Stores      | Mac App Store          | • Open app page<br>• Rate app |
-| Stores      | Microsoft Store        | • Open app page<br>• Rate app |
-| Stores      | Google Play Store      | • Open app page |
-| Stores      | Huawei AppGallery Store| • Open app page |
-| Stores      | Cafe Bazaar Store      | • Open app page |
-| Stores      | Myket Store            | • Open app page<br>• Rate app |
-| Social Apps | Telegram               | • Open profile by username/phone<br>• Send message |
-| Social Apps | Instagram              | • Open profile by username |
-| Social Apps | WhatsApp               | • Chat with phone number<br>• Share text content |
-| Social Apps | Facebook               | • Open profile by ID<br>• Open profile by username<br>• Open page<br>• Open group<br>• Open event |
-| Social Apps | YouTube                | • Open video<br>• Open channel<br>• Open playlist<br>• Search |
-| Social Apps | Twitter                | • Open profile by username<br>• Open tweet by ID<br>• Search |
-| Social Apps | Pinterest              | • Open profile by username<br>• Open board by ID<br>• Search |
-| Social Apps | TikTok                 | • Open profile by username<br>• Open video<br>• Open Tag |
-| Social Apps | Zoom                   | • Join meeting by ID |
-| Social Apps | Slack                  | • Open team<br>• Open channel<br>• Open user |
-| Navigation  | Google Maps            | • View map<br>• Search location<br>• Directions<br>• Directions with coordinates |
-| Business    | LinkedIn               | • Open profile page<br>• Open company page |
+| Category    | App                     | Supported Actions                                                                                 |
+| ----------- | ----------------------- | ------------------------------------------------------------------------------------------------- |
+| Stores      | iOS App Store           | • Open app page<br>• Rate app                                                                     |
+| Stores      | Mac App Store           | • Open app page<br>• Rate app                                                                     |
+| Stores      | Microsoft Store         | • Open app page<br>• Rate app                                                                     |
+| Stores      | Google Play Store       | • Open app page                                                                                   |
+| Stores      | Huawei AppGallery Store | • Open app page                                                                                   |
+| Stores      | Cafe Bazaar Store       | • Open app page                                                                                   |
+| Stores      | Myket Store             | • Open app page<br>• Rate app                                                                     |
+| Social Apps | Telegram                | • Open profile by username/phone<br>• Send message                                                |
+| Social Apps | Instagram               | • Open profile by username                                                                        |
+| Social Apps | WhatsApp                | • Chat with phone number<br>• Share text content                                                  |
+| Social Apps | Facebook                | • Open profile by ID<br>• Open profile by username<br>• Open page<br>• Open group<br>• Open event |
+| Social Apps | YouTube                 | • Open video<br>• Open channel<br>• Open playlist<br>• Search                                     |
+| Social Apps | Twitter                 | • Open profile by username<br>• Open tweet by ID<br>• Search                                      |
+| Social Apps | Pinterest               | • Open profile by username<br>• Open board by ID<br>• Search                                      |
+| Social Apps | TikTok                  | • Open profile by username<br>• Open video<br>• Open Tag                                          |
+| Social Apps | Zoom                    | • Join meeting by ID                                                                              |
+| Social Apps | Slack                   | • Open team<br>• Open channel<br>• Open user                                                      |
+| Navigation  | Google Maps             | • View map<br>• Search location<br>• Directions<br>• Directions with coordinates                  |
+| Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
 ## Documentation
 
