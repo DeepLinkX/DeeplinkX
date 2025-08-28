@@ -28,6 +28,7 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 ## Demo
 
 Try the live demo: [https://deeplinkx.github.io/DeeplinkX/](https://deeplinkx.github.io/DeeplinkX/)
+> **Note**: For better results test on mobile device.
 
 ## Usage
 
