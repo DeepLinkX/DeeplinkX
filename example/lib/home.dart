@@ -179,7 +179,6 @@ class _HomePageState extends State<HomePage> {
           crossAxisCount: crossAxisCount,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          childAspectRatio: 1,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
           children: [for (final item in items) _GridItem(item: item)],
@@ -190,9 +189,15 @@ class _HomePageState extends State<HomePage> {
 
   int _calculateCrossAxisCount(final BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    if (width >= 1200) return 6;
-    if (width >= 900) return 5;
-    if (width >= 600) return 4;
+    if (width >= 1200) {
+      return 6;
+    }
+    if (width >= 900) {
+      return 5;
+    }
+    if (width >= 600) {
+      return 4;
+    }
     return 3;
   }
 
