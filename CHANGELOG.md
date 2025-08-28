@@ -1,3 +1,12 @@
+## 1.1.2+1
+* Updated example project
+  * Added splash screen with DeeplinkX logo
+  * Added home screen with grid or list view of apps and stores
+  * Splited main.dart to specific per app page
+* Updated readme
+  * Added DeeplinkX logo
+  * Add demo link 
+
 ## 1.1.2
 * Added Google Maps app with following actions:
   * Open app
