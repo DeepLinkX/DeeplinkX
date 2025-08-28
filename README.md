@@ -8,7 +8,7 @@
 [![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20%7C%20macOS%20%7C%20Windows%20%7C%20Linux%20%7C%20Web-blue.svg)](https://flutter.dev)
 
 <p>
-  <img align="center" src="images/deeplink_x_logo.jpg" width="200" alt="DeeplinkX Logo">
+  <img align="center" src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/deeplink_x_logo.jpg" width="200" alt="DeeplinkX Logo">
 </p>
 
 Easy to use Flutter plugin for type-safe handling of external deeplinks with built-in support for popular apps. Features smart fallback to app stores and web URLs across all major platforms.
