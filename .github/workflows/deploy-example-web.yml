@@ -22,7 +22,7 @@ concurrency:
 
 env:
   # Pin your Flutter version (use the stable you target)
-  FLUTTER_VERSION: "3.24.0"
+  FLUTTER_VERSION: "3.35.2"
   # For a project page like https://<user>.github.io/<repo>/
   BASE_HREF: "/${{ github.event.repository.name }}/"
   WEB_RENDERER: "auto"          # or "canvaskit"
