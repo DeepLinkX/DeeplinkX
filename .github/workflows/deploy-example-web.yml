@@ -1,0 +1,83 @@
+name: Build & Deploy Example Web
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "example/**"
+      - "packages/**"
+      - "pubspec.yaml"
+      - ".github/workflows/deploy-example-web.yml"
+  workflow_dispatch:
+
+# Required for GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+env:
+  # Pin your Flutter version (use the stable you target)
+  FLUTTER_VERSION: "3.24.0"
+  # For a project page like https://<user>.github.io/<repo>/
+  BASE_HREF: "/${{ github.event.repository.name }}/"
+  WEB_RENDERER: "auto"          # or "canvaskit"
+  PWA_STRATEGY: "none"          # avoid stale caches on updates
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Enable web
+        run: flutter config --enable-web
+
+      - name: Pub get (root)
+        run: flutter pub get
+
+      - name: Pub get (example)
+        working-directory: example
+        run: flutter pub get
+
+      - name: Build example for web (release)
+        working-directory: example
+        run: |
+          flutter build web \
+            --release \
+            --web-renderer $WEB_RENDERER \
+            --pwa-strategy $PWA_STRATEGY \
+            --base-href "$BASE_HREF"
+          # SPA fallback for GitHub Pages
+          cp -v build/web/index.html build/web/404.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: example/build/web
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
