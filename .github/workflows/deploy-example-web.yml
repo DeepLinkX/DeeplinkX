@@ -60,6 +60,7 @@ jobs:
         run: |
           flutter build web \
             --release \
+            --wasm \
             --web-renderer $WEB_RENDERER \
             --pwa-strategy $PWA_STRATEGY \
             --base-href "$BASE_HREF"
