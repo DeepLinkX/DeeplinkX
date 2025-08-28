@@ -1,4 +1,4 @@
-import 'package:deeplink_x_example/home.dart';
+import 'package:deeplink_x_example/splash.dart';
 import 'package:flutter/material.dart';
 
 /// Entry point for the DeeplinkX example application.
@@ -13,5 +13,5 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) =>
-      MaterialApp(title: 'DeeplinkX Example', theme: ThemeData(useMaterial3: true), home: const HomePage());
+      MaterialApp(title: 'DeeplinkX Example', theme: ThemeData(useMaterial3: true), home: const SplashPage());
 }
