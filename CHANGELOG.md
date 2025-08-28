@@ -1,5 +1,6 @@
 ## 1.1.3
-* Improved example app visibility with list-based navigation
+* Made example home page more attractive with a responsive grid of logos and names
+* Added toggle to switch between grid view and the original tab view
 * Split example into multiple files for easier reading
 * Added dedicated pages for all remaining apps and app stores
 
