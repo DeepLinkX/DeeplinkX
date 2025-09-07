@@ -14,6 +14,7 @@ import 'package:deeplink_x_example/pages/slack_page.dart';
 import 'package:deeplink_x_example/pages/telegram_page.dart';
 import 'package:deeplink_x_example/pages/tiktok_page.dart';
 import 'package:deeplink_x_example/pages/twitter_page.dart';
+import 'package:deeplink_x_example/pages/waze_page.dart';
 import 'package:deeplink_x_example/pages/whatsapp_page.dart';
 import 'package:deeplink_x_example/pages/youtube_page.dart';
 import 'package:deeplink_x_example/pages/zoom_page.dart';
@@ -42,6 +43,7 @@ final _apps = <_DemoItem>[
   _DemoItem(title: 'Zoom', assetName: 'assets/zoom.png', builder: (_) => const ZoomPage()),
   _DemoItem(title: 'Slack', assetName: 'assets/slack.png', builder: (_) => const SlackPage()),
   _DemoItem(title: 'Google Maps', assetName: 'assets/google_maps.png', builder: (_) => const GoogleMapsPage()),
+  _DemoItem(title: 'Waze', assetName: 'assets/waze.png', builder: (_) => const WazePage()),
 ];
 
 // List of store demos.

@@ -1,3 +1,13 @@
+## 1.1.3
+* Added Waze app with the following actions:
+  * Open app
+  * View map action
+  * Search action — no web fallback
+  * Directions action
+  * Directions with coordinates action
+* Added documentation for Waze deeplinks
+* Updated example app with a Waze tab
+
 ## 1.1.2+1
 * Updated example project
   * Added splash screen with DeeplinkX logo

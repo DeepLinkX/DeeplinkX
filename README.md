@@ -23,7 +23,7 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 - Check if external app is installed on the device
 - Smart fallback system
 - Support popular stores including Google PlayStore, iOS AppStore, Mac AppStore, Microsoft Store, Huawei AppGallery, Myket, Cafe Bazaar
-- Support popular apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, TikTok, Pinterest, Zoom, Slack, and Google Maps
+- Support popular apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, and Waze
 
 ## Demo
 
@@ -43,6 +43,7 @@ void main() {
 ```
 
 ### App and Platform Configuration
+
 Configure app-specific URLs for each platform:
 
 - iOS: `Info.plist`
@@ -118,10 +119,10 @@ final isRedirected = await deeplinkX.redirectToStore(
 | Social Apps | Zoom                    | • Join meeting by ID                                                                              |
 | Social Apps | Slack                   | • Open team<br>• Open channel<br>• Open user                                                      |
 | Navigation  | Google Maps             | • View map<br>• Search location<br>• Directions<br>• Directions with coordinates                  |
+| Navigation  | Waze                    | • View map<br>• Search<br>• Directions<br>• Directions with coordinates                  |
 | Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
 ## Documentation
-
 
 Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/DeeplinkX/tree/master/doc/apps):
 
@@ -144,6 +145,7 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [Zoom](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/zoom.md)
 - [Slack](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/slack.md)
 - [Google Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/google_maps.md)
+- [Waze](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md)
 
 ## URL Scheme Handling
 
@@ -165,6 +167,7 @@ await deeplinkX.launchAction(
 For detailed URL schemes and fallback behavior, see each app's documentation.
 
 ## Why Prefer Custom Schemes, App Links or Intent Actions Instead of Universal Links?
+
 - **Better User Experience:** Custom schemes and app links trigger the app directly, so users don’t see a browser flash or an extra redirect before the app opens. This results in a smoother, more native-feeling experience.
 - **No More Selection Dialogs:** By using custom schemes and Android intents, the app launches directly without showing the "Open with..." dialog, reducing friction and confusion for users.
 - **Safer with Fallbacks:** You can reliably check if an app is installed using custom schemes or package names. If the app isn’t present, DeeplinkX can automatically fall back to the appropriate store or web URL.
@@ -173,6 +176,7 @@ For detailed URL schemes and fallback behavior, see each app's documentation.
 - **Best of Both Worlds:** DeeplinkX combines the speed and directness of custom schemes with the reliability of universal links as a fallback, ensuring your users always reach the intended content in the best way possible.
 
 ## Why use DeeplinkX over `url_launcher`?
+
 - **Automatic Fallbacks:** DeeplinkX can check if an app is installed and automatically fall back to the app store or a web URL if the app is missing. With `url_launcher`, you must handle this logic manually.
 - **Custom Android Intents:** DeeplinkX uses advanced Android intent options, `url_launcher` only supports basic intent launching.
 - **Cross-Platform Consistency:** DeeplinkX works seamlessly across platform, where `url_launcher` may not support certain schemes (e.g., checking can launch deep link of custom schemes on macOS).
@@ -180,6 +184,7 @@ For detailed URL schemes and fallback behavior, see each app's documentation.
 - **Less Boilerplate:** With DeeplinkX, you can trigger complex actions (like opening a specific screen in an app, or falling back to the store) with a single method call, instead of writing custom logic for each case.
 
 ## Platform-Specific Configuration
+
 See respective app documentation for platform-specific configuration.
 
 ## Contributing
