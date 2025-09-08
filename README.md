@@ -13,7 +13,8 @@
 
 Easy to use Flutter plugin for type-safe handling of external deeplinks with built-in support for popular apps. Features smart fallback to app stores and web URLs across all major platforms.
 
-> **Naming Note**: 'X' in DeeplinkX stands for external.
+> **Naming Note:**  
+'X' in DeeplinkX stands for external.
 
 ## Features
 
@@ -28,7 +29,9 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 ## Demo
 
 Try the live demo: [https://deeplinkx.github.io/DeeplinkX/](https://deeplinkx.github.io/DeeplinkX/)
-> **Note**: For better results test on mobile device.
+> **Note**  
+For best results, build and run on real phone.  
+Some features like app installation checks may not work on web.  
 
 ## Usage
 
@@ -166,6 +169,10 @@ await deeplinkX.launchAction(
 
 For detailed URL schemes and fallback behavior, see each app's documentation.
 
+## Platform-Specific Configuration
+
+See respective app documentation for platform-specific configuration.
+
 ## Why Prefer Custom Schemes, App Links or Intent Actions Instead of Universal Links?
 
 - **Better User Experience:** Custom schemes and app links trigger the app directly, so users don’t see a browser flash or an extra redirect before the app opens. This results in a smoother, more native-feeling experience.
@@ -183,9 +190,6 @@ For detailed URL schemes and fallback behavior, see each app's documentation.
 - **Unified API for Many Apps:** DeeplinkX provides a unified, high-level API for dozens of popular apps and stores, so you don't have to research and maintain deep link formats or intent structures yourself.
 - **Less Boilerplate:** With DeeplinkX, you can trigger complex actions (like opening a specific screen in an app, or falling back to the store) with a single method call, instead of writing custom logic for each case.
 
-## Platform-Specific Configuration
-
-See respective app documentation for platform-specific configuration.
 
 ## Contributing
 
