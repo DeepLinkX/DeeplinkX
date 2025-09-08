@@ -1,4 +1,7 @@
-## 1.1.3
+## 1.1.3+2
+* Fixed changelog format
+
+## 1.1.3+1
 * Added coordinate model tests for better reliability
 
 ## 1.1.3
