@@ -1,4 +1,7 @@
 ## 1.1.3
+* Added coordinate model tests for better reliability
+
+## 1.1.3
 * Added Waze app with the following actions:
   * Open app
   * View map action
