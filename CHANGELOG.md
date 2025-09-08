@@ -1,3 +1,14 @@
+## 1.1.3+3
+* Update coordinate model tests for coverage issue
+* Added Waze app with the following actions:
+  * Open app
+  * View map action
+  * Search action — no web fallback
+  * Directions action
+  * Directions with coordinates action
+* Added documentation for Waze deeplinks
+* Updated example app with a Waze tab
+
 ## 1.1.3+2
 * Fixed changelog format
 
