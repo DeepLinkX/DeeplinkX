@@ -113,7 +113,7 @@ class _WazePageState extends State<WazePage> {
             child: const Text('Search'),
           ),
           const SizedBox(height: 16),
-          const Text('Directions (Text)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('Directions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           TextField(
             controller: _directionsTextController,
@@ -141,10 +141,10 @@ class _WazePageState extends State<WazePage> {
                 );
               }
             },
-            child: const Text('Get Directions (Text)'),
+            child: const Text('Get Directions'),
           ),
           const SizedBox(height: 16),
-          const Text('Directions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('Directions With Coordinates', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           Row(
             children: [
