@@ -96,6 +96,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Waze', () {
+        final action = Waze.open();
+        expect(action, isA<App>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());
