@@ -1,3 +1,6 @@
+## 1.1.4
+* Bump dependency deeplink_x_android version to 1.0.0 ([#Change](https://pub.dev/packages/deeplink_x_android/changelog#100))
+
 ## 1.1.3+3
 * Update coordinate model tests for coverage issue
 * Added Waze app with the following actions:
