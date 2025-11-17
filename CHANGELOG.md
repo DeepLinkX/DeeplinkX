@@ -1,3 +1,14 @@
+## 1.1.5
+* Added Apple Maps app with the following actions:
+  * Open app
+  * View map action
+  * Search action
+  * Directions action
+  * Directions with coordinates action
+* Added documentation for Apple Maps deeplinks
+* Added tests for the Apple Maps integration
+* Updated example app with an Apple Maps tab
+
 ## 1.1.4
 * Bump dependency deeplink_x_android version to 1.0.0 ([#Change](https://pub.dev/packages/deeplink_x_android/changelog#100))
 
