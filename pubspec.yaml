@@ -21,7 +21,7 @@ dependencies:
   flutter:
     sdk: flutter
   deeplink_x_platform_interface: ^0.1.0
-  deeplink_x_android: ^0.1.0
+  deeplink_x_android: ^1.0.0
   deeplink_x_ios: ^0.1.0
   deeplink_x_linux: ^0.1.0
   deeplink_x_macos: ^0.1.0
