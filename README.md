@@ -24,7 +24,7 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 - Check if external app is installed on the device
 - Smart fallback system
 - Support popular stores including Google PlayStore, iOS AppStore, Mac AppStore, Microsoft Store, Huawei AppGallery, Myket, Cafe Bazaar
-- Support popular apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, and Waze
+- Support popular apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, and Apple Maps
 
 ## Demo
 
@@ -123,6 +123,7 @@ final isRedirected = await deeplinkX.redirectToStore(
 | Social Apps | Slack                   | • Open team<br>• Open channel<br>• Open user                                                      |
 | Navigation  | Google Maps             | • View map<br>• Search location<br>• Directions<br>• Directions with coordinates                  |
 | Navigation  | Waze                    | • View map<br>• Search<br>• Directions<br>• Directions with coordinates                  |
+| Navigation  | Apple Maps              | • View map<br>• Search location<br>• Directions<br>• Directions with coordinates                  |
 | Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
 ## Documentation
@@ -149,6 +150,7 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [Slack](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/slack.md)
 - [Google Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/google_maps.md)
 - [Waze](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md)
+- [Apple Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md)
 
 ## URL Scheme Handling
 
@@ -189,7 +191,6 @@ See respective app documentation for platform-specific configuration.
 - **Cross-Platform Consistency:** DeeplinkX works seamlessly across platform, where `url_launcher` may not support certain schemes (e.g., checking can launch deep link of custom schemes on macOS).
 - **Unified API for Many Apps:** DeeplinkX provides a unified, high-level API for dozens of popular apps and stores, so you don't have to research and maintain deep link formats or intent structures yourself.
 - **Less Boilerplate:** With DeeplinkX, you can trigger complex actions (like opening a specific screen in an app, or falling back to the store) with a single method call, instead of writing custom logic for each case.
-
 
 ## Contributing
 
