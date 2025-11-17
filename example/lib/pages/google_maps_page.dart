@@ -64,7 +64,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
             child: const Text('Open Google Maps'),
           ),
           const SizedBox(height: 16),
-          const Text('View Coordinates', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('View Map', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           Row(
             children: [

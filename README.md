@@ -24,7 +24,7 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 - Check if external app is installed on the device
 - Smart fallback system
 - Support popular stores including Google PlayStore, iOS AppStore, Mac AppStore, Microsoft Store, Huawei AppGallery, Myket, Cafe Bazaar
-- Support popular apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, and Apple Maps
+- Support popular apps including Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, and Sygic
 
 ## Demo
 
@@ -124,6 +124,7 @@ final isRedirected = await deeplinkX.redirectToStore(
 | Navigation  | Google Maps             | • View map<br>• Search location<br>• Directions<br>• Directions with coordinates                  |
 | Navigation  | Waze                    | • View map<br>• Search<br>• Directions<br>• Directions with coordinates                  |
 | Navigation  | Apple Maps              | • View map<br>• Search location<br>• Directions<br>• Directions with coordinates                  |
+| Navigation  | Sygic                   | • View map<br>• Directions with coordinates                                               |
 | Business    | LinkedIn                | • Open profile page<br>• Open company page                                                        |
 
 ## Documentation
@@ -151,6 +152,7 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [Google Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/google_maps.md)
 - [Waze](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md)
 - [Apple Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md)
+- [Sygic](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md)
 
 ## URL Scheme Handling
 
