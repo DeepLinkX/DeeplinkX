@@ -1,4 +1,4 @@
-name: Test & Coveralls (Flutter 3.35.2)
+name: Test & Coveralls (Flutter 3.38.0)
 
 on:
   push:
@@ -19,10 +19,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Flutter 3.35.2
+      - name: Set up Flutter 3.38.0
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.2'
+          flutter-version: '3.38.0'
           channel: 'stable'
           cache: true
 
