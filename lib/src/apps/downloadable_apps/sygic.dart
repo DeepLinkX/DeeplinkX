@@ -63,15 +63,6 @@ class Sygic extends App implements DownloadableApp {
         mode: mode,
         fallbackToStore: fallbackToStore,
       );
-
-  /// Temporary alias for [directionsWithCoords] to keep backwards compatibility.
-  @Deprecated('Use directionsWithCoords instead')
-  static SygicDirectionsWithCoordsAction navigate({
-    required final Coordinate destination,
-    final SygicTransportMode mode = SygicTransportMode.drive,
-    final bool fallbackToStore = false,
-  }) =>
-      directionsWithCoords(destination: destination, mode: mode, fallbackToStore: fallbackToStore);
 }
 
 /// Sygic renders modes accepted by the coordinate URI.
