@@ -54,6 +54,14 @@ void main() {
       expect(action.mode, SygicTransportMode.walk);
     });
 
+    test('directionsWithCoords action has website fallback', () {
+      final action = Sygic.directionsWithCoords(
+        destination: const Coordinate(latitude: 48.1486, longitude: 17.1077),
+      );
+
+      expect(action.fallbackLink.toString(), 'https://www.sygic.com/gps-navigation');
+    });
+
     test('store actions resolve to expected stores', () {
       final storeActions = Sygic().storeActions;
       expect(storeActions.length, 2);
