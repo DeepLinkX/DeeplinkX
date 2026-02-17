@@ -87,7 +87,6 @@ class _WazePageState extends State<WazePage> {
             ],
           ),
           const SizedBox(height: 8),
-          const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () async {
               if (_latController.text.isEmpty || _lngController.text.isEmpty) {
