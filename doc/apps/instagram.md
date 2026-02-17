@@ -23,13 +23,13 @@ await deeplinkX.launchApp(Instagram.open(), disableFallback: true);
 final deeplinkX = DeeplinkX();
 
 // Simple action
-await deeplinkX.launchAction(Instagram.openProfile('username'));
+await deeplinkX.launchAction(Instagram.openProfile(username: 'username'));
 
 // Action with store fallback if not installed
-await deeplinkX.launchAction(Instagram.openProfile('username', fallbackToStore: true));
+await deeplinkX.launchAction(Instagram.openProfile(username: 'username', fallbackToStore: true));
 
 // Action with fallback disabled
-await deeplinkX.launchAction(Instagram.openProfile('username'), disableFallback: true);
+await deeplinkX.launchAction(Instagram.openProfile(username: 'username'), disableFallback: true);
 ```
 
 ## Parameter Validations

@@ -61,7 +61,7 @@ Execute a deeplink action and optionally fall back to the store if the app isn't
 
 ```dart
 final launched = await deeplinkX.launchAction(
-  Telegram.openProfile('username', fallBackToStore: true),
+  Telegram.openProfile(username: 'username', fallbackToStore: true),
 );
 // Set `disableFallback: true` to suppress store and web fallbacks.
 ```
@@ -72,7 +72,7 @@ Open an app without specifying an action:
 
 ```dart
 final launched = await deeplinkX.launchApp(
-  Instagram.open(fallBackToStore: true),
+  Instagram.open(fallbackToStore: true),
 );
 // Use `disableFallback: true` to skip store and web fallbacks.
 ```
@@ -93,7 +93,7 @@ Redirect users to appropriate app stores based on their platform:
 // Redirect to appropriate store based on current platform
 final isRedirected = await deeplinkX.redirectToStore(
   storeActions: [
-    AppStore.openAppPage(appId: '389801252'),  // iOS App Store
+    IOSAppStore.openAppPage(appId: '389801252', appName: 'instagram'),  // iOS App Store
     PlayStore.openAppPage(packageName: 'com.instagram.android'),  // Google Play Store
     HuaweiAppGalleryStore.openAppPage(appId: 'C101162369'),  // Huawei AppGallery Store
   ],
@@ -159,14 +159,14 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 DeeplinkX uses a three-tier approach for compatibility:
 
 1. **Native App Deep Links**: Direct app launch when installed
-2. **Store Fallback**: Redirects to app stores when apps aren't installed (with `fallBackToStore: true`)
+2. **Store Fallback**: Redirects to app stores when apps aren't installed (with `fallbackToStore: true`)
 3. **Web Fallback**: Redirects to web URLs when neither app nor store is available
 
 Most actions support store or web fallbacks when the target app is missing:
 
 ```dart
 await deeplinkX.launchAction(
-  Instagram.open(fallBackToStore: true),
+  Instagram.open(fallbackToStore: true),
 );
 // Pass `disableFallback: true` to prevent store and web redirects.
 ```
@@ -183,7 +183,7 @@ See respective app documentation for platform-specific configuration.
 - **No More Selection Dialogs:** By using custom schemes and Android intents, the app launches directly without showing the "Open with..." dialog, reducing friction and confusion for users.
 - **Safer with Fallbacks:** You can reliably check if an app is installed using custom schemes or package names. If the app isn’t present, DeeplinkX can automatically fall back to the appropriate store or web URL.
 - **Resilient to Changes:** Custom schemes are often unofficial and may change or be removed by the app vendor. DeeplinkX always provides a fallback URL (usually a universal link), so even if the custom scheme changes, users are still redirected to the correct destination.
-  > **Note:** If you enable `fallBackToStore: true` and the custom scheme is changed or deleted (not usually happens), DeeplinkX will redirect users to the app store instead of the fallback web URL. This may interrupt the intended fallback-to-web experience. If you want users to always reach the web fallback when the app is missing or the scheme is invalid, set `fallBackToStore: false`.
+  > **Note:** If you enable `fallbackToStore: true` and the custom scheme is changed or deleted (not usually happens), DeeplinkX will redirect users to the app store instead of the fallback web URL. This may interrupt the intended fallback-to-web experience. If you want users to always reach the web fallback when the app is missing or the scheme is invalid, set `fallbackToStore: false`.
 - **Best of Both Worlds:** DeeplinkX combines the speed and directness of custom schemes with the reliability of universal links as a fallback, ensuring your users always reach the intended content in the best way possible.
 
 ## Why use DeeplinkX over `url_launcher`?
