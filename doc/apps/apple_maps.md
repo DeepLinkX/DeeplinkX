@@ -15,7 +15,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchApp(AppleMaps.open());
 ```
 
-### View Coordinates Action
+### View Map Action
 
 ```dart
 await deeplinkX.launchAction(
@@ -82,14 +82,14 @@ Add the same scheme entry to your `macos/Runner/Info.plist` inside the `LSApplic
 
 ### Native App Deep Links
 
-- View coordinates: `maps://?ll={lat},{lng}&z={zoom}`
+- View map: `maps://?ll={lat},{lng}&z={zoom}`
 - Search: `maps://?q={query}`
 - Directions: `maps://?saddr={origin}&daddr={destination}&dirflg={mode}`
 - Directions with coordinates: `maps://?saddr={origin_lat},{origin_lng}&daddr={dest_lat},{dest_lng}&dirflg={mode}`
 
 ### Web Fallback URLs
 
-- View coordinates: `https://maps.apple.com/?ll={lat},{lng}&z={zoom}`
+- View map: `https://maps.apple.com/?ll={lat},{lng}&z={zoom}`
 - Search: `https://maps.apple.com/?q={query}`
 - Directions: `https://maps.apple.com/?saddr={origin}&daddr={destination}&dirflg={mode}`
 - Directions with coordinates: `https://maps.apple.com/?saddr={origin_lat},{origin_lng}&daddr={dest_lat},{dest_lng}&dirflg={mode}`

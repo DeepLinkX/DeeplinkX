@@ -106,6 +106,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Sygic', () {
+        final action = Sygic.open();
+        expect(action, isA<App>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());

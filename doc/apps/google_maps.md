@@ -15,7 +15,7 @@ final deeplinkX = DeeplinkX();
 await deeplinkX.launchApp(GoogleMaps.open());
 ```
 
-### View Coordinates Action
+### View Map Action
 ```dart
 await deeplinkX.launchAction(
   GoogleMaps.view(
@@ -71,19 +71,19 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
 ## URL Schemes
 
 ### Native App Deep Links
-- View coordinates: `comgooglemaps://?center={lat},{lng}&zoom={zoom}`
+- View map: `comgooglemaps://?center={lat},{lng}&zoom={zoom}`
 - Search: `comgooglemaps://?q={query}`
 - Directions: `comgooglemaps://?saddr={origin}&daddr={destination}&directionsmode={mode}`
 - Directions with coordinates: `comgooglemaps://?saddr={origin_lat},{origin_lng}&daddr={dest_lat},{dest_lng}&directionsmode={mode}`
 
 ### Android Intent URIs
-- View coordinates: `geo:{lat},{lng}?z={zoom}`
+- View map: `geo:{lat},{lng}?z={zoom}`
 - Search: `geo:0,0?q={query}`
 - Directions: `https://www.google.com/maps/dir/?api=1&destination={destination}&origin={origin}&travelmode={mode}`
 - Directions with coordinates: `https://www.google.com/maps/dir/?api=1&destination={dest_lat},{dest_lng}&origin={origin_lat},{origin_lng}&travelmode={mode}`
 
 ### Web Fallback URLs
-- View coordinates: `https://www.google.com/maps/@{lat},{lng},{zoom}z`
+- View map: `https://www.google.com/maps/@{lat},{lng},{zoom}z`
 - Search: `https://www.google.com/maps/@?api=1&query={query}`
 - Directions: `https://maps.google.com/maps/dir/?destination={destination}&origin={origin}&travelmode={mode}`
 - Directions with coordinates: `https://maps.google.com/maps/dir/?origin={origin_lat},{origin_lng}&destination={dest_lat},{dest_lng}&travelmode={mode}`
