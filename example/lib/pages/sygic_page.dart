@@ -19,6 +19,14 @@ class _SygicPageState extends State<SygicPage> {
   var _mode = SygicTransportMode.drive;
   bool _fallback = true;
 
+  void _showInputError(final String message) {
+    if (!mounted) {
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   void dispose() {
     _viewLatController.dispose();
@@ -55,17 +63,25 @@ class _SygicPageState extends State<SygicPage> {
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () async {
-              if (_viewLatController.text.isNotEmpty && _viewLngController.text.isNotEmpty) {
-                await _deeplinkX.launchAction(
-                  Sygic.view(
-                    coordinate: Coordinate(
-                      latitude: double.parse(_viewLatController.text),
-                      longitude: double.parse(_viewLngController.text),
-                    ),
-                    fallbackToStore: _fallback,
-                  ),
-                );
+              if (_viewLatController.text.isEmpty || _viewLngController.text.isEmpty) {
+                _showInputError('Please enter both latitude and longitude.');
+                return;
               }
+
+              final latitude = double.tryParse(_viewLatController.text);
+              final longitude = double.tryParse(_viewLngController.text);
+
+              if (latitude == null || longitude == null) {
+                _showInputError('Please enter valid latitude and longitude values.');
+                return;
+              }
+
+              await _deeplinkX.launchAction(
+                Sygic.view(
+                  coordinate: Coordinate(latitude: latitude, longitude: longitude),
+                  fallbackToStore: _fallback,
+                ),
+              );
             },
             child: const Text('Show Location'),
           ),
@@ -86,18 +102,26 @@ class _SygicPageState extends State<SygicPage> {
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () async {
-              if (_navLatController.text.isNotEmpty && _navLngController.text.isNotEmpty) {
-                await _deeplinkX.launchAction(
-                  Sygic.directionsWithCoords(
-                    destination: Coordinate(
-                      latitude: double.parse(_navLatController.text),
-                      longitude: double.parse(_navLngController.text),
-                    ),
-                    mode: _mode,
-                    fallbackToStore: _fallback,
-                  ),
-                );
+              if (_navLatController.text.isEmpty || _navLngController.text.isEmpty) {
+                _showInputError('Please enter destination latitude and longitude.');
+                return;
               }
+
+              final latitude = double.tryParse(_navLatController.text);
+              final longitude = double.tryParse(_navLngController.text);
+
+              if (latitude == null || longitude == null) {
+                _showInputError('Please enter valid destination coordinates.');
+                return;
+              }
+
+              await _deeplinkX.launchAction(
+                Sygic.directionsWithCoords(
+                  destination: Coordinate(latitude: latitude, longitude: longitude),
+                  mode: _mode,
+                  fallbackToStore: _fallback,
+                ),
+              );
             },
             child: const Text('Start Navigation'),
           ),

@@ -26,6 +26,14 @@ class _AppleMapsPageState extends State<AppleMapsPage> {
   AppleMapsTransportType? _coordsMode;
   bool _fallback = true;
 
+  void _showInputError(final String message) {
+    if (!mounted) {
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   void dispose() {
     _latController.dispose();
@@ -94,18 +102,32 @@ class _AppleMapsPageState extends State<AppleMapsPage> {
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () async {
-              if (_latController.text.isNotEmpty && _lngController.text.isNotEmpty) {
-                await _deeplinkX.launchAction(
-                  AppleMaps.view(
-                    coordinate: Coordinate(
-                      latitude: double.parse(_latController.text),
-                      longitude: double.parse(_lngController.text),
-                    ),
-                    zoom: _zoomController.text.isNotEmpty ? double.parse(_zoomController.text) : null,
-                    fallbackToStore: _fallback,
-                  ),
-                );
+              if (_latController.text.isEmpty || _lngController.text.isEmpty) {
+                _showInputError('Please enter both latitude and longitude.');
+                return;
               }
+
+              final latitude = double.tryParse(_latController.text);
+              final longitude = double.tryParse(_lngController.text);
+              final zoom = _zoomController.text.isNotEmpty ? double.tryParse(_zoomController.text) : null;
+
+              if (latitude == null || longitude == null) {
+                _showInputError('Please enter valid latitude and longitude values.');
+                return;
+              }
+
+              if (_zoomController.text.isNotEmpty && zoom == null) {
+                _showInputError('Please enter a valid zoom value.');
+                return;
+              }
+
+              await _deeplinkX.launchAction(
+                AppleMaps.view(
+                  coordinate: Coordinate(latitude: latitude, longitude: longitude),
+                  zoom: zoom,
+                  fallbackToStore: _fallback,
+                ),
+              );
             },
             child: const Text('View Map'),
           ),
@@ -226,25 +248,48 @@ class _AppleMapsPageState extends State<AppleMapsPage> {
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () async {
-              if (_destLatController.text.isNotEmpty && _destLngController.text.isNotEmpty) {
-                await _deeplinkX.launchAction(
-                  AppleMaps.directionsWithCoords(
-                    origin:
-                        _originLatController.text.isNotEmpty && _originLngController.text.isNotEmpty
-                            ? Coordinate(
-                              latitude: double.parse(_originLatController.text),
-                              longitude: double.parse(_originLngController.text),
-                            )
-                            : null,
-                    destination: Coordinate(
-                      latitude: double.parse(_destLatController.text),
-                      longitude: double.parse(_destLngController.text),
-                    ),
-                    mode: _coordsMode,
-                    fallbackToStore: _fallback,
-                  ),
-                );
+              if (_destLatController.text.isEmpty || _destLngController.text.isEmpty) {
+                _showInputError('Please enter destination latitude and longitude.');
+                return;
               }
+
+              final hasOriginLat = _originLatController.text.isNotEmpty;
+              final hasOriginLng = _originLngController.text.isNotEmpty;
+
+              if (hasOriginLat != hasOriginLng) {
+                _showInputError('Please enter both origin latitude and longitude, or leave both empty.');
+                return;
+              }
+
+              final destinationLat = double.tryParse(_destLatController.text);
+              final destinationLng = double.tryParse(_destLngController.text);
+
+              if (destinationLat == null || destinationLng == null) {
+                _showInputError('Please enter valid destination coordinates.');
+                return;
+              }
+
+              Coordinate? origin;
+              if (hasOriginLat && hasOriginLng) {
+                final originLat = double.tryParse(_originLatController.text);
+                final originLng = double.tryParse(_originLngController.text);
+
+                if (originLat == null || originLng == null) {
+                  _showInputError('Please enter valid origin coordinates.');
+                  return;
+                }
+
+                origin = Coordinate(latitude: originLat, longitude: originLng);
+              }
+
+              await _deeplinkX.launchAction(
+                AppleMaps.directionsWithCoords(
+                  origin: origin,
+                  destination: Coordinate(latitude: destinationLat, longitude: destinationLng),
+                  mode: _coordsMode,
+                  fallbackToStore: _fallback,
+                ),
+              );
             },
             child: const Text('Get Directions with Coordinates'),
           ),
