@@ -15,7 +15,7 @@ class MacAppStore implements StoreApp {
 
   /// The platform this store app is associated with (macOS).
   @override
-  PlatformType platform = PlatformType.macos;
+  PlatformType get platform => PlatformType.macos;
 
   /// The Android package name for the Mac App Store (not applicable for macOS).
   @override

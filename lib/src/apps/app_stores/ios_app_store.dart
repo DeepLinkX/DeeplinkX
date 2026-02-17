@@ -15,7 +15,7 @@ class IOSAppStore implements StoreApp {
 
   /// The platform this store app is associated with (iOS).
   @override
-  PlatformType platform = PlatformType.ios;
+  PlatformType get platform => PlatformType.ios;
 
   /// The Android package name for the App Store (not applicable for iOS).
   @override

@@ -15,7 +15,7 @@ class MicrosoftStore implements StoreApp {
 
   /// The platform this store app is associated with (Windows).
   @override
-  PlatformType platform = PlatformType.windows;
+  PlatformType get platform => PlatformType.windows;
 
   /// The Android package name for the Microsoft Store (not applicable for Windows).
   @override

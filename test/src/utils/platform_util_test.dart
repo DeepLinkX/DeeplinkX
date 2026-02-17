@@ -39,6 +39,15 @@ void main() {
       expect(platformUtil.getCurrentPlatform(), equals(PlatformType.web));
     });
 
+    test('getCurrentPlatform returns PlatformType.web when isWeb is true', () {
+      final platformUtil = PlatformUtil(
+        platformName: 'android',
+        isWeb: true,
+      );
+
+      expect(platformUtil.getCurrentPlatform(), equals(PlatformType.web));
+    });
+
     test('PlatformUtil defaults to defaultTargetPlatform when no platform name provided', () {
       final platformUtil = PlatformUtil();
 

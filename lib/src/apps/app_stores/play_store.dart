@@ -15,7 +15,7 @@ class PlayStore implements StoreApp {
 
   /// The platform this store app is associated with (Android).
   @override
-  PlatformType platform = PlatformType.android;
+  PlatformType get platform => PlatformType.android;
 
   /// The Android package name for the Google Play Store app.
   @override
