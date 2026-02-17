@@ -78,8 +78,7 @@ class DeeplinkX {
       return false;
     }
 
-    if (action is DownloadableApp) {
-      final downloadableApp = action as DownloadableApp;
+    if (action case final DownloadableApp downloadableApp) {
       if (downloadableApp.fallbackToStore) {
         final isRedirected = await redirectToStore(storeActions: downloadableApp.storeActions);
 
@@ -89,8 +88,7 @@ class DeeplinkX {
       }
     }
 
-    if (action is Fallbackable) {
-      final fallbackableAction = action as Fallbackable;
+    if (action case final Fallbackable fallbackableAction) {
       return _launcherUtil.launchUrl(fallbackableAction.fallbackLink);
     }
 
