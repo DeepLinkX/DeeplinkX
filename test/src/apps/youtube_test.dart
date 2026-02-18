@@ -12,8 +12,7 @@ void main() {
       expect(action.website.toString(), 'https://www.youtube.com');
       expect(action.supportedPlatforms, contains(PlatformType.android));
       expect(action.supportedPlatforms, contains(PlatformType.ios));
-      expect(action.supportedPlatforms, contains(PlatformType.windows));
-      expect(action.supportedPlatforms.length, 3);
+      expect(action.supportedPlatforms.length, 2);
       expect(action.macosBundleIdentifier, null);
 
       // As DownloadableApp
@@ -141,8 +140,7 @@ void main() {
       expect(action.website.toString(), 'https://www.youtube.com');
       expect(action.supportedPlatforms, contains(PlatformType.android));
       expect(action.supportedPlatforms, contains(PlatformType.ios));
-      expect(action.supportedPlatforms, contains(PlatformType.windows));
-      expect(action.supportedPlatforms.length, 3);
+      expect(action.supportedPlatforms.length, 2);
       expect(action.macosBundleIdentifier, null);
 
       // As DownloadableApp

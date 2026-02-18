@@ -42,7 +42,7 @@ class YouTube extends App implements DownloadableApp {
 
   /// The platforms that the YouTube app supports.
   @override
-  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android, PlatformType.windows];
+  List<PlatformType> get supportedPlatforms => [PlatformType.ios, PlatformType.android];
 
   /// Whether to automatically redirect to app stores when the YouTube app is not installed.
   @override
