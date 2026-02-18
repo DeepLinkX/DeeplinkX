@@ -71,7 +71,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.1.6"
+    version: "1.2.0"
   deeplink_x_android:
     dependency: transitive
     description:
@@ -100,10 +100,10 @@ packages:
     dependency: transitive
     description:
       name: deeplink_x_macos
-      sha256: "7132604c0a81c9b778b8fab1599d650ac4e8a8712bfdd779d547aa2788a8d994"
+      sha256: "413f12e6fd2b11ddd7a4097d498fbc6d565956fe95e66cd3eaec7c301df5c28e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "0.2.0"
   deeplink_x_platform_interface:
     dependency: transitive
     description:
