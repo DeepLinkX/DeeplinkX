@@ -12,11 +12,11 @@ class FacebookPage extends StatefulWidget {
 
 class _FacebookPageState extends State<FacebookPage> {
   final _deeplinkX = DeeplinkX();
-  final _idController = TextEditingController(text: '123456789');
-  final _usernameController = TextEditingController(text: 'johndoe');
-  final _pageIdController = TextEditingController(text: 'examplepage');
-  final _groupIdController = TextEditingController(text: '869653691215417');
-  final _eventIdController = TextEditingController(text: '1599696570680586');
+  final _idController = TextEditingController(text: '4');
+  final _usernameController = TextEditingController(text: 'zuck');
+  final _pageIdController = TextEditingController(text: 'facebookapp');
+  final _groupIdController = TextEditingController(text: '231104380821004');
+  final _eventIdController = TextEditingController(text: '10155945715431729');
   bool _fallback = true;
 
   @override

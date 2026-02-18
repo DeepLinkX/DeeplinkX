@@ -12,7 +12,7 @@ class InstagramPage extends StatefulWidget {
 
 class _InstagramPageState extends State<InstagramPage> {
   final _deeplinkX = DeeplinkX();
-  final _usernameController = TextEditingController(text: 'johndoe');
+  final _usernameController = TextEditingController(text: 'instagram');
   bool _fallback = true;
 
   @override

@@ -15,8 +15,8 @@ class _PinterestPageState extends State<PinterestPage> {
   final _usernameController = TextEditingController(text: 'pinterest');
   final _pinIdController = TextEditingController(text: '1120622319784769688');
   final _searchQueryController = TextEditingController();
-  final _boardUsernameController = TextEditingController();
-  final _boardController = TextEditingController(text: 'anime-couple');
+  final _boardUsernameController = TextEditingController(text: 'pinterest');
+  final _boardController = TextEditingController(text: 'official-news');
   bool _fallback = true;
 
   @override
