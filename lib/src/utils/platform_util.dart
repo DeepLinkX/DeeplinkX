@@ -10,12 +10,18 @@ class PlatformUtil {
   ///
   /// [platformName] is an optional parameter that allows specifying a custom
   /// platform name. If not provided, the default target platform name is used.
+  /// [isWeb] allows overriding web detection in tests.
   ///
   /// The [PlatformUtil] class is used to determine and work with the current
   /// platform of the application.
-  PlatformUtil({final String? platformName}) : _platformName = platformName ?? defaultTargetPlatform.name;
+  PlatformUtil({
+    final String? platformName,
+    final bool? isWeb,
+  })  : _platformName = platformName ?? defaultTargetPlatform.name,
+        _isWeb = isWeb ?? kIsWeb;
 
   final String _platformName;
+  final bool _isWeb;
 
   /// Returns the current platform based on the default target platform of the app.
   ///
@@ -24,5 +30,11 @@ class PlatformUtil {
   ///
   /// Returns:
   ///   A [PlatformType] representing the current platform.
-  PlatformType getCurrentPlatform() => PlatformType.fromOperatingSystem(_platformName.toLowerCase());
+  PlatformType getCurrentPlatform() {
+    if (_isWeb) {
+      return PlatformType.web;
+    }
+
+    return PlatformType.fromOperatingSystem(_platformName.toLowerCase());
+  }
 }

@@ -18,7 +18,7 @@ void main() {
 
       // As DownloadableApp
       expect(action.fallbackToStore, false);
-      expect(action.storeActions.length, 3);
+      expect(action.storeActions.length, 2);
     });
 
     test('open action creates YouTube instance with correct type', () {
@@ -147,7 +147,7 @@ void main() {
 
       // As DownloadableApp
       expect(action.fallbackToStore, true);
-      expect(action.storeActions.length, 3);
+      expect(action.storeActions.length, 2);
     });
 
     test('store actions have correct properties', () {
@@ -162,10 +162,6 @@ void main() {
       final iosStoreAction = storeActions[1] as IOSAppStoreOpenAppPageAction;
       expect(iosStoreAction.appId, '544007664');
       expect(iosStoreAction.appName, 'youtube');
-
-      // Microsoft Store action
-      final microsoftStoreAction = storeActions[2] as MicrosoftStoreOpenAppPageAction;
-      expect(microsoftStoreAction.productId, '9wzdncrfj2wl');
     });
   });
 }

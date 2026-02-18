@@ -15,7 +15,7 @@ class HuaweiAppGalleryStore implements StoreApp {
 
   /// The platform this store app is associated with (Android).
   @override
-  PlatformType platform = PlatformType.android;
+  PlatformType get platform => PlatformType.android;
 
   /// The Android package name for the Huawei AppGallery app.
   @override

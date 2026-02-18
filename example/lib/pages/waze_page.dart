@@ -22,6 +22,14 @@ class _WazePageState extends State<WazePage> {
   final _directionsZoomController = TextEditingController(text: '8');
   bool _fallback = true;
 
+  void _showInputError(final String message) {
+    if (!mounted) {
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   void dispose() {
     _latController.dispose();
@@ -79,20 +87,24 @@ class _WazePageState extends State<WazePage> {
             ],
           ),
           const SizedBox(height: 8),
-          const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () async {
-              if (_latController.text.isNotEmpty && _lngController.text.isNotEmpty) {
-                await _deeplinkX.launchAction(
-                  Waze.view(
-                    coordinate: Coordinate(
-                      latitude: double.parse(_latController.text),
-                      longitude: double.parse(_lngController.text),
-                    ),
-                    fallbackToStore: _fallback,
-                  ),
-                );
+              if (_latController.text.isEmpty || _lngController.text.isEmpty) {
+                _showInputError('Please enter both latitude and longitude.');
+                return;
               }
+
+              final latitude = double.tryParse(_latController.text);
+              final longitude = double.tryParse(_lngController.text);
+
+              if (latitude == null || longitude == null) {
+                _showInputError('Please enter valid latitude and longitude values.');
+                return;
+              }
+
+              await _deeplinkX.launchAction(
+                Waze.view(coordinate: Coordinate(latitude: latitude, longitude: longitude), fallbackToStore: _fallback),
+              );
             },
             child: const Text('View Map'),
           ),
@@ -129,15 +141,18 @@ class _WazePageState extends State<WazePage> {
           ElevatedButton(
             onPressed: () async {
               if (_directionsTextController.text.isNotEmpty) {
+                final zoom =
+                    _directionsTextZoomController.text.isNotEmpty
+                        ? int.tryParse(_directionsTextZoomController.text)
+                        : null;
+
+                if (_directionsTextZoomController.text.isNotEmpty && zoom == null) {
+                  _showInputError('Please enter a valid zoom value.');
+                  return;
+                }
+
                 await _deeplinkX.launchAction(
-                  Waze.directions(
-                    destination: _directionsTextController.text,
-                    zoom:
-                        _directionsTextZoomController.text.isNotEmpty
-                            ? int.parse(_directionsTextZoomController.text)
-                            : null,
-                    fallbackToStore: _fallback,
-                  ),
+                  Waze.directions(destination: _directionsTextController.text, zoom: zoom, fallbackToStore: _fallback),
                 );
               }
             },
@@ -174,18 +189,33 @@ class _WazePageState extends State<WazePage> {
           const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () async {
-              if (_destLatController.text.isNotEmpty && _destLngController.text.isNotEmpty) {
-                await _deeplinkX.launchAction(
-                  Waze.directionsWithCoords(
-                    destination: Coordinate(
-                      latitude: double.parse(_destLatController.text),
-                      longitude: double.parse(_destLngController.text),
-                    ),
-                    zoom: _directionsZoomController.text.isNotEmpty ? int.parse(_directionsZoomController.text) : null,
-                    fallbackToStore: _fallback,
-                  ),
-                );
+              if (_destLatController.text.isEmpty || _destLngController.text.isEmpty) {
+                _showInputError('Please enter destination latitude and longitude.');
+                return;
               }
+
+              final latitude = double.tryParse(_destLatController.text);
+              final longitude = double.tryParse(_destLngController.text);
+              final zoom =
+                  _directionsZoomController.text.isNotEmpty ? int.tryParse(_directionsZoomController.text) : null;
+
+              if (latitude == null || longitude == null) {
+                _showInputError('Please enter valid destination coordinates.');
+                return;
+              }
+
+              if (_directionsZoomController.text.isNotEmpty && zoom == null) {
+                _showInputError('Please enter a valid zoom value.');
+                return;
+              }
+
+              await _deeplinkX.launchAction(
+                Waze.directionsWithCoords(
+                  destination: Coordinate(latitude: latitude, longitude: longitude),
+                  zoom: zoom,
+                  fallbackToStore: _fallback,
+                ),
+              );
             },
             child: const Text('Get Directions'),
           ),

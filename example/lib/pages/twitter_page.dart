@@ -12,8 +12,8 @@ class TwitterPage extends StatefulWidget {
 
 class _TwitterPageState extends State<TwitterPage> {
   final _deeplinkX = DeeplinkX();
-  final _usernameController = TextEditingController(text: 'twitter');
-  final _tweetIdController = TextEditingController(text: '1234567890');
+  final _usernameController = TextEditingController(text: 'jack');
+  final _tweetIdController = TextEditingController(text: '20');
   final _searchQueryController = TextEditingController();
   bool _fallback = true;
 

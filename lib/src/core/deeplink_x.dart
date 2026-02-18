@@ -78,8 +78,7 @@ class DeeplinkX {
       return false;
     }
 
-    if (action is DownloadableApp) {
-      final downloadableApp = action as DownloadableApp;
+    if (action case final DownloadableApp downloadableApp) {
       if (downloadableApp.fallbackToStore) {
         final isRedirected = await redirectToStore(storeActions: downloadableApp.storeActions);
 
@@ -89,8 +88,7 @@ class DeeplinkX {
       }
     }
 
-    if (action is Fallbackable) {
-      final fallbackableAction = action as Fallbackable;
+    if (action case final Fallbackable fallbackableAction) {
       return _launcherUtil.launchUrl(fallbackableAction.fallbackLink);
     }
 
@@ -171,7 +169,7 @@ class DeeplinkX {
   /// // Redirect to Instagram's store page on the appropriate platform
   /// await deeplinkX.redirectToStore(
   ///   storeActions: [
-  ///     AppStore.openAppPage(appId: '389801252'),  // iOS App Store
+  ///     IOSAppStore.openAppPage(appId: '389801252', appName: 'instagram'),  // iOS App Store
   ///     PlayStore.openAppPage(packageName: 'com.instagram.android'),  // Google Play Store
   ///     HuaweiAppGalleryStore.openAppPage(appId: 'C101162369'),  // Huawei AppGallery
   ///   ],

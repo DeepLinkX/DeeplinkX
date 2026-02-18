@@ -26,7 +26,6 @@ class YouTube extends App implements DownloadableApp {
   List<StoreOpenAppPageAction> get storeActions => [
         PlayStore.openAppPage(packageName: 'com.google.android.youtube'),
         IOSAppStore.openAppPage(appId: '544007664', appName: 'youtube'),
-        MicrosoftStore.openAppPage(productId: '9wzdncrfj2wl'),
       ];
 
   /// The Android package name for the YouTube app.

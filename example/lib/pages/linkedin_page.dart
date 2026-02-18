@@ -12,8 +12,8 @@ class LinkedInPage extends StatefulWidget {
 
 class _LinkedInPageState extends State<LinkedInPage> {
   final _deeplinkX = DeeplinkX();
-  final _profileController = TextEditingController(text: 'profileId');
-  final _companyController = TextEditingController(text: 'companyId');
+  final _profileController = TextEditingController(text: 'satyanadella');
+  final _companyController = TextEditingController(text: 'microsoft');
   bool _fallback = true;
 
   @override

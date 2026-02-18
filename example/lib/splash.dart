@@ -25,5 +25,6 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   @override
-  Widget build(final BuildContext context) => Scaffold(body: Center(child: Image.asset('assets/deeplink_x_logo.jpg')));
+  Widget build(final BuildContext context) =>
+      Scaffold(backgroundColor: Colors.white, body: Center(child: Image.asset('assets/deeplink_x_logo.jpg')));
 }

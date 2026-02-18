@@ -128,7 +128,6 @@ When the YouTube app is not installed, DeeplinkX can redirect users to download 
 
 - iOS App Store
 - Google Play Store
-- Microsoft Store
 
 ## Fallback Behavior
 
@@ -145,4 +144,3 @@ DeeplinkX follows this sequence when handling YouTube deeplinks:
 final deeplinkX = DeeplinkX();
 final isInstalled = await deeplinkX.isAppInstalled(YouTube());
 ```
-

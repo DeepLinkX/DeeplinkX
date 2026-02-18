@@ -12,7 +12,7 @@ class TelegramPage extends StatefulWidget {
 
 class _TelegramPageState extends State<TelegramPage> {
   final _deeplinkX = DeeplinkX();
-  final _usernameController = TextEditingController(text: 'johndoe');
+  final _usernameController = TextEditingController(text: 'durov');
   final _phoneController = TextEditingController(text: '14155552671');
   final _messageController = TextEditingController(text: 'Hello! How are you?');
   bool _fallback = true;

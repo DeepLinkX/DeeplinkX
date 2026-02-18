@@ -8,13 +8,13 @@
 /// import 'package:deeplink_x/deeplink_x.dart';
 ///
 /// // Create a DeeplinkX instance
-/// final deeplinkX = const DeeplinkX();
+/// final deeplinkX = DeeplinkX();
 ///
 /// // Open Instagram app
 /// await deeplinkX.launchApp(Instagram.open());
 ///
 /// // Open a specific profile
-/// await deeplinkX.launchAction(Instagram.openProfile('username'));
+/// await deeplinkX.launchAction(Instagram.openProfile(username: 'username'));
 /// ```
 library;
 

@@ -23,13 +23,13 @@ await deeplinkX.launchApp(Telegram.open(), disableFallback: true);
 final deeplinkX = DeeplinkX();
 
 // Simple action
-await deeplinkX.launchAction(Telegram.openProfile('username'));
+await deeplinkX.launchAction(Telegram.openProfile(username: 'username'));
 
 // Action with store fallback if not installed
-await deeplinkX.launchAction(Telegram.openProfile('username', fallbackToStore: true));
+await deeplinkX.launchAction(Telegram.openProfile(username: 'username', fallbackToStore: true));
 
 // Action with fallback disabled
-await deeplinkX.launchAction(Telegram.openProfile('username'), disableFallback: true);
+await deeplinkX.launchAction(Telegram.openProfile(username: 'username'), disableFallback: true);
 ```
 
 ### Launch Profile by Phone Number Action
@@ -37,13 +37,13 @@ await deeplinkX.launchAction(Telegram.openProfile('username'), disableFallback: 
 final deeplinkX = DeeplinkX();
 
 // Simple action
-await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890'));
+await deeplinkX.launchAction(Telegram.openProfileByPhoneNumber(phoneNumber: '1234567890'));
 
 // Action with store fallback if not installed
-await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890', fallbackToStore: true));
+await deeplinkX.launchAction(Telegram.openProfileByPhoneNumber(phoneNumber: '1234567890', fallbackToStore: true));
 
 // Action with fallback disabled
-await deeplinkX.launchAction(Telegram.openProfileByPhone('1234567890'), disableFallback: true);
+await deeplinkX.launchAction(Telegram.openProfileByPhoneNumber(phoneNumber: '1234567890'), disableFallback: true);
 ```
 
 ### Launch Send Message Action
@@ -215,9 +215,9 @@ DeeplinkX follows this sequence when handling Telegram deeplinks:
 | ------------------ | -------------- | ------------ |
 | open               | ✅              | ✅            |
 | openProfile        | ✅              | ✅            |
-| openProfileByPhone | ✅              | ✅            |
+| openProfileByPhoneNumber | ✅              | ✅            |
 | sendMessage        | ✅              | ✅            |
-| sendMessageByPhone | ✅              | ✅            |
+| sendMessageByPhoneNumber | ✅              | ✅            |
 
 ## Check If Telegram Is Installed
 
