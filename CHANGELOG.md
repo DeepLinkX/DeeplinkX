@@ -1,3 +1,23 @@
+## 1.2.0
+
+* Bump dependency deeplink_x_macos version to 0.2.0 ([#Change](https://pub.dev/packages/deeplink_x_macos/changelog#020))
+  * Added Swift Package Manager (SPM) support in macOS federated plugin
+* Fixed platform and store handling
+  * Handle web platform explicitly in PlatformUtil
+  * Make app store platform values readonly
+* Fixed YouTube fallback behavior
+  * Removed Microsoft Store fallback from YouTube store actions
+  * Updated related tests and documentation
+* Improved documentation and README
+  * Added a table of contents and GIF demos to README
+  * Updated snippets to use `fallbackToStore` and named arguments
+  * Updated Telegram method names in docs (`openProfileByPhoneNumber`, `sendMessageByPhoneNumber`)
+* Updated example app reliability and presentation
+  * Prevent crashes on invalid numeric input in map pages
+  * Updated Android and iOS example configuration and default inputs
+  * Fixed Sygic icon asset and adjusted splash screen visuals
+* Minor internal code readability improvements
+
 ## 1.1.6
 
 * Added Sygic GPS Navigation app with the following actions:
