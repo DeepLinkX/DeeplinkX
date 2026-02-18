@@ -33,6 +33,41 @@ Try the live demo: [https://deeplinkx.github.io/DeeplinkX/](https://deeplinkx.gi
 For best results, build and run on real phone.  
 Some features like app installation checks may not work on web.  
 
+### GIF Demos
+
+<table>
+  <tr>
+    <td align="center">
+      <strong>Instagram Profile</strong><br>
+      <img src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/previews/01_instagram_open_profile.gif" alt="Instagram profile deeplink demo" width="220" height="476">
+    </td>
+    <td align="center">
+      <strong>Telegram Profile</strong><br>
+      <img src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/previews/02_telegram_open_profile.gif" alt="Telegram profile deeplink demo" width="220" height="476">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>Facebook App</strong><br>
+      <img src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/previews/03_facebook_open_app.gif" alt="Facebook app deeplink demo" width="220" height="476">
+    </td>
+    <td align="center">
+      <strong>YouTube Video</strong><br>
+      <img src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/previews/04_youtube_open_video.gif" alt="YouTube video deeplink demo" width="220" height="476">
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <strong>Facebook Web Fallback</strong><br>
+      <img src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/previews/05_facebook_open_web_profile.gif" alt="Facebook web fallback deeplink demo" width="220" height="476">
+    </td>
+    <td align="center">
+      <strong>iOS App Store Page</strong><br>
+      <img src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/previews/06_ios_app_store_open_page.gif" alt="iOS App Store deeplink demo" width="220" height="476">
+    </td>
+  </tr>
+</table>
+
 ## Usage
 
 First, import the package and create an instance:
