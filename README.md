@@ -16,6 +16,21 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 > **Naming Note:**  
 'X' in DeeplinkX stands for external.
 
+## Table of Contents
+
+- [Features](#features)
+- [Demo](#demo)
+- [Usage](#usage)
+- [Supported Apps And Actions](#supported-apps-and-actions)
+- [Documentation](#documentation)
+- [URL Scheme Handling](#url-scheme-handling)
+- [Platform-Specific Configuration](#platform-specific-configuration)
+- [Why Prefer Custom Schemes, App Links or Intent Actions Instead of Universal Links?](#why-prefer-custom-schemes-app-links-or-intent-actions-instead-of-universal-links)
+- [Why use DeeplinkX over `url_launcher`?](#why-use-deeplinkx-over-url_launcher)
+- [Contributing](#contributing)
+- [License](#license)
+- [Issues and Feature Requests](#issues-and-feature-requests)
+
 ## Features
 
 - Launch deeplink actions within apps
