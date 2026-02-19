@@ -1,0 +1,59 @@
+name: Docs improvement
+description: Suggest or track a documentation improvement for DeeplinkX promotion assets.
+title: "docs: "
+labels:
+  - documentation
+  - promotion
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for README, recipes, strategy docs, or references updates.
+
+  - type: input
+    id: target_file
+    attributes:
+      label: Target file/path
+      description: Which file should be updated?
+      placeholder: README.md or doc/recipes/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What is missing or unclear right now?
+      placeholder: Current docs do not cover ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_change
+    attributes:
+      label: Proposed change
+      description: What exact update should be made?
+      placeholder: Add section/snippet/table ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence links
+      description: Add repo paths or links supporting this change.
+      placeholder: lib/src/... , test/src/... , doc/apps/...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I verified this request does not require runtime/API changes.
+          required: true
+        - label: I included at least one proof source.
+          required: true
+        - label: I checked for overlap with existing docs.
+          required: true

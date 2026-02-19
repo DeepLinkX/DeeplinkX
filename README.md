@@ -11,7 +11,7 @@
   <img align="center" src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/deeplink_x_logo.jpg" width="200" alt="DeeplinkX Logo">
 </p>
 
-Easy to use Flutter plugin for type-safe handling of external deeplinks with built-in support for popular apps. Features smart fallback to app stores and web URLs across all major platforms.
+DeeplinkX is a Flutter plugin for outbound deep-link orchestration across external apps and app stores. It provides typed actions, install checks, and smart fallback handling so one app can implement multiple deeplink features (for example app update, contact us, social profile open, and map directions) with consistent behavior across major platforms.
 
 > **Naming Note:**  
 'X' in DeeplinkX stands for external.
@@ -23,10 +23,13 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 - [Usage](#usage)
 - [Supported Apps And Actions](#supported-apps-and-actions)
 - [Documentation](#documentation)
+- [Intent Recipes](#intent-recipes)
 - [URL Scheme Handling](#url-scheme-handling)
 - [Platform-Specific Configuration](#platform-specific-configuration)
 - [Why Prefer Custom Schemes, App Links or Intent Actions Instead of Universal Links?](#why-prefer-custom-schemes-app-links-or-intent-actions-instead-of-universal-links)
 - [Why use DeeplinkX over `url_launcher`?](#why-use-deeplinkx-over-url_launcher)
+- [Claim-to-Proof Map](#claim-to-proof-map)
+- [References](#references)
 - [Contributing](#contributing)
 - [License](#license)
 - [Issues and Feature Requests](#issues-and-feature-requests)
@@ -204,6 +207,14 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [Apple Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md)
 - [Sygic](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md)
 
+## Intent Recipes
+
+Use these scenario-based guides when your app has multiple independent deeplink features:
+
+- [Multi-feature app menu](doc/recipes/multi_feature_app_menu.md)
+- [Fallback strategy examples](doc/recipes/fallback_strategy_examples.md)
+- [Common outbound flows](doc/recipes/common_outbound_flows.md)
+
 ## URL Scheme Handling
 
 DeeplinkX uses a three-tier approach for compatibility:
@@ -243,6 +254,25 @@ See respective app documentation for platform-specific configuration.
 - **Cross-Platform Consistency:** DeeplinkX works seamlessly across platform, where `url_launcher` may not support certain schemes (e.g., checking can launch deep link of custom schemes on macOS).
 - **Unified API for Many Apps:** DeeplinkX provides a unified, high-level API for dozens of popular apps and stores, so you don't have to research and maintain deep link formats or intent structures yourself.
 - **Less Boilerplate:** With DeeplinkX, you can trigger complex actions (like opening a specific screen in an app, or falling back to the store) with a single method call, instead of writing custom logic for each case.
+
+## Claim-to-Proof Map
+
+| Claim | Proof |
+| --- | --- |
+| Launch app actions with a single API entrypoint | [lib/src/core/deeplink_x.dart](lib/src/core/deeplink_x.dart) (`launchAction`) |
+| Launch whole apps without choosing a specific action | [lib/src/core/deeplink_x.dart](lib/src/core/deeplink_x.dart) (`launchApp`) |
+| Redirect users to platform-appropriate stores | [lib/src/core/deeplink_x.dart](lib/src/core/deeplink_x.dart) (`redirectToStore`) |
+| Supports app install checks for external apps | [lib/src/core/deeplink_x.dart](lib/src/core/deeplink_x.dart) (`isAppInstalled`) |
+| Built-in store and web fallback flow with override support | [lib/src/core/deeplink_x.dart](lib/src/core/deeplink_x.dart), [doc/apps/telegram.md](doc/apps/telegram.md), [doc/apps/google_maps.md](doc/apps/google_maps.md) |
+| Broad provider catalog (social, navigation, stores) | [lib/src/apps/downloadable_apps/downloadable_apps.dart](lib/src/apps/downloadable_apps/downloadable_apps.dart), [lib/src/apps/app_stores/app_stores.dart](lib/src/apps/app_stores/app_stores.dart), [doc/apps](doc/apps) |
+| Provider-level behavior is covered by tests | [test/src/apps/telegram_test.dart](test/src/apps/telegram_test.dart), [test/src/apps/google_maps_test.dart](test/src/apps/google_maps_test.dart), [test/src/apps/whatsapp_test.dart](test/src/apps/whatsapp_test.dart) |
+| Core package exports are verified | [test/deeplink_x_test.dart](test/deeplink_x_test.dart) |
+
+## References
+
+- [Why DeeplinkX Beats url_launcher for External App Deep Linking in Flutter](https://medium.com/@parham.dev/why-deeplinkx-beats-url-launcher-for-external-app-deep-linking-in-flutter-0c7d8bdb3409)
+- [Promotion references index](doc/strategy/references.md)
+- [Article claim audit worksheet](doc/strategy/article_claim_audit.md)
 
 ## Contributing
 

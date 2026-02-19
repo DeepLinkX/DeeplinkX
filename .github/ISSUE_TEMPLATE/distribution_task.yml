@@ -1,0 +1,71 @@
+name: Distribution task
+description: Track Stack Overflow, article, or external surface tasks.
+title: "distribution: "
+labels:
+  - promotion
+  - distribution
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for non-code promotion tasks (SO targets, article drafts, references updates).
+
+  - type: dropdown
+    id: channel
+    attributes:
+      label: Channel
+      options:
+        - Stack Overflow
+        - Article
+        - Documentation reference update
+        - Community discussion
+    validations:
+      required: true
+
+  - type: input
+    id: objective
+    attributes:
+      label: Objective
+      description: What metric or query target does this task support?
+      placeholder: Improve coverage for query #16 in query_targets.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: Deliverable
+      description: What is the exact output?
+      placeholder: One published answer with code snippet and proof links
+    validations:
+      required: true
+
+  - type: textarea
+    id: proof_sources
+    attributes:
+      label: Proof sources
+      description: Repo paths/links that back the claims.
+      placeholder: README.md claim map, doc/apps/telegram.md, test/src/apps/telegram_test.dart
+    validations:
+      required: true
+
+  - type: textarea
+    id: kpi_link
+    attributes:
+      label: KPI link
+      description: Which KPI in kpi_framework.md does this task move?
+      placeholder: External surface outputs
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: Language is technical and non-spammy.
+          required: true
+        - label: Claims are evidence-backed.
+          required: true
+        - label: Task is in scope for this no-code cycle.
+          required: true
