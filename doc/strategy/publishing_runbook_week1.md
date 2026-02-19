@@ -14,6 +14,9 @@ This runbook converts prepared drafts into published external assets.
   - `doc/strategy/article_2_draft.md`
   - `doc/strategy/article_3_draft.md`
 - Evidence links: `README.md`, `doc/apps/`, `doc/recipes/`, `lib/src/core/deeplink_x.dart`
+- Publishing queue: `doc/strategy/week1_publishing_queue.md`
+- QA results: `doc/strategy/content_qa_check_results.md`
+- KPI update template: `doc/strategy/post_publish_kpi_update_template.md`
 
 ## A) Stack Overflow Publish Steps
 1. Find a matching live question for target #1 from `doc/strategy/so_targets.md`.
@@ -35,6 +38,7 @@ This runbook converts prepared drafts into published external assets.
    - publication URLs,
    - initial qualitative notes.
 2. Update `doc/strategy/execution_status.md` External publishing status.
+3. Apply `doc/strategy/post_publish_kpi_update_template.md` and store output in week review notes.
 
 ## Recommended Publishing Order
 1. SO Target #1

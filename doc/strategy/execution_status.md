@@ -14,7 +14,7 @@
 | Recipe docs | Completed | Multi-feature menu, fallback strategies, common outbound flows created |
 | Contributor process docs | Completed | Lanes, checklist, review SLA created |
 | Issue templates | Completed | Docs and distribution templates added |
-| External publishing | In progress | Full publish pack prepared (5 SO drafts + 3 article drafts) with runbook/log; manual posting pending |
+| External publishing | In progress | Full publish pack prepared (5 SO drafts + 3 article drafts + 1 discussion draft) with queue, QA, and runbook; manual posting pending |
 | KPI baseline capture | Completed | Query coverage 30/30 and pub.dev baseline snapshot recorded |
 
 ## Task Progress (R-01 to R-18)
@@ -41,10 +41,11 @@
 | R-18 | Completed | `doc/strategy/next_cycle_backlog.md` |
 
 ## Immediate Next Actions
-1. Publish SO drafts (targets 1-5) using `doc/strategy/publishing_runbook_week1.md` order.
-2. Publish article drafts (articles 1-3) using `doc/strategy/publishing_runbook_week1.md` order.
+1. Execute scheduled publishing from `doc/strategy/week1_publishing_queue.md`.
+2. Publish SO drafts (targets 1-5), article drafts (articles 1-3), and discussion draft.
 3. Update publication URLs and statuses in `doc/strategy/external_publication_log.md`.
-4. Refresh KPI section in `doc/strategy/promotion_review_week6.md` after each publication batch.
+4. Run post-publish KPI updates using `doc/strategy/post_publish_kpi_update_template.md`.
+5. Refresh KPI section in `doc/strategy/promotion_review_week6.md` after each publication batch.
 
 ## Out-of-Scope Guardrails
 1. No changes to `lib/` in this cycle.
