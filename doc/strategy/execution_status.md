@@ -14,7 +14,8 @@
 | Recipe docs | Completed | Multi-feature menu, fallback strategies, common outbound flows created |
 | Contributor process docs | Completed | Lanes, checklist, review SLA created |
 | Issue templates | Completed | Docs and distribution templates added |
-| External publishing | In progress | Publish-ready Stack Overflow answer, article draft, and runbook/log prepared; manual posting pending |
+| External publishing | In progress | Full publish pack prepared (5 SO drafts + 3 article drafts) with runbook/log; manual posting pending |
+| KPI baseline capture | Completed | Query coverage 30/30 and pub.dev baseline snapshot recorded |
 
 ## Task Progress (R-01 to R-18)
 
@@ -36,14 +37,14 @@
 | R-14 | Completed | `doc/strategy/so_targets.md` |
 | R-15 | Completed | `doc/strategy/article_outlines.md` |
 | R-16 | Completed | `doc/strategy/kpi_framework.md` |
-| R-17 | Completed (template) | `doc/strategy/promotion_review_week6.md` |
-| R-18 | Completed (initial) | `doc/strategy/next_cycle_backlog.md` |
+| R-17 | Completed (baseline updated) | `doc/strategy/promotion_review_week6.md` |
+| R-18 | Completed | `doc/strategy/next_cycle_backlog.md` |
 
 ## Immediate Next Actions
-1. Post the prepared Stack Overflow answer draft from `doc/strategy/so_answer_target_1_draft.md` and log URL.
-2. Publish the prepared article draft from `doc/strategy/article_1_draft.md` and log URL.
-3. Use `doc/strategy/publishing_runbook_week1.md` and update `doc/strategy/external_publication_log.md`.
-4. Continue weekly KPI updates in `doc/strategy/promotion_review_week6.md` after first external publications.
+1. Publish SO drafts (targets 1-5) using `doc/strategy/publishing_runbook_week1.md` order.
+2. Publish article drafts (articles 1-3) using `doc/strategy/publishing_runbook_week1.md` order.
+3. Update publication URLs and statuses in `doc/strategy/external_publication_log.md`.
+4. Refresh KPI section in `doc/strategy/promotion_review_week6.md` after each publication batch.
 
 ## Out-of-Scope Guardrails
 1. No changes to `lib/` in this cycle.

@@ -10,9 +10,9 @@
 | Query coverage | 20/30 covered (30 mapped) | 30/30 covered | 30/30 | On target |
 | Proof-backed claims | 8 claims | 8 claims | >= 8 | On target |
 | Recipe docs published | 3 | 3 | >= 3 | On target |
-| External surface outputs | 0 published (2 drafts ready) | 0 published (2 drafts + runbook ready) | >= 3 | In progress |
-| pub.dev likes trend | Baseline pending manual capture | Baseline pending manual capture | Upward | Pending |
-| pub.dev downloads trend | Baseline pending manual capture | Baseline pending manual capture | Upward | Pending |
+| External surface outputs | 0 published (8 drafts ready) | 0 published (8 drafts + runbook/log ready) | >= 3 | In progress |
+| pub.dev likes trend | 6 likes (2026-02-19 baseline) | 6 (baseline) | Upward | Monitoring |
+| pub.dev downloads trend | 272 (30-day baseline) | 272 (baseline) | Upward | Monitoring |
 
 ## Snapshot
 - Period: __________________

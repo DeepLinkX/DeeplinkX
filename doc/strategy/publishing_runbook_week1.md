@@ -3,8 +3,16 @@
 This runbook converts prepared drafts into published external assets.
 
 ## Inputs
-- SO draft: `doc/strategy/so_answer_target_1_draft.md`
-- Article draft: `doc/strategy/article_1_draft.md`
+- SO drafts:
+  - `doc/strategy/so_answer_target_1_draft.md`
+  - `doc/strategy/so_answer_target_2_draft.md`
+  - `doc/strategy/so_answer_target_3_draft.md`
+  - `doc/strategy/so_answer_target_4_draft.md`
+  - `doc/strategy/so_answer_target_5_draft.md`
+- Article drafts:
+  - `doc/strategy/article_1_draft.md`
+  - `doc/strategy/article_2_draft.md`
+  - `doc/strategy/article_3_draft.md`
 - Evidence links: `README.md`, `doc/apps/`, `doc/recipes/`, `lib/src/core/deeplink_x.dart`
 
 ## A) Stack Overflow Publish Steps
@@ -27,6 +35,16 @@ This runbook converts prepared drafts into published external assets.
    - publication URLs,
    - initial qualitative notes.
 2. Update `doc/strategy/execution_status.md` External publishing status.
+
+## Recommended Publishing Order
+1. SO Target #1
+2. Article 1
+3. SO Target #3
+4. Article 2
+5. SO Target #2
+6. SO Target #5
+7. Article 3
+8. SO Target #4
 
 ## Guardrails
 1. Keep language technical and non-promotional.

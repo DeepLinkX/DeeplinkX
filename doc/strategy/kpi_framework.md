@@ -27,3 +27,4 @@
 1. Weekly leading indicator review.
 2. Monthly lagging indicator review.
 3. End-of-cycle decision document in `promotion_review_week6.md`.
+4. Store monthly pub.dev baselines in dated files (starting with `pubdev_baseline_2026-02-19.md`).

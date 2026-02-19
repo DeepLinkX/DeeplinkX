@@ -34,6 +34,9 @@ Flutter Deep Link Fallback Strategies: Native, Store, Web, and No-Fallback Modes
 - `doc/apps/telegram.md`
 - `doc/apps/google_maps.md`
 
+### Draft asset
+- `doc/strategy/article_2_draft.md`
+
 ## Article 3
 ### Title
 Production Playbook for Outbound Deep Linking in Flutter
@@ -49,3 +52,6 @@ Production Playbook for Outbound Deep Linking in Flutter
 - `doc/contributing/docs_quality_checklist.md`
 - `doc/strategy/kpi_framework.md`
 - `README.md` claim-to-proof map
+
+### Draft asset
+- `doc/strategy/article_3_draft.md`

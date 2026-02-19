@@ -44,3 +44,7 @@ Focus on high-intent questions where a practical, evidence-backed answer can nat
 
 ## Draft Assets
 - Target 1 draft answer: `doc/strategy/so_answer_target_1_draft.md`
+- Target 2 draft answer: `doc/strategy/so_answer_target_2_draft.md`
+- Target 3 draft answer: `doc/strategy/so_answer_target_3_draft.md`
+- Target 4 draft answer: `doc/strategy/so_answer_target_4_draft.md`
+- Target 5 draft answer: `doc/strategy/so_answer_target_5_draft.md`
