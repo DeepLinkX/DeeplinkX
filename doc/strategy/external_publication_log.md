@@ -18,3 +18,4 @@ Track all published external assets and their relationship to KPI updates.
 1. Replace `Pending publish` with final URL after publication.
 2. Add one row per published item.
 3. Reflect progress in `doc/strategy/promotion_review_week6.md`.
+4. Use `doc/strategy/so_candidate_threads.md` when selecting SO threads for each target.

@@ -6,6 +6,7 @@ Objective: publish a first external batch with consistent quality and measurable
 - Primary: Contributor B
 - Reviewer: Owner
 - Technical verifier: Contributor A
+- SO thread source list: `doc/strategy/so_candidate_threads.md`
 
 ## Schedule (Local Time)
 
