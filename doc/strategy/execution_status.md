@@ -14,8 +14,9 @@
 | Recipe docs | Completed | Multi-feature menu, fallback strategies, common outbound flows created |
 | Contributor process docs | Completed | Lanes, checklist, review SLA created |
 | Issue templates | Completed | Docs and distribution templates added |
-| External publishing | In progress | Full publish pack prepared (5 SO drafts + 3 article drafts + 1 discussion draft) with queue, QA, runbook, and candidate thread map; manual posting pending |
+| External publishing | Deferred (skipped this cycle) | Full publish pack prepared (5 SO drafts + 3 article drafts + 1 discussion draft). Posting is intentionally skipped in this cycle by instruction. |
 | KPI baseline capture | Completed | Query coverage 30/30 and pub.dev baseline snapshot recorded |
+| Cycle close summary | Completed | `doc/strategy/cycle_close_summary_2026-02-19.md` |
 
 ## Task Progress (R-01 to R-18)
 
@@ -41,11 +42,10 @@
 | R-18 | Completed | `doc/strategy/next_cycle_backlog.md` |
 
 ## Immediate Next Actions
-1. Execute scheduled publishing from `doc/strategy/week1_publishing_queue.md` using candidate mapping in `doc/strategy/so_candidate_threads.md`.
-2. Publish SO drafts (targets 1-5), article drafts (articles 1-3), and discussion draft.
-3. Update publication URLs and statuses in `doc/strategy/external_publication_log.md`.
-4. Run post-publish KPI updates using `doc/strategy/post_publish_kpi_update_template.md`.
-5. Refresh KPI section in `doc/strategy/promotion_review_week6.md` after each publication batch.
+1. Keep all prepared external drafts queued for next cycle.
+2. Update `doc/strategy/next_cycle_backlog.md` with deferred publishing tasks.
+3. Continue monthly in-repo KPI baseline capture and pruning.
+4. Keep cycle guardrails unchanged (no runtime/API changes).
 
 ## Out-of-Scope Guardrails
 1. No changes to `lib/` in this cycle.
