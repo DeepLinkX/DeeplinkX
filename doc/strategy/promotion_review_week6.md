@@ -7,10 +7,10 @@
 
 | KPI | Baseline | Current | Target | Result |
 | --- | --- | --- | --- | --- |
-| Query coverage | 20/30 covered (30 mapped) | 20/30 covered | 30/30 | In progress |
+| Query coverage | 20/30 covered (30 mapped) | 30/30 covered | 30/30 | On target |
 | Proof-backed claims | 8 claims | 8 claims | >= 8 | On target |
 | Recipe docs published | 3 | 3 | >= 3 | On target |
-| External surface outputs | 0 published (2 drafts ready) | 0 published | >= 3 | In progress |
+| External surface outputs | 0 published (2 drafts ready) | 0 published (2 drafts + runbook ready) | >= 3 | In progress |
 | pub.dev likes trend | Baseline pending manual capture | Baseline pending manual capture | Upward | Pending |
 | pub.dev downloads trend | Baseline pending manual capture | Baseline pending manual capture | Upward | Pending |
 

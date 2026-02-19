@@ -10,11 +10,11 @@
 | Area | Status | Notes |
 | --- | --- | --- |
 | README positioning updates | Completed | Category narrative, recipe index, claim-to-proof map, references added |
-| Strategy docs | Completed | Query map, references, article audit, KPI framework, SO/article targets created |
+| Strategy docs | Completed | Query map now at 30/30 covered, references, article audit, KPI framework, SO/article targets created |
 | Recipe docs | Completed | Multi-feature menu, fallback strategies, common outbound flows created |
 | Contributor process docs | Completed | Lanes, checklist, review SLA created |
 | Issue templates | Completed | Docs and distribution templates added |
-| External publishing | In progress | Publish-ready Stack Overflow answer and article draft prepared; manual posting pending |
+| External publishing | In progress | Publish-ready Stack Overflow answer, article draft, and runbook/log prepared; manual posting pending |
 
 ## Task Progress (R-01 to R-18)
 
@@ -40,9 +40,10 @@
 | R-18 | Completed (initial) | `doc/strategy/next_cycle_backlog.md` |
 
 ## Immediate Next Actions
-1. Post the prepared Stack Overflow answer draft from `doc/strategy/so_answer_target_1_draft.md`.
-2. Publish the prepared article draft from `doc/strategy/article_1_draft.md`.
-3. Continue weekly KPI updates in `doc/strategy/promotion_review_week6.md` after first external publications.
+1. Post the prepared Stack Overflow answer draft from `doc/strategy/so_answer_target_1_draft.md` and log URL.
+2. Publish the prepared article draft from `doc/strategy/article_1_draft.md` and log URL.
+3. Use `doc/strategy/publishing_runbook_week1.md` and update `doc/strategy/external_publication_log.md`.
+4. Continue weekly KPI updates in `doc/strategy/promotion_review_week6.md` after first external publications.
 
 ## Out-of-Scope Guardrails
 1. No changes to `lib/` in this cycle.

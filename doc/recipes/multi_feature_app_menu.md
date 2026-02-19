@@ -93,3 +93,9 @@ Future<void> onNavigateToOfficeTap() async {
 1. Each product feature keeps its own deeplink action and parameters.
 2. Fallback behavior is consistent across features.
 3. Adding a new menu action is usually one new handler function.
+
+## Enterprise Scaling Notes
+1. Keep one outbound service layer in your app (for example `ExternalActionsService`) and call it from multiple features.
+2. Keep each business feature mapped to one explicit DeeplinkX action method for easier testing and analytics.
+3. Centralize constants (usernames, support numbers, package IDs, store IDs) to avoid duplication across modules.
+4. Add per-feature telemetry around action success/failure so product teams can monitor user flow health.
