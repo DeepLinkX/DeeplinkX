@@ -41,3 +41,6 @@ Focus on high-intent questions where a practical, evidence-backed answer can nat
 1. Be neutral and technical.
 2. Include source links from repo docs/code.
 3. Avoid unverifiable comparative claims.
+
+## Draft Assets
+- Target 1 draft answer: `doc/strategy/so_answer_target_1_draft.md`

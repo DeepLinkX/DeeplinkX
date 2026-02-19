@@ -16,6 +16,9 @@ How to Build a Multi-Feature Outbound Deep Link Menu in Flutter
 - `doc/recipes/fallback_strategy_examples.md`
 - `lib/src/core/deeplink_x.dart`
 
+### Draft asset
+- `doc/strategy/article_1_draft.md`
+
 ## Article 2
 ### Title
 Flutter Deep Link Fallback Strategies: Native, Store, Web, and No-Fallback Modes

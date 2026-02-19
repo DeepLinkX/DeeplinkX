@@ -1,5 +1,19 @@
 # Week 6 Promotion Review
 
+## Baseline Snapshot (Week 1)
+- Date: February 19, 2026
+- Reviewer: Owner
+- Contributors: Contributor A, Contributor B
+
+| KPI | Baseline | Current | Target | Result |
+| --- | --- | --- | --- | --- |
+| Query coverage | 20/30 covered (30 mapped) | 20/30 covered | 30/30 | In progress |
+| Proof-backed claims | 8 claims | 8 claims | >= 8 | On target |
+| Recipe docs published | 3 | 3 | >= 3 | On target |
+| External surface outputs | 0 published (2 drafts ready) | 0 published | >= 3 | In progress |
+| pub.dev likes trend | Baseline pending manual capture | Baseline pending manual capture | Upward | Pending |
+| pub.dev downloads trend | Baseline pending manual capture | Baseline pending manual capture | Upward | Pending |
+
 ## Snapshot
 - Period: __________________
 - Reviewer: __________________

@@ -14,7 +14,7 @@
 | Recipe docs | Completed | Multi-feature menu, fallback strategies, common outbound flows created |
 | Contributor process docs | Completed | Lanes, checklist, review SLA created |
 | Issue templates | Completed | Docs and distribution templates added |
-| External publishing | Pending | Requires manual publishing on external platforms |
+| External publishing | In progress | Publish-ready Stack Overflow answer and article draft prepared; manual posting pending |
 
 ## Task Progress (R-01 to R-18)
 
@@ -40,9 +40,9 @@
 | R-18 | Completed (initial) | `doc/strategy/next_cycle_backlog.md` |
 
 ## Immediate Next Actions
-1. Publish one Stack Overflow answer using `doc/strategy/so_targets.md` target #1.
-2. Publish one article using `doc/strategy/article_outlines.md` Article 1.
-3. Record first KPI snapshot baseline in `doc/strategy/promotion_review_week6.md`.
+1. Post the prepared Stack Overflow answer draft from `doc/strategy/so_answer_target_1_draft.md`.
+2. Publish the prepared article draft from `doc/strategy/article_1_draft.md`.
+3. Continue weekly KPI updates in `doc/strategy/promotion_review_week6.md` after first external publications.
 
 ## Out-of-Scope Guardrails
 1. No changes to `lib/` in this cycle.
