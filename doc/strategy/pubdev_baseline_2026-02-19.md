@@ -7,7 +7,7 @@ Source: https://pub.dev/packages/deeplink_x
 ## Captured Metrics
 - Likes: 6
 - 30-day downloads: 272
-- pub points: 0 (`pending` label observed on package page)
+- pub points: 160
 
 ## Notes
 1. This snapshot is used as cycle baseline for lagging KPI comparisons.
