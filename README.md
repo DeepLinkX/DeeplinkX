@@ -23,6 +23,7 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 - [Usage](#usage)
 - [Supported Apps And Actions](#supported-apps-and-actions)
 - [Documentation](#documentation)
+- [Launch Utilities](#launch-utilities)
 - [URL Scheme Handling](#url-scheme-handling)
 - [Platform-Specific Configuration](#platform-specific-configuration)
 - [Why Prefer Custom Schemes, App Links or Intent Actions Instead of Universal Links?](#why-prefer-custom-schemes-app-links-or-intent-actions-instead-of-universal-links)
@@ -36,6 +37,7 @@ Easy to use Flutter plugin for type-safe handling of external deeplinks with bui
 - Launch deeplink actions within apps
 - Launch apps without specific actions
 - Redirect to app stores to update apps
+- Launch utilities for store redirects and ordered map provider fallback
 - Check if external app is installed on the device
 - Smart fallback system
 - Support popular stores including Google PlayStore, iOS AppStore, Mac AppStore, Microsoft Store, Huawei AppGallery, Myket, Cafe Bazaar
@@ -135,21 +137,6 @@ Verify if a specific app is installed on the device:
 final isInstalled = await deeplinkX.isAppInstalled(LinkedIn());
 ```
 
-### Redirect To Store
-
-Redirect users to appropriate app stores based on their platform:
-
-```dart
-// Redirect to appropriate store based on current platform
-final isRedirected = await deeplinkX.redirectToStore(
-  storeActions: [
-    IOSAppStore.openAppPage(appId: '389801252', appName: 'instagram'),  // iOS App Store
-    PlayStore.openAppPage(packageName: 'com.instagram.android'),  // Google Play Store
-    HuaweiAppGalleryStore.openAppPage(appId: 'C101162369'),  // Huawei AppGallery Store
-  ],
-);
-```
-
 ## Supported Apps And Actions
 
 | Category    | App                     | Supported Actions                                                                                 |
@@ -203,6 +190,71 @@ Detailed documentation available in [doc/apps](https://github.com/DeeplinkX/Deep
 - [Waze](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md)
 - [Apple Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md)
 - [Sygic](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md)
+
+## Launch Utilities
+
+### Store Redirect
+
+Redirect users to appropriate app stores based on their platform:
+
+```dart
+// Redirect to appropriate store based on current platform
+final isRedirected = await deeplinkX.redirectToStore(
+  storeActions: [
+    IOSAppStore.openAppPage(appId: '389801252', appName: 'instagram'),  // iOS App Store
+    PlayStore.openAppPage(packageName: 'com.instagram.android'),  // Google Play Store
+    HuaweiAppGalleryStore.openAppPage(appId: 'C101162369'),  // Huawei AppGallery Store
+  ],
+);
+```
+
+### Map Provider Launching
+
+Use map launch utilities when several navigation apps can handle the same
+action. DeeplinkX tries the actions in the order you provide, so the list stays
+caller-owned and can grow as new map providers are added.
+
+```dart
+const currentLocation = Coordinate(latitude: 35.6892, longitude: 51.3890);
+const destination = Coordinate(latitude: 35.7000, longitude: 51.4000);
+
+await deeplinkX.launchMapViewAction(
+  actions: [
+    GoogleMaps.view(coordinate: currentLocation),
+    AppleMaps.view(coordinate: currentLocation),
+  ],
+);
+
+await deeplinkX.launchMapSearchAction(
+  actions: [
+    GoogleMaps.search(query: 'Central Park'),
+    AppleMaps.search(query: 'Central Park'),
+  ],
+);
+
+await deeplinkX.launchMapDirectionsAction(
+  actions: [
+    GoogleMaps.directions(destination: 'Central Park'),
+    AppleMaps.directions(destination: 'Central Park'),
+  ],
+);
+
+await deeplinkX.launchMapDirectionsWithCoordsAction(
+  actions: [
+    GoogleMaps.directionsWithCoords(destination: destination),
+    AppleMaps.directionsWithCoords(destination: destination),
+  ],
+);
+```
+
+Supported apps:
+
+| Method | Supported apps |
+| ------ | -------------- |
+| `launchMapViewAction` | Google Maps, Apple Maps, Waze, Sygic |
+| `launchMapSearchAction` | Google Maps, Apple Maps, Waze |
+| `launchMapDirectionsAction` | Google Maps, Apple Maps, Waze |
+| `launchMapDirectionsWithCoordsAction` | Google Maps, Apple Maps, Waze, Sygic |
 
 ## URL Scheme Handling
 

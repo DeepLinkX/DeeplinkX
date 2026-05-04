@@ -165,7 +165,8 @@ enum GoogleMapsTravelMode {
 ///
 /// This class extends [GoogleMaps] and implements multiple interfaces to provide
 /// comprehensive functionality for searching with fallback support.
-class GoogleMapsSearchAction extends GoogleMaps implements IntentAppLinkAction, AppLinkAppAction, Fallbackable {
+class GoogleMapsSearchAction extends GoogleMaps
+    implements IntentAppLinkAction, AppLinkAppAction, Fallbackable, MapSearchAction {
   /// Creates a new [GoogleMapsSearchAction] instance.
   ///
   /// Parameters:
@@ -178,6 +179,7 @@ class GoogleMapsSearchAction extends GoogleMaps implements IntentAppLinkAction, 
   });
 
   /// The search query.
+  @override
   final String query;
 
   @override
@@ -211,7 +213,8 @@ class GoogleMapsSearchAction extends GoogleMaps implements IntentAppLinkAction, 
 }
 
 /// An action to display a map centered on specific coordinates.
-class GoogleMapsViewAction extends GoogleMaps implements IntentAppLinkAction, AppLinkAppAction, Fallbackable {
+class GoogleMapsViewAction extends GoogleMaps
+    implements IntentAppLinkAction, AppLinkAppAction, Fallbackable, MapViewAction {
   /// Creates a new [GoogleMapsViewAction] instance.
   GoogleMapsViewAction({
     required this.coordinate,
@@ -220,6 +223,7 @@ class GoogleMapsViewAction extends GoogleMaps implements IntentAppLinkAction, Ap
   });
 
   /// Coordinate to center the map on.
+  @override
   final Coordinate coordinate;
 
   /// Optional zoom level.
@@ -257,7 +261,8 @@ class GoogleMapsViewAction extends GoogleMaps implements IntentAppLinkAction, Ap
 }
 
 /// An action to get directions using addresses or place IDs.
-class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkAction, AppLinkAppAction, Fallbackable {
+class GoogleMapsDirectionsAction extends GoogleMaps
+    implements IntentAppLinkAction, AppLinkAppAction, Fallbackable, MapDirectionsAction {
   /// Creates a new [GoogleMapsDirectionsAction] instance.
   GoogleMapsDirectionsAction({
     required this.destination,
@@ -267,6 +272,7 @@ class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkActi
   });
 
   /// Destination address or place name.
+  @override
   final String destination;
 
   /// Optional origin address or place name.
@@ -319,7 +325,7 @@ class GoogleMapsDirectionsAction extends GoogleMaps implements IntentAppLinkActi
 
 /// An action to get directions using coordinates.
 class GoogleMapsDirectionsWithCoordsAction extends GoogleMaps
-    implements IntentAppLinkAction, AppLinkAppAction, Fallbackable {
+    implements IntentAppLinkAction, AppLinkAppAction, Fallbackable, MapDirectionsWithCoordsAction {
   /// Creates a new [GoogleMapsDirectionsWithCoordsAction] instance.
   GoogleMapsDirectionsWithCoordsAction({
     required this.destination,
@@ -329,6 +335,7 @@ class GoogleMapsDirectionsWithCoordsAction extends GoogleMaps
   });
 
   /// Destination coordinates.
+  @override
   final Coordinate destination;
 
   /// Optional origin coordinates.

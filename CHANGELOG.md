@@ -1,3 +1,19 @@
+## 1.3.0
+
+* Added map action abstractions for navigation providers:
+  * `MapAppAction`
+  * `MapViewAction`
+  * `MapSearchAction`
+  * `MapDirectionsAction`
+  * `MapDirectionsWithCoordsAction`
+* Added typed map launch utilities to `DeeplinkX`:
+  * `launchMapViewAction`
+  * `launchMapSearchAction`
+  * `launchMapDirectionsAction`
+  * `launchMapDirectionsWithCoordsAction`
+* Updated README examples and AGENTS navigation-app guidance
+* Added tests for map abstractions, launch utilities, and public API coverage
+
 ## 1.2.0
 
 * Bump dependency deeplink_x_macos version to 0.2.0 ([#Change](https://pub.dev/packages/deeplink_x_macos/changelog#020))

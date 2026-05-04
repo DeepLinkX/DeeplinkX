@@ -4,6 +4,7 @@ export 'app_link_app_action_interface.dart';
 export 'downloadable_app_interface.dart';
 export 'fallbackable_interface.dart';
 export 'intent_app_action_interface.dart';
+export 'map_app_action_interface.dart';
 export 'store_app_interface.dart';
 export 'store_open_app_page_action_interface.dart';
 export 'universal_link_app_action_interface.dart';

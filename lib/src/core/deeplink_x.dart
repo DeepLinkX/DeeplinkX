@@ -188,4 +188,73 @@ class DeeplinkX {
 
     return false;
   }
+
+  /// Launches the first available map view action from [actions].
+  ///
+  /// Actions are attempted in the provided order. DeeplinkX first tries each
+  /// native map action without fallback, then tries regular fallback behavior
+  /// only if no native launch succeeds.
+  Future<bool> launchMapViewAction({
+    required final List<MapViewAction> actions,
+    final bool disableFallback = false,
+  }) =>
+      _launchMapActions(actions, disableFallback: disableFallback);
+
+  /// Launches the first available map search action from [actions].
+  ///
+  /// Actions are attempted in the provided order. DeeplinkX first tries each
+  /// native map action without fallback, then tries regular fallback behavior
+  /// only if no native launch succeeds.
+  Future<bool> launchMapSearchAction({
+    required final List<MapSearchAction> actions,
+    final bool disableFallback = false,
+  }) =>
+      _launchMapActions(actions, disableFallback: disableFallback);
+
+  /// Launches the first available map directions action from [actions].
+  ///
+  /// Actions are attempted in the provided order. DeeplinkX first tries each
+  /// native map action without fallback, then tries regular fallback behavior
+  /// only if no native launch succeeds.
+  Future<bool> launchMapDirectionsAction({
+    required final List<MapDirectionsAction> actions,
+    final bool disableFallback = false,
+  }) =>
+      _launchMapActions(actions, disableFallback: disableFallback);
+
+  /// Launches the first available coordinate-based map directions action from [actions].
+  ///
+  /// Actions are attempted in the provided order. DeeplinkX first tries each
+  /// native map action without fallback, then tries regular fallback behavior
+  /// only if no native launch succeeds.
+  Future<bool> launchMapDirectionsWithCoordsAction({
+    required final List<MapDirectionsWithCoordsAction> actions,
+    final bool disableFallback = false,
+  }) =>
+      _launchMapActions(actions, disableFallback: disableFallback);
+
+  Future<bool> _launchMapActions<T extends MapAppAction>(
+    final List<T> actions, {
+    required final bool disableFallback,
+  }) async {
+    for (final action in actions) {
+      final isLaunched = await launchAction(action, disableFallback: true);
+      if (isLaunched) {
+        return true;
+      }
+    }
+
+    if (disableFallback) {
+      return false;
+    }
+
+    for (final action in actions) {
+      final isLaunched = await launchAction(action);
+      if (isLaunched) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }

@@ -16,11 +16,13 @@ When introducing a new navigation app (e.g. Maps providers), follow this checkli
    - Wire exports via `lib/src/apps/downloadable_apps/downloadable_apps.dart`.
    - Ensure custom schemes, store actions, supported platforms, and fallback links are defined.
    - Align navigation APIs with the existing pattern: provide at least a `view` action plus `directionsWithCoords` (or platform-equivalent) so navigation workflows stay consistent.
+   - Implement the relevant map action abstractions (`MapViewAction`, `MapSearchAction`, `MapDirectionsAction`, `MapDirectionsWithCoordsAction`) on each navigation action so the shared map launch utilities can use it.
    - Reuse the established naming for navigation actions across code and docs (`View map`, `Search`, `Directions`, `Directions with coordinates`) so README tables, doc pages, changelog entries, and example labels stay in sync.
 
 2. **Documentation**
    - Add a dedicated page in `doc/apps/` describing usage, configuration, and URL schemes.
    - Reference the new app everywhere it appears in `README.md` (feature bullet list, supported apps table, documentation list, etc.).
+   - Add the new provider action to the README map launch utility examples when it supports one of the shared map action abstractions.
 
 3. **Example App**
    - Provide a sample page in `example/lib/pages/` that demonstrates all supported actions.
