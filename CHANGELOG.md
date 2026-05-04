@@ -1,3 +1,14 @@
+## 1.3.1
+
+* Restructured README for better first-read flow:
+  * Restored table of contents
+  * Moved feature overview before demo content
+  * Added supported stores and apps to the feature summary
+  * Updated quick start with an iOS Telegram profile example and required `Info.plist` schemes
+  * Expanded core concepts, recipes, platform configuration, and the `url_launcher` comparison
+  * Added a dedicated new app request callout
+* Added GitHub issue forms for user feedback and new app requests
+
 ## 1.3.0
 
 * Added map action abstractions for navigation providers:

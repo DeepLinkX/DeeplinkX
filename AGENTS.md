@@ -21,8 +21,9 @@ When introducing a new navigation app (e.g. Maps providers), follow this checkli
 
 2. **Documentation**
    - Add a dedicated page in `doc/apps/` describing usage, configuration, and URL schemes.
-   - Reference the new app everywhere it appears in `README.md` (feature bullet list, supported apps table, documentation list, etc.).
+   - Reference the new app everywhere it appears in `README.md` (feature counts and app list, supported apps table, documentation list, recipes, etc.).
    - Add the new provider action to the README map launch utility examples when it supports one of the shared map action abstractions.
+   - Keep README code snippets aligned with public API names and constructor parameters.
 
 3. **Example App**
    - Provide a sample page in `example/lib/pages/` that demonstrates all supported actions.
