@@ -81,7 +81,7 @@ enum SygicTransportMode {
 }
 
 /// Sygic show coordinate action.
-class SygicViewAction extends Sygic implements AppLinkAppAction, Fallbackable {
+class SygicViewAction extends Sygic implements AppLinkAppAction, Fallbackable, MapViewAction {
   /// Creates a new [SygicViewAction].
   SygicViewAction({
     required this.coordinate,
@@ -89,6 +89,7 @@ class SygicViewAction extends Sygic implements AppLinkAppAction, Fallbackable {
   });
 
   /// Coordinate to show on the map.
+  @override
   final Coordinate coordinate;
 
   @override
@@ -106,7 +107,8 @@ class SygicViewAction extends Sygic implements AppLinkAppAction, Fallbackable {
 }
 
 /// Sygic turn-by-turn navigation action.
-class SygicDirectionsWithCoordsAction extends Sygic implements AppLinkAppAction, Fallbackable {
+class SygicDirectionsWithCoordsAction extends Sygic
+    implements AppLinkAppAction, Fallbackable, MapDirectionsWithCoordsAction {
   /// Creates a new [SygicDirectionsWithCoordsAction].
   SygicDirectionsWithCoordsAction({
     required this.destination,
@@ -115,6 +117,7 @@ class SygicDirectionsWithCoordsAction extends Sygic implements AppLinkAppAction,
   });
 
   /// Destination coordinate.
+  @override
   final Coordinate destination;
 
   /// Selected transport mode.

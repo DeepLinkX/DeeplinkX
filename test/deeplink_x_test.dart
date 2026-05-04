@@ -21,6 +21,16 @@ class MockUniversalLinkAppAction extends Mock implements UniversalLinkAppAction 
 
 class MockIntentAppLinkAction extends Mock implements IntentAppLinkAction {}
 
+class MockMapAppAction extends Mock implements MapAppAction {}
+
+class MockMapViewAction extends Mock implements MapViewAction {}
+
+class MockMapSearchAction extends Mock implements MapSearchAction {}
+
+class MockMapDirectionsAction extends Mock implements MapDirectionsAction {}
+
+class MockMapDirectionsWithCoordsAction extends Mock implements MapDirectionsWithCoordsAction {}
+
 class MockDeeplinkX extends Mock implements DeeplinkX {}
 
 // Tests APIs exposed correctly
@@ -204,6 +214,42 @@ void main() {
         final result = await deeplinkX.redirectToStore(storeActions: [MockStoreOpenAppPageAction()]);
         expect(result, true);
       });
+
+      test('launchMapViewAction', () async {
+        final actions = <MapViewAction>[];
+        when(() => deeplinkX.launchMapViewAction(actions: actions)).thenAnswer((final _) async => true);
+
+        final result = await deeplinkX.launchMapViewAction(actions: actions);
+
+        expect(result, true);
+      });
+
+      test('launchMapSearchAction', () async {
+        final actions = <MapSearchAction>[];
+        when(() => deeplinkX.launchMapSearchAction(actions: actions)).thenAnswer((final _) async => true);
+
+        final result = await deeplinkX.launchMapSearchAction(actions: actions);
+
+        expect(result, true);
+      });
+
+      test('launchMapDirectionsAction', () async {
+        final actions = <MapDirectionsAction>[];
+        when(() => deeplinkX.launchMapDirectionsAction(actions: actions)).thenAnswer((final _) async => true);
+
+        final result = await deeplinkX.launchMapDirectionsAction(actions: actions);
+
+        expect(result, true);
+      });
+
+      test('launchMapDirectionsWithCoordsAction', () async {
+        final actions = <MapDirectionsWithCoordsAction>[];
+        when(() => deeplinkX.launchMapDirectionsWithCoordsAction(actions: actions)).thenAnswer((final _) async => true);
+
+        final result = await deeplinkX.launchMapDirectionsWithCoordsAction(actions: actions);
+
+        expect(result, true);
+      });
     });
 
     group('Interfaces:', () {
@@ -256,6 +302,45 @@ void main() {
         when(() => mock.appLink).thenReturn(Uri.parse('test://test'));
 
         expect(mock.appLink.toString(), 'test://test');
+      });
+
+      test('MapAppAction', () {
+        final mock = MockMapAppAction();
+        expect(mock, isA<MapAppAction>());
+      });
+
+      test('MapViewAction', () {
+        final mock = MockMapViewAction();
+        const coordinate = Coordinate(latitude: 1, longitude: 2);
+        when(() => mock.coordinate).thenReturn(coordinate);
+
+        expect(mock, isA<MapViewAction>());
+        expect(mock.coordinate, coordinate);
+      });
+
+      test('MapSearchAction', () {
+        final mock = MockMapSearchAction();
+        when(() => mock.query).thenReturn('Central Park');
+
+        expect(mock, isA<MapSearchAction>());
+        expect(mock.query, 'Central Park');
+      });
+
+      test('MapDirectionsAction', () {
+        final mock = MockMapDirectionsAction();
+        when(() => mock.destination).thenReturn('Central Park');
+
+        expect(mock, isA<MapDirectionsAction>());
+        expect(mock.destination, 'Central Park');
+      });
+
+      test('MapDirectionsWithCoordsAction', () {
+        final mock = MockMapDirectionsWithCoordsAction();
+        const destination = Coordinate(latitude: 1, longitude: 2);
+        when(() => mock.destination).thenReturn(destination);
+
+        expect(mock, isA<MapDirectionsWithCoordsAction>());
+        expect(mock.destination, destination);
       });
 
       test('Fallbackable', () {

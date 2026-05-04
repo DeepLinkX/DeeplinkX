@@ -90,7 +90,7 @@ class Waze extends App implements DownloadableApp {
 }
 
 /// Waze view map action using universal link.
-class WazeViewAction extends Waze implements UniversalLinkAppAction, Fallbackable {
+class WazeViewAction extends Waze implements UniversalLinkAppAction, Fallbackable, MapViewAction {
   /// Creates a new [WazeViewAction].
   WazeViewAction({
     required this.coordinate,
@@ -98,6 +98,7 @@ class WazeViewAction extends Waze implements UniversalLinkAppAction, Fallbackabl
   });
 
   /// Map center coordinate.
+  @override
   final Coordinate coordinate;
 
   @override
@@ -115,7 +116,7 @@ class WazeViewAction extends Waze implements UniversalLinkAppAction, Fallbackabl
 }
 
 /// Waze search action using universal link. No web fallback provided.
-class WazeSearchAction extends Waze implements UniversalLinkAppAction {
+class WazeSearchAction extends Waze implements UniversalLinkAppAction, MapSearchAction {
   /// Creates a new [WazeSearchAction].
   WazeSearchAction({
     required this.query,
@@ -123,6 +124,7 @@ class WazeSearchAction extends Waze implements UniversalLinkAppAction {
   });
 
   /// Search query string (q).
+  @override
   final String query;
 
   @override
@@ -137,7 +139,7 @@ class WazeSearchAction extends Waze implements UniversalLinkAppAction {
 }
 
 /// Waze directions action to a destination string.
-class WazeDirectionsAction extends Waze implements UniversalLinkAppAction, Fallbackable {
+class WazeDirectionsAction extends Waze implements UniversalLinkAppAction, Fallbackable, MapDirectionsAction {
   /// Creates a new [WazeDirectionsAction].
   WazeDirectionsAction({
     required this.destination,
@@ -146,6 +148,7 @@ class WazeDirectionsAction extends Waze implements UniversalLinkAppAction, Fallb
   });
 
   /// Destination address or place (q).
+  @override
   final String destination;
 
   /// Optional zoom (z) level.
@@ -168,7 +171,8 @@ class WazeDirectionsAction extends Waze implements UniversalLinkAppAction, Fallb
 }
 
 /// Waze directions action to destination coordinates.
-class WazeDirectionsWithCoordsAction extends Waze implements UniversalLinkAppAction, Fallbackable {
+class WazeDirectionsWithCoordsAction extends Waze
+    implements UniversalLinkAppAction, Fallbackable, MapDirectionsWithCoordsAction {
   /// Creates a new [WazeDirectionsWithCoordsAction].
   WazeDirectionsWithCoordsAction({
     required this.destination,
@@ -177,6 +181,7 @@ class WazeDirectionsWithCoordsAction extends Waze implements UniversalLinkAppAct
   });
 
   /// Destination coordinates (ll).
+  @override
   final Coordinate destination;
 
   /// Optional zoom (z) level.
