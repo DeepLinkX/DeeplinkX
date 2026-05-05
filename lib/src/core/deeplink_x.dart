@@ -146,10 +146,11 @@ class DeeplinkX {
     return _launcherUtil.launchUrl(app.website);
   }
 
-  /// Redirects the user to the appropriate app store based on the current platform.
+  /// Redirects the user to the matching app store page based on the current platform.
   ///
-  /// This method is particularly useful when your app has a new update and you want
-  /// to navigate users to the relevant app store to update the application.
+  /// This method is useful when you want to send users to a platform-specific
+  /// listing for any app you configure, such as your own app update page, a
+  /// promoted app, or an ad landing page.
   ///
   /// The method attempts to launch each store action that matches the current platform
   /// in the order they are provided. It stops and returns `true` as soon as one

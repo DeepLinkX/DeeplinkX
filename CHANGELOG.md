@@ -1,3 +1,11 @@
+## 1.3.1+1
+
+* Refined README and API guidance for store redirects, clarifying that `redirectToStore` routes users to a configured target app's platform-specific store listing for installs, updates, promotions, or ad landing flows.
+* Added a promoted app/ad CTA `redirectToStore` example with supported tracking and referrer parameters.
+* Improved map provider fallback documentation to better explain declaring one navigation action and letting DeeplinkX launch the first installed provider.
+* Updated README tables and examples for clearer supported action, platform configuration, documentation, and `url_launcher` comparison sections.
+* Updated package metadata in `pubspec.yaml`, including homepage, documentation URL, topics, screenshots, and minimum Flutter SDK.
+
 ## 1.3.1
 
 * Restructured README for better first-read flow:
