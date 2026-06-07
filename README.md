@@ -62,7 +62,7 @@
 - **Map provider fallback** — declare a navigation action once (view, search, directions); DeeplinkX checks which apps are installed and opens the first available one automatically.
 - **Cross-platform** — works on iOS, Android, macOS, Windows, Linux, and Web from a single package.
 - **7 supported stores** — iOS App Store, Mac App Store, Microsoft Store, Google Play Store, Huawei AppGallery, Cafe Bazaar, Myket.
-- **15 supported apps** — Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic.
+- **16 supported apps** — Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic.
 
 ---
 
@@ -338,6 +338,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 |                | Facebook          | Open profile by ID, open profile by username, open page, open group, open event |
 |                | YouTube           | Open video, open channel, open playlist, search                                 |
 |                | Twitter           | Open profile by username, open tweet by ID, search                              |
+|                | Threads           | Open profile by username, open post, open comments, create post                 |
 |                | Pinterest         | Open profile by username, open pin, open board by ID, search                    |
 |                | TikTok            | Open profile by username, open video, open tag                                  |
 |                | Zoom              | Join meeting by ID                                                              |
@@ -406,7 +407,7 @@ DeeplinkX prefers custom URL schemes, App Links, and Android Intents over plain 
 
 |                                    | DeeplinkX                     | `url_launcher`                                    |
 | ---------------------------------- | ----------------------------- | ------------------------------------------------- |
-| **Typed API for popular apps**     | ✅ 15 apps, no URL maintenance | ❌ Raw URLs only                                   |
+| **Typed API for popular apps**     | ✅ 16 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
@@ -451,6 +452,7 @@ Per-app documentation covering URL schemes, required configuration, and fallback
 | LinkedIn    | [linkedin.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/linkedin.md)       |
 | YouTube     | [youtube.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/youtube.md)         |
 | Twitter     | [twitter.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/twitter.md)         |
+| Threads     | [threads.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/threads.md)         |
 | Pinterest   | [pinterest.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/pinterest.md)     |
 | TikTok      | [tiktok.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/tiktok.md)           |
 | Zoom        | [zoom.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/zoom.md)               |

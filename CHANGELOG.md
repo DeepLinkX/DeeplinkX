@@ -1,3 +1,14 @@
+## 1.3.2
+
+* Added Threads app support, requested by @hafizidev in issue #28:
+  * Open app
+  * Open profile action
+  * Open post action
+  * Open comments action
+  * Create post action
+* Added documentation for Threads deeplinks
+* Updated the example app with a Threads page and asset
+
 ## 1.3.1+1
 
 * Refined README and API guidance for store redirects, clarifying that `redirectToStore` routes users to a configured target app's platform-specific store listing for installs, updates, promotions, or ad landing flows.

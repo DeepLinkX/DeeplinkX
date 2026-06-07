@@ -86,6 +86,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Threads', () {
+        final action = Threads.open();
+        expect(action, isA<App>());
+      });
+
       test('TikTok', () {
         final action = TikTok.open();
         expect(action, isA<App>());

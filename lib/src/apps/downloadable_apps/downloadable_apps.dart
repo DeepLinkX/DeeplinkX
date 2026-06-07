@@ -7,6 +7,7 @@ export 'pinterest.dart';
 export 'slack.dart';
 export 'sygic.dart';
 export 'telegram.dart';
+export 'threads.dart';
 export 'tiktok.dart';
 export 'twitter.dart';
 export 'waze.dart';
