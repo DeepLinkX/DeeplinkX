@@ -43,6 +43,8 @@ jobs:
           channel: ${{ env.FLUTTER_CHANNEL }}
           cache: true
           pub-cache: true
+          cache-key: "deeplinkx-pages-flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          pub-cache-key: "deeplinkx-pages-flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
 
       - name: Flutter version
         run: flutter --version
