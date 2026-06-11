@@ -14,6 +14,7 @@ import 'package:deeplink_x_example/pages/play_store_page.dart';
 import 'package:deeplink_x_example/pages/slack_page.dart';
 import 'package:deeplink_x_example/pages/sygic_page.dart';
 import 'package:deeplink_x_example/pages/telegram_page.dart';
+import 'package:deeplink_x_example/pages/threads_page.dart';
 import 'package:deeplink_x_example/pages/tiktok_page.dart';
 import 'package:deeplink_x_example/pages/twitter_page.dart';
 import 'package:deeplink_x_example/pages/waze_page.dart';
@@ -40,6 +41,7 @@ final _apps = <_DemoItem>[
   _DemoItem(title: 'LinkedIn', assetName: 'assets/linkedin.png', builder: (_) => const LinkedInPage()),
   _DemoItem(title: 'YouTube', assetName: 'assets/youtube.png', builder: (_) => const YouTubePage()),
   _DemoItem(title: 'Twitter', assetName: 'assets/twitter.png', builder: (_) => const TwitterPage()),
+  _DemoItem(title: 'Threads', assetName: 'assets/threads.png', builder: (_) => const ThreadsPage()),
   _DemoItem(title: 'Pinterest', assetName: 'assets/pinterest.png', builder: (_) => const PinterestPage()),
   _DemoItem(title: 'TikTok', assetName: 'assets/tiktok.png', builder: (_) => const TikTokPage()),
   _DemoItem(title: 'Zoom', assetName: 'assets/zoom.png', builder: (_) => const ZoomPage()),
