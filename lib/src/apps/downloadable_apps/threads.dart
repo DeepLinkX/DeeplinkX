@@ -114,7 +114,7 @@ class ThreadsOpenProfileAction extends Threads implements IntentAppLinkAction, A
   /// The username of the profile to open.
   final String username;
 
-  /// The app link URL for opening the specified profile in the Threads app on iOS.
+  /// The app link URL for opening the specified profile in the Threads app.
   @override
   Uri get appLink => Uri(
         scheme: 'barcelona',
@@ -155,7 +155,11 @@ class ThreadsOpenPostAction extends Threads implements IntentAppLinkAction, Univ
   final String postId;
 
   @override
-  Uri? get appLink => null;
+  Uri get appLink => Uri(
+        scheme: 'barcelona',
+        host: 'media',
+        queryParameters: {'shortcode': postId},
+      );
 
   @override
   AndroidIntentOption get androidIntentOptions => AndroidIntentOption(
@@ -199,7 +203,7 @@ class ThreadsCreatePostAction extends Threads implements IntentAppLinkAction, Ap
   /// The text to prefill in the compose flow.
   final String text;
 
-  /// The app link URL for opening the compose flow in the Threads app on iOS.
+  /// The app link URL for opening the compose flow in the Threads app.
   @override
   Uri get appLink => Uri(
         scheme: 'barcelona',
@@ -209,7 +213,7 @@ class ThreadsCreatePostAction extends Threads implements IntentAppLinkAction, Ap
 
   @override
   AndroidIntentOption get androidIntentOptions => AndroidIntentOption(
-        action: 'action_send',
+        action: 'android.intent.action.SEND',
         arguments: {'android.intent.extra.TEXT': text},
         package: androidPackageName,
         type: 'text/plain',

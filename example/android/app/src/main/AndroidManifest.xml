@@ -46,6 +46,8 @@
         <package android:name="com.google.android.youtube" />
         <!-- Twitter -->
         <package android:name="com.twitter.android" />
+        <!-- Threads -->
+        <package android:name="com.instagram.barcelona" />
         <!-- Pinterest -->
         <package android:name="com.pinterest" />
         <!-- TikTok -->
@@ -73,6 +75,11 @@
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="https" />
+        </intent>
+        <!-- Threads native scheme fallback -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="barcelona" />
         </intent>
     </queries>
 </manifest>

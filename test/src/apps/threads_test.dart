@@ -79,7 +79,10 @@ void main() {
         postId: 'CuN0hdYv8Lq',
       );
 
-      expect(action.appLink, null);
+      expect(
+        action.appLink.toString(),
+        'barcelona://media?shortcode=CuN0hdYv8Lq',
+      );
       expect(
         action.universalLink.toString(),
         'https://www.threads.com/@zuck/post/CuN0hdYv8Lq',
@@ -115,7 +118,10 @@ void main() {
         postId: 'CuN0hdYv8Lq',
       );
 
-      expect(action.appLink, null);
+      expect(
+        action.appLink.toString(),
+        'barcelona://media?shortcode=CuN0hdYv8Lq',
+      );
       expect(
         action.universalLink.toString(),
         'https://www.threads.com/@zuck/post/CuN0hdYv8Lq',
@@ -153,7 +159,7 @@ void main() {
         action.fallbackLink.toString(),
         'https://www.threads.com/intent/post?text=Hello+from+Threads',
       );
-      expect(action.androidIntentOptions.action, 'action_send');
+      expect(action.androidIntentOptions.action, 'android.intent.action.SEND');
       expect(action.androidIntentOptions.package, 'com.instagram.barcelona');
       expect(action.androidIntentOptions.type, 'text/plain');
       expect(

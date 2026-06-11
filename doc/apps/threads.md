@@ -91,6 +91,12 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
         <action android:name="android.intent.action.VIEW" />
         <data android:scheme="https" />
     </intent>
+
+    <!-- For native Threads scheme fallback -->
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:scheme="barcelona" />
+    </intent>
 </queries>
 ```
 
@@ -99,11 +105,13 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
 DeeplinkX uses the following URLs for Threads:
 
 ### Native App Deep Links
-- `barcelona://` for iOS app and compose/profile flows
+- `barcelona://user?username={username}` for profile native fallback
+- `barcelona://media?shortcode={postId}` for post/comments native fallback
+- `barcelona://create?text={text}` for compose native fallback
 - package-targeted Android intents for:
   - profile permalinks
   - post permalinks
-  - compose/share text
+  - compose/share text with `android.intent.action.SEND`
 
 ### Web Fallback URLs
 - `https://www.threads.com/@{username}`
@@ -119,7 +127,8 @@ When Threads is not installed, DeeplinkX can redirect users to:
 
 ## Notes
 
-- The `barcelona://` iOS scheme is not vendor-documented. DeeplinkX pairs it with web fallbacks so profile and compose flows still resolve somewhere useful if the scheme changes.
+- On Android, DeeplinkX first launches package-targeted Threads intents backed by Threads App Links metadata, then tries the native `barcelona://` scheme when available before using web or store fallback.
+- The `barcelona://` scheme is not vendor-documented. DeeplinkX pairs it with web fallbacks so profile, post, and compose flows still resolve somewhere useful if the scheme changes.
 - This release intentionally ships the stable, verified exposed deeplinks: profile, post permalink, and compose intent.
 - Search, tag, and feed-specific APIs are not included yet.
 
