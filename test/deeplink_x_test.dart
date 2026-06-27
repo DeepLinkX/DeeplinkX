@@ -193,6 +193,26 @@ void main() {
         expect(panoramaAction, isA<AppAction>());
       });
 
+      test('Yandex Navigator', () {
+        final openAction = YandexNavigator.open();
+        final viewAction = YandexNavigator.view(
+          coordinate: const Coordinate(latitude: 55.753716, longitude: 37.619902),
+          launchParams: const YandexNavigatorLaunchParams(client: 'client-id'),
+        );
+        final searchAction = YandexNavigator.search(query: 'gas station');
+        final routeAction = YandexNavigator.directionsWithCoords(
+          destination: const Coordinate(latitude: 55.76009, longitude: 37.648801),
+          waypoints: const [
+            YandexNavigatorWaypoint(coordinate: Coordinate(latitude: 55.745719, longitude: 37.604337)),
+          ],
+        );
+
+        expect(openAction, isA<App>());
+        expect(viewAction, isA<MapViewAction>());
+        expect(searchAction, isA<MapSearchAction>());
+        expect(routeAction, isA<MapDirectionsWithCoordsAction>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());

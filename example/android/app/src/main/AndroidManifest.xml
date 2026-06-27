@@ -74,6 +74,8 @@
         <package android:name="ru.dublgis.dgismobile" />
         <!-- Yandex Maps -->
         <package android:name="ru.yandex.yandexmaps" />
+        <!-- Yandex Navigator -->
+        <package android:name="ru.yandex.yandexnavi" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->
@@ -123,6 +125,10 @@
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="yandexmaps" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="yandexnavi" />
         </intent>
     </queries>
 </manifest>

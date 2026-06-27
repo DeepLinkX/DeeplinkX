@@ -1,3 +1,11 @@
+## 1.4.1
+
+### Added
+
+* Added Yandex Navigator support for opening the app, viewing coordinates, searching, and building coordinate routes with optional origins, waypoints, and launch identification parameters.
+* Added action-preserving Yandex Maps web fallbacks for Yandex Navigator view, search, and directions actions.
+* Added Yandex Navigator documentation, tests, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.4.0
 
 ### Added

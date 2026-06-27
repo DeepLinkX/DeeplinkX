@@ -65,5 +65,11 @@ void main() {
       expect(YandexMaps.search(query: 'Central Park'), isA<MapSearchAction>());
       expect(YandexMaps.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
+
+    test('Yandex Navigator actions implement supported map abstractions', () {
+      expect(YandexNavigator.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(YandexNavigator.search(query: 'Central Park'), isA<MapSearchAction>());
+      expect(YandexNavigator.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
   });
 }

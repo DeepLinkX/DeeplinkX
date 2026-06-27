@@ -690,4 +690,58 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'yandex_navigator',
+    name: 'Yandex Navigator',
+    assetName: 'assets/yandex_navigator.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'YandexNavigator.open(fallbackToStore)',
+        buttonLabel: 'Open Yandex Navigator',
+        runner: OpenAppRunner(
+          ({required final fallbackToStore}) => YandexNavigator.open(fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'YandexNavigator.view(coordinate)',
+        buttonLabel: 'View location',
+        fields: [_latField(value: '55.753716'), _lngField(value: '37.619902')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              YandexNavigator.view(coordinate: v.coordinate('lat', 'lng'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.search_rounded,
+        title: 'Search',
+        apiLabel: 'YandexNavigator.search(query)',
+        buttonLabel: 'Search',
+        fields: const [ActionField(key: 'query', label: 'Query', defaultValue: 'gas station')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              YandexNavigator.search(query: v.value('query'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'YandexNavigator.directionsWithCoords(destination, origin)',
+        buttonLabel: 'Navigate',
+        fields: [_latField(value: '55.76009'), _lngField(value: '37.648801'), ..._originFields],
+        validate: _validateOrigin,
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => YandexNavigator.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            origin: v.optionalCoordinate('originLat', 'originLng'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];

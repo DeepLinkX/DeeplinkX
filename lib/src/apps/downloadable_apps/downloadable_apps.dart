@@ -18,5 +18,6 @@ export 'two_gis.dart';
 export 'waze.dart';
 export 'whatsapp.dart';
 export 'yandex_maps.dart';
+export 'yandex_navigator.dart';
 export 'youtube.dart';
 export 'zoom.dart';
