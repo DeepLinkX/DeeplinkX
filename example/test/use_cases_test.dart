@@ -22,7 +22,7 @@ void main() {
       await tester.pumpWidget(const MaterialApp(home: HomePage()));
 
       expect(find.text('View all 9'), findsOneWidget);
-      expect(find.text('View all 23'), findsOneWidget);
+      expect(find.text('View all 24'), findsOneWidget);
       expect(find.text('View all 7'), findsOneWidget);
 
       const titles = [
@@ -44,7 +44,7 @@ void main() {
 
       await tester.tap(find.byKey(const ValueKey('filter-apps')));
       await tester.pump();
-      expect(find.byType(AppTile), findsNWidgets(23));
+      expect(find.byType(AppTile), findsNWidgets(24));
 
       await tester.tap(find.byKey(const ValueKey('filter-stores')));
       await tester.pump();
@@ -207,11 +207,12 @@ void main() {
       await tester.pumpAndSettle();
 
       final actions = deeplinkX.mapDirectionsActions.single;
-      expect(actions, hasLength(11));
+      expect(actions, hasLength(12));
       expect(actions.first, isA<GoogleMapsDirectionsWithCoordsAction>());
       expect(actions[6], isA<SygicDirectionsWithCoordsAction>());
       expect(actions[9], isA<YandexMapsDirectionsWithCoordsAction>());
-      expect(actions.last, isA<YandexNavigatorDirectionsWithCoordsAction>());
+      expect(actions[10], isA<YandexNavigatorDirectionsWithCoordsAction>());
+      expect(actions.last, isA<TencentMapsDirectionsWithCoordsAction>());
     });
 
     testWidgets('rating selector uses Android listing alternatives', (final tester) async {

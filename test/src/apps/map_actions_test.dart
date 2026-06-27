@@ -71,5 +71,15 @@ void main() {
       expect(YandexNavigator.search(query: 'Central Park'), isA<MapSearchAction>());
       expect(YandexNavigator.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
+
+    test('Tencent Maps actions implement supported map abstractions', () {
+      expect(TencentMaps.view(coordinate: coordinate, referer: 'developer-key'), isA<MapViewAction>());
+      expect(TencentMaps.search(query: 'Central Park', referer: 'developer-key'), isA<MapSearchAction>());
+      expect(TencentMaps.nearbySearch(query: 'coffee', referer: 'developer-key'), isA<MapSearchAction>());
+      expect(
+        TencentMaps.directionsWithCoords(destination: coordinate, referer: 'developer-key'),
+        isA<MapDirectionsWithCoordsAction>(),
+      );
+    });
   });
 }

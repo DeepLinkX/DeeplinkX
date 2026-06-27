@@ -58,6 +58,7 @@ class _InstalledAppsPageState extends State<InstalledAppsPage> {
     _InstalledItem('Maps', 'Neshan', Neshan(), 'assets/neshan.png'),
     _InstalledItem('Maps', 'Yandex Maps', YandexMaps(), 'assets/yandex_maps.png'),
     _InstalledItem('Maps', 'Yandex Navigator', YandexNavigator(), 'assets/yandex_navigator.png'),
+    _InstalledItem('Maps', 'Tencent Maps', TencentMaps(), 'assets/tencent_maps.png'),
     _InstalledItem('Stores', 'Google Play Store', PlayStore(), 'assets/google_play.png'),
     _InstalledItem('Stores', 'iOS App Store', IOSAppStore(), 'assets/apple.png'),
     _InstalledItem('Stores', 'Mac App Store', MacAppStore(), 'assets/apple.png'),
