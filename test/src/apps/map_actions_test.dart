@@ -30,5 +30,10 @@ void main() {
       expect(Sygic.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Sygic.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
+
+    test('CoPilot actions implement supported map abstractions', () {
+      expect(Copilot.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(Copilot.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
   });
 }
