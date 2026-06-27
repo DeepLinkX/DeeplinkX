@@ -1,3 +1,14 @@
+## 1.3.3
+
+* Added Tencent Maps app support:
+  * Open app
+  * View map action
+  * Search action
+  * Nearby search action
+  * Directions with coordinates action
+* Added documentation for Tencent Maps deeplinks
+* Updated the example app with a Tencent Maps page and asset
+
 ## 1.3.2
 
 * Added Threads app support, requested by @hafizidev in issue #28:

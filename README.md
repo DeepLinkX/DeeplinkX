@@ -62,7 +62,7 @@
 - **Map provider fallback** — declare a navigation action once (view, search, directions); DeeplinkX checks which apps are installed and opens the first available one automatically.
 - **Cross-platform** — works on iOS, Android, macOS, Windows, Linux, and Web from a single package.
 - **7 supported stores** — iOS App Store, Mac App Store, Microsoft Store, Google Play Store, Huawei AppGallery, Cafe Bazaar, Myket.
-- **16 supported apps** — Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic.
+- **17 supported apps** — Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic, Tencent Maps.
 
 ---
 
@@ -280,6 +280,7 @@ await deeplinkX.launchMapViewAction(
     AppleMaps.view(coordinate: origin),
     Waze.view(coordinate: origin),
     Sygic.view(coordinate: origin),
+    TencentMaps.view(coordinate: origin),
   ],
 );
 
@@ -289,6 +290,7 @@ await deeplinkX.launchMapSearchAction(
     GoogleMaps.search(query: 'Central Park'),
     AppleMaps.search(query: 'Central Park'),
     Waze.search(query: 'Central Park'),
+    TencentMaps.search(query: 'Central Park'),
   ],
 );
 
@@ -308,16 +310,17 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
     AppleMaps.directionsWithCoords(destination: destination),
     Waze.directionsWithCoords(destination: destination),
     Sygic.directionsWithCoords(destination: destination),
+    TencentMaps.directionsWithCoords(destination: destination),
   ],
 );
 ```
 
-| Method                                | Supported apps                       |
-| ------------------------------------- | ------------------------------------ |
-| `launchMapViewAction`                 | Google Maps, Apple Maps, Waze, Sygic |
-| `launchMapSearchAction`               | Google Maps, Apple Maps, Waze        |
-| `launchMapDirectionsAction`           | Google Maps, Apple Maps, Waze        |
-| `launchMapDirectionsWithCoordsAction` | Google Maps, Apple Maps, Waze, Sygic |
+| Method                                | Supported apps                                     |
+| ------------------------------------- | -------------------------------------------------- |
+| `launchMapViewAction`                 | Google Maps, Apple Maps, Waze, Sygic, Tencent Maps |
+| `launchMapSearchAction`               | Google Maps, Apple Maps, Waze, Tencent Maps        |
+| `launchMapDirectionsAction`           | Google Maps, Apple Maps, Waze                      |
+| `launchMapDirectionsWithCoordsAction` | Google Maps, Apple Maps, Waze, Sygic, Tencent Maps |
 
 ---
 
@@ -348,6 +351,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 |                | Apple Maps        | View map, search location, directions, directions with coordinates              |
 |                | Waze              | View map, search, directions, directions with coordinates                       |
 |                | Sygic             | View map, directions with coordinates                                           |
+|                | Tencent Maps      | View map, search, nearby search, directions with coordinates                   |
 
 ---
 
@@ -383,6 +387,8 @@ And the Android entry for Instagram:
 </queries>
 ```
 
+For Tencent Maps, declare `<string>qqmap</string>` on iOS and `<package android:name="com.tencent.map" />` on Android.
+
 ---
 
 ## Why Custom Schemes Instead of Universal Links?
@@ -407,7 +413,7 @@ DeeplinkX prefers custom URL schemes, App Links, and Android Intents over plain 
 
 |                                    | DeeplinkX                     | `url_launcher`                                    |
 | ---------------------------------- | ----------------------------- | ------------------------------------------------- |
-| **Typed API for popular apps**     | ✅ 16 apps, no URL maintenance | ❌ Raw URLs only                                   |
+| **Typed API for popular apps**     | ✅ 17 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
@@ -461,6 +467,7 @@ Per-app documentation covering URL schemes, required configuration, and fallback
 | Waze        | [waze.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md)               |
 | Apple Maps  | [apple_maps.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md)   |
 | Sygic       | [sygic.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md)             |
+| Tencent Maps | [tencent_maps.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/tencent_maps.md) |
 
 Full API reference is on [pub.dev](https://pub.dev/documentation/deeplink_x/latest/).
 
