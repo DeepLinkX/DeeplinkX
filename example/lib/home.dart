@@ -13,6 +13,7 @@ import 'package:deeplink_x_example/pages/pinterest_page.dart';
 import 'package:deeplink_x_example/pages/play_store_page.dart';
 import 'package:deeplink_x_example/pages/slack_page.dart';
 import 'package:deeplink_x_example/pages/sygic_page.dart';
+import 'package:deeplink_x_example/pages/sygic_truck_page.dart';
 import 'package:deeplink_x_example/pages/telegram_page.dart';
 import 'package:deeplink_x_example/pages/threads_page.dart';
 import 'package:deeplink_x_example/pages/tiktok_page.dart';
@@ -50,6 +51,7 @@ final _apps = <_DemoItem>[
   _DemoItem(title: 'Waze', assetName: 'assets/waze.png', builder: (_) => const WazePage()),
   _DemoItem(title: 'Apple Maps', assetName: 'assets/apple_maps.png', builder: (_) => const AppleMapsPage()),
   _DemoItem(title: 'Sygic', assetName: 'assets/sygic.png', builder: (_) => const SygicPage()),
+  _DemoItem(title: 'Sygic Truck', assetName: 'assets/sygic_truck.png', builder: (_) => const SygicTruckPage()),
 ];
 
 // List of store demos.

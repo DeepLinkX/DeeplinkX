@@ -30,5 +30,10 @@ void main() {
       expect(Sygic.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Sygic.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
+
+    test('Sygic Truck actions implement supported map abstractions', () {
+      expect(SygicTruck.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(SygicTruck.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
   });
 }
