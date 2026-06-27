@@ -71,14 +71,17 @@ void main() {
       expect(intentUri.queryParameters['lat'], '39.98848272');
       expect(intentUri.queryParameters['lon'], '116.47560823');
       expect(intentUri.queryParameters['dev'], '1');
+      expect(action.fallbackLink.toString(), 'https://www.amap.com');
     });
 
     test('search action creates platform-specific query keys', () {
       final action = Amap.search(
         query: 'bank|fuel',
-        bounds: const AmapBounds(
-          topLeft: Coordinate(latitude: 36.1, longitude: 116.1),
-          bottomRight: Coordinate(latitude: 36.2, longitude: 116.2),
+        // not const on purpose so VM executes the constructor (coverage)
+        // ignore: prefer_const_constructors
+        bounds: AmapBounds(
+          topLeft: const Coordinate(latitude: 36.1, longitude: 116.1),
+          bottomRight: const Coordinate(latitude: 36.2, longitude: 116.2),
         ),
       );
 
@@ -102,6 +105,7 @@ void main() {
       expect(intentUri.queryParameters['lat2'], '36.2');
       expect(intentUri.queryParameters['lon2'], '116.2');
       expect(intentUri.queryParameters['dev'], '0');
+      expect(action.fallbackLink.toString(), 'https://www.amap.com');
     });
 
     test('directions action creates text destination links', () {
@@ -122,6 +126,7 @@ void main() {
       expect(intentUri.queryParameters['dname'], 'Amap HQ');
       expect(intentUri.queryParameters['dev'], '0');
       expect(intentUri.queryParameters['t'], '0');
+      expect(action.fallbackLink.toString(), 'https://www.amap.com');
     });
 
     test('directionsWithCoords action creates route links with waypoints', () {
@@ -130,13 +135,17 @@ void main() {
         originTitle: 'A',
         destination: const Coordinate(latitude: 39.98848272, longitude: 116.47560823),
         destinationTitle: 'B',
-        waypoints: const [
+        waypoints: [
+          // not const on purpose so VM executes the constructor (coverage)
+          // ignore: prefer_const_constructors
           AmapWaypoint(
-            coordinate: Coordinate(latitude: 39.5, longitude: 116.8),
+            coordinate: const Coordinate(latitude: 39.5, longitude: 116.8),
             title: 'Via 1',
           ),
+          // not const on purpose so VM executes the constructor (coverage)
+          // ignore: prefer_const_constructors
           AmapWaypoint(
-            coordinate: Coordinate(latitude: 39.7, longitude: 116.5),
+            coordinate: const Coordinate(latitude: 39.7, longitude: 116.5),
             title: 'Via 2',
           ),
         ],
@@ -175,6 +184,7 @@ void main() {
       expect(intentUri.queryParameters['vialons'], '116.8|116.5');
       expect(intentUri.queryParameters['vialats'], '39.5|39.7');
       expect(intentUri.queryParameters['vianames'], 'Via 1|Via 2');
+      expect(action.fallbackLink.toString(), 'https://www.amap.com');
     });
 
     test('store actions resolve to expected stores', () {
