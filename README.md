@@ -62,7 +62,7 @@
 - **Map provider fallback** — declare a navigation action once (view, search, directions); DeeplinkX checks which apps are installed and opens the first available one automatically.
 - **Cross-platform** — works on iOS, Android, macOS, Windows, Linux, and Web from a single package.
 - **7 supported stores** — iOS App Store, Mac App Store, Microsoft Store, Google Play Store, Huawei AppGallery, Cafe Bazaar, Myket.
-- **16 supported apps** — Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic.
+- **17 supported apps** — Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, OsmAnd, Waze, Apple Maps, Sygic.
 
 ---
 
@@ -278,6 +278,7 @@ await deeplinkX.launchMapViewAction(
   actions: [
     GoogleMaps.view(coordinate: origin),
     AppleMaps.view(coordinate: origin),
+    OsmAnd.view(coordinate: origin),
     Waze.view(coordinate: origin),
     Sygic.view(coordinate: origin),
   ],
@@ -306,18 +307,19 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
   actions: [
     GoogleMaps.directionsWithCoords(destination: destination),
     AppleMaps.directionsWithCoords(destination: destination),
+    OsmAnd.directionsWithCoords(destination: destination),
     Waze.directionsWithCoords(destination: destination),
     Sygic.directionsWithCoords(destination: destination),
   ],
 );
 ```
 
-| Method                                | Supported apps                       |
-| ------------------------------------- | ------------------------------------ |
-| `launchMapViewAction`                 | Google Maps, Apple Maps, Waze, Sygic |
-| `launchMapSearchAction`               | Google Maps, Apple Maps, Waze        |
-| `launchMapDirectionsAction`           | Google Maps, Apple Maps, Waze        |
-| `launchMapDirectionsWithCoordsAction` | Google Maps, Apple Maps, Waze, Sygic |
+| Method                                | Supported apps                                  |
+| ------------------------------------- | ----------------------------------------------- |
+| `launchMapViewAction`                 | Google Maps, Apple Maps, OsmAnd, Waze, Sygic    |
+| `launchMapSearchAction`               | Google Maps, Apple Maps, Waze                   |
+| `launchMapDirectionsAction`           | Google Maps, Apple Maps, Waze                   |
+| `launchMapDirectionsWithCoordsAction` | Google Maps, Apple Maps, OsmAnd, Waze, Sygic    |
 
 ---
 
@@ -346,6 +348,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 |                | LinkedIn          | Open profile page, open company page                                            |
 | **Navigation** | Google Maps       | View map, search location, directions, directions with coordinates              |
 |                | Apple Maps        | View map, search location, directions, directions with coordinates              |
+|                | OsmAnd            | View map, directions with coordinates                                           |
 |                | Waze              | View map, search, directions, directions with coordinates                       |
 |                | Sygic             | View map, directions with coordinates                                           |
 
@@ -383,6 +386,8 @@ And the Android entry for Instagram:
 </queries>
 ```
 
+For OsmAnd specifically, declare `<string>osmandmaps</string>` on iOS and `<package android:name="net.osmand" />` on Android.
+
 ---
 
 ## Why Custom Schemes Instead of Universal Links?
@@ -407,7 +412,7 @@ DeeplinkX prefers custom URL schemes, App Links, and Android Intents over plain 
 
 |                                    | DeeplinkX                     | `url_launcher`                                    |
 | ---------------------------------- | ----------------------------- | ------------------------------------------------- |
-| **Typed API for popular apps**     | ✅ 16 apps, no URL maintenance | ❌ Raw URLs only                                   |
+| **Typed API for popular apps**     | ✅ 17 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
@@ -458,6 +463,7 @@ Per-app documentation covering URL schemes, required configuration, and fallback
 | Zoom        | [zoom.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/zoom.md)               |
 | Slack       | [slack.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/slack.md)             |
 | Google Maps | [google_maps.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/google_maps.md) |
+| OsmAnd      | [osmand.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/osmand.md)           |
 | Waze        | [waze.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md)               |
 | Apple Maps  | [apple_maps.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md)   |
 | Sygic       | [sygic.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md)             |
