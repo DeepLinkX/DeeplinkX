@@ -9,6 +9,7 @@ import 'package:deeplink_x_example/pages/linkedin_page.dart';
 import 'package:deeplink_x_example/pages/mac_app_store_page.dart';
 import 'package:deeplink_x_example/pages/microsoft_store_page.dart';
 import 'package:deeplink_x_example/pages/myket_page.dart';
+import 'package:deeplink_x_example/pages/osmand_page.dart';
 import 'package:deeplink_x_example/pages/pinterest_page.dart';
 import 'package:deeplink_x_example/pages/play_store_page.dart';
 import 'package:deeplink_x_example/pages/slack_page.dart';
@@ -47,6 +48,7 @@ final _apps = <_DemoItem>[
   _DemoItem(title: 'Zoom', assetName: 'assets/zoom.png', builder: (_) => const ZoomPage()),
   _DemoItem(title: 'Slack', assetName: 'assets/slack.png', builder: (_) => const SlackPage()),
   _DemoItem(title: 'Google Maps', assetName: 'assets/google_maps.png', builder: (_) => const GoogleMapsPage()),
+  _DemoItem(title: 'OsmAnd', assetName: 'assets/osmand.png', builder: (_) => const OsmAndPage()),
   _DemoItem(title: 'Waze', assetName: 'assets/waze.png', builder: (_) => const WazePage()),
   _DemoItem(title: 'Apple Maps', assetName: 'assets/apple_maps.png', builder: (_) => const AppleMapsPage()),
   _DemoItem(title: 'Sygic', assetName: 'assets/sygic.png', builder: (_) => const SygicPage()),

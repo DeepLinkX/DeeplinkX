@@ -19,6 +19,11 @@ void main() {
       expect(AppleMaps.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
 
+    test('OsmAnd actions implement supported map abstractions', () {
+      expect(OsmAnd.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(OsmAnd.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
     test('Waze actions implement map abstractions', () {
       expect(Waze.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Waze.search(query: 'Central Park'), isA<MapSearchAction>());

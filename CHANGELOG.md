@@ -1,3 +1,12 @@
+## 1.3.3
+
+* Added OsmAnd app support:
+  * Open app
+  * View map action
+  * Directions with coordinates action from the current location
+* Added documentation for OsmAnd deeplinks
+* Updated the example app with an OsmAnd page and asset
+
 ## 1.3.2
 
 * Added Threads app support, requested by @hafizidev in issue #28:
