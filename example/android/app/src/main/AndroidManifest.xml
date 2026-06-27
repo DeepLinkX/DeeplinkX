@@ -70,6 +70,8 @@
         <package android:name="com.tranzmate" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
+        <!-- NAVER Map -->
+        <package android:name="com.nhn.android.nmap" />
         <!-- 2GIS -->
         <package android:name="ru.dublgis.dgismobile" />
         <!-- Yandex Maps -->
@@ -135,6 +137,10 @@
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="qqmap" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="nmap" />
         </intent>
     </queries>
 </manifest>

@@ -29,6 +29,11 @@ const ActionField _tencentKeyField = ActionField(
   defaultValue: 'YOUR_TENCENT_MAPS_KEY',
 );
 
+const NaverMapLaunchParams _naverMapLaunchParams = NaverMapLaunchParams(
+  androidAppName: 'io.github.deeplinkx.demo',
+  iosAppName: 'com.example.deeplinkXExample',
+);
+
 String? _validateOrigin(final ActionValues values) => validateOptionalPair(values, 'originLat', 'originLng', 'origin');
 
 String? _validateTencentMarker(final ActionValues values) {
@@ -322,6 +327,108 @@ final List<AppSpec> mapApps = [
         runner: AppActionRunner(
           (final v, {required final fallbackToStore}) =>
               BaiduMaps.navigate(destination: v.coordinate('lat', 'lng'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+    ],
+  ),
+  AppSpec(
+    id: 'naver_map',
+    name: 'NAVER Map',
+    assetName: 'assets/naver_map.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'NaverMap.open(fallbackToStore)',
+        buttonLabel: 'Open NAVER Map',
+        runner: OpenAppRunner(({required final fallbackToStore}) => NaverMap.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.location_on_rounded,
+        title: 'View map',
+        apiLabel: 'NaverMap.view(coordinate, title, launchParams)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '37.5209436'),
+          _lngField(value: '127.1230074'),
+          const ActionField(key: 'title', label: 'Title (optional)', defaultValue: 'Olympic Park', optional: true),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => NaverMap.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            title: v.optionalValue('title'),
+            launchParams: _naverMapLaunchParams,
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.search_rounded,
+        title: 'Search',
+        apiLabel: 'NaverMap.search(query, launchParams)',
+        buttonLabel: 'Search',
+        fields: const [ActionField(key: 'query', label: 'Query', defaultValue: 'Gangnam Station')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => NaverMap.search(
+            query: v.value('query'),
+            launchParams: _naverMapLaunchParams,
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.directions_bus_rounded,
+        title: 'Bus search',
+        apiLabel: 'NaverMap.busSearch(query, launchParams)',
+        buttonLabel: 'Search buses',
+        fields: const [ActionField(key: 'query', label: 'Bus number', defaultValue: '222')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => NaverMap.busSearch(
+            query: v.value('query'),
+            launchParams: _naverMapLaunchParams,
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.route_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'NaverMap.directionsWithCoords(destination, origin, launchParams)',
+        buttonLabel: 'Get directions',
+        fields: [_latField(value: '37.5209436'), _lngField(value: '127.1230074'), ..._originFields],
+        validate: _validateOrigin,
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => NaverMap.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            origin: v.optionalCoordinate('originLat', 'originLng'),
+            launchParams: _naverMapLaunchParams,
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.navigation_rounded,
+        title: 'Navigation',
+        apiLabel: 'NaverMap.navigate(destination, launchParams)',
+        buttonLabel: 'Start navigation',
+        fields: [_latField(value: '37.5209436'), _lngField(value: '127.1230074')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => NaverMap.navigate(
+            destination: v.coordinate('lat', 'lng'),
+            launchParams: _naverMapLaunchParams,
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.health_and_safety_rounded,
+        title: 'Safe driving',
+        apiLabel: 'NaverMap.safeDriving(launchParams)',
+        buttonLabel: 'Start safe driving',
+        runner: AppActionRunner(
+          (final _, {required final fallbackToStore}) =>
+              NaverMap.safeDriving(launchParams: _naverMapLaunchParams, fallbackToStore: fallbackToStore),
         ),
       ),
     ],

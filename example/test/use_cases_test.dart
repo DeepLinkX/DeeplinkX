@@ -22,7 +22,7 @@ void main() {
       await tester.pumpWidget(const MaterialApp(home: HomePage()));
 
       expect(find.text('View all 9'), findsOneWidget);
-      expect(find.text('View all 24'), findsOneWidget);
+      expect(find.text('View all 25'), findsOneWidget);
       expect(find.text('View all 7'), findsOneWidget);
 
       const titles = [
@@ -44,7 +44,7 @@ void main() {
 
       await tester.tap(find.byKey(const ValueKey('filter-apps')));
       await tester.pump();
-      expect(find.byType(AppTile), findsNWidgets(24));
+      expect(find.byType(AppTile), findsNWidgets(25));
 
       await tester.tap(find.byKey(const ValueKey('filter-stores')));
       await tester.pump();
@@ -200,7 +200,29 @@ void main() {
       expect(find.textContaining('Latitude must be'), findsOneWidget);
       expect(deeplinkX.mapDirectionsActions, isEmpty);
 
+      await tester.enterText(find.byKey(const ValueKey('map-latitude')), '37.5665');
+      await tester.enterText(find.byKey(const ValueKey('map-longitude')), '126.9780');
+      await tester.tap(find.byKey(const ValueKey('open-map-selector')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('selector-automatic')));
+      await tester.pumpAndSettle();
+
+      final actions = deeplinkX.mapDirectionsActions.single;
+      expect(actions, hasLength(13));
+      expect(actions.first, isA<GoogleMapsDirectionsWithCoordsAction>());
+      expect(actions[3], isA<NaverMapDirectionsWithCoordsAction>());
+      expect(actions[7], isA<SygicDirectionsWithCoordsAction>());
+      expect(actions[10], isA<YandexMapsDirectionsWithCoordsAction>());
+      expect(actions[11], isA<YandexNavigatorDirectionsWithCoordsAction>());
+      expect(actions.last, isA<TencentMapsDirectionsWithCoordsAction>());
+    });
+
+    testWidgets('map selector omits NAVER Map outside its documented coordinate range', (final tester) async {
+      final deeplinkX = _FakeDeeplinkX();
+      await _pumpPage(tester, MapSelectorPage(deeplinkX: deeplinkX));
+
       await tester.enterText(find.byKey(const ValueKey('map-latitude')), '35.6892');
+      await tester.enterText(find.byKey(const ValueKey('map-longitude')), '51.3890');
       await tester.tap(find.byKey(const ValueKey('open-map-selector')));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('selector-automatic')));
@@ -208,11 +230,7 @@ void main() {
 
       final actions = deeplinkX.mapDirectionsActions.single;
       expect(actions, hasLength(12));
-      expect(actions.first, isA<GoogleMapsDirectionsWithCoordsAction>());
-      expect(actions[6], isA<SygicDirectionsWithCoordsAction>());
-      expect(actions[9], isA<YandexMapsDirectionsWithCoordsAction>());
-      expect(actions[10], isA<YandexNavigatorDirectionsWithCoordsAction>());
-      expect(actions.last, isA<TencentMapsDirectionsWithCoordsAction>());
+      expect(actions.whereType<NaverMapDirectionsWithCoordsAction>(), isEmpty);
     });
 
     testWidgets('rating selector uses Android listing alternatives', (final tester) async {

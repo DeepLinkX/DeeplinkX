@@ -4,6 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Map action abstractions', () {
     const coordinate = Coordinate(latitude: 1, longitude: 2);
+    const naverCoordinate = Coordinate(latitude: 37.5665, longitude: 126.9780);
+    const naverLaunchParams = NaverMapLaunchParams(
+      androidAppName: 'com.example.android',
+      iosAppName: 'com.example.ios',
+    );
 
     test('Google Maps actions implement map abstractions', () {
       expect(GoogleMaps.view(coordinate: coordinate), isA<MapViewAction>());
@@ -24,6 +29,29 @@ void main() {
       expect(BaiduMaps.search(query: 'Central Park'), isA<MapSearchAction>());
       expect(BaiduMaps.directions(destination: 'Central Park'), isA<MapDirectionsAction>());
       expect(BaiduMaps.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
+    test('NAVER Map actions implement supported map abstractions', () {
+      expect(
+        NaverMap.view(coordinate: naverCoordinate, launchParams: naverLaunchParams),
+        isA<MapViewAction>(),
+      );
+      expect(
+        NaverMap.search(query: 'Gangnam Station', launchParams: naverLaunchParams),
+        isA<MapSearchAction>(),
+      );
+      expect(
+        NaverMap.busSearch(query: '222', launchParams: naverLaunchParams),
+        isA<MapSearchAction>(),
+      );
+      expect(
+        NaverMap.directionsWithCoords(destination: naverCoordinate, launchParams: naverLaunchParams),
+        isA<MapDirectionsWithCoordsAction>(),
+      );
+      expect(
+        NaverMap.navigate(destination: naverCoordinate, launchParams: naverLaunchParams),
+        isA<MapDirectionsWithCoordsAction>(),
+      );
     });
 
     test('Apple Maps actions implement map abstractions', () {

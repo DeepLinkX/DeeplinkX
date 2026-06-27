@@ -126,6 +126,20 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('NAVER Map', () {
+        final openAction = NaverMap.open();
+        final searchAction = NaverMap.search(
+          query: 'Gangnam Station',
+          launchParams: const NaverMapLaunchParams(
+            androidAppName: 'com.example.android',
+            iosAppName: 'com.example.ios',
+          ),
+        );
+
+        expect(openAction, isA<App>());
+        expect(searchAction, isA<MapSearchAction>());
+      });
+
       test('2GIS', () {
         final openAction = TwoGis.open();
         final viewAction = TwoGis.view(

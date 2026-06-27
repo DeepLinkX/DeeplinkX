@@ -6,6 +6,7 @@ export 'google_maps.dart';
 export 'instagram.dart';
 export 'linkedin.dart';
 export 'moovit.dart';
+export 'naver_map.dart';
 export 'neshan.dart';
 export 'pinterest.dart';
 export 'slack.dart';

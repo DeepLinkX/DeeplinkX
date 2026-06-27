@@ -25,6 +25,7 @@ void main() {
       'com.autonavi.minimap',
       'com.tranzmate',
       'com.baidu.BaiduMap',
+      'com.nhn.android.nmap',
       'ru.dublgis.dgismobile',
       'ru.yandex.yandexmaps',
       'ru.yandex.yandexnavi',
@@ -44,6 +45,7 @@ void main() {
 
     expect(_occurrences(manifest, '<data android:scheme="yandexnavi" />'), 1);
     expect(_occurrences(manifest, '<data android:scheme="qqmap" />'), 1);
+    expect(_occurrences(manifest, '<data android:scheme="nmap" />'), 1);
   });
 
   test('iOS visibility contains every queried scheme exactly once', () async {
@@ -73,6 +75,7 @@ void main() {
       'yandexmaps',
       'yandexnavi',
       'qqmap',
+      'nmap',
       'itms-apps',
     ];
     for (final scheme in schemes) {
