@@ -14,6 +14,7 @@ import 'package:deeplink_x_example/pages/play_store_page.dart';
 import 'package:deeplink_x_example/pages/slack_page.dart';
 import 'package:deeplink_x_example/pages/sygic_page.dart';
 import 'package:deeplink_x_example/pages/telegram_page.dart';
+import 'package:deeplink_x_example/pages/tencent_maps_page.dart';
 import 'package:deeplink_x_example/pages/threads_page.dart';
 import 'package:deeplink_x_example/pages/tiktok_page.dart';
 import 'package:deeplink_x_example/pages/twitter_page.dart';
@@ -50,6 +51,7 @@ final _apps = <_DemoItem>[
   _DemoItem(title: 'Waze', assetName: 'assets/waze.png', builder: (_) => const WazePage()),
   _DemoItem(title: 'Apple Maps', assetName: 'assets/apple_maps.png', builder: (_) => const AppleMapsPage()),
   _DemoItem(title: 'Sygic', assetName: 'assets/sygic.png', builder: (_) => const SygicPage()),
+  _DemoItem(title: 'Tencent Maps', assetName: 'assets/tencent_maps.png', builder: (_) => const TencentMapsPage()),
 ];
 
 // List of store demos.

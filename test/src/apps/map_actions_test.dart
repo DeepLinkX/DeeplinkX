@@ -30,5 +30,12 @@ void main() {
       expect(Sygic.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Sygic.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
+
+    test('Tencent Maps actions implement supported map abstractions', () {
+      expect(TencentMaps.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(TencentMaps.search(query: 'Central Park'), isA<MapSearchAction>());
+      expect(TencentMaps.nearbySearch(query: 'Central Park'), isA<MapSearchAction>());
+      expect(TencentMaps.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
   });
 }
