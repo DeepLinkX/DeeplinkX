@@ -1,3 +1,12 @@
+## 1.3.3
+
+* Added TomTom Go Fleet app support:
+  * Open app
+  * View map action
+  * Directions with coordinates action
+* Added documentation for TomTom Go Fleet deeplinks
+* Updated the example app with a TomTom Go Fleet page and asset
+
 ## 1.3.2
 
 * Added Threads app support, requested by @hafizidev in issue #28:
