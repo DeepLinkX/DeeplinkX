@@ -126,6 +126,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Neshan', () {
+        final action = Neshan.open();
+        expect(action, isA<App>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());
