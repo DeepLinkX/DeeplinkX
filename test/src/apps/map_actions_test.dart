@@ -30,5 +30,11 @@ void main() {
       expect(Sygic.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Sygic.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
+
+    test('Air Navigation Pro actions implement supported map abstractions', () {
+      expect(AirNavigationPro.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(AirNavigationPro.directTo(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+      expect(AirNavigationPro.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
   });
 }

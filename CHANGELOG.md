@@ -1,3 +1,14 @@
+## 1.3.3
+
+* Added Air Navigation Pro app with the following actions:
+  * Open app
+  * View map
+  * Direct to
+  * Directions with coordinates
+* Added documentation for Air Navigation Pro deeplinks.
+* Added unit tests covering Air Navigation Pro actions, exports, and map action interfaces.
+* Updated the example app with a dedicated Air Navigation Pro page and asset.
+
 ## 1.3.2
 
 * Added Threads app support, requested by @hafizidev in issue #28:
