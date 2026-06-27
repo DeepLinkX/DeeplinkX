@@ -38,6 +38,11 @@ void main() {
       expect(Sygic.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
 
+    test('Moovit actions implement supported map abstractions', () {
+      expect(Moovit.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(Moovit.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
     test('Neshan actions implement supported map abstractions', () {
       expect(Neshan.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Neshan.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());

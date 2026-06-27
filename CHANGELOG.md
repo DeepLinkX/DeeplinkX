@@ -1,3 +1,13 @@
+## 1.3.5
+
+* Added Moovit app with the following actions:
+  * Open app
+  * View map action
+  * Directions with coordinates action
+* Added documentation for Moovit deeplinks
+* Added unit tests covering all Moovit actions and exports
+* Updated the example app with a dedicated Moovit page and asset
+
 ## 1.3.4+1
 
 * Refined the package description and README wording for pub.dev keyword visibility (named WhatsApp, Telegram, Instagram, YouTube, Google Maps, and Waze explicitly).
