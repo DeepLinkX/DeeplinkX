@@ -1,6 +1,7 @@
 export 'apple_maps.dart';
 export 'facebook.dart';
 export 'google_maps.dart';
+export 'here_wego.dart';
 export 'instagram.dart';
 export 'linkedin.dart';
 export 'pinterest.dart';

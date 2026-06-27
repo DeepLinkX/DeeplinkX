@@ -2,6 +2,7 @@ import 'package:deeplink_x_example/pages/apple_maps_page.dart';
 import 'package:deeplink_x_example/pages/cafe_bazaar_page.dart';
 import 'package:deeplink_x_example/pages/facebook_page.dart';
 import 'package:deeplink_x_example/pages/google_maps_page.dart';
+import 'package:deeplink_x_example/pages/here_wego_page.dart';
 import 'package:deeplink_x_example/pages/huawei_app_gallery_page.dart';
 import 'package:deeplink_x_example/pages/instagram_page.dart';
 import 'package:deeplink_x_example/pages/ios_app_store_page.dart';
@@ -50,6 +51,7 @@ final _apps = <_DemoItem>[
   _DemoItem(title: 'Waze', assetName: 'assets/waze.png', builder: (_) => const WazePage()),
   _DemoItem(title: 'Apple Maps', assetName: 'assets/apple_maps.png', builder: (_) => const AppleMapsPage()),
   _DemoItem(title: 'Sygic', assetName: 'assets/sygic.png', builder: (_) => const SygicPage()),
+  _DemoItem(title: 'HERE WeGo', assetName: 'assets/here_wego.png', builder: (_) => const HereWeGoPage()),
 ];
 
 // List of store demos.
