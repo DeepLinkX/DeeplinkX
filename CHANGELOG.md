@@ -1,3 +1,12 @@
+## 1.3.3
+
+* Added Sygic Truck app support:
+  * Open app
+  * View map action
+  * Directions with coordinates action
+* Added documentation for Sygic Truck deeplinks
+* Updated the example app with a Sygic Truck page and asset
+
 ## 1.3.2
 
 * Added Threads app support, requested by @hafizidev in issue #28:

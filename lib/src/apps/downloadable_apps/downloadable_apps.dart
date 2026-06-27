@@ -6,6 +6,7 @@ export 'linkedin.dart';
 export 'pinterest.dart';
 export 'slack.dart';
 export 'sygic.dart';
+export 'sygic_truck.dart';
 export 'telegram.dart';
 export 'threads.dart';
 export 'tiktok.dart';
