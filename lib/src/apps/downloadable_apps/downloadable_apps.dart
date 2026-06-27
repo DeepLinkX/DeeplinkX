@@ -2,6 +2,7 @@ export 'apple_maps.dart';
 export 'facebook.dart';
 export 'google_maps.dart';
 export 'instagram.dart';
+export 'kakao_map.dart';
 export 'linkedin.dart';
 export 'pinterest.dart';
 export 'slack.dart';

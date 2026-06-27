@@ -30,5 +30,10 @@ void main() {
       expect(Sygic.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Sygic.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
+
+    test('KakaoMap actions implement supported map abstractions', () {
+      expect(KakaoMap.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(KakaoMap.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
   });
 }
