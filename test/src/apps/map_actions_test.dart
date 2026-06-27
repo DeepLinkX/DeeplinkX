@@ -30,5 +30,10 @@ void main() {
       expect(Sygic.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Sygic.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
+
+    test('Mappls actions implement supported map abstractions', () {
+      expect(Mappls.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(Mappls.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
   });
 }
