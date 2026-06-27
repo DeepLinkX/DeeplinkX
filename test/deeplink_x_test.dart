@@ -111,6 +111,22 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Citymapper', () {
+        final openAction = Citymapper.open();
+        final viewAction = Citymapper.view(
+          coordinate: const Coordinate(latitude: 51.503399, longitude: -0.119519),
+        );
+        final routeAction = Citymapper.directionsWithCoords(
+          origin: const Coordinate(latitude: 51.500729, longitude: -0.124625),
+          destination: const Coordinate(latitude: 51.503399, longitude: -0.119519),
+          arriveBy: DateTime.utc(2026, 1, 2, 3, 4, 5),
+        );
+
+        expect(openAction, isA<App>());
+        expect(viewAction, isA<MapViewAction>());
+        expect(routeAction, isA<MapDirectionsWithCoordsAction>());
+      });
+
       test('Waze', () {
         final action = Waze.open();
         expect(action, isA<App>());

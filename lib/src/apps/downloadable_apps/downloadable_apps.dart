@@ -1,4 +1,5 @@
 export 'apple_maps.dart';
+export 'citymapper.dart';
 export 'facebook.dart';
 export 'google_maps.dart';
 export 'instagram.dart';

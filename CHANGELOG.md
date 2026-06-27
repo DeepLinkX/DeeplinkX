@@ -1,3 +1,12 @@
+## 1.3.3
+
+* Added Citymapper app support:
+  * Open app
+  * View map action, using Citymapper's directions-to-point flow
+  * Directions with coordinates action, including optional origin, labels, addresses, and arrival time
+* Added documentation for Citymapper deeplinks
+* Updated the example app with a Citymapper page and asset
+
 ## 1.3.2
 
 * Added Threads app support, requested by @hafizidev in issue #28:
