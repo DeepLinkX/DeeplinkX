@@ -3,6 +3,7 @@ export 'facebook.dart';
 export 'google_maps.dart';
 export 'instagram.dart';
 export 'linkedin.dart';
+export 'mapy_cz.dart';
 export 'pinterest.dart';
 export 'slack.dart';
 export 'sygic.dart';
