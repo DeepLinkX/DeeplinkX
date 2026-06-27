@@ -14,6 +14,7 @@ export 'telegram.dart';
 export 'threads.dart';
 export 'tiktok.dart';
 export 'twitter.dart';
+export 'two_gis.dart';
 export 'waze.dart';
 export 'whatsapp.dart';
 export 'youtube.dart';
