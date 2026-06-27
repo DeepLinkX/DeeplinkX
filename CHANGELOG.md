@@ -1,3 +1,13 @@
+## 1.3.3
+
+* Added Mapy.cz app with the following actions:
+  * Open app
+  * View map
+  * Directions with coordinates
+* Added documentation for Mapy.cz deeplinks.
+* Added unit tests covering Mapy.cz actions, exports, and map action interfaces.
+* Updated the example app with a dedicated Mapy.cz page and asset.
+
 ## 1.3.2
 
 * Added Threads app support, requested by @hafizidev in issue #28:
