@@ -111,6 +111,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Amap', () {
+        final action = Amap.open();
+        expect(action, isA<App>());
+      });
+
       test('Waze', () {
         final action = Waze.open();
         expect(action, isA<App>());

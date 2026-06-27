@@ -20,7 +20,7 @@
   <a href="https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml">➕ Request an App</a>
 </p>
 
-DeeplinkX launches deeplinks into **other** apps — open a location in **Google Maps, Apple Maps, or Waze** and get turn-by-turn directions, open an Instagram profile, start a Telegram chat, or play a YouTube video — with one strongly-typed call. When the target app isn't installed, it automatically falls back to the right app store, then to a web URL. No URL strings to maintain, no `Platform.isAndroid` branches to write.
+DeeplinkX launches deeplinks into **other** apps — open a location in **Google Maps, Amap, Apple Maps, Waze, Sygic, or Neshan** and get turn-by-turn directions, open an Instagram profile, start a Telegram chat, or play a YouTube video — with one strongly-typed call. When the target app isn't installed, it automatically falls back to the right app store, then to a web URL. No URL strings to maintain, no `Platform.isAndroid` branches to write.
 
 > **What does the X stand for?** *External.* DeeplinkX is built for launching links **out** to other apps — not for handling incoming links into your own. For inbound links, use `app_links` or `go_router`.
 
@@ -30,10 +30,10 @@ DeeplinkX launches deeplinks into **other** apps — open a location in **Google
 - **Smart fallback** — installed → open the app; not installed → open its store; no store → open the web URL.
 - **Installation check** — ask `isAppInstalled()` before you launch.
 - **Cross-platform store redirect** — point users at a store listing (your app, a promoted app, an ad CTA) and DeeplinkX picks the right store for the device.
-- **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Apple Maps, Waze, Sygic, or Neshan; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
+- **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Amap, Apple Maps, Waze, Sygic, or Neshan; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
 - **One package, every platform** — iOS, Android, macOS, Windows, Linux, and Web.
 
-Out of the box: **17 apps** (Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic, Neshan) and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
+Out of the box: **18 apps** (Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Amap, Waze, Apple Maps, Sygic, Neshan) and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
 
 ## Install
 
@@ -222,7 +222,7 @@ await deeplinkX.redirectToStore(
 
 ### Open a map, search a place, or get directions
 
-Launch **Google Maps, Apple Maps, Waze, Sygic, or Neshan** for supported map actions — **view** a location, **search** a place, get **directions** (by address), or get **directions with coordinates** — on every platform, including web and desktop. For each, list the maps apps you prefer in priority order; DeeplinkX opens the first installed one and falls back to the web map if none are present. Need another provider? [Request it](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml) — map support is actively expanding.
+Launch **Google Maps, Amap, Apple Maps, Waze, Sygic, or Neshan** for supported map actions — **view** a location, **search** a place, get **directions** (by address), or get **directions with coordinates** — on every platform, including web and desktop. For each, list the maps apps you prefer in priority order; DeeplinkX opens the first installed one and falls back to the web map if none are present. Need another provider? [Request it](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml) — map support is actively expanding.
 
 ```dart
 const origin = Coordinate(latitude: 35.6892, longitude: 51.3890);
@@ -232,6 +232,7 @@ const destination = Coordinate(latitude: 35.7000, longitude: 51.4000);
 await deeplinkX.launchMapViewAction(
   actions: [
     GoogleMaps.view(coordinate: origin),
+    Amap.view(coordinate: origin),
     AppleMaps.view(coordinate: origin),
     Waze.view(coordinate: origin),
     Sygic.view(coordinate: origin),
@@ -243,6 +244,7 @@ await deeplinkX.launchMapViewAction(
 await deeplinkX.launchMapSearchAction(
   actions: [
     GoogleMaps.search(query: 'Central Park'),
+    Amap.search(query: 'Central Park'),
     AppleMaps.search(query: 'Central Park'),
     Waze.search(query: 'Central Park'),
   ],
@@ -252,6 +254,7 @@ await deeplinkX.launchMapSearchAction(
 await deeplinkX.launchMapDirectionsAction(
   actions: [
     GoogleMaps.directions(destination: 'Eiffel Tower, Paris'),
+    Amap.directions(destination: 'Eiffel Tower, Paris'),
     AppleMaps.directions(destination: 'Eiffel Tower, Paris'),
     Waze.directions(destination: 'Eiffel Tower, Paris'),
   ],
@@ -261,6 +264,7 @@ await deeplinkX.launchMapDirectionsAction(
 await deeplinkX.launchMapDirectionsWithCoordsAction(
   actions: [
     GoogleMaps.directionsWithCoords(destination: destination),
+    Amap.directionsWithCoords(destination: destination),
     AppleMaps.directionsWithCoords(destination: destination),
     Waze.directionsWithCoords(destination: destination),
     Sygic.directionsWithCoords(destination: destination),
@@ -271,10 +275,10 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 
 | Method                                | Supported apps                       |
 | ------------------------------------- | ------------------------------------ |
-| `launchMapViewAction`                 | Google Maps, Apple Maps, Waze, Sygic, Neshan |
-| `launchMapSearchAction`               | Google Maps, Apple Maps, Waze        |
-| `launchMapDirectionsAction`           | Google Maps, Apple Maps, Waze        |
-| `launchMapDirectionsWithCoordsAction` | Google Maps, Apple Maps, Waze, Sygic, Neshan |
+| `launchMapViewAction`                 | Google Maps, Amap, Apple Maps, Waze, Sygic, Neshan |
+| `launchMapSearchAction`               | Google Maps, Amap, Apple Maps, Waze                |
+| `launchMapDirectionsAction`           | Google Maps, Amap, Apple Maps, Waze                |
+| `launchMapDirectionsWithCoordsAction` | Google Maps, Amap, Apple Maps, Waze, Sygic, Neshan |
 
 ## Supported apps and actions
 
@@ -300,6 +304,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 |                | Slack             | Open team, open channel, open user                                              |
 |                | LinkedIn          | Open profile page, open company page                                            |
 | **Navigation** | Google Maps       | View map, search location, directions, directions with coordinates              |
+|                | Amap              | Open current location, view map, search, directions, directions with coordinates |
 |                | Apple Maps        | View map, search location, directions, directions with coordinates              |
 |                | Waze              | View map, search, directions, directions with coordinates                       |
 |                | Sygic             | View map, directions with coordinates                                           |
@@ -342,7 +347,7 @@ Each app's [doc page](#documentation) lists the exact schemes and package names.
 
 |                                    | DeeplinkX                      | `url_launcher`                                     |
 | ---------------------------------- | ------------------------------ | -------------------------------------------------- |
-| **Typed API for popular apps**     | ✅ 17 apps, no URL maintenance | ❌ Raw URLs only                                   |
+| **Typed API for popular apps**     | ✅ 18 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
@@ -392,6 +397,7 @@ Per-app pages (schemes, required config, fallback behavior) live in [`doc/apps`]
 [Zoom](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/zoom.md) ·
 [Slack](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/slack.md) ·
 [Google Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/google_maps.md) ·
+[Amap](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/amap.md) ·
 [Waze](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md) ·
 [Apple Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md) ·
 [Sygic](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md) ·

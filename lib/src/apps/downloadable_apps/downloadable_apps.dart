@@ -1,3 +1,4 @@
+export 'amap.dart';
 export 'apple_maps.dart';
 export 'facebook.dart';
 export 'google_maps.dart';

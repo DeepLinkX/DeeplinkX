@@ -1,6 +1,6 @@
 name: deeplink_x
 description: Type-safe Flutter deeplinks to open external apps, maps and stores — launch Google Maps, Waze or social apps with directions, navigation and smart store fallback.
-version: 1.3.3
+version: 1.3.4
 homepage: https://github.com/DeepLinkX/DeeplinkX
 repository: https://github.com/DeepLinkX/DeeplinkX
 issue_tracker: https://github.com/DeepLinkX/DeeplinkX/issues
