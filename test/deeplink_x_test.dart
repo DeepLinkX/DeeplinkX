@@ -116,6 +116,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Baidu Maps', () {
+        final action = BaiduMaps.open();
+        expect(action, isA<App>());
+      });
+
       test('Waze', () {
         final action = Waze.open();
         expect(action, isA<App>());
