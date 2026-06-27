@@ -126,6 +126,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('TomTom Go', () {
+        final action = TomTomGo.open();
+        expect(action, isA<App>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());
