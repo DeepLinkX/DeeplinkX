@@ -24,6 +24,7 @@ import 'package:deeplink_x_example/pages/twitter_page.dart';
 import 'package:deeplink_x_example/pages/two_gis_page.dart';
 import 'package:deeplink_x_example/pages/waze_page.dart';
 import 'package:deeplink_x_example/pages/whatsapp_page.dart';
+import 'package:deeplink_x_example/pages/yandex_maps_page.dart';
 import 'package:deeplink_x_example/pages/youtube_page.dart';
 import 'package:deeplink_x_example/pages/zoom_page.dart';
 import 'package:flutter/material.dart';
@@ -60,6 +61,7 @@ final _apps = <_DemoItem>[
   _DemoItem(title: 'Sygic', assetName: 'assets/sygic.png', builder: (_) => const SygicPage()),
   _DemoItem(title: 'Moovit', assetName: 'assets/moovit.png', builder: (_) => const MoovitPage()),
   _DemoItem(title: 'Neshan', assetName: 'assets/neshan.png', builder: (_) => const NeshanPage()),
+  _DemoItem(title: 'Yandex Maps', assetName: 'assets/yandex_maps.png', builder: (_) => const YandexMapsPage()),
 ];
 
 // List of store demos.

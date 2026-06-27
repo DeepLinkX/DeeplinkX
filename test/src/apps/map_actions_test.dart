@@ -59,5 +59,11 @@ void main() {
       expect(Neshan.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Neshan.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
+
+    test('Yandex Maps actions implement supported map abstractions', () {
+      expect(YandexMaps.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(YandexMaps.search(query: 'Central Park'), isA<MapSearchAction>());
+      expect(YandexMaps.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
   });
 }
