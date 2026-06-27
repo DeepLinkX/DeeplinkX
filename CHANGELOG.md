@@ -1,3 +1,12 @@
+## 1.3.3
+
+* Added HERE WeGo app support:
+  * Open app
+  * View map action
+  * Directions with coordinates action
+* Added documentation for HERE WeGo deeplinks
+* Updated the example app with a HERE WeGo page and asset
+
 ## 1.3.2
 
 * Added Threads app support, requested by @hafizidev in issue #28:
