@@ -3,72 +3,77 @@
 [![pub package](https://img.shields.io/pub/v/deeplink_x.svg)](https://pub.dev/packages/deeplink_x)
 [![Coverage Status](https://coveralls.io/repos/github/DeepLinkX/DeeplinkX/badge.svg)](https://coveralls.io/github/DeepLinkX/DeeplinkX)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Issues](https://img.shields.io/github/issues/DeepLinkX/DeeplinkX)](https://github.com/DeepLinkX/DeeplinkX/issues)
-[![GitHub Stars](https://img.shields.io/github/stars/DeepLinkX/DeeplinkX?style=social)](https://github.com/DeepLinkX/DeeplinkX/stargazers)
 [![Platform](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20%7C%20macOS%20%7C%20Windows%20%7C%20Linux%20%7C%20Web-blue.svg)](https://flutter.dev)
+[![GitHub Stars](https://img.shields.io/github/stars/DeepLinkX/DeeplinkX?style=social)](https://github.com/DeepLinkX/DeeplinkX/stargazers)
 
 <p align="center">
   <img src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/deeplink_x_logo.jpg" width="180" alt="DeeplinkX Logo">
 </p>
 
 <p align="center">
-  <strong>Type-safe deeplinks to external apps — with automatic store fallback, across every Flutter platform.</strong>
+  <strong>Type-safe deeplinks into external apps — with automatic store &amp; web fallback, on every Flutter platform.</strong>
 </p>
 
 <p align="center">
   <a href="https://deeplinkx.github.io/DeeplinkX/">🌐 Live Demo</a> &nbsp;·&nbsp;
   <a href="https://pub.dev/documentation/deeplink_x/latest/">📖 API Reference</a> &nbsp;·&nbsp;
-  <a href="https://github.com/DeepLinkX/DeeplinkX/blob/master/CHANGELOG.md">📋 Changelog</a> &nbsp;·&nbsp;
   <a href="https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml">➕ Request an App</a>
 </p>
 
-> **What does the X stand for?** External. DeeplinkX is specifically built for launching deeplinks into *other* apps, not handling incoming links into your own.
+DeeplinkX launches deeplinks into **other** apps — open a location in **Google Maps, Apple Maps, or Waze** and get turn-by-turn directions, open an Instagram profile, start a Telegram chat, or play a YouTube video — with one strongly-typed call. When the target app isn't installed, it automatically falls back to the right app store, then to a web URL. No URL strings to maintain, no `Platform.isAndroid` branches to write.
 
----
+> **What does the X stand for?** *External.* DeeplinkX is built for launching links **out** to other apps — not for handling incoming links into your own. For inbound links, use `app_links` or `go_router`.
 
-## Table of Contents
+## Why DeeplinkX
 
-- [Features](#features)
-- [Demo](#demo)
-- [Install](#install)
-- [Quick Start](#quick-start)
-- [Core Concepts](#core-concepts)
-  - [The three-tier fallback system](#the-three-tier-fallback-system)
-  - [Why custom schemes instead of universal links?](#why-custom-schemes-instead-of-universal-links)
-- [Recipes](#recipes)
-  - [1. Launch an app action](#1-launch-an-app-action)
-  - [2. Launch an app](#2-launch-an-app)
-  - [3. Check if an app is installed](#3-check-if-an-app-is-installed)
-  - [4. Redirect to an app store](#4-redirect-to-an-app-store)
-  - [5. Map provider fallback](#5-map-provider-fallback)
-- [Supported Apps and Actions](#supported-apps-and-actions)
-- [Platform Configuration](#platform-configuration)
-- [Why Custom Schemes Instead of Universal Links?](#why-custom-schemes-instead-of-universal-links-1)
-- [DeeplinkX vs `url_launcher`](#deeplinkx-vs-url_launcher)
-- [Missing an App?](#missing-an-app)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [Feedback](#feedback)
-- [License](#license)
+- **Typed API** — every supported app and action is a Dart call; the package owns the URL schemes, not you.
+- **Smart fallback** — installed → open the app; not installed → open its store; no store → open the web URL.
+- **Installation check** — ask `isAppInstalled()` before you launch.
+- **Cross-platform store redirect** — point users at a store listing (your app, a promoted app, an ad CTA) and DeeplinkX picks the right store for the device.
+- **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Apple Maps, or Waze; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
+- **One package, every platform** — iOS, Android, macOS, Windows, Linux, and Web.
 
----
+Out of the box: **16 apps** (Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic) and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
 
-## Features
+## Install
 
-- **Typed API** — launch any supported app or in-app action with strongly-typed Dart calls; no URL string maintenance.
-- **Smart fallback** — automatically redirects to the app store or a web URL when the target app is not installed.
-- **Installation check** — query whether any supported app is present on the device before attempting a launch.
-- **Store redirect** — send users to the correct store listing for any app you configure, including your own app, promoted apps, or ad landing pages, without detecting the platform manually.
-- **Map provider fallback** — declare a navigation action once (view, search, directions); DeeplinkX checks which apps are installed and opens the first available one automatically.
-- **Cross-platform** — works on iOS, Android, macOS, Windows, Linux, and Web from a single package.
-- **7 supported stores** — iOS App Store, Mac App Store, Microsoft Store, Google Play Store, Huawei AppGallery, Cafe Bazaar, Myket.
-- **16 supported apps** — Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic.
+```bash
+flutter pub add deeplink_x
+```
 
----
+```dart
+import 'package:deeplink_x/deeplink_x.dart';
+```
+
+Requires Dart `>=3.1.0` and Flutter `>=3.13.0`.
+
+## Quick Start
+
+Open a Telegram profile, and fall back to the App Store / Play Store if Telegram isn't installed:
+
+```dart
+final deeplinkX = DeeplinkX();
+
+await deeplinkX.launchAction(
+  Telegram.openProfile(username: 'username', fallbackToStore: true),
+);
+```
+
+On iOS, declare the schemes you query in `ios/Runner/Info.plist` (each app's [doc page](#documentation) lists its exact values):
+
+```xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+    <string>tg</string>
+    <string>itms-apps</string>
+</array>
+```
+
+That's the whole flow — DeeplinkX resolves the platform, checks installation, and handles the fallback.
 
 ## Demo
 
-Try the [live web demo](https://deeplinkx.github.io/DeeplinkX/) or build the example on a real device for the full experience — app installation checks require a native platform.
+Try the [live web demo](https://deeplinkx.github.io/DeeplinkX/), or run the example on a real device for the full experience — installation checks need a native platform.
 
 <table>
   <tr>
@@ -101,98 +106,54 @@ Try the [live web demo](https://deeplinkx.github.io/DeeplinkX/) or build the exa
   </tr>
 </table>
 
----
+## How it works
 
-## Install
+Every launch follows the same three-tier strategy, in order:
 
-```bash
-flutter pub add deeplink_x
-```
+<p align="center">
+  <img src="https://github.com/DeeplinkX/DeeplinkX/raw/master/images/how_it_works.png" width="760" alt="DeeplinkX three-tier fallback flow: try the native deeplink, then the app store, then the web URL">
+</p>
 
-Then import the package wherever you need it:
+1. **Native deeplink** — opens the app directly via a custom URL scheme, App Link, or Android Intent when it's installed.
+2. **Store fallback** — if `fallbackToStore: true` and the app is absent, redirects to the correct store for the current platform.
+3. **Web fallback** — otherwise opens the action's web URL, when one exists.
 
-```dart
-import 'package:deeplink_x/deeplink_x.dart';
-```
+Pass `disableFallback: true` to any launch method to attempt **only** the native path (skip ② and ③). Every launch method returns `Future<bool>` — see [Return values](#return-values).
 
----
+> **Note:** with `fallbackToStore: true`, if a vendor changes or removes a custom scheme, DeeplinkX redirects to the **store** rather than the web URL. Set `fallbackToStore: false` when you always want the web page as the fallback.
 
-## Quick Start
+**Why custom schemes instead of universal links?** DeeplinkX prefers custom URL schemes, App Links, and Android Intents over plain HTTPS universal links because they:
 
-The example below opens a Telegram profile on iOS. If Telegram is not installed, the user is redirected to the App Store.
+- **Launch directly, no browser flash** — no redirect flicker before the app opens.
+- **Skip the "Open with…" dialog on Android** — Intents target the exact package.
+- **Allow a real installation check** — universal links return `true` even when the app is missing (the browser would handle them), which breaks fallback logic; a scheme/package check does not.
+- **Stay resilient** — every scheme is paired with a web fallback, so a deprecated scheme still lands the user somewhere useful.
 
-**Step 1 — declare the URL scheme in `ios/Runner/Info.plist`:**
+## Use cases
 
-```xml
-<key>LSApplicationQueriesSchemes</key>
-<array>
-    <string>tg</string>
-    <string>itms-apps</string>
-</array>
-```
+### Open a screen inside an app
 
-**Step 2 — launch the action:**
+Deep-link to a specific screen; fall back to the store if the app is missing:
 
 ```dart
 final deeplinkX = DeeplinkX();
 
-final launched = await deeplinkX.launchAction(
-  Telegram.openProfile(username: 'username', fallbackToStore: true),
-);
-```
-
-That's it. DeeplinkX resolves the platform, checks installation, and handles the fallback for you.
-
----
-
-## Core Concepts
-
-### The three-tier fallback system
-
-DeeplinkX applies the following strategy on every launch, in order:
-
-1. **Native deeplink** — opens the app directly using a custom URL scheme, App Link, or Android Intent when the app is installed.
-2. **Store fallback** — if `fallbackToStore: true` and the app is not installed, redirects to the appropriate app store for the current platform.
-3. **Web fallback** — if no store redirect applies, opens the web URL for the action (when one exists).
-
-Pass `disableFallback: true` to any launch method to skip steps 2 and 3 entirely and attempt only the native path.
-
-> **Important:** When `fallbackToStore: true` is set and a custom scheme is removed or changed by the app vendor, DeeplinkX will redirect to the store rather than the web fallback. Set `fallbackToStore: false` if you always want the web URL as the fallback destination.
-
-### Why custom schemes instead of universal links?
-
-Custom URL schemes and Android Intents let DeeplinkX reliably check whether an app is installed *before* attempting a launch, so the fallback logic works correctly. Universal links cannot be checked in advance and open a browser tab on failure. See the full explanation in [Why Custom Schemes Instead of Universal Links?](#why-custom-schemes-instead-of-universal-links-1).
-
----
-
-## Recipes
-
-### 1. Launch an app action
-
-Open a specific screen inside an app. Falls back to the store if the app is not installed:
-
-```dart
-final deeplinkX = DeeplinkX();
-
-// Open a Telegram profile
 await deeplinkX.launchAction(
   Telegram.openProfile(username: 'flutter', fallbackToStore: true),
 );
 
-// Open a YouTube video
 await deeplinkX.launchAction(
   YouTube.openVideo(videoId: 'dQw4w9WgXcQ', fallbackToStore: true),
 );
 
-// Open a WhatsApp chat
 await deeplinkX.launchAction(
   WhatsApp.chat(phoneNumber: '1234567890', fallbackToStore: true),
 );
 ```
 
-### 2. Launch an app
+### Open an app
 
-Open a supported app without targeting a specific screen:
+Launch a supported app without targeting a screen:
 
 ```dart
 await deeplinkX.launchApp(
@@ -200,7 +161,7 @@ await deeplinkX.launchApp(
 );
 ```
 
-### 3. Check if an app is installed
+### Check whether an app is installed
 
 ```dart
 final isInstalled = await deeplinkX.isAppInstalled(LinkedIn());
@@ -212,13 +173,11 @@ if (isInstalled) {
 }
 ```
 
-### 4. Redirect to an app store
+### Send users to a store listing
 
-Use this to send users to the correct store page for any app you configure. That can be your own app for install or update flows, or another app's listing from a promotion, recommendation, or ad. You declare each platform-specific listing, and DeeplinkX opens the one that matches the user's platform automatically. No platform detection needed.
+Send users to the right store page for any app you configure — your own app's install/update flow, a promoted app, or an ad CTA. Declare each platform's listing once; DeeplinkX opens the one matching the device. No `Platform.isAndroid` checks.
 
 ```dart
-// Add every store listing you want to support.
-// DeeplinkX opens the one that matches the current platform.
 await deeplinkX.redirectToStore(
   storeActions: [
     IOSAppStore.openAppPage(appId: 'TARGET_APP_ID', appName: 'target-app'),
@@ -235,9 +194,7 @@ await deeplinkX.redirectToStore(
 );
 ```
 
-Common patterns include an "Update App" button, a promoted app card, or an ad call-to-action. When the user taps it on Android they land on Google Play, on iOS on the App Store, on Huawei devices on AppGallery — without a single `Platform.isAndroid` check in your code.
-
-For promoted apps or ad CTAs, pass tracking values on stores that support them:
+For promoted apps or ad CTAs, pass tracking parameters on stores that support them:
 
 ```dart
 await deeplinkX.redirectToStore(
@@ -263,13 +220,11 @@ await deeplinkX.redirectToStore(
 );
 ```
 
-### 5. Map provider fallback
+### Open a map, search a place, or get directions
 
-Instead of checking which navigation app is installed and then deciding which one to call, you declare what you want to do and list the apps you want to support. DeeplinkX checks installation and opens the first available one. If none are installed, it falls back to the web URL when one exists.
+Launch **Google Maps, Apple Maps, or Waze** for any of four map actions — **view** a location, **search** a place, get **directions** (by address), or get **directions with coordinates** — on every platform, including web and desktop. For each, list the maps apps you prefer in priority order; DeeplinkX opens the first installed one and falls back to the web map if none are present. Need another provider? [Request it](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml) — map support is actively expanding.
 
 ```dart
-final deeplinkX = DeeplinkX();
-
 const origin = Coordinate(latitude: 35.6892, longitude: 51.3890);
 const destination = Coordinate(latitude: 35.7000, longitude: 51.4000);
 
@@ -292,7 +247,7 @@ await deeplinkX.launchMapSearchAction(
   ],
 );
 
-// Get directions by address
+// Directions by address
 await deeplinkX.launchMapDirectionsAction(
   actions: [
     GoogleMaps.directions(destination: 'Eiffel Tower, Paris'),
@@ -301,7 +256,7 @@ await deeplinkX.launchMapDirectionsAction(
   ],
 );
 
-// Get directions by coordinates
+// Directions by coordinates
 await deeplinkX.launchMapDirectionsWithCoordsAction(
   actions: [
     GoogleMaps.directionsWithCoords(destination: destination),
@@ -319,19 +274,17 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 | `launchMapDirectionsAction`           | Google Maps, Apple Maps, Waze        |
 | `launchMapDirectionsWithCoordsAction` | Google Maps, Apple Maps, Waze, Sygic |
 
----
-
-## Supported Apps and Actions
+## Supported apps and actions
 
 | Category       | App               | Actions                                                                         |
 | -------------- | ----------------- | ------------------------------------------------------------------------------- |
-| **Stores**     | iOS App Store     | Open app page, rate app                                                         |
-|                | Mac App Store     | Open app page, rate app                                                         |
-|                | Microsoft Store   | Open app page, rate app                                                         |
+| **Stores**     | iOS App Store     | Open app page, rate app                                                          |
+|                | Mac App Store     | Open app page, rate app                                                          |
+|                | Microsoft Store   | Open app page, rate app                                                          |
 |                | Google Play Store | Open app page                                                                   |
 |                | Huawei AppGallery | Open app page                                                                   |
 |                | Cafe Bazaar       | Open app page                                                                   |
-|                | Myket             | Open app page, rate app                                                         |
+|                | Myket             | Open app page, rate app                                                          |
 | **Social**     | Telegram          | Open profile by username, open profile by phone number, send message            |
 |                | Instagram         | Open profile by username                                                        |
 |                | WhatsApp          | Chat with phone number, share text content                                      |
@@ -347,23 +300,20 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 | **Navigation** | Google Maps       | View map, search location, directions, directions with coordinates              |
 |                | Apple Maps        | View map, search location, directions, directions with coordinates              |
 |                | Waze              | View map, search, directions, directions with coordinates                       |
-|                | Sygic             | View map, directions with coordinates                                           |
+|                | Sygic             | View map, directions with coordinates                                            |
 
----
+## Platform configuration
 
-## Platform Configuration
+Some platforms require you to declare URL schemes or package visibility before the OS will allow installation checks.
 
-Some platforms require you to declare URL schemes or package visibility before the OS allows installation checks.
+| Platform | File                                       | Required? |
+| -------- | ------------------------------------------ | --------- |
+| iOS      | `ios/Runner/Info.plist`                    | Yes       |
+| Android  | `android/app/src/main/AndroidManifest.xml` | Yes       |
+| macOS    | `macos/Runner/Info.plist`                  | Yes       |
+| Windows / Linux / Web | —                             | No config |
 
-| Platform | File                                       |
-| -------- | ------------------------------------------ |
-| iOS      | `ios/Runner/Info.plist`                    |
-| Android  | `android/app/src/main/AndroidManifest.xml` |
-| macOS    | `macos/Runner/Info.plist`                  |
-
-Windows, Linux, and Web do not require additional configuration.
-
-Each app's documentation page (linked in [Documentation](#documentation)) lists the exact schemes and package names to declare. As a reference, here is the iOS entry for Telegram and the App Store:
+Each app's [doc page](#documentation) lists the exact schemes and package names. For example, Telegram + App Store on iOS:
 
 ```xml
 <!-- ios/Runner/Info.plist -->
@@ -374,7 +324,7 @@ Each app's documentation page (linked in [Documentation](#documentation)) lists 
 </array>
 ```
 
-And the Android entry for Instagram:
+…and Instagram on Android:
 
 ```xml
 <!-- android/app/src/main/AndroidManifest.xml -->
@@ -383,109 +333,70 @@ And the Android entry for Instagram:
 </queries>
 ```
 
----
-
-## Why Custom Schemes Instead of Universal Links?
-
-DeeplinkX prefers custom URL schemes, App Links, and Android Intents over plain HTTPS universal links for several concrete reasons:
-
-**Direct app launch, no browser flash.** Custom schemes and App Links open the native app without routing through a browser first, which eliminates the redirect flicker that users see with universal links. The result is a smoother, more native-feeling experience.
-
-**No "Open with…" dialog on Android.** Android Intents let DeeplinkX target the exact app package, so the system launches it directly. Universal links can show a disambiguation dialog when multiple apps claim the same domain.
-
-**Reliable installation check.** DeeplinkX can query `canLaunch` for a custom scheme or check for a package name before attempting a launch. Universal links return `true` even when the app is absent, because the browser will handle them — making fallback logic unreliable.
-
-**Resilience to scheme changes.** Custom schemes are unofficial and can be deprecated by app vendors. DeeplinkX always pairs a custom scheme with a web fallback URL, so if a scheme disappears, users are still redirected somewhere useful rather than landing on an error.
-
-**Best of both.** DeeplinkX uses the speed and precision of custom schemes for native launches and the reliability of web URLs as the last-resort fallback, giving users the best possible path to the content regardless of what is installed.
-
----
-
 ## DeeplinkX vs `url_launcher`
 
-`url_launcher` is a general-purpose URL launcher. DeeplinkX is purpose-built for external app deeplinks and goes further in every dimension that matters for that use case:
+`url_launcher` is a general-purpose URL opener. DeeplinkX is purpose-built for external app deeplinks:
 
-|                                    | DeeplinkX                     | `url_launcher`                                    |
-| ---------------------------------- | ----------------------------- | ------------------------------------------------- |
+|                                    | DeeplinkX                      | `url_launcher`                                     |
+| ---------------------------------- | ------------------------------ | -------------------------------------------------- |
 | **Typed API for popular apps**     | ✅ 16 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
 | **macOS custom scheme check**      | ✅ Supported                   | ❌ Not supported                                   |
-| **Map provider fallback**          | ✅ Try multiple apps in order  | ❌ Not available                                   |
+| **Map actions across apps**        | ✅ View / search / directions, first installed | ❌ Not available                       |
 | **Store listing redirect**         | ✅ One call, all platforms     | ❌ Not available                                   |
 
-In practice: redirecting users to a target app's store page with `url_launcher` requires you to detect the platform, look up each store URL format, handle edge cases for Huawei devices, and wire that logic in every place you need it. DeeplinkX handles all of it with one `redirectToStore` call — you just supply the app IDs for each store once.
+Redirecting to a store page with `url_launcher` means detecting the platform, looking up each store's URL format, and handling Huawei edge cases — everywhere you need it. DeeplinkX does it in one `redirectToStore` call.
 
----
+## Return values
 
-## Missing an App?
+Every launch method returns a `Future<bool>`:
 
-If DeeplinkX does not support the app, store, or navigation provider you need, open a [new app request](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml). Include the app name, target platforms, known URL schemes or App Link patterns, store links, and the actions you want to launch.
+- `launchAction`, `launchApp` — `true` if the app launched **or** a fallback (store/web) succeeded; `false` otherwise.
+- `isAppInstalled` — `true` if the app is installed.
+- `redirectToStore` — `true` if any matching store opened; `false` if no store matched the platform or none launched.
+- `launchMap*Action` — `true` if any listed provider (or its fallback) launched.
 
----
+DeeplinkX swallows platform errors internally and reports them through this boolean, so a launch never throws — branch on the result.
+
+## Missing an app?
+
+If DeeplinkX doesn't support the app, store, or navigation provider you need, open a [new app request](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml) with the app name, target platforms, known schemes/App Link patterns, store links, and the actions you want.
 
 ## Documentation
 
-Per-app documentation covering URL schemes, required configuration, and fallback behavior is available in [`doc/apps`](https://github.com/DeeplinkX/DeeplinkX/tree/master/doc/apps):
+Per-app pages (schemes, required config, fallback behavior) live in [`doc/apps`](https://github.com/DeeplinkX/DeeplinkX/tree/master/doc/apps). Full API reference: [pub.dev](https://pub.dev/documentation/deeplink_x/latest/).
 
-**Stores**
+**Stores:** [iOS App Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/ios_app_store.md) ·
+[Mac App Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/mac_app_store.md) ·
+[Microsoft Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/microsoft_store.md) ·
+[Google Play](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/play_store.md) ·
+[Huawei AppGallery](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/huawei_app_gallery_store.md) ·
+[Cafe Bazaar](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/cafe_bazaar_store.md) ·
+[Myket](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/myket_store.md)
 
-| Store             | Link                                                                                                                          |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| iOS App Store     | [ios_app_store.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/ios_app_store.md)                       |
-| Mac App Store     | [mac_app_store.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/mac_app_store.md)                       |
-| Microsoft Store   | [microsoft_store.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/microsoft_store.md)                   |
-| Google Play Store | [play_store.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/play_store.md)                             |
-| Huawei AppGallery | [huawei_app_gallery_store.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/huawei_app_gallery_store.md) |
-| Cafe Bazaar       | [cafe_bazaar_store.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/cafe_bazaar_store.md)               |
-| Myket             | [myket_store.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/myket_store.md)                           |
-
-**Apps**
-
-| App         | Link                                                                                         |
-| ----------- | -------------------------------------------------------------------------------------------- |
-| Facebook    | [facebook.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/facebook.md)       |
-| Instagram   | [instagram.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/instagram.md)     |
-| Telegram    | [telegram.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/telegram.md)       |
-| WhatsApp    | [whatsapp.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/whatsapp.md)       |
-| LinkedIn    | [linkedin.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/linkedin.md)       |
-| YouTube     | [youtube.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/youtube.md)         |
-| Twitter     | [twitter.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/twitter.md)         |
-| Threads     | [threads.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/threads.md)         |
-| Pinterest   | [pinterest.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/pinterest.md)     |
-| TikTok      | [tiktok.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/tiktok.md)           |
-| Zoom        | [zoom.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/zoom.md)               |
-| Slack       | [slack.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/slack.md)             |
-| Google Maps | [google_maps.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/google_maps.md) |
-| Waze        | [waze.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md)               |
-| Apple Maps  | [apple_maps.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md)   |
-| Sygic       | [sygic.md](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md)             |
-
-Full API reference is on [pub.dev](https://pub.dev/documentation/deeplink_x/latest/).
-
----
+**Apps:** [Facebook](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/facebook.md) ·
+[Instagram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/instagram.md) ·
+[Telegram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/telegram.md) ·
+[WhatsApp](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/whatsapp.md) ·
+[LinkedIn](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/linkedin.md) ·
+[YouTube](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/youtube.md) ·
+[Twitter](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/twitter.md) ·
+[Threads](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/threads.md) ·
+[Pinterest](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/pinterest.md) ·
+[TikTok](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/tiktok.md) ·
+[Zoom](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/zoom.md) ·
+[Slack](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/slack.md) ·
+[Google Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/google_maps.md) ·
+[Waze](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md) ·
+[Apple Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md) ·
+[Sygic](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md)
 
 ## Contributing
 
-Contributions are welcome. To get started:
-
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -m 'Add my feature'`
-4. Push to the branch: `git push origin feature/my-feature`
-5. Open a Pull Request.
-
-Please check existing issues before opening a new one.
-
----
-
-## Feedback
-
-If DeeplinkX works well for you, feels confusing in places, or is missing something important for your app, please share it through the [feedback form](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=feedback.yml). User feedback directly shapes the package API and documentation.
-
----
+Contributions are welcome — fork, branch, and open a PR. Please check existing issues first. Found a rough edge or a gap? The [feedback form](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=feedback.yml) directly shapes the API and docs.
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](https://github.com/DeeplinkX/DeeplinkX/blob/master/LICENSE) for details.
+MIT — see [LICENSE](https://github.com/DeeplinkX/DeeplinkX/blob/master/LICENSE).

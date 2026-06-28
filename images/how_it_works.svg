@@ -1,0 +1,63 @@
+<svg width="960" height="470" viewBox="0 0 960 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- panel background (keeps text readable in GitHub dark mode) -->
+  <rect x="0" y="0" width="960" height="470" rx="18" fill="#ffffff"/>
+
+  <!-- ===== Start ===== -->
+  <rect x="350" y="28" width="260" height="50" rx="25" fill="#4f46e5"/>
+  <text x="480" y="59" text-anchor="middle" fill="#ffffff" font-size="19" font-family="'SF Mono', Menlo, Consolas, monospace">launchAction(action)</text>
+
+  <!-- arrow start -> decision1 -->
+  <line x1="480" y1="78" x2="480" y2="116" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===== Decision 1: App installed? ===== -->
+  <rect x="372" y="118" width="216" height="56" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+  <text x="480" y="152" text-anchor="middle" fill="#92400e" font-size="18" font-weight="600">App installed?</text>
+
+  <!-- Yes branch: decision1 -> step 1 -->
+  <polyline points="372,146 200,146 200,232" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="262" y="118" width="44" height="22" rx="11" fill="#dcfce7"/>
+  <text x="284" y="133" text-anchor="middle" fill="#15803d" font-size="13" font-weight="700">Yes</text>
+
+  <!-- No branch: decision1 -> decision2 -->
+  <polyline points="588,146 720,146 720,232" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="652" y="118" width="40" height="22" rx="11" fill="#fee2e2"/>
+  <text x="672" y="133" text-anchor="middle" fill="#b91c1c" font-size="13" font-weight="700">No</text>
+
+  <!-- ===== Step 1: native deeplink ===== -->
+  <rect x="96" y="234" width="208" height="76" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="200" y="266" text-anchor="middle" fill="#15803d" font-size="17" font-weight="700">① Open the app</text>
+  <text x="200" y="290" text-anchor="middle" fill="#166534" font-size="13">native scheme · App Link · Intent</text>
+
+  <!-- ===== Decision 2: fallbackToStore? ===== -->
+  <rect x="600" y="234" width="240" height="56" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+  <text x="720" y="261" text-anchor="middle" fill="#92400e" font-size="16" font-weight="600">fallbackToStore: true?</text>
+
+  <!-- Decision2 Yes -> step 2 -->
+  <polyline points="720,290 720,330 615,330 615,358" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="636" y="304" width="44" height="22" rx="11" fill="#dcfce7"/>
+  <text x="658" y="319" text-anchor="middle" fill="#15803d" font-size="13" font-weight="700">Yes</text>
+
+  <!-- Decision2 No -> step 3 -->
+  <polyline points="720,290 720,330 825,330 825,358" fill="none" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="762" y="304" width="40" height="22" rx="11" fill="#fee2e2"/>
+  <text x="782" y="319" text-anchor="middle" fill="#b91c1c" font-size="13" font-weight="700">No</text>
+
+  <!-- ===== Step 2: store fallback ===== -->
+  <rect x="511" y="360" width="208" height="76" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="615" y="392" text-anchor="middle" fill="#1d4ed8" font-size="17" font-weight="700">② Open app store</text>
+  <text x="615" y="416" text-anchor="middle" fill="#1e40af" font-size="13">matching this platform</text>
+
+  <!-- ===== Step 3: web fallback ===== -->
+  <rect x="721" y="360" width="208" height="76" rx="12" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+  <text x="825" y="392" text-anchor="middle" fill="#475569" font-size="17" font-weight="700">③ Open web URL</text>
+  <text x="825" y="416" text-anchor="middle" fill="#475569" font-size="13">last-resort fallback</text>
+
+  <!-- caption -->
+  <text x="200" y="356" text-anchor="middle" fill="#94a3b8" font-size="12.5">Tries each tier in order — stops at the first success.</text>
+</svg>
