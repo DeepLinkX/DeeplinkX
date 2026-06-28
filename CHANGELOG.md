@@ -1,3 +1,13 @@
+## 1.3.3
+
+* Added Neshan app with the following actions:
+  * Open app
+  * View map
+  * Directions with coordinates
+* Added documentation for Neshan deeplinks.
+* Added unit tests covering Neshan actions, exports, and map action interfaces.
+* Updated the example app with a dedicated Neshan page and asset.
+
 ## 1.3.2+1
 
 * Rewrote the README with a clearer structure and a fallback flow diagram.

@@ -30,10 +30,10 @@ DeeplinkX launches deeplinks into **other** apps — open a location in **Google
 - **Smart fallback** — installed → open the app; not installed → open its store; no store → open the web URL.
 - **Installation check** — ask `isAppInstalled()` before you launch.
 - **Cross-platform store redirect** — point users at a store listing (your app, a promoted app, an ad CTA) and DeeplinkX picks the right store for the device.
-- **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Apple Maps, or Waze; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
+- **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Apple Maps, Waze, Sygic, or Neshan; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
 - **One package, every platform** — iOS, Android, macOS, Windows, Linux, and Web.
 
-Out of the box: **16 apps** (Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic) and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
+Out of the box: **17 apps** (Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Waze, Apple Maps, Sygic, Neshan) and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
 
 ## Install
 
@@ -222,7 +222,7 @@ await deeplinkX.redirectToStore(
 
 ### Open a map, search a place, or get directions
 
-Launch **Google Maps, Apple Maps, or Waze** for any of four map actions — **view** a location, **search** a place, get **directions** (by address), or get **directions with coordinates** — on every platform, including web and desktop. For each, list the maps apps you prefer in priority order; DeeplinkX opens the first installed one and falls back to the web map if none are present. Need another provider? [Request it](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml) — map support is actively expanding.
+Launch **Google Maps, Apple Maps, Waze, Sygic, or Neshan** for supported map actions — **view** a location, **search** a place, get **directions** (by address), or get **directions with coordinates** — on every platform, including web and desktop. For each, list the maps apps you prefer in priority order; DeeplinkX opens the first installed one and falls back to the web map if none are present. Need another provider? [Request it](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml) — map support is actively expanding.
 
 ```dart
 const origin = Coordinate(latitude: 35.6892, longitude: 51.3890);
@@ -235,6 +235,7 @@ await deeplinkX.launchMapViewAction(
     AppleMaps.view(coordinate: origin),
     Waze.view(coordinate: origin),
     Sygic.view(coordinate: origin),
+    Neshan.view(coordinate: origin),
   ],
 );
 
@@ -263,16 +264,17 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
     AppleMaps.directionsWithCoords(destination: destination),
     Waze.directionsWithCoords(destination: destination),
     Sygic.directionsWithCoords(destination: destination),
+    Neshan.directionsWithCoords(destination: destination),
   ],
 );
 ```
 
 | Method                                | Supported apps                       |
 | ------------------------------------- | ------------------------------------ |
-| `launchMapViewAction`                 | Google Maps, Apple Maps, Waze, Sygic |
+| `launchMapViewAction`                 | Google Maps, Apple Maps, Waze, Sygic, Neshan |
 | `launchMapSearchAction`               | Google Maps, Apple Maps, Waze        |
 | `launchMapDirectionsAction`           | Google Maps, Apple Maps, Waze        |
-| `launchMapDirectionsWithCoordsAction` | Google Maps, Apple Maps, Waze, Sygic |
+| `launchMapDirectionsWithCoordsAction` | Google Maps, Apple Maps, Waze, Sygic, Neshan |
 
 ## Supported apps and actions
 
@@ -300,7 +302,8 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 | **Navigation** | Google Maps       | View map, search location, directions, directions with coordinates              |
 |                | Apple Maps        | View map, search location, directions, directions with coordinates              |
 |                | Waze              | View map, search, directions, directions with coordinates                       |
-|                | Sygic             | View map, directions with coordinates                                            |
+|                | Sygic             | View map, directions with coordinates                                           |
+|                | Neshan            | View map, directions with coordinates                                           |
 
 ## Platform configuration
 
@@ -339,7 +342,7 @@ Each app's [doc page](#documentation) lists the exact schemes and package names.
 
 |                                    | DeeplinkX                      | `url_launcher`                                     |
 | ---------------------------------- | ------------------------------ | -------------------------------------------------- |
-| **Typed API for popular apps**     | ✅ 16 apps, no URL maintenance | ❌ Raw URLs only                                   |
+| **Typed API for popular apps**     | ✅ 17 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
@@ -391,7 +394,8 @@ Per-app pages (schemes, required config, fallback behavior) live in [`doc/apps`]
 [Google Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/google_maps.md) ·
 [Waze](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/waze.md) ·
 [Apple Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/apple_maps.md) ·
-[Sygic](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md)
+[Sygic](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic.md) ·
+[Neshan](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/neshan.md)
 
 ## Contributing
 
