@@ -1,3 +1,8 @@
+## 1.3.2+1
+
+* Rewrote the README with a clearer structure and a fallback flow diagram.
+* Improved maps discoverability in the package description and topics.
+
 ## 1.3.2
 
 * Added Threads app support, requested by @hafizidev in issue #28:
