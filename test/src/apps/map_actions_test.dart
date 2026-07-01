@@ -12,6 +12,13 @@ void main() {
       expect(GoogleMaps.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
 
+    test('Amap actions implement map abstractions', () {
+      expect(Amap.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(Amap.search(query: 'Central Park'), isA<MapSearchAction>());
+      expect(Amap.directions(destination: 'Central Park'), isA<MapDirectionsAction>());
+      expect(Amap.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
     test('Apple Maps actions implement map abstractions', () {
       expect(AppleMaps.view(coordinate: coordinate), isA<MapViewAction>());
       expect(AppleMaps.search(query: 'Central Park'), isA<MapSearchAction>());
