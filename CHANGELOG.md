@@ -1,16 +1,16 @@
 ## 1.3.4
 
-* Added Amap app support:
+* Added Amap app with the following actions:
   * Open app
   * My location action
   * View map action
   * Search action with optional bounds
   * Directions action
   * Directions with coordinates action with optional origin, waypoints, and travel modes
-* Added documentation for Amap deeplinks.
-* Added unit tests covering Amap actions, fallbacks, exports, and map action interfaces.
-* Updated README map launcher examples and supported app tables.
-* Updated the example app with an Amap page and asset.
+* Added documentation for Amap deeplinks
+* Added unit tests covering all Amap actions and exports
+* Updated README map launcher examples and supported app tables
+* Updated the example app with a dedicated Amap page and asset
 
 ## 1.3.3
 
