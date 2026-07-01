@@ -20,7 +20,7 @@
   <a href="https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml">➕ Request an App</a>
 </p>
 
-DeeplinkX launches deeplinks into **other** apps — open a location in **Google Maps, Amap, Apple Maps, Waze, Sygic, or Neshan** and get turn-by-turn directions, open an Instagram profile, start a Telegram chat, or play a YouTube video — with one strongly-typed call. When the target app isn't installed, it automatically falls back to the right app store, then to a web URL. No URL strings to maintain, no `Platform.isAndroid` branches to write.
+DeeplinkX is a Flutter plugin for launching typed external deeplinks — it launches deeplinks into **other** apps from your Flutter app. Open a chat in **WhatsApp**, a profile in **Telegram** or **Instagram**, a video on **YouTube**, or a location in **Google Maps, Amap, Apple Maps, Waze, Sygic, or Neshan** with turn-by-turn directions — with one strongly-typed call. When the target app isn't installed, it automatically falls back to the right app store, then to a web URL. No URL strings to maintain, no `Platform.isAndroid` branches to write.
 
 > **What does the X stand for?** *External.* DeeplinkX is built for launching links **out** to other apps — not for handling incoming links into your own. For inbound links, use `app_links` or `go_router`.
 
@@ -122,7 +122,7 @@ Pass `disableFallback: true` to any launch method to attempt **only** the native
 
 > **Note:** with `fallbackToStore: true`, if a vendor changes or removes a custom scheme, DeeplinkX redirects to the **store** rather than the web URL. Set `fallbackToStore: false` when you always want the web page as the fallback.
 
-**Why custom schemes instead of universal links?** DeeplinkX prefers custom URL schemes, App Links, and Android Intents over plain HTTPS universal links because they:
+**Why custom schemes instead of universal links?** Under the hood, DeeplinkX opens apps with iOS custom URL schemes, Android Intents, and Android/iOS App Links — the same launch mechanics you'd otherwise hand-roll with `url_launcher` — rather than plain HTTPS universal links, because they:
 
 - **Launch directly, no browser flash** — no redirect flicker before the app opens.
 - **Skip the "Open with…" dialog on Android** — Intents target the exact package.
@@ -151,9 +151,9 @@ await deeplinkX.launchAction(
 );
 ```
 
-### Open an app
+### Open another app from Flutter
 
-Launch a supported app without targeting a screen:
+Launch a supported app without targeting a screen — no raw URLs, no `Platform.isAndroid` checks:
 
 ```dart
 await deeplinkX.launchApp(
@@ -161,7 +161,11 @@ await deeplinkX.launchApp(
 );
 ```
 
+The same call shape works to open WhatsApp, Telegram, or any other [supported app](#supported-apps-and-actions) from your Flutter app.
+
 ### Check whether an app is installed
+
+Check whether WhatsApp, Telegram, Google Maps, LinkedIn, or another supported app is installed before you launch it:
 
 ```dart
 final isInstalled = await deeplinkX.isAppInstalled(LinkedIn());
@@ -356,6 +360,8 @@ Each app's [doc page](#documentation) lists the exact schemes and package names.
 | **Store listing redirect**         | ✅ One call, all platforms     | ❌ Not available                                   |
 
 Redirecting to a store page with `url_launcher` means detecting the platform, looking up each store's URL format, and handling Huawei edge cases — everywhere you need it. DeeplinkX does it in one `redirectToStore` call.
+
+Compared to single-purpose alternatives: `map_launcher` opens a chosen maps app but doesn't cover social apps or store fallback; `external_app_launcher` opens an app or its store listing but has no typed map or social-app actions. DeeplinkX covers apps, maps, and stores from one typed API.
 
 ## Return values
 
