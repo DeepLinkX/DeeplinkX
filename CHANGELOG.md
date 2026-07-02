@@ -1,3 +1,10 @@
+## Unreleased
+
+* Added CapCut app support:
+  * Open app
+  * Open template link
+* Added documentation, tests, and example app support for CapCut.
+
 ## 1.3.4+1
 
 * Refined the package description and README wording for pub.dev keyword visibility (named WhatsApp, Telegram, Instagram, YouTube, Google Maps, and Waze explicitly).

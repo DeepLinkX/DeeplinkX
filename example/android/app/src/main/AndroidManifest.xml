@@ -32,6 +32,8 @@
             android:value="2" />
     </application>
     <queries>
+        <!-- CapCut -->
+        <package android:name="com.lemon.lvoverseas" />
         <!-- LinkedIn -->
         <package android:name="com.linkedin.android" />
         <!-- Instagram -->
