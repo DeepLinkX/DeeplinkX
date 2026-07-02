@@ -56,6 +56,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Snapchat', () {
+        final action = Snapchat.open();
+        expect(action, isA<App>());
+      });
+
       test('Telegram', () {
         final action = Telegram.open();
         expect(action, isA<App>());
