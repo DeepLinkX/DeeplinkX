@@ -32,6 +32,8 @@
             android:value="2" />
     </application>
     <queries>
+        <!-- Netflix -->
+        <package android:name="com.netflix.mediaclient" />
         <!-- LinkedIn -->
         <package android:name="com.linkedin.android" />
         <!-- Instagram -->

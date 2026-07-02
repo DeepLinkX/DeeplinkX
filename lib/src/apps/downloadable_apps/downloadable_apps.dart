@@ -5,6 +5,7 @@ export 'google_maps.dart';
 export 'instagram.dart';
 export 'linkedin.dart';
 export 'neshan.dart';
+export 'netflix.dart';
 export 'pinterest.dart';
 export 'slack.dart';
 export 'sygic.dart';

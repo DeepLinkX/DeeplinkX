@@ -11,6 +11,7 @@ import 'package:deeplink_x_example/pages/mac_app_store_page.dart';
 import 'package:deeplink_x_example/pages/microsoft_store_page.dart';
 import 'package:deeplink_x_example/pages/myket_page.dart';
 import 'package:deeplink_x_example/pages/neshan_page.dart';
+import 'package:deeplink_x_example/pages/netflix_page.dart';
 import 'package:deeplink_x_example/pages/pinterest_page.dart';
 import 'package:deeplink_x_example/pages/play_store_page.dart';
 import 'package:deeplink_x_example/pages/slack_page.dart';
@@ -36,6 +37,7 @@ class _DemoItem {
 
 // List of application demos.
 final _apps = <_DemoItem>[
+  _DemoItem(title: 'Netflix', assetName: 'assets/netflix.png', builder: (_) => const NetflixPage()),
   _DemoItem(title: 'Instagram', assetName: 'assets/instagram.png', builder: (_) => const InstagramPage()),
   _DemoItem(title: 'Telegram', assetName: 'assets/telegram.png', builder: (_) => const TelegramPage()),
   _DemoItem(title: 'WhatsApp', assetName: 'assets/whatsapp.png', builder: (_) => const WhatsAppPage()),
