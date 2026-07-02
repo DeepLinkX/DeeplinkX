@@ -1,6 +1,7 @@
 import 'package:deeplink_x_example/pages/amap_page.dart';
 import 'package:deeplink_x_example/pages/apple_maps_page.dart';
 import 'package:deeplink_x_example/pages/cafe_bazaar_page.dart';
+import 'package:deeplink_x_example/pages/chatgpt_page.dart';
 import 'package:deeplink_x_example/pages/facebook_page.dart';
 import 'package:deeplink_x_example/pages/google_maps_page.dart';
 import 'package:deeplink_x_example/pages/huawei_app_gallery_page.dart';
@@ -36,6 +37,7 @@ class _DemoItem {
 
 // List of application demos.
 final _apps = <_DemoItem>[
+  _DemoItem(title: 'ChatGPT', assetName: 'assets/chatgpt.png', builder: (_) => const ChatGPTPage()),
   _DemoItem(title: 'Instagram', assetName: 'assets/instagram.png', builder: (_) => const InstagramPage()),
   _DemoItem(title: 'Telegram', assetName: 'assets/telegram.png', builder: (_) => const TelegramPage()),
   _DemoItem(title: 'WhatsApp', assetName: 'assets/whatsapp.png', builder: (_) => const WhatsAppPage()),
