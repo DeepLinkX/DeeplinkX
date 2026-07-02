@@ -1,3 +1,9 @@
+## 1.3.4+1
+
+* Refined the package description and README wording for pub.dev keyword visibility (named WhatsApp, Telegram, Instagram, YouTube, Google Maps, and Waze explicitly).
+* Added README wording for URL schemes, Android Intents, and App Links, plus install-check phrasing around `isAppInstalled()`.
+* Added brief README comparisons with `map_launcher` and `external_app_launcher`.
+
 ## 1.3.4
 
 * Added Amap app with the following actions:
