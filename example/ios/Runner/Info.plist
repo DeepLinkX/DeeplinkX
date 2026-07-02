@@ -26,6 +26,7 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>capcut</string>
 		<string>instagram</string>
 		<string>tg</string>
 		<string>fb</string>
