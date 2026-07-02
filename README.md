@@ -20,7 +20,7 @@
   <a href="https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml">➕ Request an App</a>
 </p>
 
-DeeplinkX is a Flutter plugin for launching typed external deeplinks — it launches deeplinks into **other** apps from your Flutter app. Open a chat in **WhatsApp**, a profile in **Telegram** or **Instagram**, a video on **YouTube**, or a location in **Google Maps, Amap, Apple Maps, Waze, Sygic, or Neshan** with turn-by-turn directions — with one strongly-typed call. When the target app isn't installed, it automatically falls back to the right app store, then to a web URL. No URL strings to maintain, no `Platform.isAndroid` branches to write.
+DeeplinkX is a Flutter plugin for launching typed external deeplinks — it launches deeplinks into **other** apps from your Flutter app. Open a chat in **WhatsApp**, a profile in **Telegram** or **Instagram**, a search in **Temu**, a video on **YouTube**, or a location in **Google Maps, Amap, Apple Maps, Waze, Sygic, or Neshan** with turn-by-turn directions — with one strongly-typed call. When the target app isn't installed, it automatically falls back to the right app store, then to a web URL. No URL strings to maintain, no `Platform.isAndroid` branches to write.
 
 > **What does the X stand for?** *External.* DeeplinkX is built for launching links **out** to other apps — not for handling incoming links into your own. For inbound links, use `app_links` or `go_router`.
 
@@ -33,7 +33,7 @@ DeeplinkX is a Flutter plugin for launching typed external deeplinks — it laun
 - **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Amap, Apple Maps, Waze, Sygic, or Neshan; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
 - **One package, every platform** — iOS, Android, macOS, Windows, Linux, and Web.
 
-Out of the box: **18 apps** (Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Amap, Waze, Apple Maps, Sygic, Neshan) and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
+Out of the box: **19 apps** (Temu, Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Amap, Waze, Apple Maps, Sygic, Neshan) and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
 
 ## Install
 
@@ -295,6 +295,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 |                | Huawei AppGallery | Open app page                                                                   |
 |                | Cafe Bazaar       | Open app page                                                                   |
 |                | Myket             | Open app page, rate app                                                          |
+| **Shopping**   | Temu              | Open link, search                                                               |
 | **Social**     | Telegram          | Open profile by username, open profile by phone number, send message            |
 |                | Instagram         | Open profile by username                                                        |
 |                | WhatsApp          | Chat with phone number, share text content                                      |
@@ -351,7 +352,7 @@ Each app's [doc page](#documentation) lists the exact schemes and package names.
 
 |                                    | DeeplinkX                      | `url_launcher`                                     |
 | ---------------------------------- | ------------------------------ | -------------------------------------------------- |
-| **Typed API for popular apps**     | ✅ 18 apps, no URL maintenance | ❌ Raw URLs only                                   |
+| **Typed API for popular apps**     | ✅ 19 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
@@ -390,7 +391,8 @@ Per-app pages (schemes, required config, fallback behavior) live in [`doc/apps`]
 [Cafe Bazaar](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/cafe_bazaar_store.md) ·
 [Myket](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/myket_store.md)
 
-**Apps:** [Facebook](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/facebook.md) ·
+**Apps:** [Temu](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/temu.md) ·
+[Facebook](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/facebook.md) ·
 [Instagram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/instagram.md) ·
 [Telegram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/telegram.md) ·
 [WhatsApp](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/whatsapp.md) ·
