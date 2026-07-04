@@ -4,6 +4,7 @@ export 'facebook.dart';
 export 'google_maps.dart';
 export 'instagram.dart';
 export 'linkedin.dart';
+export 'moovit.dart';
 export 'neshan.dart';
 export 'pinterest.dart';
 export 'slack.dart';
