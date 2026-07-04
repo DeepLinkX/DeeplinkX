@@ -1,3 +1,7 @@
+## 1.3.5+2
+
+* Added tag-based GitHub Actions publishing to pub.dev.
+
 ## 1.3.5+1
 
 * Added a Pub Readiness GitHub Actions workflow that enforces a full Pana score and runs `flutter pub publish --dry-run`.
