@@ -1,0 +1,51 @@
+name: Pub Readiness
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: ${{ vars.FLUTTER_VERSION || '3.41.1' }}
+  FLUTTER_CHANNEL: ${{ vars.FLUTTER_CHANNEL || 'stable' }}
+
+jobs:
+  pub-readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+          pub-cache: true
+          cache-key: "deeplinkx-pub-readiness-flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          pub-cache-key: "deeplinkx-pub-readiness-flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Activate Pana
+        run: dart pub global activate pana
+
+      - name: Check Pana score
+        run: dart pub global run pana --exit-code-threshold 0 .
+
+      - name: Publish dry run
+        run: flutter pub publish --dry-run

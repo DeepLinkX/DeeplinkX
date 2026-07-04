@@ -1,6 +1,6 @@
 name: deeplink_x
 description: Type-safe Flutter deeplinks for WhatsApp, Telegram, Instagram, YouTube, Google Maps, Waze and app stores, with automatic store and web fallback.
-version: 1.3.5
+version: 1.3.5+1
 homepage: https://github.com/DeepLinkX/DeeplinkX
 repository: https://github.com/DeepLinkX/DeeplinkX
 issue_tracker: https://github.com/DeepLinkX/DeeplinkX/issues
