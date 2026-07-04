@@ -1,3 +1,7 @@
+## 1.3.5+1
+
+* Added a Pub Readiness GitHub Actions workflow that enforces a full Pana score and runs `flutter pub publish --dry-run`.
+
 ## 1.3.5
 
 * Added Moovit app with the following actions:
