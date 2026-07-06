@@ -1,3 +1,19 @@
+## 1.3.6
+
+* Added Baidu Maps app with the following actions:
+  * Open app
+  * View map action
+  * Search action
+  * Nearby search action
+  * Transit line action
+  * Directions action
+  * Directions with coordinates action
+  * Native navigation action
+* Added documentation for Baidu Maps deeplinks
+* Added unit tests covering all Baidu Maps actions, exports, and map action interfaces
+* Updated README map launcher examples and supported app tables
+* Updated the example app with a dedicated Baidu Maps page and asset
+
 ## 1.3.5+2
 
 * Added tag-based GitHub Actions publishing to pub.dev.

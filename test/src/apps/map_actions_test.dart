@@ -19,6 +19,13 @@ void main() {
       expect(Amap.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
 
+    test('Baidu Maps actions implement map abstractions', () {
+      expect(BaiduMaps.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(BaiduMaps.search(query: 'Central Park'), isA<MapSearchAction>());
+      expect(BaiduMaps.directions(destination: 'Central Park'), isA<MapDirectionsAction>());
+      expect(BaiduMaps.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
     test('Apple Maps actions implement map abstractions', () {
       expect(AppleMaps.view(coordinate: coordinate), isA<MapViewAction>());
       expect(AppleMaps.search(query: 'Central Park'), isA<MapSearchAction>());

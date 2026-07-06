@@ -1,5 +1,6 @@
 import 'package:deeplink_x_example/pages/amap_page.dart';
 import 'package:deeplink_x_example/pages/apple_maps_page.dart';
+import 'package:deeplink_x_example/pages/baidu_maps_page.dart';
 import 'package:deeplink_x_example/pages/cafe_bazaar_page.dart';
 import 'package:deeplink_x_example/pages/facebook_page.dart';
 import 'package:deeplink_x_example/pages/google_maps_page.dart';
@@ -51,6 +52,7 @@ final _apps = <_DemoItem>[
   _DemoItem(title: 'Slack', assetName: 'assets/slack.png', builder: (_) => const SlackPage()),
   _DemoItem(title: 'Google Maps', assetName: 'assets/google_maps.png', builder: (_) => const GoogleMapsPage()),
   _DemoItem(title: 'Amap', assetName: 'assets/amap.png', builder: (_) => const AmapPage()),
+  _DemoItem(title: 'Baidu Maps', assetName: 'assets/baidu_maps.png', builder: (_) => const BaiduMapsPage()),
   _DemoItem(title: 'Waze', assetName: 'assets/waze.png', builder: (_) => const WazePage()),
   _DemoItem(title: 'Apple Maps', assetName: 'assets/apple_maps.png', builder: (_) => const AppleMapsPage()),
   _DemoItem(title: 'Sygic', assetName: 'assets/sygic.png', builder: (_) => const SygicPage()),
