@@ -19,6 +19,7 @@ The goal is to understand which searches `deeplink_x` currently owns after the 2
 - All keyword queries in this refresh were scanned up to top 100 unless the result set ended earlier.
 - Rate limits were waited out with retry/backoff rather than skipped.
 - Search results are time-sensitive and can change as pub.dev reindexes, downloads change, likes change, or package metadata changes.
+- Supported-app keyword coverage was cross-checked against the current README app list and `doc/apps/*.md`; the app-specific matrix covers all current app docs, including newer map/navigation providers such as Amap, Moovit, and Neshan.
 
 Sources:
 

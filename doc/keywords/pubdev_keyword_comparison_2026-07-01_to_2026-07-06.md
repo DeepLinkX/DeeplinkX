@@ -6,7 +6,7 @@ Package audited: `deeplink_x`
 
 ## Summary
 
-This comparison measures ranking movement after the new publish and metadata update. The largest gains are in app/provider terms that were added to the published description: WhatsApp, Telegram, Instagram, YouTube, Google Maps, Waze, app stores, and fallback wording.
+This comparison measures ranking movement after the new publish and metadata update. The largest gains are in app/provider terms that were added to the published description or newly checked in the app matrix: WhatsApp, Telegram, Instagram, YouTube, Google Maps, Waze, Amap, Moovit, Neshan, app stores, and fallback wording.
 
 Current package state:
 

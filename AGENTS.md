@@ -7,6 +7,21 @@ These instructions apply to the entire repository.
 - Run all tests with `flutter test`.
 - Document new features in `CHANGELOG.md` and update any relevant files under `doc/`.
 
+## Keyword Reports
+
+When creating or refreshing pub.dev keyword reports:
+
+- Store reports under `doc/keywords/` with date-stamped filenames using `YYYY-MM-DD`.
+- Keep `doc/keywords/README.md` updated with every new visibility or comparison report.
+- Fetch current pub.dev package metadata, score data, rendered package page, and rendered score page before writing the report.
+- Re-scan the previous report's keyword groups so comparisons remain stable.
+- Derive app-specific keywords from the current supported app list in `README.md` and every `doc/apps/*.md` page, including newly added apps and navigation providers.
+- For each supported app, scan at least `{app}`, `{app} link`, `{app} deeplink`, and human search phrases such as `open {app} from Flutter`.
+- For map and navigation apps, also scan search, directions, coordinates, and provider-specific navigation phrases.
+- Include expanded human-search phrases and Medium-derived article phrases.
+- Wait through pub.dev rate limits with retry/backoff instead of skipping rate-limited queries.
+- Create a comparison report when a previous snapshot exists.
+
 ## Adding A Navigation App
 
 When introducing a new navigation app (e.g. Maps providers), follow this checklist:
