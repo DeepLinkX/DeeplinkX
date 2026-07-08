@@ -1,4 +1,6 @@
+import 'package:deeplink_x_example/pages/amap_page.dart';
 import 'package:deeplink_x_example/pages/apple_maps_page.dart';
+import 'package:deeplink_x_example/pages/baidu_maps_page.dart';
 import 'package:deeplink_x_example/pages/cafe_bazaar_page.dart';
 import 'package:deeplink_x_example/pages/facebook_page.dart';
 import 'package:deeplink_x_example/pages/google_maps_page.dart';
@@ -8,12 +10,15 @@ import 'package:deeplink_x_example/pages/ios_app_store_page.dart';
 import 'package:deeplink_x_example/pages/linkedin_page.dart';
 import 'package:deeplink_x_example/pages/mac_app_store_page.dart';
 import 'package:deeplink_x_example/pages/microsoft_store_page.dart';
+import 'package:deeplink_x_example/pages/moovit_page.dart';
 import 'package:deeplink_x_example/pages/myket_page.dart';
+import 'package:deeplink_x_example/pages/neshan_page.dart';
 import 'package:deeplink_x_example/pages/pinterest_page.dart';
 import 'package:deeplink_x_example/pages/play_store_page.dart';
 import 'package:deeplink_x_example/pages/slack_page.dart';
 import 'package:deeplink_x_example/pages/sygic_page.dart';
 import 'package:deeplink_x_example/pages/telegram_page.dart';
+import 'package:deeplink_x_example/pages/threads_page.dart';
 import 'package:deeplink_x_example/pages/tiktok_page.dart';
 import 'package:deeplink_x_example/pages/twitter_page.dart';
 import 'package:deeplink_x_example/pages/waze_page.dart';
@@ -40,14 +45,19 @@ final _apps = <_DemoItem>[
   _DemoItem(title: 'LinkedIn', assetName: 'assets/linkedin.png', builder: (_) => const LinkedInPage()),
   _DemoItem(title: 'YouTube', assetName: 'assets/youtube.png', builder: (_) => const YouTubePage()),
   _DemoItem(title: 'Twitter', assetName: 'assets/twitter.png', builder: (_) => const TwitterPage()),
+  _DemoItem(title: 'Threads', assetName: 'assets/threads.png', builder: (_) => const ThreadsPage()),
   _DemoItem(title: 'Pinterest', assetName: 'assets/pinterest.png', builder: (_) => const PinterestPage()),
   _DemoItem(title: 'TikTok', assetName: 'assets/tiktok.png', builder: (_) => const TikTokPage()),
   _DemoItem(title: 'Zoom', assetName: 'assets/zoom.png', builder: (_) => const ZoomPage()),
   _DemoItem(title: 'Slack', assetName: 'assets/slack.png', builder: (_) => const SlackPage()),
   _DemoItem(title: 'Google Maps', assetName: 'assets/google_maps.png', builder: (_) => const GoogleMapsPage()),
+  _DemoItem(title: 'Amap', assetName: 'assets/amap.png', builder: (_) => const AmapPage()),
+  _DemoItem(title: 'Baidu Maps', assetName: 'assets/baidu_maps.png', builder: (_) => const BaiduMapsPage()),
   _DemoItem(title: 'Waze', assetName: 'assets/waze.png', builder: (_) => const WazePage()),
   _DemoItem(title: 'Apple Maps', assetName: 'assets/apple_maps.png', builder: (_) => const AppleMapsPage()),
   _DemoItem(title: 'Sygic', assetName: 'assets/sygic.png', builder: (_) => const SygicPage()),
+  _DemoItem(title: 'Moovit', assetName: 'assets/moovit.png', builder: (_) => const MoovitPage()),
+  _DemoItem(title: 'Neshan', assetName: 'assets/neshan.png', builder: (_) => const NeshanPage()),
 ];
 
 // List of store demos.

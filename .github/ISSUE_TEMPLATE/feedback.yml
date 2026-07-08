@@ -1,0 +1,72 @@
+name: Feedback
+description: Share feedback about DeeplinkX APIs, docs, examples, or developer experience.
+title: "[Feedback]: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve DeeplinkX. Clear feedback makes it easier to improve the package in the right direction.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Feedback area
+      description: Which part of DeeplinkX is your feedback about?
+      options:
+        - API design
+        - Documentation
+        - Examples
+        - Supported apps
+        - Platform behavior
+        - Developer experience
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Feedback
+      description: What worked well, felt confusing, or could be improved?
+      placeholder: Describe your feedback with enough context for maintainers to understand it.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Use case or context
+      description: What were you trying to build or solve?
+      placeholder: "Example: I needed to launch map directions with a provider fallback on Android and iOS."
+    validations:
+      required: false
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested improvement
+      description: If you have a specific change in mind, describe it here.
+      placeholder: "Example: Add a shorter quick-start example for store fallback."
+    validations:
+      required: false
+  - type: input
+    id: package_version
+    attributes:
+      label: DeeplinkX version
+      description: Which package version were you using?
+      placeholder: 1.3.1
+    validations:
+      required: false
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      description: Which platform is most relevant?
+      multiple: true
+      options:
+        - Android
+        - iOS
+        - macOS
+        - Windows
+        - Linux
+        - Web
+        - Not platform-specific
+    validations:
+      required: false

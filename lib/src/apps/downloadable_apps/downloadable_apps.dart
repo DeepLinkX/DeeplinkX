@@ -1,12 +1,17 @@
+export 'amap.dart';
 export 'apple_maps.dart';
+export 'baidu_maps.dart';
 export 'facebook.dart';
 export 'google_maps.dart';
 export 'instagram.dart';
 export 'linkedin.dart';
+export 'moovit.dart';
+export 'neshan.dart';
 export 'pinterest.dart';
 export 'slack.dart';
 export 'sygic.dart';
 export 'telegram.dart';
+export 'threads.dart';
 export 'tiktok.dart';
 export 'twitter.dart';
 export 'waze.dart';

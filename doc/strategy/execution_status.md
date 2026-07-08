@@ -9,8 +9,8 @@
 
 | Area | Status | Notes |
 | --- | --- | --- |
-| README positioning updates | Completed | Category narrative, recipe index, claim-to-proof map, references added |
-| Strategy docs | Completed | Query map now at 30/30 covered, references, article audit, KPI framework, SO/article targets created |
+| README positioning updates | Completed | Reconciled with the v1.3.6 README; recipe index, claim-to-proof map, and references retained |
+| Strategy docs | Completed | Query map now at 30/30 covered with current README anchors and Baidu Maps coverage; references, article audit, KPI framework, SO/article targets created |
 | Recipe docs | Completed | Multi-feature menu, fallback strategies, common outbound flows created |
 | Contributor process docs | Completed | Lanes, checklist, review SLA created |
 | Issue templates | Completed | Docs and distribution templates added |

@@ -1,21 +1,35 @@
 name: deeplink_x
-description: Easy to use Flutter plugin for type-safe external deeplink launching with built-in smart fallback, supporting app stores and popular apps.
-version: 1.2.0
-
+description: Type-safe Flutter deeplinks for WhatsApp, Telegram, Instagram, YouTube, Google Maps, Waze and app stores, with automatic store and web fallback.
+version: 1.3.6
+homepage: https://github.com/DeepLinkX/DeeplinkX
 repository: https://github.com/DeepLinkX/DeeplinkX
 issue_tracker: https://github.com/DeepLinkX/DeeplinkX/issues
-documentation: https://pub.dev/documentation/deeplink_x/latest/deeplink_x/
+documentation: https://pub.dev/documentation/deeplink_x/latest/
 
 topics:
+  - deeplink
   - app-links
-  - external-deeplink
-  - universal-links
-  - custom-url-schemes
+  - maps
+  - navigation
   - open-store
 
+screenshots:
+  - description: Opening an Instagram profile via deeplink
+    path: images/previews/01_instagram_open_profile.gif
+  - description: Opening a Telegram profile via deeplink
+    path: images/previews/02_telegram_open_profile.gif
+  - description: Opening the Facebook app via deeplink
+    path: images/previews/03_facebook_open_app.gif
+  - description: Opening a YouTube video via deeplink
+    path: images/previews/04_youtube_open_video.gif
+  - description: Facebook profile falling back to web when app is not installed
+    path: images/previews/05_facebook_open_web_profile.gif
+  - description: Opening an app page in the iOS App Store
+    path: images/previews/06_ios_app_store_open_page.gif
+
 environment:
-  sdk: ">=3.1.0 <4.0.0"
-  flutter: ">=3.12.0"
+  sdk: '>=3.1.0 <4.0.0'
+  flutter: '>=3.13.0'
 
 dependencies:
   flutter:
@@ -23,17 +37,17 @@ dependencies:
   deeplink_x_platform_interface: ^0.1.0
   deeplink_x_android: ^1.0.0
   deeplink_x_ios: ^0.1.0
-  deeplink_x_linux: ^0.1.0
   deeplink_x_macos: ^0.2.0
-  deeplink_x_web: ^0.1.0
+  deeplink_x_linux: ^0.1.0
   deeplink_x_windows: ^0.1.0
+  deeplink_x_web: ^0.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  mocktail: ^1.0.4
-  plugin_platform_interface: ^2.1.8
+  mocktail: ^1.0.0
+  plugin_platform_interface: ^2.0.0
 
 flutter:
   plugin:
@@ -42,11 +56,11 @@ flutter:
         default_package: deeplink_x_android
       ios:
         default_package: deeplink_x_ios
-      linux:
-        default_package: deeplink_x_linux
       macos:
         default_package: deeplink_x_macos
-      web:
-        default_package: deeplink_x_web
+      linux:
+        default_package: deeplink_x_linux
       windows:
         default_package: deeplink_x_windows
+      web:
+        default_package: deeplink_x_web

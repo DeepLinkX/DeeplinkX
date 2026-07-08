@@ -312,4 +312,92 @@ void main() {
       verifyNever(() => mockLauncherUtil.launchUrl(any()));
     });
   });
+
+  group('map action launchers', () {
+    const firstCoordinate = Coordinate(latitude: 1, longitude: 2);
+    const secondCoordinate = Coordinate(latitude: 3, longitude: 4);
+
+    test('launchMapViewAction tries later native actions before fallback', () async {
+      final first = Waze.view(
+        coordinate: firstCoordinate,
+        fallbackToStore: true,
+      );
+      final second = Waze.view(coordinate: secondCoordinate);
+
+      when(() => mockLauncherUtil.launchUrl(first.universalLink)).thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.launchUrl(second.universalLink)).thenAnswer((final _) async => true);
+
+      final result = await deeplinkX.launchMapViewAction(actions: [first, second]);
+
+      expect(result, isTrue);
+      verify(() => mockLauncherUtil.launchUrl(first.universalLink)).called(1);
+      verify(() => mockLauncherUtil.launchUrl(second.universalLink)).called(1);
+    });
+
+    test('launchMapViewAction falls back after all native actions fail', () async {
+      final first = Waze.view(coordinate: firstCoordinate);
+      final second = Waze.view(coordinate: secondCoordinate);
+      var firstLaunchCount = 0;
+
+      when(() => mockLauncherUtil.launchUrl(any())).thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.launchUrl(first.universalLink)).thenAnswer((final _) async {
+        firstLaunchCount += 1;
+        return firstLaunchCount == 2;
+      });
+      when(() => mockLauncherUtil.launchUrl(second.universalLink)).thenAnswer((final _) async => false);
+
+      final result = await deeplinkX.launchMapViewAction(actions: [first, second]);
+
+      expect(result, isTrue);
+      verifyInOrder([
+        () => mockLauncherUtil.launchUrl(first.universalLink),
+        () => mockLauncherUtil.launchUrl(second.universalLink),
+        () => mockLauncherUtil.launchUrl(first.universalLink),
+      ]);
+    });
+
+    test('launchMapViewAction respects disableFallback', () async {
+      final first = Waze.view(coordinate: firstCoordinate);
+      final second = Waze.view(coordinate: secondCoordinate);
+
+      when(() => mockLauncherUtil.launchUrl(any())).thenAnswer((final _) async => false);
+
+      final result = await deeplinkX.launchMapViewAction(
+        actions: [first, second],
+        disableFallback: true,
+      );
+
+      expect(result, isFalse);
+      verify(() => mockLauncherUtil.launchUrl(first.universalLink)).called(1);
+      verify(() => mockLauncherUtil.launchUrl(second.universalLink)).called(1);
+    });
+
+    test('launchMapSearchAction returns false for empty actions', () async {
+      final result = await deeplinkX.launchMapSearchAction(actions: []);
+
+      expect(result, isFalse);
+      verifyNever(() => mockLauncherUtil.isAppInstalled(any()));
+      verifyNever(() => mockLauncherUtil.launchUrl(any()));
+    });
+
+    test('map launcher methods accept each supported action type', () async {
+      final viewResult = await deeplinkX.launchMapViewAction(
+        actions: [Waze.view(coordinate: firstCoordinate)],
+      );
+      final searchResult = await deeplinkX.launchMapSearchAction(
+        actions: [Waze.search(query: 'Central Park')],
+      );
+      final directionsResult = await deeplinkX.launchMapDirectionsAction(
+        actions: [Waze.directions(destination: 'Central Park')],
+      );
+      final coordsResult = await deeplinkX.launchMapDirectionsWithCoordsAction(
+        actions: [Waze.directionsWithCoords(destination: firstCoordinate)],
+      );
+
+      expect(viewResult, isTrue);
+      expect(searchResult, isTrue);
+      expect(directionsResult, isTrue);
+      expect(coordsResult, isTrue);
+    });
+  });
 }

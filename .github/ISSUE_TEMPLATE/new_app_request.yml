@@ -1,0 +1,87 @@
+name: New app request
+description: Request support for a new app, store, or deeplink provider.
+title: "[New App]: "
+labels: ["new app request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new DeeplinkX integration. Please include as many verified links and platform details as possible.
+  - type: input
+    id: app_name
+    attributes:
+      label: App name
+      description: What app, store, or provider should DeeplinkX support?
+      placeholder: "Example: Google Maps"
+    validations:
+      required: true
+  - type: dropdown
+    id: platforms
+    attributes:
+      label: Target platforms
+      description: Which platforms should be supported?
+      multiple: true
+      options:
+        - Android
+        - iOS
+        - macOS
+        - Windows
+        - Linux
+        - Web
+    validations:
+      required: true
+  - type: textarea
+    id: actions
+    attributes:
+      label: Requested actions
+      description: Which actions should DeeplinkX expose for this app?
+      placeholder: |
+        - Open app
+        - Open profile
+        - Search
+        - Directions with coordinates
+    validations:
+      required: true
+  - type: textarea
+    id: schemes_links
+    attributes:
+      label: URL schemes, app links, universal links, or intents
+      description: Add official docs or verified deeplink formats if you have them.
+      placeholder: |
+        Custom scheme:
+        App link:
+        Universal link:
+        Android intent:
+        Documentation:
+    validations:
+      required: false
+  - type: textarea
+    id: fallback_store
+    attributes:
+      label: Fallback and store information
+      description: Add app store links, package names, bundle identifiers, or web fallback URLs.
+      placeholder: |
+        Android package:
+        iOS app ID:
+        macOS bundle identifier:
+        Web fallback:
+        Store links:
+    validations:
+      required: false
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: Why do you need this app in DeeplinkX?
+      placeholder: Describe the product flow or user journey this would support.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues before opening this request.
+          required: true
+        - label: I included official docs or verified links when available.
+          required: false

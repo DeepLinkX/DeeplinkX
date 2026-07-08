@@ -1,4 +1,4 @@
-name: Test & Coveralls
+name: Pub Readiness
 
 on:
   push:
@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: read
-  checks: write
-  pull-requests: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -21,7 +19,7 @@ env:
   FLUTTER_CHANNEL: ${{ vars.FLUTTER_CHANNEL || 'stable' }}
 
 jobs:
-  test:
+  pub-readiness:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,8 +32,8 @@ jobs:
           channel: ${{ env.FLUTTER_CHANNEL }}
           cache: true
           pub-cache: true
-          cache-key: "deeplinkx-ci-flutter-:os:-:channel:-:version:-:arch:-:hash:"
-          pub-cache-key: "deeplinkx-ci-flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
+          cache-key: "deeplinkx-pub-readiness-flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          pub-cache-key: "deeplinkx-pub-readiness-flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
 
       - name: Flutter version
         run: flutter --version
@@ -43,19 +41,14 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Check formatting
-        run: dart format --output=none --set-exit-if-changed .
+      - name: Install WebP tools
+        run: sudo apt-get install -y webp
 
-      - name: Analyze
-        run: flutter analyze
+      - name: Activate Pana
+        run: dart pub global activate pana
 
-      - name: Run tests with coverage
-        run: flutter test --coverage
+      - name: Check Pana score
+        run: dart pub global run pana --exit-code-threshold 0 .
 
-      - name: Upload coverage to Coveralls
-        uses: coverallsapp/github-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          file: coverage/lcov.info
-          format: lcov
-          fail-on-error: true
+      - name: Publish dry run
+        run: flutter pub publish --dry-run

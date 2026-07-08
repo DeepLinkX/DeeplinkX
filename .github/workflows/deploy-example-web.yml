@@ -5,8 +5,11 @@ on:
     branches: [ master ]
     paths:
       - "example/**"
+      - "lib/**"
       - "packages/**"
+      - "analysis_options.yaml"
       - "pubspec.yaml"
+      - "pubspec.lock"
       - ".github/workflows/deploy-example-web.yml"
   workflow_dispatch:
 
@@ -21,8 +24,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # Pin your Flutter version (use the stable you target)
-  FLUTTER_VERSION: "3.41.1"
+  FLUTTER_VERSION: ${{ vars.FLUTTER_VERSION || '3.41.1' }}
+  FLUTTER_CHANNEL: ${{ vars.FLUTTER_CHANNEL || 'stable' }}
   # For a project page like https://<user>.github.io/<repo>/
   BASE_HREF: "/${{ github.event.repository.name }}/"
 
@@ -36,9 +39,12 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
           flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
           cache: true
+          pub-cache: true
+          cache-key: "deeplinkx-pages-flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          pub-cache-key: "deeplinkx-pages-flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
 
       - name: Flutter version
         run: flutter --version

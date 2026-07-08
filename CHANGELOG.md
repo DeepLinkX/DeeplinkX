@@ -1,3 +1,118 @@
+## 1.3.6
+
+* Added Baidu Maps app with the following actions:
+  * Open app
+  * View map action
+  * Search action
+  * Nearby search action
+  * Transit line action
+  * Directions action
+  * Directions with coordinates action
+  * Native navigation action
+* Added documentation for Baidu Maps deeplinks
+* Added unit tests covering all Baidu Maps actions, exports, and map action interfaces
+* Updated README map launcher examples and supported app tables
+* Updated the example app with a dedicated Baidu Maps page and asset
+
+## 1.3.5+2
+
+* Added tag-based GitHub Actions publishing to pub.dev.
+
+## 1.3.5+1
+
+* Added a Pub Readiness GitHub Actions workflow that enforces a full Pana score and runs `flutter pub publish --dry-run`.
+
+## 1.3.5
+
+* Added Moovit app with the following actions:
+  * Open app
+  * View map action
+  * Directions with coordinates action
+* Added documentation for Moovit deeplinks
+* Added unit tests covering all Moovit actions and exports
+* Updated the example app with a dedicated Moovit page and asset
+
+## 1.3.4+1
+
+* Refined the package description and README wording for pub.dev keyword visibility (named WhatsApp, Telegram, Instagram, YouTube, Google Maps, and Waze explicitly).
+* Added README wording for URL schemes, Android Intents, and App Links, plus install-check phrasing around `isAppInstalled()`.
+* Added brief README comparisons with `map_launcher` and `external_app_launcher`.
+
+## 1.3.4
+
+* Added Amap app with the following actions:
+  * Open app
+  * My location action
+  * View map action
+  * Search action with optional bounds
+  * Directions action
+  * Directions with coordinates action with optional origin, waypoints, and travel modes
+* Added documentation for Amap deeplinks
+* Added unit tests covering all Amap actions and exports
+* Updated README map launcher examples and supported app tables
+* Updated the example app with a dedicated Amap page and asset
+
+## 1.3.3
+
+* Added Neshan app with the following actions:
+  * Open app
+  * View map
+  * Directions with coordinates
+* Added documentation for Neshan deeplinks.
+* Added unit tests covering Neshan actions, exports, and map action interfaces.
+* Updated the example app with a dedicated Neshan page and asset.
+
+## 1.3.2+1
+
+* Rewrote the README with a clearer structure and a fallback flow diagram.
+* Improved maps discoverability in the package description and topics.
+
+## 1.3.2
+
+* Added Threads app support, requested by @hafizidev in issue #28:
+  * Open app
+  * Open profile action
+  * Open post action
+  * Open comments action
+  * Create post action
+* Added documentation for Threads deeplinks
+* Updated the example app with a Threads page and asset
+
+## 1.3.1+1
+
+* Refined README and API guidance for store redirects, clarifying that `redirectToStore` routes users to a configured target app's platform-specific store listing for installs, updates, promotions, or ad landing flows.
+* Added a promoted app/ad CTA `redirectToStore` example with supported tracking and referrer parameters.
+* Improved map provider fallback documentation to better explain declaring one navigation action and letting DeeplinkX launch the first installed provider.
+* Updated README tables and examples for clearer supported action, platform configuration, documentation, and `url_launcher` comparison sections.
+* Updated package metadata in `pubspec.yaml`, including homepage, documentation URL, topics, screenshots, and minimum Flutter SDK.
+
+## 1.3.1
+
+* Restructured README for better first-read flow:
+  * Restored table of contents
+  * Moved feature overview before demo content
+  * Added supported stores and apps to the feature summary
+  * Updated quick start with an iOS Telegram profile example and required `Info.plist` schemes
+  * Expanded core concepts, recipes, platform configuration, and the `url_launcher` comparison
+  * Added a dedicated new app request callout
+* Added GitHub issue forms for user feedback and new app requests
+
+## 1.3.0
+
+* Added map action abstractions for navigation providers:
+  * `MapAppAction`
+  * `MapViewAction`
+  * `MapSearchAction`
+  * `MapDirectionsAction`
+  * `MapDirectionsWithCoordsAction`
+* Added typed map launch utilities to `DeeplinkX`:
+  * `launchMapViewAction`
+  * `launchMapSearchAction`
+  * `launchMapDirectionsAction`
+  * `launchMapDirectionsWithCoordsAction`
+* Updated README examples and AGENTS navigation-app guidance
+* Added tests for map abstractions, launch utilities, and public API coverage
+
 ## 1.2.0
 
 * Bump dependency deeplink_x_macos version to 0.2.0 ([#Change](https://pub.dev/packages/deeplink_x_macos/changelog#020))

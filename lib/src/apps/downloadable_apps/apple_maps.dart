@@ -111,7 +111,7 @@ enum AppleMapsTransportType {
 }
 
 /// Apple Maps search action using custom scheme.
-class AppleMapsSearchAction extends AppleMaps implements AppLinkAppAction, Fallbackable {
+class AppleMapsSearchAction extends AppleMaps implements AppLinkAppAction, Fallbackable, MapSearchAction {
   /// Creates a new [AppleMapsSearchAction].
   AppleMapsSearchAction({
     required this.query,
@@ -119,6 +119,7 @@ class AppleMapsSearchAction extends AppleMaps implements AppLinkAppAction, Fallb
   });
 
   /// Search query.
+  @override
   final String query;
 
   @override
@@ -141,7 +142,7 @@ class AppleMapsSearchAction extends AppleMaps implements AppLinkAppAction, Fallb
 }
 
 /// Apple Maps view action.
-class AppleMapsViewAction extends AppleMaps implements AppLinkAppAction, Fallbackable {
+class AppleMapsViewAction extends AppleMaps implements AppLinkAppAction, Fallbackable, MapViewAction {
   /// Creates a new [AppleMapsViewAction].
   AppleMapsViewAction({
     required this.coordinate,
@@ -150,6 +151,7 @@ class AppleMapsViewAction extends AppleMaps implements AppLinkAppAction, Fallbac
   });
 
   /// Map center coordinate.
+  @override
   final Coordinate coordinate;
 
   /// Optional zoom.
@@ -177,7 +179,7 @@ class AppleMapsViewAction extends AppleMaps implements AppLinkAppAction, Fallbac
 }
 
 /// Apple Maps directions action using addresses/place names.
-class AppleMapsDirectionsAction extends AppleMaps implements AppLinkAppAction, Fallbackable {
+class AppleMapsDirectionsAction extends AppleMaps implements AppLinkAppAction, Fallbackable, MapDirectionsAction {
   /// Creates a new [AppleMapsDirectionsAction].
   AppleMapsDirectionsAction({
     required this.destination,
@@ -187,6 +189,7 @@ class AppleMapsDirectionsAction extends AppleMaps implements AppLinkAppAction, F
   });
 
   /// Destination address or name.
+  @override
   final String destination;
 
   /// Optional origin address or name.
@@ -219,7 +222,8 @@ class AppleMapsDirectionsAction extends AppleMaps implements AppLinkAppAction, F
 }
 
 /// Apple Maps directions action using coordinates.
-class AppleMapsDirectionsWithCoordsAction extends AppleMaps implements AppLinkAppAction, Fallbackable {
+class AppleMapsDirectionsWithCoordsAction extends AppleMaps
+    implements AppLinkAppAction, Fallbackable, MapDirectionsWithCoordsAction {
   /// Creates a new [AppleMapsDirectionsWithCoordsAction].
   AppleMapsDirectionsWithCoordsAction({
     required this.destination,
@@ -229,6 +233,7 @@ class AppleMapsDirectionsWithCoordsAction extends AppleMaps implements AppLinkAp
   });
 
   /// Destination coordinates.
+  @override
   final Coordinate destination;
 
   /// Optional origin coordinates.
