@@ -1,3 +1,14 @@
+## 1.3.7
+
+* Added 2GIS app with the following actions:
+  * Open app
+  * View map action
+  * Directions with coordinates action, including optional origin and travel mode
+* Added documentation for 2GIS deeplinks
+* Added unit tests covering 2GIS actions, exports, and map action interfaces
+* Updated README map launcher examples and supported app tables
+* Updated the example app with a dedicated 2GIS page and asset
+
 ## 1.3.6
 
 * Added Baidu Maps app with the following actions:

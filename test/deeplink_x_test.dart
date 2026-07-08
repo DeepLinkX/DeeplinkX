@@ -121,6 +121,22 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('2GIS', () {
+        final openAction = TwoGis.open();
+        final viewAction = TwoGis.view(
+          coordinate: const Coordinate(latitude: 55.76009, longitude: 37.648801),
+        );
+        final routeAction = TwoGis.directionsWithCoords(
+          origin: const Coordinate(latitude: 55.751244, longitude: 37.618423),
+          destination: const Coordinate(latitude: 55.76009, longitude: 37.648801),
+          mode: TwoGisTravelMode.walking,
+        );
+
+        expect(openAction, isA<App>());
+        expect(viewAction, isA<MapViewAction>());
+        expect(routeAction, isA<MapDirectionsWithCoordsAction>());
+      });
+
       test('Waze', () {
         final action = Waze.open();
         expect(action, isA<App>());

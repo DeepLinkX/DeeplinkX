@@ -33,6 +33,11 @@ void main() {
       expect(AppleMaps.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
 
+    test('2GIS actions implement supported map abstractions', () {
+      expect(TwoGis.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(TwoGis.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
     test('Waze actions implement map abstractions', () {
       expect(Waze.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Waze.search(query: 'Central Park'), isA<MapSearchAction>());
