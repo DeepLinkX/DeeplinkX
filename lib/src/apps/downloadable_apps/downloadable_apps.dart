@@ -17,5 +17,6 @@ export 'twitter.dart';
 export 'two_gis.dart';
 export 'waze.dart';
 export 'whatsapp.dart';
+export 'yandex_maps.dart';
 export 'youtube.dart';
 export 'zoom.dart';

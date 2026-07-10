@@ -1,3 +1,16 @@
+## 1.3.8
+
+* Added Yandex Maps app support:
+  * Open app
+  * Open map
+  * View map
+  * Search
+  * Open organization card
+  * Open "What's here?"
+  * Directions with coordinates
+  * Panorama
+* Added Yandex Maps documentation, tests, public API coverage, README entries, and example app page
+
 ## 1.3.7
 
 * Added 2GIS app with the following actions:

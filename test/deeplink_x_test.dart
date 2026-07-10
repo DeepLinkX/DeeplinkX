@@ -162,6 +162,32 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Yandex Maps', () {
+        final action = YandexMaps.open();
+        final searchAction = YandexMaps.search(query: 'Central Park');
+        final routeAction = YandexMaps.directionsWithCoords(
+          destination: const Coordinate(latitude: 1, longitude: 2),
+          waypoints: const [
+            YandexMapsWaypoint(coordinate: Coordinate(latitude: 3, longitude: 4)),
+          ],
+          mode: YandexMapsTravelMode.walking,
+        );
+        final openMapAction = YandexMaps.openMap(
+          viewport: const YandexMapsViewport(longitudeDelta: 1, latitudeDelta: 2),
+        );
+        final panoramaAction = YandexMaps.panorama(
+          coordinate: const Coordinate(latitude: 1, longitude: 2),
+          direction: const YandexMapsPanoramaDirection(azimuth: 1, elevation: 2),
+          span: const YandexMapsPanoramaSpan(horizontal: 3, vertical: 4),
+        );
+
+        expect(action, isA<App>());
+        expect(searchAction, isA<MapSearchAction>());
+        expect(routeAction, isA<MapDirectionsWithCoordsAction>());
+        expect(openMapAction, isA<AppAction>());
+        expect(panoramaAction, isA<AppAction>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());
