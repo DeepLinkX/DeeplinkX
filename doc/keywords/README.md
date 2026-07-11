@@ -8,7 +8,9 @@ This directory tracks pub.dev keyword visibility snapshots for `deeplink_x`.
 | --- | --- | --- |
 | 2026-07-01 | [pubdev_keyword_visibility_report_2026-07-01.md](pubdev_keyword_visibility_report_2026-07-01.md) | Baseline keyword visibility snapshot before the refreshed publish. |
 | 2026-07-06 | [pubdev_keyword_visibility_report_2026-07-06.md](pubdev_keyword_visibility_report_2026-07-06.md) | Current keyword visibility snapshot after the refreshed publish. |
+| 2026-07-10 | [pubdev_keyword_visibility_report_2026-07-10.md](pubdev_keyword_visibility_report_2026-07-10.md) | Expanded visibility snapshot after Baidu Maps, 2GIS, and Yandex Maps releases. |
 | 2026-07-01 to 2026-07-06 | [pubdev_keyword_comparison_2026-07-01_to_2026-07-06.md](pubdev_keyword_comparison_2026-07-01_to_2026-07-06.md) | Ranking movement, wins, regressions, and net assessment. |
+| 2026-07-06 to 2026-07-10 | [pubdev_keyword_comparison_2026-07-06_to_2026-07-10.md](pubdev_keyword_comparison_2026-07-06_to_2026-07-10.md) | Full baseline movement plus new app, related-search, and Medium-derived coverage. |
 
 ## Refresh Checklist
 
@@ -23,4 +25,4 @@ This directory tracks pub.dev keyword visibility snapshots for `deeplink_x`.
 - Wait through pub.dev rate limits with retry/backoff; do not mark queries skipped only because of rate limiting.
 - Create a comparison report whenever a prior snapshot exists.
 
-Current supported app keyword coverage baseline: Facebook, Instagram, Telegram, WhatsApp, LinkedIn, YouTube, Twitter, Threads, Pinterest, TikTok, Zoom, Slack, Google Maps, Amap, Waze, Apple Maps, Sygic, Moovit, and Neshan.
+Current supported app keyword coverage baseline: Facebook, Instagram, Telegram, WhatsApp, LinkedIn, YouTube, Twitter, Threads, Pinterest, TikTok, Zoom, Slack, Google Maps, Amap, Baidu Maps, 2GIS, Yandex Maps, Waze, Apple Maps, Sygic, Moovit, and Neshan.
