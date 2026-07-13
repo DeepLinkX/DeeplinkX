@@ -60,6 +60,18 @@
         <package android:name="com.google.android.apps.maps" />
         <!-- Waze -->
         <package android:name="com.waze" />
+        <!-- Neshan -->
+        <package android:name="org.rajman.neshan.traffic.tehran.navigator" />
+        <!-- Amap -->
+        <package android:name="com.autonavi.minimap" />
+        <!-- Moovit -->
+        <package android:name="com.tranzmate" />
+        <!-- Baidu Maps -->
+        <package android:name="com.baidu.BaiduMap" />
+        <!-- 2GIS -->
+        <package android:name="ru.dublgis.dgismobile" />
+        <!-- Yandex Maps -->
+        <package android:name="ru.yandex.yandexmaps" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->
@@ -80,6 +92,35 @@
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="barcelona" />
+        </intent>
+        <!-- Navigation app schemes used by fallback launch attempts -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="neshan" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="androidamap" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="amapuri" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="moovit" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="baidumap" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="dgis" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="yandexmaps" />
         </intent>
     </queries>
 </manifest>
