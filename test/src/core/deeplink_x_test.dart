@@ -18,6 +18,11 @@ class MockUniversalLinkAction extends Mock implements UniversalLinkAppAction {}
 
 class MockAppLinkAction extends Mock implements AppLinkAppAction {}
 
+class MockIntentAppLinkFallbackAction extends Mock implements IntentAppLinkAction, AppLinkAppAction, Fallbackable {}
+
+class MockIntentAppUniversalAction extends Mock
+    implements IntentAppLinkAction, AppLinkAppAction, UniversalLinkAppAction, Fallbackable {}
+
 class MockFallbackAction extends Mock implements AppAction, Fallbackable {}
 
 class MockDownloadableAction extends Mock implements AppAction, DownloadableApp {}
@@ -150,6 +155,47 @@ void main() {
       expect(result, isTrue);
       verify(() => mockLauncherUtil.launchIntent(options)).called(1);
       verify(() => mockLauncherUtil.launchUrl(appLink)).called(1);
+    });
+
+    test('does not retry the same app link for combined intent actions', () async {
+      final action = MockIntentAppLinkFallbackAction();
+      const options = AndroidIntentOption(action: 'action');
+      final appLink = Uri.parse('scheme://path');
+      final fallback = Uri.parse('https://fallback');
+
+      when(() => action.androidIntentOptions).thenReturn(options);
+      when(() => action.appLink).thenReturn(appLink);
+      when(() => action.fallbackLink).thenReturn(fallback);
+      when(() => mockLauncherUtil.launchIntent(options)).thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.launchUrl(appLink)).thenAnswer((final _) async => false);
+
+      final result = await deeplinkX.launchAction(action);
+
+      expect(result, isTrue);
+      verify(() => mockLauncherUtil.launchUrl(appLink)).called(1);
+      verify(() => mockLauncherUtil.launchUrl(fallback)).called(1);
+    });
+
+    test('tries a distinct universal link after a combined intent app link', () async {
+      final action = MockIntentAppUniversalAction();
+      const options = AndroidIntentOption(action: 'action');
+      final appLink = Uri.parse('scheme://path');
+      final universalLink = Uri.parse('https://universal');
+
+      when(() => action.androidIntentOptions).thenReturn(options);
+      when(() => action.appLink).thenReturn(appLink);
+      when(() => action.universalLink).thenReturn(universalLink);
+      when(() => mockLauncherUtil.launchIntent(options)).thenAnswer((final _) async => false);
+      when(() => mockLauncherUtil.launchUrl(appLink)).thenAnswer((final _) async => false);
+
+      final result = await deeplinkX.launchAction(action);
+
+      expect(result, isTrue);
+      verifyInOrder([
+        () => mockLauncherUtil.launchIntent(options),
+        () => mockLauncherUtil.launchUrl(appLink),
+        () => mockLauncherUtil.launchUrl(universalLink),
+      ]);
     });
 
     test('launches universal link action', () async {
