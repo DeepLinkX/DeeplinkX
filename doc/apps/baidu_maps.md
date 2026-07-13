@@ -27,6 +27,7 @@ await deeplinkX.launchAction(
     content: 'Beijing landmark',
     zoom: 16,
     coordType: BaiduMapsCoordType.wgs84,
+    sourceApplication: 'my_flutter_app',
   ),
 );
 ```
@@ -104,12 +105,13 @@ await deeplinkX.launchAction(
 await deeplinkX.launchAction(
   BaiduMaps.navigate(
     destination: const Coordinate(latitude: 39.915, longitude: 116.404),
+    destinationTitle: 'Tiananmen',
     mode: BaiduMapsNavigationMode.walking,
   ),
 );
 ```
 
-## Map Launcher Interfaces
+## Shared Map Interfaces
 
 These actions implement shared map-launcher abstractions:
 
@@ -155,12 +157,23 @@ Add Baidu Maps to package visibility in `android/app/src/main/AndroidManifest.xm
 | ------------------ | --------------------------------------- |
 | View marker        | `baidumap://map/marker`                 |
 | Search             | `baidumap://map/place/search`           |
-| Nearby search      | `baidumap://map/place/nearby`           |
+| Nearby search      | Android `place/nearby`; iOS `nearbysearch` |
 | Transit line       | `baidumap://map/line`                   |
 | Directions         | `baidumap://map/direction`              |
 | Driving navigation | `baidumap://map/navi`                   |
 | Walking navigation | `baidumap://map/walknavi`               |
 | Riding navigation  | Android `bikenavi`, iOS `ridenavi`      |
+
+Every action accepts an optional `sourceApplication`, defaulting to
+`deeplink_x`; the generated `src` is prefixed with `andr.` or `ios.` for the
+target platform. Omitted marker text uses `Pin` and `Description`. Transit line
+lookups require a nonblank `region`, and iOS driving navigation accepts an
+optional `destinationTitle` for its required query label.
+
+DeeplinkX uses familiar marker defaults and Baidu's
+`name:...|latlng:...` route-point format while enforcing provider-required
+transit regions and distinct Android and iOS nearby-search paths and parameter
+names.
 
 ## Fallbacks
 

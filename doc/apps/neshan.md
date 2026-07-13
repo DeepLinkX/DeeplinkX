@@ -4,9 +4,8 @@ DeeplinkX supports Neshan's native iOS `neshan` URI scheme and Android package-t
 
 ## References
 
-- Map Launcher open-source implementation of the same URI patterns: <https://github.com/mattermoran/map_launcher/blob/master/lib/src/marker_url.dart>
 - Neshan App Store listing: <https://apps.apple.com/us/app/neshan-map/id1548188093>
-- Neshan web map fallback: <https://nshn.ir>
+- Neshan web map fallback: <https://neshan.org/maps>
 
 ## Available Actions
 
@@ -63,16 +62,23 @@ Allow querying the package in `android/app/src/main/AndroidManifest.xml`:
 ## URI Formats
 
 - iOS view map: `neshan://?destination={latitude},{longitude}`
-- Android view map and web fallback: `https://nshn.ir?lat={latitude}&lng={longitude}`
+- Android package-targeted view map: `https://nshn.ir?lat={latitude}&lng={longitude}`
+- Web view fallback: `https://neshan.org/maps/share/{latitude},{longitude}`
 - iOS directions: `neshan://?origin={originLatitude},{originLongitude}&destination={destinationLatitude},{destinationLongitude}`
-- Android directions and web fallback: `https://nshn.ir/?origin={originLatitude},{originLongitude}&destination={destinationLatitude},{destinationLongitude}`
+- Android package-targeted directions: `https://nshn.ir/?origin={originLatitude},{originLongitude}&destination={destinationLatitude},{destinationLongitude}`
+- Web directions fallback: `https://neshan.org/maps`
 
 ## Fallback Behavior
 
 1. DeeplinkX opens the native app when installed.
 2. If the app is missing and `fallbackToStore` is `true`, we redirect to the appropriate store listing.
-3. Otherwise view and directions actions fall back to the matching `https://nshn.ir` web map URL.
+3. Otherwise view actions use Neshan's canonical share URL and directions open
+   the canonical web map.
 4. Set `disableFallback: true` when calling `launchAction` to skip both store and web fallbacks.
+
+The Android `nshn.ir` URI remains useful when package-targeted to the installed
+app, but the live web redirect discards route query parameters. DeeplinkX
+therefore does not reuse that short URL as a browser fallback.
 
 ### Fallback Support Matrix
 

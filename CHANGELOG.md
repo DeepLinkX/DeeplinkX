@@ -1,3 +1,11 @@
+## Unreleased
+
+* Added verified Threads search and topic-tag actions with native Android/iOS links and web fallbacks.
+* Prevented combined intent/app-link actions from retrying the same app link.
+* Audited Amap, Baidu Maps, 2GIS, Yandex Maps, Moovit, and Neshan URI contracts against current provider documentation and physical Android behavior.
+* Corrected provider-specific route modes, marker defaults, source/partner identifiers, validation, Android URI variants, and canonical web fallbacks.
+* Added the audited app queries to the example iOS and Android projects and documented Telegram's Android package-visibility setup.
+
 ## 1.3.8
 
 * Added Yandex Maps app support:

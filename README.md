@@ -69,6 +69,32 @@ On iOS, declare the schemes you query in `ios/Runner/Info.plist` (each app's [do
 </array>
 ```
 
+On Android, add package and intent visibility declarations directly under
+`<manifest>`, alongside `<application>`, in
+`android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <queries>
+        <package android:name="org.telegram.messenger" />
+        <package android:name="com.android.vending" />
+        <package android:name="com.huawei.appmarket" />
+
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
+    <application ...>
+        <!-- ... -->
+    </application>
+</manifest>
+```
+
+This placement follows Android's
+[package visibility guidance](https://developer.android.com/training/package-visibility/declaring).
+
 That's the whole flow — DeeplinkX resolves the platform, checks installation, and handles the fallback.
 
 ## Demo
@@ -312,7 +338,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 |                | Facebook          | Open profile by ID, open profile by username, open page, open group, open event |
 |                | YouTube           | Open video, open channel, open playlist, search                                 |
 |                | Twitter           | Open profile by username, open tweet by ID, search                              |
-|                | Threads           | Open profile by username, open post, open comments, create post                 |
+|                | Threads           | Open profile by username, open post, open comments, create post, search, open topic tag |
 |                | Pinterest         | Open profile by username, open pin, open board by ID, search                    |
 |                | TikTok            | Open profile by username, open video, open tag                                  |
 |                | Zoom              | Join meeting by ID                                                              |
