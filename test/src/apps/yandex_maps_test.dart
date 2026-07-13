@@ -212,8 +212,22 @@ void main() {
       expect(action.origin, null);
       expect(action.waypoints, isEmpty);
       expect(action.mode, YandexMapsTravelMode.driving);
-      expect(action.appLink.queryParameters['rtext'], '55.76009,37.648801');
+      expect(action.appLink.queryParameters['rtext'], '~55.76009,37.648801');
       expect(action.appLink.queryParameters['rtt'], 'auto');
+    });
+
+    test('directionsWithCoords preserves current location before waypoints', () {
+      final action = YandexMaps.directionsWithCoords(
+        destination: destination,
+        waypoints: const [
+          YandexMapsWaypoint(coordinate: Coordinate(latitude: 55.745719, longitude: 37.604337)),
+        ],
+      );
+
+      expect(
+        action.appLink.queryParameters['rtext'],
+        '~55.745719,37.604337~55.76009,37.648801',
+      );
     });
 
     test('directionsWithCoords action supports walking mode', () {
@@ -248,6 +262,69 @@ void main() {
       expect(
         Uri.parse(action.androidIntentOptions.data!).queryParameters['panorama[direction]'],
         '228.97,6.060547',
+      );
+    });
+
+    test('mobile zoom values must be between 1 and 18', () {
+      expect(() => YandexMaps.openMap(zoom: 0), throwsArgumentError);
+      expect(() => YandexMaps.view(coordinate: center, zoom: 19), throwsArgumentError);
+      expect(
+        () => YandexMaps.search(query: 'cafe', zoom: -1),
+        throwsArgumentError,
+      );
+      expect(
+        () => YandexMaps.whatIsHere(coordinate: center, zoom: 19),
+        throwsArgumentError,
+      );
+    });
+
+    test('organization IDs must contain only digits', () {
+      expect(
+        () => YandexMaps.organization(objectId: 'org-1221676748'),
+        throwsArgumentError,
+      );
+      expect(() => YandexMaps.organization(objectId: ''), throwsArgumentError);
+    });
+
+    test('viewports require positive finite deltas', () {
+      expect(
+        () => YandexMaps.openMap(
+          viewport: const YandexMapsViewport(
+            longitudeDelta: 0,
+            latitudeDelta: 1,
+          ),
+        ),
+        throwsArgumentError,
+      );
+      expect(
+        () => YandexMaps.search(
+          query: 'cafe',
+          viewport: const YandexMapsViewport(
+            longitudeDelta: double.infinity,
+            latitudeDelta: 1,
+          ),
+        ),
+        throwsArgumentError,
+      );
+    });
+
+    test('panorama direction and span values are validated', () {
+      expect(
+        () => YandexMaps.panorama(
+          coordinate: center,
+          direction: const YandexMapsPanoramaDirection(
+            azimuth: 361,
+            elevation: 10,
+          ),
+        ),
+        throwsArgumentError,
+      );
+      expect(
+        () => YandexMaps.panorama(
+          coordinate: center,
+          span: const YandexMapsPanoramaSpan(horizontal: 120, vertical: 0),
+        ),
+        throwsArgumentError,
       );
     });
   });

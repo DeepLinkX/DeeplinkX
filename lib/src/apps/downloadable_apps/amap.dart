@@ -1,6 +1,6 @@
 import 'package:deeplink_x/src/src.dart';
 
-const String _sourceApplication = 'deeplink_x';
+const String _defaultSourceApplication = 'deeplink_x';
 
 /// Amap (Gaode Maps) application.
 ///
@@ -46,20 +46,26 @@ class Amap extends App implements DownloadableApp {
 
   /// Creates an action to show the user's current location in Amap.
   static AmapMyLocationAction myLocation({
+    final String sourceApplication = _defaultSourceApplication,
     final bool fallbackToStore = false,
   }) =>
-      AmapMyLocationAction(fallbackToStore: fallbackToStore);
+      AmapMyLocationAction(
+        sourceApplication: sourceApplication,
+        fallbackToStore: fallbackToStore,
+      );
 
   /// Creates an action to show a coordinate marker in Amap.
   static AmapViewAction view({
     required final Coordinate coordinate,
     final String? title,
+    final String sourceApplication = _defaultSourceApplication,
     final bool convertFromWgs84 = false,
     final bool fallbackToStore = false,
   }) =>
       AmapViewAction(
         coordinate: coordinate,
         title: title,
+        sourceApplication: sourceApplication,
         convertFromWgs84: convertFromWgs84,
         fallbackToStore: fallbackToStore,
       );
@@ -68,12 +74,14 @@ class Amap extends App implements DownloadableApp {
   static AmapSearchAction search({
     required final String query,
     final AmapBounds? bounds,
+    final String sourceApplication = _defaultSourceApplication,
     final bool convertFromWgs84 = false,
     final bool fallbackToStore = false,
   }) =>
       AmapSearchAction(
         query: query,
         bounds: bounds,
+        sourceApplication: sourceApplication,
         convertFromWgs84: convertFromWgs84,
         fallbackToStore: fallbackToStore,
       );
@@ -81,10 +89,12 @@ class Amap extends App implements DownloadableApp {
   /// Creates a text-based directions action in Amap.
   static AmapDirectionsAction directions({
     required final String destination,
+    final String sourceApplication = _defaultSourceApplication,
     final bool fallbackToStore = false,
   }) =>
       AmapDirectionsAction(
         destination: destination,
+        sourceApplication: sourceApplication,
         fallbackToStore: fallbackToStore,
       );
 
@@ -96,6 +106,7 @@ class Amap extends App implements DownloadableApp {
     final String? originTitle,
     final List<AmapWaypoint> waypoints = const [],
     final AmapTravelMode mode = AmapTravelMode.driving,
+    final String sourceApplication = _defaultSourceApplication,
     final bool convertFromWgs84 = false,
     final bool fallbackToStore = false,
   }) =>
@@ -106,6 +117,7 @@ class Amap extends App implements DownloadableApp {
         originTitle: originTitle,
         waypoints: waypoints,
         mode: mode,
+        sourceApplication: sourceApplication,
         convertFromWgs84: convertFromWgs84,
         fallbackToStore: fallbackToStore,
       );
@@ -165,13 +177,19 @@ class AmapWaypoint {
 /// Opens Amap at the user's current location.
 class AmapMyLocationAction extends Amap implements IntentAppLinkAction, Fallbackable {
   /// Creates a new [AmapMyLocationAction].
-  AmapMyLocationAction({required super.fallbackToStore});
+  AmapMyLocationAction({
+    required super.fallbackToStore,
+    final String sourceApplication = _defaultSourceApplication,
+  }) : sourceApplication = _validatedSourceApplication(sourceApplication);
+
+  /// Identifier of the application launching Amap.
+  final String sourceApplication;
 
   @override
   Uri get appLink => Uri(
         scheme: 'iosamap',
         host: 'myLocation',
-        queryParameters: const {'sourceApplication': _sourceApplication},
+        queryParameters: {'sourceApplication': sourceApplication},
       );
 
   @override
@@ -181,7 +199,7 @@ class AmapMyLocationAction extends Amap implements IntentAppLinkAction, Fallback
         data: Uri(
           scheme: 'androidamap',
           host: 'myLocation',
-          queryParameters: const {'sourceApplication': _sourceApplication},
+          queryParameters: {'sourceApplication': sourceApplication},
         ).toString(),
         package: androidPackageName,
         flags: const [0x10000000],
@@ -198,8 +216,9 @@ class AmapViewAction extends Amap implements IntentAppLinkAction, Fallbackable, 
     required this.coordinate,
     required this.convertFromWgs84,
     required super.fallbackToStore,
+    final String sourceApplication = _defaultSourceApplication,
     this.title,
-  });
+  }) : sourceApplication = _validatedSourceApplication(sourceApplication);
 
   /// Coordinate to display.
   @override
@@ -210,6 +229,9 @@ class AmapViewAction extends Amap implements IntentAppLinkAction, Fallbackable, 
 
   /// Whether Amap should convert the coordinate from WGS84 to GCJ-02.
   final bool convertFromWgs84;
+
+  /// Identifier of the application launching Amap.
+  final String sourceApplication;
 
   @override
   Uri get appLink => _viewLink('iosamap');
@@ -230,8 +252,8 @@ class AmapViewAction extends Amap implements IntentAppLinkAction, Fallbackable, 
         scheme: scheme,
         host: 'viewMap',
         queryParameters: {
-          'sourceApplication': _sourceApplication,
-          if (title != null) 'poiname': title,
+          'sourceApplication': sourceApplication,
+          'poiname': title ?? 'Pin',
           'lat': coordinate.latitude.toString(),
           'lon': coordinate.longitude.toString(),
           'dev': _devValue(convertFromWgs84),
@@ -246,8 +268,9 @@ class AmapSearchAction extends Amap implements IntentAppLinkAction, Fallbackable
     required this.query,
     required this.convertFromWgs84,
     required super.fallbackToStore,
+    final String sourceApplication = _defaultSourceApplication,
     this.bounds,
-  });
+  }) : sourceApplication = _validatedSourceApplication(sourceApplication);
 
   /// Search query.
   @override
@@ -258,6 +281,9 @@ class AmapSearchAction extends Amap implements IntentAppLinkAction, Fallbackable
 
   /// Whether Amap should convert provided bounds from WGS84 to GCJ-02.
   final bool convertFromWgs84;
+
+  /// Identifier of the application launching Amap.
+  final String sourceApplication;
 
   @override
   Uri get appLink => Uri(
@@ -283,7 +309,7 @@ class AmapSearchAction extends Amap implements IntentAppLinkAction, Fallbackable
   Uri get fallbackLink => website;
 
   Map<String, String> _searchQueryParameters(final String queryKey) => {
-        'sourceApplication': _sourceApplication,
+        'sourceApplication': sourceApplication,
         queryKey: query,
         if (bounds != null) ...{
           'lat1': bounds!.topLeft.latitude.toString(),
@@ -301,14 +327,18 @@ class AmapDirectionsAction extends Amap implements IntentAppLinkAction, Fallback
   AmapDirectionsAction({
     required this.destination,
     required super.fallbackToStore,
-  });
+    final String sourceApplication = _defaultSourceApplication,
+  }) : sourceApplication = _validatedSourceApplication(sourceApplication);
 
   /// Destination name.
   @override
   final String destination;
 
+  /// Identifier of the application launching Amap.
+  final String sourceApplication;
+
   @override
-  Uri get appLink => _iosDirectionsLink({
+  Uri get appLink => _iosDirectionsLink(sourceApplication, {
         'dname': destination,
         'dev': '0',
         't': AmapTravelMode.driving.value,
@@ -318,11 +348,15 @@ class AmapDirectionsAction extends Amap implements IntentAppLinkAction, Fallback
   AndroidIntentOption get androidIntentOptions => AndroidIntentOption(
         action: 'android.intent.action.VIEW',
         category: 'android.intent.category.DEFAULT',
-        data: _androidDirectionsLink({
-          'dname': destination,
-          'dev': '0',
-          't': AmapTravelMode.driving.value,
-        }).toString(),
+        data: Uri(
+          scheme: 'androidamap',
+          host: 'keywordNavi',
+          queryParameters: {
+            'sourceApplication': sourceApplication,
+            'keyword': destination,
+            'style': '2',
+          },
+        ).toString(),
         package: androidPackageName,
         flags: const [0x10000000],
       );
@@ -341,10 +375,11 @@ class AmapDirectionsWithCoordsAction extends Amap
     required this.mode,
     required this.convertFromWgs84,
     required super.fallbackToStore,
+    final String sourceApplication = _defaultSourceApplication,
     this.origin,
     this.destinationTitle,
     this.originTitle,
-  });
+  }) : sourceApplication = _validatedSourceApplication(sourceApplication);
 
   /// Destination coordinate.
   @override
@@ -368,14 +403,17 @@ class AmapDirectionsWithCoordsAction extends Amap
   /// Whether Amap should convert coordinates from WGS84 to GCJ-02.
   final bool convertFromWgs84;
 
+  /// Identifier of the application launching Amap.
+  final String sourceApplication;
+
   @override
-  Uri get appLink => _iosDirectionsLink(_routeQueryParameters);
+  Uri get appLink => _iosDirectionsLink(sourceApplication, _routeQueryParameters);
 
   @override
   AndroidIntentOption get androidIntentOptions => AndroidIntentOption(
         action: 'android.intent.action.VIEW',
         category: 'android.intent.category.DEFAULT',
-        data: _androidDirectionsLink(_routeQueryParameters).toString(),
+        data: _androidDirectionsLink(sourceApplication, _routeQueryParameters).toString(),
         package: androidPackageName,
         flags: const [0x10000000],
       );
@@ -403,23 +441,42 @@ class AmapDirectionsWithCoordsAction extends Amap
       };
 }
 
-Uri _androidDirectionsLink(final Map<String, String> queryParameters) => Uri(
+Uri _androidDirectionsLink(
+  final String sourceApplication,
+  final Map<String, String> queryParameters,
+) =>
+    Uri(
       scheme: 'amapuri',
       host: 'route',
       path: '/plan/',
       queryParameters: {
-        'sourceApplication': _sourceApplication,
+        'sourceApplication': sourceApplication,
         ...queryParameters,
       },
     );
 
-Uri _iosDirectionsLink(final Map<String, String> queryParameters) => Uri(
+Uri _iosDirectionsLink(
+  final String sourceApplication,
+  final Map<String, String> queryParameters,
+) =>
+    Uri(
       scheme: 'iosamap',
       host: 'path',
       queryParameters: {
-        'sourceApplication': _sourceApplication,
+        'sourceApplication': sourceApplication,
         ...queryParameters,
       },
     );
 
 String _devValue(final bool convertFromWgs84) => convertFromWgs84 ? '1' : '0';
+
+String _validatedSourceApplication(final String sourceApplication) {
+  if (sourceApplication.trim().isEmpty) {
+    throw ArgumentError.value(
+      sourceApplication,
+      'sourceApplication',
+      'must not be blank',
+    );
+  }
+  return sourceApplication;
+}

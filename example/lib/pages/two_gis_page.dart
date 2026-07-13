@@ -18,7 +18,7 @@ class _TwoGisPageState extends State<TwoGisPage> {
   final _originLngController = TextEditingController(text: '37.618423');
   final _destLatController = TextEditingController(text: '55.76009');
   final _destLngController = TextEditingController(text: '37.648801');
-  var _mode = TwoGisTravelMode.auto;
+  var _mode = TwoGisTravelMode.driving;
   bool _fallback = true;
 
   void _showInputError(final String message) {
@@ -80,9 +80,8 @@ class _TwoGisPageState extends State<TwoGisPage> {
           DropdownButton<TwoGisTravelMode>(
             value: _mode,
             isExpanded: true,
-            onChanged: (final mode) => setState(() => _mode = mode ?? TwoGisTravelMode.auto),
+            onChanged: (final mode) => setState(() => _mode = mode ?? TwoGisTravelMode.driving),
             items: const [
-              DropdownMenuItem(value: TwoGisTravelMode.auto, child: Text('Auto')),
               DropdownMenuItem(value: TwoGisTravelMode.driving, child: Text('Driving')),
               DropdownMenuItem(value: TwoGisTravelMode.transit, child: Text('Transit')),
               DropdownMenuItem(value: TwoGisTravelMode.walking, child: Text('Walking')),

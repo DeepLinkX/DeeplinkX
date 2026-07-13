@@ -42,10 +42,19 @@ void main() {
     });
 
     test('travel modes expose provider values', () {
-      expect(TwoGisTravelMode.auto.value, 'auto');
+      // ignore: deprecated_member_use_from_same_package
+      expect(TwoGisTravelMode.auto.value, 'car');
       expect(TwoGisTravelMode.driving.value, 'car');
-      expect(TwoGisTravelMode.transit.value, 'bus');
+      expect(TwoGisTravelMode.transit.value, 'ctx');
       expect(TwoGisTravelMode.walking.value, 'pedestrian');
+    });
+
+    test('travel modes expose Android app values', () {
+      // ignore: deprecated_member_use_from_same_package
+      expect(TwoGisTravelMode.auto.androidValue, 'car');
+      expect(TwoGisTravelMode.driving.androidValue, 'car');
+      expect(TwoGisTravelMode.transit.androidValue, 'bus');
+      expect(TwoGisTravelMode.walking.androidValue, 'pedestrian');
     });
 
     test('view action creates iOS marker, Android route, and fallback URLs', () {
@@ -87,15 +96,18 @@ void main() {
       expect(action.fallbackToStore, true);
       expect(
         action.appLink.toString(),
-        'dgis://2gis.ru/routeSearch/rsType/bus/from/37.618423,55.751244/to/37.648801,55.76009',
+        'dgis://2gis.ru/routeSearch/rsType/ctx/from/37.618423,55.751244/to/37.648801,55.76009',
       );
       expect(action.androidIntentOptions.action, 'action_view');
-      expect(action.androidIntentOptions.data, action.appLink.toString());
+      expect(
+        action.androidIntentOptions.data,
+        'dgis://2gis.ru/routeSearch/rsType/bus/from/37.618423,55.751244/to/37.648801,55.76009',
+      );
       expect(action.androidIntentOptions.package, 'ru.dublgis.dgismobile');
       expect(action.androidIntentOptions.flags, [0x10000000]);
       expect(
         action.fallbackLink.toString(),
-        'https://2gis.ru/routeSearch/rsType/bus/from/37.618423,55.751244/to/37.648801,55.76009',
+        'https://2gis.ru/routeSearch/rsType/ctx/from/37.618423,55.751244/to/37.648801,55.76009',
       );
     });
 
@@ -103,9 +115,9 @@ void main() {
       final action = TwoGis.directionsWithCoords(destination: destination);
 
       expect(action.origin, null);
-      expect(action.mode, TwoGisTravelMode.auto);
-      expect(action.appLink.toString(), 'dgis://2gis.ru/routeSearch/rsType/auto/to/37.648801,55.76009');
-      expect(action.fallbackLink.toString(), 'https://2gis.ru/routeSearch/rsType/auto/to/37.648801,55.76009');
+      expect(action.mode, TwoGisTravelMode.driving);
+      expect(action.appLink.toString(), 'dgis://2gis.ru/routeSearch/rsType/car/to/37.648801,55.76009');
+      expect(action.fallbackLink.toString(), 'https://2gis.ru/routeSearch/rsType/car/to/37.648801,55.76009');
     });
   });
 }

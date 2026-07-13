@@ -46,6 +46,17 @@ void main() {
       expect(action.fallbackLink.toString(), 'https://www.amap.com');
     });
 
+    test('myLocation action accepts a custom source application', () {
+      final action = Amap.myLocation(sourceApplication: 'com.example.client');
+
+      expect(action.sourceApplication, 'com.example.client');
+      expect(action.appLink.queryParameters['sourceApplication'], 'com.example.client');
+      expect(
+        Uri.parse(action.androidIntentOptions.data!).queryParameters['sourceApplication'],
+        'com.example.client',
+      );
+    });
+
     test('view action creates marker links', () {
       final action = Amap.view(
         coordinate: const Coordinate(latitude: 39.98848272, longitude: 116.47560823),
@@ -72,6 +83,18 @@ void main() {
       expect(intentUri.queryParameters['lon'], '116.47560823');
       expect(intentUri.queryParameters['dev'], '1');
       expect(action.fallbackLink.toString(), 'https://www.amap.com');
+    });
+
+    test('view action supplies the provider-required marker name', () {
+      final action = Amap.view(
+        coordinate: const Coordinate(latitude: 39.9, longitude: 116.4),
+      );
+
+      expect(action.appLink.queryParameters['poiname'], 'Pin');
+      expect(
+        Uri.parse(action.androidIntentOptions.data!).queryParameters['poiname'],
+        'Pin',
+      );
     });
 
     test('search action creates platform-specific query keys', () {
@@ -119,13 +142,11 @@ void main() {
       expect(action.appLink.queryParameters['t'], '0');
 
       final intentUri = Uri.parse(action.androidIntentOptions.data!);
-      expect(intentUri.scheme, 'amapuri');
-      expect(intentUri.host, 'route');
-      expect(intentUri.path, '/plan/');
+      expect(intentUri.scheme, 'androidamap');
+      expect(intentUri.host, 'keywordnavi');
       expect(intentUri.queryParameters['sourceApplication'], 'deeplink_x');
-      expect(intentUri.queryParameters['dname'], 'Amap HQ');
-      expect(intentUri.queryParameters['dev'], '0');
-      expect(intentUri.queryParameters['t'], '0');
+      expect(intentUri.queryParameters['keyword'], 'Amap HQ');
+      expect(intentUri.queryParameters['style'], '2');
       expect(action.fallbackLink.toString(), 'https://www.amap.com');
     });
 
@@ -211,6 +232,17 @@ void main() {
         fallbackToStore: true,
       );
       expect(directionsAction.fallbackToStore, true);
+    });
+
+    test('actions reject a blank source application', () {
+      expect(() => Amap.myLocation(sourceApplication: '  '), throwsArgumentError);
+      expect(
+        () => Amap.view(
+          coordinate: const Coordinate(latitude: 1, longitude: 2),
+          sourceApplication: '',
+        ),
+        throwsArgumentError,
+      );
     });
   });
 }

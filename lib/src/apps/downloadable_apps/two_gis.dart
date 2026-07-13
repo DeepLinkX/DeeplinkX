@@ -25,7 +25,7 @@ class TwoGis extends App implements DownloadableApp {
   static TwoGisDirectionsWithCoordsAction directionsWithCoords({
     required final Coordinate destination,
     final Coordinate? origin,
-    final TwoGisTravelMode mode = TwoGisTravelMode.auto,
+    final TwoGisTravelMode mode = TwoGisTravelMode.driving,
     final bool fallbackToStore = false,
   }) =>
       TwoGisDirectionsWithCoordsAction(
@@ -72,22 +72,26 @@ class TwoGis extends App implements DownloadableApp {
 
 /// 2GIS travel modes.
 enum TwoGisTravelMode {
-  /// Automatic mode selection.
-  auto('auto'),
+  /// Compatibility alias for car routing.
+  @Deprecated('Use TwoGisTravelMode.driving instead.')
+  auto('car', androidValue: 'car'),
 
   /// Car routing.
-  driving('car'),
+  driving('car', androidValue: 'car'),
 
   /// Public transit routing.
-  transit('bus'),
+  transit('ctx', androidValue: 'bus'),
 
   /// Walking routing.
-  walking('pedestrian');
+  walking('pedestrian', androidValue: 'pedestrian');
 
-  const TwoGisTravelMode(this.value);
+  const TwoGisTravelMode(this.value, {required this.androidValue});
 
-  /// URI path value.
+  /// Provider-documented URI path value used by custom links and fallbacks.
   final String value;
+
+  /// URI path value accepted by the current Android app.
+  final String androidValue;
 }
 
 /// Shows a coordinate in 2GIS.
@@ -125,7 +129,7 @@ class TwoGisDirectionsWithCoordsAction extends TwoGis
     required this.destination,
     required super.fallbackToStore,
     this.origin,
-    this.mode = TwoGisTravelMode.auto,
+    this.mode = TwoGisTravelMode.driving,
   });
 
   /// Destination coordinate.
@@ -138,28 +142,28 @@ class TwoGisDirectionsWithCoordsAction extends TwoGis
   /// Travel mode.
   final TwoGisTravelMode mode;
 
-  String get _routePath => [
+  String _routePath(final String travelMode) => [
         'routeSearch',
         'rsType',
-        mode.value,
+        travelMode,
         if (origin != null) ...['from', _lngLat(origin!)],
         'to',
         _lngLat(destination),
       ].join('/');
 
   @override
-  Uri get appLink => _twoGisUri(_routePath);
+  Uri get appLink => _twoGisUri(_routePath(mode.value));
 
   @override
   AndroidIntentOption get androidIntentOptions => AndroidIntentOption(
         action: 'action_view',
-        data: appLink.toString(),
+        data: _twoGisUri(_routePath(mode.androidValue)).toString(),
         package: androidPackageName,
         flags: const [0x10000000],
       );
 
   @override
-  Uri get fallbackLink => _twoGisWebUri(_routePath);
+  Uri get fallbackLink => _twoGisWebUri(_routePath(mode.value));
 }
 
 String _lngLat(final Coordinate coordinate) => '${coordinate.longitude},${coordinate.latitude}';

@@ -1,6 +1,6 @@
 import 'package:deeplink_x/src/src.dart';
 
-const _sourceApplication = 'deeplink_x';
+const _defaultSourceApplication = 'deeplink_x';
 const _currentLocation = '我的位置';
 const _newTaskFlag = 0x10000000;
 
@@ -9,10 +9,23 @@ const _newTaskFlag = 0x10000000;
 /// Implements Baidu Maps URI actions for Android and iOS.
 class BaiduMaps extends App implements DownloadableApp {
   /// Creates a new [BaiduMaps] instance.
-  BaiduMaps({this.fallbackToStore = false});
+  BaiduMaps({
+    this.fallbackToStore = false,
+    final String sourceApplication = _defaultSourceApplication,
+  }) : sourceApplication = _validatedSourceApplication(sourceApplication);
 
   /// Creates an action to open the Baidu Maps app.
-  factory BaiduMaps.open({final bool fallbackToStore = false}) => BaiduMaps(fallbackToStore: fallbackToStore);
+  factory BaiduMaps.open({
+    final bool fallbackToStore = false,
+    final String sourceApplication = _defaultSourceApplication,
+  }) =>
+      BaiduMaps(
+        fallbackToStore: fallbackToStore,
+        sourceApplication: sourceApplication,
+      );
+
+  /// Identifier of the application launching Baidu Maps.
+  final String sourceApplication;
 
   /// Store actions for Baidu Maps.
   @override
@@ -53,6 +66,7 @@ class BaiduMaps extends App implements DownloadableApp {
     final int? zoom,
     final BaiduMapsCoordType coordType = BaiduMapsCoordType.bd09ll,
     final bool traffic = false,
+    final String sourceApplication = _defaultSourceApplication,
     final bool fallbackToStore = false,
   }) =>
       BaiduMapsViewAction(
@@ -63,6 +77,7 @@ class BaiduMaps extends App implements DownloadableApp {
         title: title,
         content: content,
         zoom: zoom,
+        sourceApplication: sourceApplication,
       );
 
   /// Creates an action that searches for places.
@@ -74,6 +89,7 @@ class BaiduMaps extends App implements DownloadableApp {
     final int? radius,
     final int? zoom,
     final BaiduMapsCoordType coordType = BaiduMapsCoordType.bd09ll,
+    final String sourceApplication = _defaultSourceApplication,
     final bool fallbackToStore = false,
   }) =>
       BaiduMapsSearchAction(
@@ -85,6 +101,7 @@ class BaiduMaps extends App implements DownloadableApp {
         bounds: bounds,
         radius: radius,
         zoom: zoom,
+        sourceApplication: sourceApplication,
       );
 
   /// Creates an action that searches nearby places.
@@ -93,6 +110,7 @@ class BaiduMaps extends App implements DownloadableApp {
     final Coordinate? center,
     final int? radius,
     final BaiduMapsCoordType coordType = BaiduMapsCoordType.bd09ll,
+    final String sourceApplication = _defaultSourceApplication,
     final bool fallbackToStore = false,
   }) =>
       BaiduMapsNearbySearchAction(
@@ -101,6 +119,7 @@ class BaiduMaps extends App implements DownloadableApp {
         fallbackToStore: fallbackToStore,
         center: center,
         radius: radius,
+        sourceApplication: sourceApplication,
       );
 
   /// Creates an action that searches a transit line.
@@ -108,6 +127,7 @@ class BaiduMaps extends App implements DownloadableApp {
     required final String name,
     final String? region,
     final int? zoom,
+    final String sourceApplication = _defaultSourceApplication,
     final bool fallbackToStore = false,
   }) =>
       BaiduMapsLineAction(
@@ -115,6 +135,7 @@ class BaiduMaps extends App implements DownloadableApp {
         fallbackToStore: fallbackToStore,
         region: region,
         zoom: zoom,
+        sourceApplication: sourceApplication,
       );
 
   /// Creates an action that plans a route to [destination].
@@ -124,6 +145,7 @@ class BaiduMaps extends App implements DownloadableApp {
     final String? region,
     final BaiduMapsTravelMode mode = BaiduMapsTravelMode.driving,
     final BaiduMapsCoordType coordType = BaiduMapsCoordType.bd09ll,
+    final String sourceApplication = _defaultSourceApplication,
     final bool fallbackToStore = false,
   }) =>
       BaiduMapsDirectionsAction(
@@ -133,6 +155,7 @@ class BaiduMaps extends App implements DownloadableApp {
         fallbackToStore: fallbackToStore,
         origin: origin,
         region: region,
+        sourceApplication: sourceApplication,
       );
 
   /// Creates an action that plans a route to [destination] coordinates.
@@ -144,6 +167,7 @@ class BaiduMaps extends App implements DownloadableApp {
     final String? region,
     final BaiduMapsTravelMode mode = BaiduMapsTravelMode.driving,
     final BaiduMapsCoordType coordType = BaiduMapsCoordType.bd09ll,
+    final String sourceApplication = _defaultSourceApplication,
     final bool fallbackToStore = false,
   }) =>
       BaiduMapsDirectionsWithCoordsAction(
@@ -155,19 +179,24 @@ class BaiduMaps extends App implements DownloadableApp {
         destinationTitle: destinationTitle,
         originTitle: originTitle,
         region: region,
+        sourceApplication: sourceApplication,
       );
 
   /// Creates an action that starts native turn-by-turn navigation.
   static BaiduMapsNavigateAction navigate({
     required final Coordinate destination,
+    final String? destinationTitle,
     final BaiduMapsNavigationMode mode = BaiduMapsNavigationMode.driving,
     final BaiduMapsCoordType coordType = BaiduMapsCoordType.bd09ll,
+    final String sourceApplication = _defaultSourceApplication,
     final bool fallbackToStore = false,
   }) =>
       BaiduMapsNavigateAction(
         destination: destination,
+        destinationTitle: destinationTitle,
         mode: mode,
         coordType: coordType,
+        sourceApplication: sourceApplication,
         fallbackToStore: fallbackToStore,
       );
 }
@@ -264,6 +293,7 @@ class BaiduMapsViewAction extends BaiduMaps implements IntentAppLinkAction, Fall
     required this.coordType,
     required this.traffic,
     required super.fallbackToStore,
+    super.sourceApplication = _defaultSourceApplication,
     this.title,
     this.content,
     this.zoom,
@@ -288,21 +318,32 @@ class BaiduMapsViewAction extends BaiduMaps implements IntentAppLinkAction, Fall
   /// Whether to show real-time traffic.
   final bool traffic;
 
+  Map<String, String> get _queryParameters => {
+        'location': coordinate.toString(),
+        'title': title ?? 'Pin',
+        'content': content ?? 'Description',
+        if (zoom != null) 'zoom': zoom!.toString(),
+        'coord_type': coordType.value,
+        if (traffic) 'traffic': 'on',
+      };
+
   @override
   Uri get appLink => _baiduUri(
         'marker',
-        {
-          'location': coordinate.toString(),
-          if (title != null) 'title': title!,
-          if (content != null) 'content': content!,
-          if (zoom != null) 'zoom': zoom!.toString(),
-          'coord_type': coordType.value,
-          if (traffic) 'traffic': 'on',
-        },
+        _queryParameters,
+        sourceApplication: sourceApplication,
+        platformPrefix: 'ios',
       );
 
   @override
-  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(appLink);
+  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(
+        _baiduUri(
+          'marker',
+          _queryParameters,
+          sourceApplication: sourceApplication,
+          platformPrefix: 'andr',
+        ),
+      );
 
   @override
   Uri get fallbackLink => website;
@@ -315,6 +356,7 @@ class BaiduMapsSearchAction extends BaiduMaps implements IntentAppLinkAction, Fa
     required this.query,
     required this.coordType,
     required super.fallbackToStore,
+    super.sourceApplication = _defaultSourceApplication,
     this.region,
     this.center,
     this.bounds,
@@ -344,22 +386,33 @@ class BaiduMapsSearchAction extends BaiduMaps implements IntentAppLinkAction, Fa
   /// Coordinate system for [center] and [bounds].
   final BaiduMapsCoordType coordType;
 
+  Map<String, String> get _queryParameters => {
+        'query': query,
+        if (region != null) 'region': region!,
+        if (center != null) 'location': center!.toString(),
+        if (bounds != null) 'bounds': bounds!.value,
+        if (radius != null) 'radius': radius!.toString(),
+        if (zoom != null) 'zoom': zoom!.toString(),
+        'coord_type': coordType.value,
+      };
+
   @override
   Uri get appLink => _baiduUri(
         'place/search',
-        {
-          'query': query,
-          if (region != null) 'region': region!,
-          if (center != null) 'location': center!.toString(),
-          if (bounds != null) 'bounds': bounds!.value,
-          if (radius != null) 'radius': radius!.toString(),
-          if (zoom != null) 'zoom': zoom!.toString(),
-          'coord_type': coordType.value,
-        },
+        _queryParameters,
+        sourceApplication: sourceApplication,
+        platformPrefix: 'ios',
       );
 
   @override
-  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(appLink);
+  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(
+        _baiduUri(
+          'place/search',
+          _queryParameters,
+          sourceApplication: sourceApplication,
+          platformPrefix: 'andr',
+        ),
+      );
 
   @override
   Uri get fallbackLink => website;
@@ -372,6 +425,7 @@ class BaiduMapsNearbySearchAction extends BaiduMaps implements IntentAppLinkActi
     required this.query,
     required this.coordType,
     required super.fallbackToStore,
+    super.sourceApplication = _defaultSourceApplication,
     this.center,
     this.radius,
   });
@@ -390,17 +444,31 @@ class BaiduMapsNearbySearchAction extends BaiduMaps implements IntentAppLinkActi
 
   @override
   Uri get appLink => _baiduUri(
-        'place/nearby',
+        'nearbysearch',
         {
           'query': query,
-          if (center != null) 'location': center!.toString(),
+          if (center != null) 'center': center!.toString(),
           if (radius != null) 'radius': radius!.toString(),
           'coord_type': coordType.value,
         },
+        sourceApplication: sourceApplication,
+        platformPrefix: 'ios',
       );
 
   @override
-  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(appLink);
+  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(
+        _baiduUri(
+          'place/nearby',
+          {
+            'query': query,
+            if (center != null) 'location': center!.toString(),
+            if (radius != null) 'radius': radius!.toString(),
+            'coord_type': coordType.value,
+          },
+          sourceApplication: sourceApplication,
+          platformPrefix: 'andr',
+        ),
+      );
 
   @override
   Uri get fallbackLink => website;
@@ -412,9 +480,10 @@ class BaiduMapsLineAction extends BaiduMaps implements IntentAppLinkAction, Fall
   BaiduMapsLineAction({
     required this.name,
     required super.fallbackToStore,
-    this.region,
+    final String? region,
     this.zoom,
-  });
+    super.sourceApplication = _defaultSourceApplication,
+  }) : region = _validatedRegion(region);
 
   /// Transit line name.
   final String name;
@@ -425,18 +494,29 @@ class BaiduMapsLineAction extends BaiduMaps implements IntentAppLinkAction, Fall
   /// Optional zoom level.
   final int? zoom;
 
+  Map<String, String> get _queryParameters => {
+        'name': name,
+        'region': region!,
+        if (zoom != null) 'zoom': zoom!.toString(),
+      };
+
   @override
   Uri get appLink => _baiduUri(
         'line',
-        {
-          'name': name,
-          if (region != null) 'region': region!,
-          if (zoom != null) 'zoom': zoom!.toString(),
-        },
+        _queryParameters,
+        sourceApplication: sourceApplication,
+        platformPrefix: 'ios',
       );
 
   @override
-  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(appLink);
+  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(
+        _baiduUri(
+          'line',
+          _queryParameters,
+          sourceApplication: sourceApplication,
+          platformPrefix: 'andr',
+        ),
+      );
 
   @override
   Uri get fallbackLink => website;
@@ -450,6 +530,7 @@ class BaiduMapsDirectionsAction extends BaiduMaps implements IntentAppLinkAction
     required this.mode,
     required this.coordType,
     required super.fallbackToStore,
+    super.sourceApplication = _defaultSourceApplication,
     this.origin,
     this.region,
   });
@@ -470,20 +551,31 @@ class BaiduMapsDirectionsAction extends BaiduMaps implements IntentAppLinkAction
   /// Coordinate system used by route planning.
   final BaiduMapsCoordType coordType;
 
+  Map<String, String> get _queryParameters => {
+        'origin': origin ?? _currentLocation,
+        'destination': destination,
+        if (region != null) 'region': region!,
+        'mode': mode.value,
+        'coord_type': coordType.value,
+      };
+
   @override
   Uri get appLink => _baiduUri(
         'direction',
-        {
-          'origin': origin ?? _currentLocation,
-          'destination': destination,
-          if (region != null) 'region': region!,
-          'mode': mode.value,
-          'coord_type': coordType.value,
-        },
+        _queryParameters,
+        sourceApplication: sourceApplication,
+        platformPrefix: 'ios',
       );
 
   @override
-  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(appLink);
+  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(
+        _baiduUri(
+          'direction',
+          _queryParameters,
+          sourceApplication: sourceApplication,
+          platformPrefix: 'andr',
+        ),
+      );
 
   @override
   Uri get fallbackLink => website;
@@ -498,6 +590,7 @@ class BaiduMapsDirectionsWithCoordsAction extends BaiduMaps
     required this.mode,
     required this.coordType,
     required super.fallbackToStore,
+    super.sourceApplication = _defaultSourceApplication,
     this.origin,
     this.destinationTitle,
     this.originTitle,
@@ -526,20 +619,31 @@ class BaiduMapsDirectionsWithCoordsAction extends BaiduMaps
   /// Coordinate system used by route planning.
   final BaiduMapsCoordType coordType;
 
+  Map<String, String> get _queryParameters => {
+        'origin': origin != null ? _routePoint(origin!, originTitle) : originTitle ?? _currentLocation,
+        'destination': _routePoint(destination, destinationTitle),
+        if (region != null) 'region': region!,
+        'mode': mode.value,
+        'coord_type': coordType.value,
+      };
+
   @override
   Uri get appLink => _baiduUri(
         'direction',
-        {
-          'origin': origin != null ? _routePoint(origin!, originTitle) : originTitle ?? _currentLocation,
-          'destination': _routePoint(destination, destinationTitle),
-          if (region != null) 'region': region!,
-          'mode': mode.value,
-          'coord_type': coordType.value,
-        },
+        _queryParameters,
+        sourceApplication: sourceApplication,
+        platformPrefix: 'ios',
       );
 
   @override
-  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(appLink);
+  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(
+        _baiduUri(
+          'direction',
+          _queryParameters,
+          sourceApplication: sourceApplication,
+          platformPrefix: 'andr',
+        ),
+      );
 
   @override
   Uri get fallbackLink => website;
@@ -553,10 +657,15 @@ class BaiduMapsNavigateAction extends BaiduMaps implements IntentAppLinkAction, 
     required this.mode,
     required this.coordType,
     required super.fallbackToStore,
+    this.destinationTitle,
+    super.sourceApplication = _defaultSourceApplication,
   });
 
   /// Destination coordinate.
   final Coordinate destination;
+
+  /// Optional destination display name.
+  final String? destinationTitle;
 
   /// Native navigation mode.
   final BaiduMapsNavigationMode mode;
@@ -565,20 +674,30 @@ class BaiduMapsNavigateAction extends BaiduMaps implements IntentAppLinkAction, 
   final BaiduMapsCoordType coordType;
 
   @override
-  Uri get appLink => _navigationLink(mode.iosPath);
+  Uri get appLink => _navigationLink(mode.iosPath, platformPrefix: 'ios');
 
   @override
-  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(_navigationLink(mode.androidPath));
+  AndroidIntentOption get androidIntentOptions => _androidIntentOptions(
+        _navigationLink(mode.androidPath, platformPrefix: 'andr'),
+      );
 
   @override
   Uri get fallbackLink => website;
 
-  Uri _navigationLink(final String path) => _baiduUri(
+  Uri _navigationLink(
+    final String path, {
+    required final String platformPrefix,
+  }) =>
+      _baiduUri(
         path,
         {
           _navigationLocationKey: destination.toString(),
+          if (platformPrefix == 'ios' && mode == BaiduMapsNavigationMode.driving)
+            'query': destinationTitle ?? 'Destination',
           'coord_type': coordType.value,
         },
+        sourceApplication: sourceApplication,
+        platformPrefix: platformPrefix,
       );
 
   String get _navigationLocationKey {
@@ -589,13 +708,19 @@ class BaiduMapsNavigateAction extends BaiduMaps implements IntentAppLinkAction, 
   }
 }
 
-Uri _baiduUri(final String path, final Map<String, String> parameters) => Uri(
+Uri _baiduUri(
+  final String path,
+  final Map<String, String> parameters, {
+  required final String sourceApplication,
+  required final String platformPrefix,
+}) =>
+    Uri(
       scheme: 'baidumap',
       host: 'map',
       path: path,
       queryParameters: {
         ...parameters,
-        'src': _sourceApplication,
+        'src': '$platformPrefix.$sourceApplication',
       },
     );
 
@@ -611,5 +736,23 @@ String _routePoint(final Coordinate coordinate, final String? name) {
   if (name == null) {
     return latLng;
   }
-  return '$latLng|name:$name';
+  return 'name:$name|$latLng';
+}
+
+String _validatedSourceApplication(final String sourceApplication) {
+  if (sourceApplication.trim().isEmpty) {
+    throw ArgumentError.value(
+      sourceApplication,
+      'sourceApplication',
+      'must not be blank',
+    );
+  }
+  return sourceApplication;
+}
+
+String _validatedRegion(final String? region) {
+  if (region == null || region.trim().isEmpty) {
+    throw ArgumentError.value(region, 'region', 'must not be blank');
+  }
+  return region;
 }

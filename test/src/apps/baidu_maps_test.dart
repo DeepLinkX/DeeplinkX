@@ -22,6 +22,7 @@ void main() {
       expect(action.macosBundleIdentifier, null);
 
       expect(action.fallbackToStore, false);
+      expect(action.sourceApplication, 'deeplink_x');
       expect(action.storeActions.length, 2);
     });
 
@@ -54,15 +55,28 @@ void main() {
       expect(action.appLink.queryParameters['zoom'], '16');
       expect(action.appLink.queryParameters['coord_type'], 'wgs84');
       expect(action.appLink.queryParameters['traffic'], 'on');
-      expect(action.appLink.queryParameters['src'], 'deeplink_x');
+      expect(action.appLink.queryParameters['src'], 'ios.deeplink_x');
 
       final intentUri = Uri.parse(action.androidIntentOptions.data!);
       expect(intentUri.path, '/marker');
       expect(intentUri.queryParameters['location'], '39.915,116.404');
+      expect(intentUri.queryParameters['src'], 'andr.deeplink_x');
       expect(action.androidIntentOptions.action, 'action_view');
       expect(action.androidIntentOptions.package, 'com.baidu.BaiduMap');
       expect(action.androidIntentOptions.flags, const [0x10000000]);
       expect(action.fallbackLink.toString(), 'https://map.baidu.com');
+    });
+
+    test('view action supplies map_launcher-compatible marker defaults', () {
+      final action = BaiduMaps.view(
+        coordinate: const Coordinate(latitude: 39.915, longitude: 116.404),
+      );
+
+      expect(action.appLink.queryParameters['title'], 'Pin');
+      expect(action.appLink.queryParameters['content'], 'Description');
+      final intentUri = Uri.parse(action.androidIntentOptions.data!);
+      expect(intentUri.queryParameters['title'], 'Pin');
+      expect(intentUri.queryParameters['content'], 'Description');
     });
 
     test('search action creates place search links', () {
@@ -93,6 +107,7 @@ void main() {
       final intentUri = Uri.parse(action.androidIntentOptions.data!);
       expect(intentUri.path, '/place/search');
       expect(intentUri.queryParameters['query'], 'coffee');
+      expect(intentUri.queryParameters['src'], 'andr.deeplink_x');
       expect(action.fallbackLink.toString(), 'https://map.baidu.com');
     });
 
@@ -104,13 +119,25 @@ void main() {
         coordType: BaiduMapsCoordType.bd09mc,
       );
 
-      expect(action.appLink.path, '/place/nearby');
+      expect(action.appLink.path, '/nearbysearch');
       expect(action.appLink.queryParameters['query'], 'hotel');
-      expect(action.appLink.queryParameters['location'], '31.2304,121.4737');
+      expect(action.appLink.queryParameters['center'], '31.2304,121.4737');
+      expect(action.appLink.queryParameters.containsKey('location'), false);
       expect(action.appLink.queryParameters['radius'], '2500');
       expect(action.appLink.queryParameters['coord_type'], 'bd09mc');
-      expect(Uri.parse(action.androidIntentOptions.data!).path, '/place/nearby');
+      final intentUri = Uri.parse(action.androidIntentOptions.data!);
+      expect(intentUri.path, '/place/nearby');
+      expect(intentUri.queryParameters['location'], '31.2304,121.4737');
+      expect(intentUri.queryParameters.containsKey('center'), false);
       expect(action.fallbackLink.toString(), 'https://map.baidu.com');
+    });
+
+    test('line action requires a nonblank region', () {
+      expect(() => BaiduMaps.line(name: 'Line 1'), throwsArgumentError);
+      expect(
+        () => BaiduMaps.line(name: 'Line 1', region: '  '),
+        throwsArgumentError,
+      );
     });
 
     test('line action creates transit line links', () {
@@ -165,15 +192,15 @@ void main() {
       );
 
       expect(action.appLink.path, '/direction');
-      expect(action.appLink.queryParameters['origin'], 'latlng:39.9042,116.4074|name:Start');
-      expect(action.appLink.queryParameters['destination'], 'latlng:39.915,116.404|name:Tiananmen');
+      expect(action.appLink.queryParameters['origin'], 'name:Start|latlng:39.9042,116.4074');
+      expect(action.appLink.queryParameters['destination'], 'name:Tiananmen|latlng:39.915,116.404');
       expect(action.appLink.queryParameters['region'], 'Beijing');
       expect(action.appLink.queryParameters['mode'], 'walking');
       expect(action.appLink.queryParameters['coord_type'], 'wgs84');
 
       final intentUri = Uri.parse(action.androidIntentOptions.data!);
       expect(intentUri.path, '/direction');
-      expect(intentUri.queryParameters['destination'], 'latlng:39.915,116.404|name:Tiananmen');
+      expect(intentUri.queryParameters['destination'], 'name:Tiananmen|latlng:39.915,116.404');
       expect(action.fallbackLink.toString(), 'https://map.baidu.com');
 
       final currentLocationAction = BaiduMaps.directionsWithCoords(
@@ -186,12 +213,18 @@ void main() {
     test('navigate action creates native navigation links', () {
       final drivingAction = BaiduMaps.navigate(
         destination: const Coordinate(latitude: 39.915, longitude: 116.404),
+        destinationTitle: 'Tiananmen',
       );
 
       expect(drivingAction.appLink.path, '/navi');
       expect(drivingAction.appLink.queryParameters['location'], '39.915,116.404');
       expect(drivingAction.appLink.queryParameters['coord_type'], 'bd09ll');
-      expect(Uri.parse(drivingAction.androidIntentOptions.data!).path, '/navi');
+      expect(drivingAction.appLink.queryParameters['query'], 'Tiananmen');
+      expect(drivingAction.appLink.queryParameters['src'], 'ios.deeplink_x');
+      final drivingIntentUri = Uri.parse(drivingAction.androidIntentOptions.data!);
+      expect(drivingIntentUri.path, '/navi');
+      expect(drivingIntentUri.queryParameters.containsKey('query'), false);
+      expect(drivingIntentUri.queryParameters['src'], 'andr.deeplink_x');
 
       final walkingAction = BaiduMaps.navigate(
         destination: const Coordinate(latitude: 39.915, longitude: 116.404),
@@ -240,7 +273,11 @@ void main() {
       expect(nearbySearchAction.query, 'atm');
       expect(nearbySearchAction.fallbackToStore, true);
 
-      final lineAction = BaiduMaps.line(name: 'Line 2', fallbackToStore: true);
+      final lineAction = BaiduMaps.line(
+        name: 'Line 2',
+        region: 'Beijing',
+        fallbackToStore: true,
+      );
       expect(lineAction.name, 'Line 2');
       expect(lineAction.fallbackToStore, true);
 
@@ -261,6 +298,30 @@ void main() {
       );
       expect(navigateAction.destination.toString(), '1.0,2.0');
       expect(navigateAction.fallbackToStore, true);
+    });
+
+    test('actions accept a custom source application', () {
+      final action = BaiduMaps.directions(
+        destination: 'Station',
+        sourceApplication: 'com.example.client',
+      );
+
+      expect(action.sourceApplication, 'com.example.client');
+      expect(action.appLink.queryParameters['src'], 'ios.com.example.client');
+      expect(
+        Uri.parse(action.androidIntentOptions.data!).queryParameters['src'],
+        'andr.com.example.client',
+      );
+    });
+
+    test('actions reject a blank source application', () {
+      expect(
+        () => BaiduMaps.search(
+          query: 'coffee',
+          sourceApplication: ' ',
+        ),
+        throwsArgumentError,
+      );
     });
   });
 }

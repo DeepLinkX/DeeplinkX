@@ -37,7 +37,7 @@ class Neshan extends App implements DownloadableApp {
 
   /// Neshan web map fallback.
   @override
-  Uri get website => Uri.parse('https://nshn.ir');
+  Uri get website => Uri.parse('https://neshan.org/maps');
 
   /// Creates an action that shows [coordinate] on the map.
   static NeshanViewAction view({
@@ -82,7 +82,14 @@ class NeshanViewAction extends Neshan implements IntentAppLinkAction, AppLinkApp
   @override
   AndroidIntentOption get androidIntentOptions => AndroidIntentOption(
         action: 'action_view',
-        data: fallbackLink.toString(),
+        data: Uri(
+          scheme: 'https',
+          host: 'nshn.ir',
+          queryParameters: {
+            'lat': coordinate.latitude.toString(),
+            'lng': coordinate.longitude.toString(),
+          },
+        ).toString(),
         package: androidPackageName,
         flags: const [0x10000000],
       );
@@ -90,11 +97,8 @@ class NeshanViewAction extends Neshan implements IntentAppLinkAction, AppLinkApp
   @override
   Uri get fallbackLink => Uri(
         scheme: 'https',
-        host: 'nshn.ir',
-        queryParameters: {
-          'lat': coordinate.latitude.toString(),
-          'lng': coordinate.longitude.toString(),
-        },
+        host: 'neshan.org',
+        pathSegments: ['maps', 'share', coordinate.toString()],
       );
 }
 
@@ -130,13 +134,15 @@ class NeshanDirectionsWithCoordsAction extends Neshan
   @override
   AndroidIntentOption get androidIntentOptions => AndroidIntentOption(
         action: 'action_view',
-        data: fallbackLink.toString(),
+        data: _androidRouteLink.toString(),
         package: androidPackageName,
         flags: const [0x10000000],
       );
 
   @override
-  Uri get fallbackLink {
+  Uri get fallbackLink => website;
+
+  Uri get _androidRouteLink {
     final routeOrigin = origin;
 
     return Uri(
