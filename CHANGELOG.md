@@ -1,4 +1,4 @@
-## Unreleased
+## 1.3.9
 
 * Added verified Threads search and topic-tag actions with native Android/iOS links and web fallbacks.
 * Prevented combined intent/app-link actions from retrying the same app link.
