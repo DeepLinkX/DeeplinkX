@@ -168,6 +168,41 @@ void main() {
       );
     });
 
+    test('search action creates correct type and URIs', () {
+      final action = Threads.search(query: 'flutter maps');
+
+      expect(action, isInstanceOf<IntentAppLinkAction>());
+      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
+      expect(action.query, 'flutter maps');
+      expect(action.appLink.toString(), 'barcelona://search?search_text=flutter+maps');
+      expect(action.fallbackLink.toString(), 'https://www.threads.com/search?q=flutter+maps');
+      expect(action.androidIntentOptions.action, 'action_view');
+      expect(action.androidIntentOptions.data, action.fallbackLink.toString());
+      expect(action.androidIntentOptions.package, 'com.instagram.barcelona');
+      expect(action.androidIntentOptions.flags, const [0x10000000]);
+    });
+
+    test('openTag action creates correct type and URIs', () {
+      final action = Threads.openTag(tag: 'Flutter Dev');
+
+      expect(action, isInstanceOf<IntentAppLinkAction>());
+      expect(action, isInstanceOf<AppLinkAppAction>());
+      expect(action, isInstanceOf<Fallbackable>());
+      expect(action.tag, 'Flutter Dev');
+      expect(action.appLink.toString(), 'barcelona://tag/Flutter%20Dev');
+      expect(action.fallbackLink.toString(), 'https://www.threads.com/tag/Flutter%20Dev');
+      expect(action.androidIntentOptions.action, 'action_view');
+      expect(action.androidIntentOptions.data, action.fallbackLink.toString());
+      expect(action.androidIntentOptions.package, 'com.instagram.barcelona');
+      expect(action.androidIntentOptions.flags, const [0x10000000]);
+    });
+
+    test('new actions reject blank values', () {
+      expect(() => Threads.search(query: '  '), throwsArgumentError);
+      expect(() => Threads.openTag(tag: '\n'), throwsArgumentError);
+    });
+
     test('open action with fallbackToStore creates Threads instance with correct properties', () {
       final action = Threads.open(fallbackToStore: true);
 
@@ -223,6 +258,14 @@ void main() {
       );
       expect(createPostAction.text, 'Hello from Threads');
       expect(createPostAction.fallbackToStore, true);
+
+      final searchAction = Threads.search(query: 'flutter', fallbackToStore: true);
+      expect(searchAction.query, 'flutter');
+      expect(searchAction.fallbackToStore, true);
+
+      final tagAction = Threads.openTag(tag: 'Flutter', fallbackToStore: true);
+      expect(tagAction.tag, 'Flutter');
+      expect(tagAction.fallbackToStore, true);
     });
   });
 }

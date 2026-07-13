@@ -15,6 +15,8 @@ class _ThreadsPageState extends State<ThreadsPage> {
   final _usernameController = TextEditingController(text: 'zuck');
   final _postIdController = TextEditingController(text: 'DY11ZLWG_eY');
   final _composeTextController = TextEditingController(text: 'Hello from DeeplinkX');
+  final _searchController = TextEditingController(text: 'flutter');
+  final _tagController = TextEditingController(text: 'Flutter');
   bool _fallback = true;
 
   @override
@@ -22,6 +24,8 @@ class _ThreadsPageState extends State<ThreadsPage> {
     _usernameController.dispose();
     _postIdController.dispose();
     _composeTextController.dispose();
+    _searchController.dispose();
+    _tagController.dispose();
     super.dispose();
   }
 
@@ -68,6 +72,46 @@ class _ThreadsPageState extends State<ThreadsPage> {
               }
             },
             child: const Text('Open Profile'),
+          ),
+          const SizedBox(height: 16),
+          const Text('Discovery Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _searchController,
+            decoration: const InputDecoration(
+              labelText: 'Search Query',
+              hintText: 'Enter a Threads search query',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: () async {
+              if (_searchController.text.trim().isNotEmpty) {
+                await _deeplinkX.launchAction(
+                  Threads.search(query: _searchController.text, fallbackToStore: _fallback),
+                );
+              }
+            },
+            child: const Text('Search Threads'),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _tagController,
+            decoration: const InputDecoration(
+              labelText: 'Topic Tag',
+              hintText: 'Enter a Threads topic tag',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 8),
+          ElevatedButton(
+            onPressed: () async {
+              if (_tagController.text.trim().isNotEmpty) {
+                await _deeplinkX.launchAction(Threads.openTag(tag: _tagController.text, fallbackToStore: _fallback));
+              }
+            },
+            child: const Text('Open Topic Tag'),
           ),
           const SizedBox(height: 16),
           const Text('Post Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
