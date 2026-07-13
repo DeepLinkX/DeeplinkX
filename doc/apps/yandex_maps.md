@@ -10,7 +10,6 @@ panoramas.
 - Yandex Maps Android launch URLs: <https://yandex.com/dev/yandex-apps-launch-maps/doc/en/concepts/yandexmaps-android-app>
 - Yandex Maps iOS launch URLs: <https://yandex.com/dev/yandex-apps-launch-maps/doc/en/concepts/yandexmaps-ios-app>
 - Yandex Maps web launch URLs: <https://yandex.com/dev/yandex-apps-launch-maps/doc/en/concepts/yandexmaps-web>
-- Map Launcher Yandex Maps implementation: <https://github.com/mattermoran/map_launcher/blob/master/lib/src/directions_url.dart>
 
 ## Available Actions
 
@@ -136,11 +135,20 @@ Allow querying the package in `android/app/src/main/AndroidManifest.xml`:
 - Organization card: `yandexmaps://maps.yandex.com/?oid={objectId}`
 - What is here: `yandexmaps://?whatshere[point]={longitude},{latitude}&whatshere[zoom]={zoom}`
 - Directions: `yandexmaps://maps.yandex.com/?rtext={originLat},{originLng}~{destinationLat},{destinationLng}&rtt={mode}`
+- Destination-only directions: `yandexmaps://maps.yandex.com/?rtext=~{destinationLat},{destinationLng}&rtt={mode}`
 - Panorama: `yandexmaps://?panorama[point]={longitude},{latitude}&panorama[direction]={azimuth},{elevation}&panorama[span]={horizontal},{vertical}`
 
 Routes use latitude-longitude pairs in `rtext`. Map display, search areas,
 object lookup, and panorama points use longitude-latitude pairs, matching the
 Yandex Maps launch URL docs.
+
+Marker and route coordinate ordering, destination-only routes, and waypoint
+ordering remain compatible with existing integrations. Destination-only routes
+retain the leading `~` placeholder so Yandex uses the current location as the
+origin. DeeplinkX also
+validates provider ranges: zoom is 1 through 18, viewport deltas and panorama
+spans must be positive and finite, organization IDs must contain only digits,
+and panorama direction values must be finite and between 0 and 360.
 
 ## Fallback Behavior
 

@@ -33,6 +33,7 @@ await deeplinkX.launchAction(
   Amap.view(
     coordinate: const Coordinate(latitude: 39.98848272, longitude: 116.47560823),
     title: 'Amap HQ',
+    sourceApplication: 'my_flutter_app',
     convertFromWgs84: true,
   ),
 );
@@ -116,8 +117,12 @@ Allow querying the Amap package in `android/app/src/main/AndroidManifest.xml`:
 - My location: `androidamap://mylocation?sourceApplication=deeplink_x`
 - View map: `androidamap://viewmap?sourceApplication=deeplink_x&poiname={title}&lat={lat}&lon={lon}&dev={0|1}`
 - Search: `androidamap://poi?sourceApplication=deeplink_x&keywords={query}&lat1={lat1}&lon1={lon1}&lat2={lat2}&lon2={lon2}&dev={0|1}`
-- Directions: `amapuri://route/plan/?sourceApplication=deeplink_x&dname={destination}&dev=0&t=0`
+- Directions: `androidamap://keywordNavi?sourceApplication=deeplink_x&keyword={destination}&style=2`
 - Directions with coordinates: `amapuri://route/plan/?sourceApplication=deeplink_x&slat={origin_lat}&slon={origin_lng}&sname={origin}&dlat={dest_lat}&dlon={dest_lng}&dname={destination}&dev={0|1}&t={mode}`
+
+`sourceApplication` is optional on every action and defaults to `deeplink_x`.
+Marker titles default to `Pin` when omitted. Text-only Android destinations use
+Amap's documented `keywordNavi` entry point.
 
 ## Fallback Behavior
 

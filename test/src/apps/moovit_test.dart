@@ -53,9 +53,10 @@ void main() {
       expect(action, isInstanceOf<IntentAppLinkAction>());
       expect(action, isInstanceOf<Fallbackable>());
       expect(action.coordinate, const Coordinate(latitude: 40.7128, longitude: -74.0060));
-      expect(action.appLink.toString(), 'moovit://nearby?lat=40.7128&lon=-74.006');
+      expect(action.partnerId, 'deeplink_x');
+      expect(action.appLink.toString(), 'moovit://nearby?lat=40.7128&lon=-74.006&partner_id=deeplink_x');
       expect(action.androidIntentOptions.action, 'action_view');
-      expect(action.androidIntentOptions.data, 'moovit://nearby?lat=40.7128&lon=-74.006');
+      expect(action.androidIntentOptions.data, 'moovit://nearby?lat=40.7128&lon=-74.006&partner_id=deeplink_x');
       expect(action.androidIntentOptions.package, 'com.tranzmate');
       expect(action.androidIntentOptions.flags, const [0x10000000]);
       expect(action.fallbackLink.toString(), 'https://www.moovit.com/');
@@ -67,6 +68,7 @@ void main() {
         originTitle: 'Times Square',
         destination: const Coordinate(latitude: 40.7527, longitude: -73.9772),
         destinationTitle: 'Grand Central',
+        partnerId: 'deeplink_x_tests',
       );
 
       expect(action, isInstanceOf<AppLinkAppAction>());
@@ -76,14 +78,15 @@ void main() {
       expect(action.originTitle, 'Times Square');
       expect(action.destination, const Coordinate(latitude: 40.7527, longitude: -73.9772));
       expect(action.destinationTitle, 'Grand Central');
+      expect(action.partnerId, 'deeplink_x_tests');
       expect(
         action.appLink.toString(),
-        'moovit://directions?dest_lat=40.7527&dest_lon=-73.9772&dest_name=Grand+Central&orig_lat=40.758&orig_lon=-73.9855&orig_name=Times+Square',
+        'moovit://directions?dest_lat=40.7527&dest_lon=-73.9772&dest_name=Grand+Central&orig_lat=40.758&orig_lon=-73.9855&orig_name=Times+Square&partner_id=deeplink_x_tests',
       );
       expect(action.androidIntentOptions.action, 'action_view');
       expect(
         action.androidIntentOptions.data,
-        'moovit://directions?dest_lat=40.7527&dest_lon=-73.9772&dest_name=Grand+Central&orig_lat=40.758&orig_lon=-73.9855&orig_name=Times+Square',
+        'moovit://directions?dest_lat=40.7527&dest_lon=-73.9772&dest_name=Grand+Central&orig_lat=40.758&orig_lon=-73.9855&orig_name=Times+Square&partner_id=deeplink_x_tests',
       );
       expect(action.androidIntentOptions.package, 'com.tranzmate');
       expect(action.androidIntentOptions.flags, const [0x10000000]);
@@ -98,7 +101,27 @@ void main() {
       expect(action.origin, null);
       expect(action.originTitle, null);
       expect(action.destinationTitle, null);
-      expect(action.appLink.toString(), 'moovit://directions?dest_lat=40.7527&dest_lon=-73.9772');
+      expect(
+        action.appLink.toString(),
+        'moovit://directions?dest_lat=40.7527&dest_lon=-73.9772&partner_id=deeplink_x',
+      );
+    });
+
+    test('rejects blank partner identifiers', () {
+      expect(
+        () => Moovit.view(
+          coordinate: const Coordinate(latitude: 40.7128, longitude: -74.0060),
+          partnerId: '   ',
+        ),
+        throwsArgumentError,
+      );
+      expect(
+        () => Moovit.directionsWithCoords(
+          destination: const Coordinate(latitude: 40.7527, longitude: -73.9772),
+          partnerId: '',
+        ),
+        throwsArgumentError,
+      );
     });
 
     test('actions keep fallback flag', () {

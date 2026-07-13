@@ -101,6 +101,26 @@ class Threads extends App implements DownloadableApp {
         text: text,
         fallbackToStore: fallbackToStore,
       );
+
+  /// Creates an action to search Threads for [query].
+  static ThreadsSearchAction search({
+    required final String query,
+    final bool fallbackToStore = false,
+  }) =>
+      ThreadsSearchAction(
+        query: query,
+        fallbackToStore: fallbackToStore,
+      );
+
+  /// Creates an action to open a Threads topic tag.
+  static ThreadsOpenTagAction openTag({
+    required final String tag,
+    final bool fallbackToStore = false,
+  }) =>
+      ThreadsOpenTagAction(
+        tag: tag,
+        fallbackToStore: fallbackToStore,
+      );
 }
 
 /// An action to open a specific profile in the Threads app.
@@ -228,4 +248,80 @@ class ThreadsCreatePostAction extends Threads implements IntentAppLinkAction, Ap
         pathSegments: ['intent', 'post'],
         queryParameters: {'text': text},
       );
+}
+
+/// An action to search Threads for a text query.
+class ThreadsSearchAction extends Threads implements IntentAppLinkAction, AppLinkAppAction, Fallbackable {
+  /// Creates a new [ThreadsSearchAction] instance.
+  ThreadsSearchAction({
+    required final String query,
+    required super.fallbackToStore,
+  }) : query = _requireNonBlank(query, 'query');
+
+  /// The text to search for.
+  final String query;
+
+  @override
+  Uri get appLink => Uri(
+        scheme: 'barcelona',
+        host: 'search',
+        queryParameters: {'search_text': query},
+      );
+
+  @override
+  AndroidIntentOption get androidIntentOptions => AndroidIntentOption(
+        action: 'action_view',
+        data: fallbackLink.toString(),
+        package: androidPackageName,
+        flags: const [0x10000000],
+      );
+
+  @override
+  Uri get fallbackLink => Uri(
+        scheme: 'https',
+        host: 'www.threads.com',
+        path: '/search',
+        queryParameters: {'q': query},
+      );
+}
+
+/// An action to open a Threads topic tag.
+class ThreadsOpenTagAction extends Threads implements IntentAppLinkAction, AppLinkAppAction, Fallbackable {
+  /// Creates a new [ThreadsOpenTagAction] instance.
+  ThreadsOpenTagAction({
+    required final String tag,
+    required super.fallbackToStore,
+  }) : tag = _requireNonBlank(tag, 'tag');
+
+  /// The topic tag to open.
+  final String tag;
+
+  @override
+  Uri get appLink => Uri(
+        scheme: 'barcelona',
+        host: 'tag',
+        pathSegments: [tag],
+      );
+
+  @override
+  AndroidIntentOption get androidIntentOptions => AndroidIntentOption(
+        action: 'action_view',
+        data: fallbackLink.toString(),
+        package: androidPackageName,
+        flags: const [0x10000000],
+      );
+
+  @override
+  Uri get fallbackLink => Uri(
+        scheme: 'https',
+        host: 'www.threads.com',
+        pathSegments: ['tag', tag],
+      );
+}
+
+String _requireNonBlank(final String value, final String name) {
+  if (value.trim().isEmpty) {
+    throw ArgumentError.value(value, name, 'must not be blank');
+  }
+  return value;
 }

@@ -17,7 +17,7 @@ void main() {
 
       expect(action.customScheme, 'neshan');
       expect(action.androidPackageName, 'org.rajman.neshan.traffic.tehran.navigator');
-      expect(action.website.toString(), 'https://nshn.ir');
+      expect(action.website.toString(), 'https://neshan.org/maps');
       expect(action.supportedPlatforms, containsAll(<PlatformType>[PlatformType.ios, PlatformType.android]));
       expect(action.supportedPlatforms.length, 2);
       expect(action.macosBundleIdentifier, null);
@@ -58,7 +58,7 @@ void main() {
       expect(action.androidIntentOptions.data, 'https://nshn.ir?lat=35.6892&lng=51.389');
       expect(action.androidIntentOptions.package, 'org.rajman.neshan.traffic.tehran.navigator');
       expect(action.androidIntentOptions.flags, const [0x10000000]);
-      expect(action.fallbackLink.toString(), 'https://nshn.ir?lat=35.6892&lng=51.389');
+      expect(action.fallbackLink.toString(), 'https://neshan.org/maps/share/35.6892,51.389');
     });
 
     test('directionsWithCoords action builds route with origin', () {
@@ -80,7 +80,7 @@ void main() {
       );
       expect(action.androidIntentOptions.package, 'org.rajman.neshan.traffic.tehran.navigator');
       expect(action.androidIntentOptions.flags, const [0x10000000]);
-      expect(action.fallbackLink.toString(), 'https://nshn.ir/?origin=35.6892%2C51.389&destination=35.7%2C51.4');
+      expect(action.fallbackLink.toString(), 'https://neshan.org/maps');
     });
 
     test('directionsWithCoords action supports current-location origin', () {
@@ -90,7 +90,11 @@ void main() {
 
       expect(action.origin, null);
       expect(action.appLink.toString(), 'neshan://?destination=35.7%2C51.4');
-      expect(action.fallbackLink.toString(), 'https://nshn.ir/?destination=35.7%2C51.4');
+      expect(
+        action.androidIntentOptions.data,
+        'https://nshn.ir/?destination=35.7%2C51.4',
+      );
+      expect(action.fallbackLink.toString(), 'https://neshan.org/maps');
     });
 
     test('actions keep fallback flag', () {

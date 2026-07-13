@@ -4,8 +4,7 @@ DeeplinkX supports the 2GIS custom URI scheme on iOS and Android for opening the
 
 ## References
 
-- Map Launcher marker implementation: <https://github.com/mattermoran/map_launcher/blob/master/lib/src/marker_url.dart>
-- Map Launcher directions implementation: <https://github.com/mattermoran/map_launcher/blob/master/lib/src/directions_url.dart>
+- 2GIS navigation deeplink documentation: <https://help.2gis.com/question/developers-launching-2gis-navigation-using-deeplink>
 
 ## Available Actions
 
@@ -66,8 +65,16 @@ Allow querying the package in `android/app/src/main/AndroidManifest.xml`:
 
 - iOS view map: `dgis://2gis.ru/geo/{longitude},{latitude}`
 - Android view map intent data: `dgis://2gis.ru/routeSearch/rsType/car/to/{longitude},{latitude}`
-- Directions with coordinates: `dgis://2gis.ru/routeSearch/rsType/{auto|car|bus|pedestrian}/from/{originLongitude},{originLatitude}/to/{destinationLongitude},{destinationLatitude}`
-- Destination-only directions: `dgis://2gis.ru/routeSearch/rsType/{auto|car|bus|pedestrian}/to/{destinationLongitude},{destinationLatitude}`
+- Directions with coordinates: `dgis://2gis.ru/routeSearch/rsType/{car|ctx|pedestrian}/from/{originLongitude},{originLatitude}/to/{destinationLongitude},{destinationLatitude}`
+- Destination-only directions: `dgis://2gis.ru/routeSearch/rsType/{car|ctx|pedestrian}/to/{destinationLongitude},{destinationLatitude}`
+
+`TwoGisTravelMode.auto` remains as a deprecated source-compatible alias but
+emits the supported `car` value. Transit custom links and web fallbacks emit
+the provider-documented `ctx`. The package-targeted Android intent uses `bus`,
+which is the value accepted by the current Android app for selecting public
+transport.
+Longitude-latitude ordering and Android's marker-to-route behavior remain
+compatible with existing integrations.
 
 ## Fallback Behavior
 

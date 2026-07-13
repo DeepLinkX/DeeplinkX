@@ -42,10 +42,12 @@ class Moovit extends App implements DownloadableApp {
   /// Creates an action that shows nearby transit options at [coordinate].
   static MoovitViewAction view({
     required final Coordinate coordinate,
+    final String partnerId = 'deeplink_x',
     final bool fallbackToStore = false,
   }) =>
       MoovitViewAction(
         coordinate: coordinate,
+        partnerId: partnerId,
         fallbackToStore: fallbackToStore,
       );
 
@@ -55,6 +57,7 @@ class Moovit extends App implements DownloadableApp {
     final Coordinate? origin,
     final String? destinationTitle,
     final String? originTitle,
+    final String partnerId = 'deeplink_x',
     final bool fallbackToStore = false,
   }) =>
       MoovitDirectionsWithCoordsAction(
@@ -62,6 +65,7 @@ class Moovit extends App implements DownloadableApp {
         origin: origin,
         destinationTitle: destinationTitle,
         originTitle: originTitle,
+        partnerId: partnerId,
         fallbackToStore: fallbackToStore,
       );
 }
@@ -72,11 +76,15 @@ class MoovitViewAction extends Moovit implements IntentAppLinkAction, AppLinkApp
   MoovitViewAction({
     required this.coordinate,
     required super.fallbackToStore,
-  });
+    final String partnerId = 'deeplink_x',
+  }) : partnerId = _validatedPartnerId(partnerId);
 
   /// Coordinate to show nearby transit options for.
   @override
   final Coordinate coordinate;
+
+  /// Partner identifier required by Moovit deeplinks.
+  final String partnerId;
 
   @override
   Uri get appLink => Uri(
@@ -85,6 +93,7 @@ class MoovitViewAction extends Moovit implements IntentAppLinkAction, AppLinkApp
         queryParameters: {
           'lat': coordinate.latitude.toString(),
           'lon': coordinate.longitude.toString(),
+          'partner_id': partnerId,
         },
       );
 
@@ -110,7 +119,8 @@ class MoovitDirectionsWithCoordsAction extends Moovit
     required this.destinationTitle,
     required this.originTitle,
     required super.fallbackToStore,
-  });
+    final String partnerId = 'deeplink_x',
+  }) : partnerId = _validatedPartnerId(partnerId);
 
   /// Destination coordinate.
   @override
@@ -124,6 +134,9 @@ class MoovitDirectionsWithCoordsAction extends Moovit
 
   /// Optional origin label.
   final String? originTitle;
+
+  /// Partner identifier required by Moovit deeplinks.
+  final String partnerId;
 
   @override
   Uri get appLink {
@@ -141,6 +154,7 @@ class MoovitDirectionsWithCoordsAction extends Moovit
         if (routeOrigin != null) 'orig_lat': routeOrigin.latitude.toString(),
         if (routeOrigin != null) 'orig_lon': routeOrigin.longitude.toString(),
         if (routeOriginTitle != null) 'orig_name': routeOriginTitle,
+        'partner_id': partnerId,
       },
     );
   }
@@ -155,4 +169,11 @@ class MoovitDirectionsWithCoordsAction extends Moovit
 
   @override
   Uri get fallbackLink => website;
+}
+
+String _validatedPartnerId(final String partnerId) {
+  if (partnerId.trim().isEmpty) {
+    throw ArgumentError.value(partnerId, 'partnerId', 'must not be blank');
+  }
+  return partnerId;
 }

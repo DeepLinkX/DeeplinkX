@@ -39,6 +39,14 @@
 		<string>slack</string>
 		<string>comgooglemaps</string>
 		<string>waze</string>
+		<string>barcelona</string>
+		<string>neshan</string>
+		<string>iosamap</string>
+		<string>moovit</string>
+		<string>baidumap</string>
+		<string>dgis</string>
+		<string>yandexmaps</string>
+		<string>itms-apps</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

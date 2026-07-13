@@ -4,7 +4,7 @@ DeeplinkX supports Moovit's `moovit` URI scheme so Flutter apps can open nearby 
 
 ## References
 
-- Map Launcher open-source implementation of the same URI scheme: <https://github.com/mattermoran/map_launcher/blob/master/lib/src/marker_url.dart>
+- Moovit deeplinking documentation: <https://moovit.com/developers/deeplinking/>
 - Moovit App Store listing: <https://apps.apple.com/us/app/moovit-bus-transit-tracker/id498477945>
 
 ## Available Actions
@@ -22,6 +22,7 @@ await deeplinkX.launchApp(Moovit.open());
 await deeplinkX.launchAction(
   Moovit.view(
     coordinate: const Coordinate(latitude: 40.7128, longitude: -74.0060),
+    partnerId: 'my_flutter_app',
   ),
 );
 ```
@@ -63,8 +64,11 @@ Allow querying the package in `android/app/src/main/AndroidManifest.xml`:
 
 ## URI Formats
 
-- View map: `moovit://nearby?lat={latitude}&lon={longitude}`
-- Directions: `moovit://directions?dest_lat={destinationLatitude}&dest_lon={destinationLongitude}&dest_name={destinationTitle}&orig_lat={originLatitude}&orig_lon={originLongitude}&orig_name={originTitle}`
+- View map: `moovit://nearby?lat={latitude}&lon={longitude}&partner_id={partnerId}`
+- Directions: `moovit://directions?dest_lat={destinationLatitude}&dest_lon={destinationLongitude}&dest_name={destinationTitle}&orig_lat={originLatitude}&orig_lon={originLongitude}&orig_name={originTitle}&partner_id={partnerId}`
+
+`partnerId` is optional and defaults to `deeplink_x`. DeeplinkX emits Moovit's
+documented `partner_id` on nearby and directions actions.
 
 ## Fallback Behavior
 

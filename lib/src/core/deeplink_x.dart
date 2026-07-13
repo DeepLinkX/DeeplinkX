@@ -52,9 +52,7 @@ class DeeplinkX {
               return true;
             }
           }
-        }
-
-        if (action is AppLinkAppAction) {
+        } else if (action is AppLinkAppAction) {
           final isLaunched = await _launcherUtil.launchUrl(action.appLink);
           if (isLaunched) {
             return true;

@@ -260,7 +260,10 @@ class YandexMapsOpenMapAction extends YandexMaps implements IntentAppLinkAction,
     this.viewport,
     this.layer = YandexMapsMapLayer.map,
     this.showTraffic = false,
-  });
+  }) {
+    _validateZoom(zoom);
+    _validateViewport(viewport);
+  }
 
   /// Optional map center.
   final Coordinate? center;
@@ -307,7 +310,9 @@ class YandexMapsViewAction extends YandexMaps implements IntentAppLinkAction, Fa
     this.zoom,
     this.layer = YandexMapsMapLayer.map,
     this.showTraffic = false,
-  });
+  }) {
+    _validateZoom(zoom);
+  }
 
   /// Coordinate to display as a placemark.
   @override
@@ -353,7 +358,10 @@ class YandexMapsSearchAction extends YandexMaps implements IntentAppLinkAction, 
     this.viewport,
     this.layer = YandexMapsMapLayer.map,
     this.showTraffic = false,
-  });
+  }) {
+    _validateZoom(zoom);
+    _validateViewport(viewport);
+  }
 
   /// Search query.
   @override
@@ -402,7 +410,15 @@ class YandexMapsOrganizationAction extends YandexMaps implements IntentAppLinkAc
   YandexMapsOrganizationAction({
     required this.objectId,
     required super.fallbackToStore,
-  });
+  }) {
+    if (!RegExp(r'^\d+$').hasMatch(objectId)) {
+      throw ArgumentError.value(
+        objectId,
+        'objectId',
+        'must contain only digits',
+      );
+    }
+  }
 
   /// Yandex organization ID.
   final String objectId;
@@ -430,7 +446,9 @@ class YandexMapsWhatIsHereAction extends YandexMaps implements IntentAppLinkActi
     required this.coordinate,
     required this.zoom,
     required super.fallbackToStore,
-  });
+  }) {
+    _validateZoom(zoom);
+  }
 
   /// Object coordinate.
   final Coordinate coordinate;
@@ -480,7 +498,7 @@ class YandexMapsDirectionsWithCoordsAction extends YandexMaps
 
   Map<String, String> get _queryParameters => {
         'rtext': [
-          if (origin != null) _latLng(origin!),
+          if (origin != null) _latLng(origin!) else '',
           for (final waypoint in waypoints) _latLng(waypoint.coordinate),
           _latLng(destination),
         ].join('~'),
@@ -505,7 +523,10 @@ class YandexMapsPanoramaAction extends YandexMaps implements IntentAppLinkAction
     required super.fallbackToStore,
     this.direction,
     this.span,
-  });
+  }) {
+    _validatePanoramaDirection(direction);
+    _validatePanoramaSpan(span);
+  }
 
   /// Panorama coordinate.
   final Coordinate coordinate;
@@ -581,3 +602,56 @@ AndroidIntentOption _androidIntentOptions(final IntentAppLinkAction action) => A
       package: 'ru.yandex.yandexmaps',
       flags: const [0x10000000],
     );
+
+void _validateZoom(final int? zoom) {
+  if (zoom != null && (zoom < 1 || zoom > 18)) {
+    throw ArgumentError.value(
+      zoom,
+      'zoom',
+      'must be between 1 and 18 for Yandex Maps mobile URLs',
+    );
+  }
+}
+
+void _validateViewport(final YandexMapsViewport? viewport) {
+  if (viewport == null) {
+    return;
+  }
+  if (!_isPositiveFinite(viewport.longitudeDelta) || !_isPositiveFinite(viewport.latitudeDelta)) {
+    throw ArgumentError.value(
+      viewport,
+      'viewport',
+      'longitudeDelta and latitudeDelta must be positive finite values',
+    );
+  }
+}
+
+void _validatePanoramaDirection(final YandexMapsPanoramaDirection? direction) {
+  if (direction == null) {
+    return;
+  }
+  if (!_isAngle(direction.azimuth) || !_isAngle(direction.elevation)) {
+    throw ArgumentError.value(
+      direction,
+      'direction',
+      'azimuth and elevation must be finite values between 0 and 360',
+    );
+  }
+}
+
+void _validatePanoramaSpan(final YandexMapsPanoramaSpan? span) {
+  if (span == null) {
+    return;
+  }
+  if (!_isPositiveFinite(span.horizontal) || !_isPositiveFinite(span.vertical)) {
+    throw ArgumentError.value(
+      span,
+      'span',
+      'horizontal and vertical must be positive finite values',
+    );
+  }
+}
+
+bool _isPositiveFinite(final double value) => value.isFinite && value > 0;
+
+bool _isAngle(final double value) => value.isFinite && value >= 0 && value <= 360;

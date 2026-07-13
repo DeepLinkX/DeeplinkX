@@ -88,7 +88,12 @@ void main() {
 
       test('Threads', () {
         final action = Threads.open();
+        final searchAction = Threads.search(query: 'flutter');
+        final tagAction = Threads.openTag(tag: 'flutter');
+
         expect(action, isA<App>());
+        expect(searchAction, isA<ThreadsSearchAction>());
+        expect(tagAction, isA<ThreadsOpenTagAction>());
       });
 
       test('TikTok', () {
