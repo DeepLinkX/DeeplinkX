@@ -1,3 +1,8 @@
+## Unreleased
+
+* Expanded the example app with nine real-world use cases for store and map selection, social support, ratings, sharing, installation checks, collaboration, promoted app CTAs, and fallback behavior.
+* Added missing Sygic and Apple Maps visibility declarations required by the example's installation checks.
+
 ## 1.3.9
 
 * Added verified Threads search and topic-tag actions with native Android/iOS links and web fallbacks.

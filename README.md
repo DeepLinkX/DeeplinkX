@@ -101,6 +101,8 @@ That's the whole flow — DeeplinkX resolves the platform, checks installation, 
 
 Try the [live web demo](https://deeplinkx.github.io/DeeplinkX/), or run the example on a real device for the full experience — installation checks need a native platform.
 
+Alongside the individual app and store pages, the example includes real-world flows for app updates, automatic store and map selection, support links, ratings, sharing, installation checks, meetings and communities, promoted app CTAs, and fallback-policy exploration.
+
 <table>
   <tr>
     <td align="center">

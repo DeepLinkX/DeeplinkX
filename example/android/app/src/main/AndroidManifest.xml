@@ -60,6 +60,8 @@
         <package android:name="com.google.android.apps.maps" />
         <!-- Waze -->
         <package android:name="com.waze" />
+        <!-- Sygic -->
+        <package android:name="com.sygic.aura" />
         <!-- Neshan -->
         <package android:name="org.rajman.neshan.traffic.tehran.navigator" />
         <!-- Amap -->

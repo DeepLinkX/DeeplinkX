@@ -39,6 +39,8 @@
 		<string>slack</string>
 		<string>comgooglemaps</string>
 		<string>waze</string>
+		<string>maps</string>
+		<string>com.sygic.aura</string>
 		<string>barcelona</string>
 		<string>neshan</string>
 		<string>iosamap</string>

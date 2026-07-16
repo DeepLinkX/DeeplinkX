@@ -27,15 +27,27 @@ import 'package:deeplink_x_example/pages/whatsapp_page.dart';
 import 'package:deeplink_x_example/pages/yandex_maps_page.dart';
 import 'package:deeplink_x_example/pages/youtube_page.dart';
 import 'package:deeplink_x_example/pages/zoom_page.dart';
+import 'package:deeplink_x_example/use_cases/about_support_page.dart';
+import 'package:deeplink_x_example/use_cases/fallback_playground_page.dart';
+import 'package:deeplink_x_example/use_cases/installed_apps_page.dart';
+import 'package:deeplink_x_example/use_cases/map_selector_page.dart';
+import 'package:deeplink_x_example/use_cases/meeting_community_page.dart';
+import 'package:deeplink_x_example/use_cases/promoted_app_page.dart';
+import 'package:deeplink_x_example/use_cases/rate_review_page.dart';
+import 'package:deeplink_x_example/use_cases/share_message_page.dart';
+import 'package:deeplink_x_example/use_cases/update_app_page.dart';
+import 'package:deeplink_x_example/use_cases/use_case_support.dart';
 import 'package:flutter/material.dart';
 
 /// Simple model describing an example page.
 class _DemoItem {
-  const _DemoItem({required this.title, required this.assetName, required this.builder});
+  const _DemoItem({required this.title, required this.builder, this.assetName, this.icon})
+    : assert(assetName != null || icon != null, 'An asset or icon is required.');
 
   final String title;
-  final String assetName;
   final WidgetBuilder builder;
+  final String? assetName;
+  final IconData? icon;
 }
 
 // List of application demos.
@@ -75,7 +87,20 @@ final _stores = <_DemoItem>[
   _DemoItem(title: 'Myket', assetName: 'assets/myket.png', builder: (_) => const MyketPage()),
 ];
 
-List<_DemoItem> get _allItems => <_DemoItem>[..._apps, ..._stores];
+// List of real-world use cases.
+final _useCases = <_DemoItem>[
+  _DemoItem(title: 'Update App', icon: Icons.system_update, builder: (_) => const UpdateAppPage()),
+  _DemoItem(title: 'About & Support', icon: Icons.contact_support, builder: (_) => const AboutSupportPage()),
+  _DemoItem(title: 'Map Selector', icon: Icons.map, builder: (_) => const MapSelectorPage()),
+  _DemoItem(title: 'Rate & Review', icon: Icons.star_rate, builder: (_) => const RateReviewPage()),
+  _DemoItem(title: 'Share & Message', icon: Icons.share, builder: (_) => const ShareMessagePage()),
+  _DemoItem(title: 'Installed Apps', icon: Icons.install_mobile, builder: (_) => const InstalledAppsPage()),
+  _DemoItem(title: 'Meeting & Community', icon: Icons.groups, builder: (_) => const MeetingCommunityPage()),
+  _DemoItem(title: 'Promoted App CTA', icon: Icons.campaign, builder: (_) => const PromotedAppPage()),
+  _DemoItem(title: 'Fallback Playground', icon: Icons.science, builder: (_) => const FallbackPlaygroundPage()),
+];
+
+List<_DemoItem> get _allItems => <_DemoItem>[..._apps, ..._stores, ..._useCases];
 
 /// Displays a list of available deeplink examples.
 class HomePage extends StatefulWidget {
@@ -107,6 +132,8 @@ class _HomePageState extends State<HomePage> {
           _buildSection(context, 'Apps', _apps),
           const SizedBox(height: 24),
           _buildSection(context, 'Stores', _stores),
+          const SizedBox(height: 24),
+          _buildSection(context, 'Use Cases', _useCases),
         ],
       ),
     ),
@@ -155,7 +182,7 @@ class _HomePageState extends State<HomePage> {
           actions: [IconButton(icon: const Icon(Icons.grid_view), onPressed: _toggle)],
           bottom: TabBar(
             isScrollable: true,
-            tabs: [for (final item in items) Tab(icon: _Logo(assetName: item.assetName), text: item.title)],
+            tabs: [for (final item in items) Tab(icon: _DemoLeading(item: item, size: 24), text: item.title)],
           ),
         ),
         body: TabBarView(children: [for (final item in items) item.builder(context)]),
@@ -178,7 +205,7 @@ class _GridItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _Logo(assetName: item.assetName, size: 40),
+            _DemoLeading(item: item, size: 40),
             const SizedBox(height: 8),
             Text(item.title, textAlign: TextAlign.center),
           ],
@@ -188,17 +215,12 @@ class _GridItem extends StatelessWidget {
   );
 }
 
-class _Logo extends StatelessWidget {
-  const _Logo({required this.assetName, this.size = 24});
+class _DemoLeading extends StatelessWidget {
+  const _DemoLeading({required this.item, required this.size});
 
-  final String assetName;
+  final _DemoItem item;
   final double size;
 
   @override
-  Widget build(final BuildContext context) => Image.asset(
-    assetName,
-    height: size,
-    width: size,
-    errorBuilder: (final context, final error, final stackTrace) => Icon(Icons.broken_image, size: size),
-  );
+  Widget build(final BuildContext context) => UseCaseLeading(assetName: item.assetName, icon: item.icon, size: size);
 }
