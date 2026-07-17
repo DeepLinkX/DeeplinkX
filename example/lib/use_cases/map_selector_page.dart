@@ -1,5 +1,10 @@
 import 'package:deeplink_x/deeplink_x.dart';
+import 'package:deeplink_x_example/theme/app_theme.dart';
 import 'package:deeplink_x_example/use_cases/use_case_support.dart';
+import 'package:deeplink_x_example/widgets/blocks.dart';
+import 'package:deeplink_x_example/widgets/buttons.dart';
+import 'package:deeplink_x_example/widgets/inputs.dart';
+import 'package:deeplink_x_example/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 
 /// Demonstrates automatic and manual navigation-app selection.
@@ -130,48 +135,59 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
             actions: options.map((final option) => option.app).toList(),
           ),
       onSelected: _deeplinkX.launchAction,
+      pickLabel: 'Or pick a provider',
     );
   }
 
   @override
-  Widget build(final BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Map Selector')),
-    body: ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        Text('Navigate to coordinates', style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 8),
-        const Text('Enter a destination, then choose a map provider or let DeeplinkX select automatically.'),
-        const SizedBox(height: 20),
-        Row(
+  Widget build(final BuildContext context) {
+    final palette = context.palette;
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
           children: [
+            const ScreenHeader(title: 'Map Selector'),
             Expanded(
-              child: TextField(
-                key: const ValueKey('map-latitude'),
-                controller: _latitudeController,
-                decoration: const InputDecoration(labelText: 'Latitude', border: OutlineInputBorder()),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: TextField(
-                key: const ValueKey('map-longitude'),
-                controller: _longitudeController,
-                decoration: const InputDecoration(labelText: 'Longitude', border: OutlineInputBorder()),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
+                children: [
+                  const TitleBlock(
+                    title: 'Navigate to coordinates',
+                    description:
+                        'Enter a destination, then choose a map provider or let DeeplinkX select automatically.',
+                  ),
+                  const SizedBox(height: 12),
+                  InputsRow(
+                    children: [
+                      LabeledField(
+                        key: const ValueKey('map-latitude'),
+                        label: 'Latitude',
+                        controller: _latitudeController,
+                        fillColor: palette.card,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                      ),
+                      LabeledField(
+                        key: const ValueKey('map-longitude'),
+                        label: 'Longitude',
+                        controller: _longitudeController,
+                        fillColor: palette.card,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  AccentButton(
+                    key: const ValueKey('open-map-selector'),
+                    label: 'Choose navigation app',
+                    icon: Icons.directions_rounded,
+                    onPressed: _showMaps,
+                  ),
+                ],
               ),
             ),
           ],
         ),
-        const SizedBox(height: 16),
-        FilledButton.icon(
-          key: const ValueKey('open-map-selector'),
-          onPressed: _showMaps,
-          icon: const Icon(Icons.directions),
-          label: const Text('Choose navigation app'),
-        ),
-      ],
-    ),
-  );
+      ),
+    );
+  }
 }

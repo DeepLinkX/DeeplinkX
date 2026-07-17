@@ -41,8 +41,8 @@ When introducing a new navigation app (e.g. Maps providers), follow this checkli
    - Keep README code snippets aligned with public API names and constructor parameters.
 
 3. **Example App**
-   - Provide a sample page in `example/lib/pages/` that demonstrates all supported actions.
-   - Add the page to the grid/list in `example/lib/home.dart` and include required assets.
+   - Add an `AppSpec` entry to `example/lib/catalog/map_apps.dart` (or `social_apps.dart` / `stores.dart`) covering all supported actions with real API labels and sensible default inputs; the home gallery and detail screen are generated from the catalog.
+   - Include the required logo asset under `example/assets/` and keep `example/test/catalog_test.dart` counts passing.
    - Add every required app and store scheme to `example/ios/Runner/Info.plist` under `LSApplicationQueriesSchemes`.
    - Add every required package and intent visibility query to `example/android/app/src/main/AndroidManifest.xml`.
    - Avoid duplicate platform entries and verify both example configuration files after updating them.

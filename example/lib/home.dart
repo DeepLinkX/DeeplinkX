@@ -1,32 +1,6 @@
-import 'package:deeplink_x_example/pages/amap_page.dart';
-import 'package:deeplink_x_example/pages/apple_maps_page.dart';
-import 'package:deeplink_x_example/pages/baidu_maps_page.dart';
-import 'package:deeplink_x_example/pages/cafe_bazaar_page.dart';
-import 'package:deeplink_x_example/pages/facebook_page.dart';
-import 'package:deeplink_x_example/pages/google_maps_page.dart';
-import 'package:deeplink_x_example/pages/huawei_app_gallery_page.dart';
-import 'package:deeplink_x_example/pages/instagram_page.dart';
-import 'package:deeplink_x_example/pages/ios_app_store_page.dart';
-import 'package:deeplink_x_example/pages/linkedin_page.dart';
-import 'package:deeplink_x_example/pages/mac_app_store_page.dart';
-import 'package:deeplink_x_example/pages/microsoft_store_page.dart';
-import 'package:deeplink_x_example/pages/moovit_page.dart';
-import 'package:deeplink_x_example/pages/myket_page.dart';
-import 'package:deeplink_x_example/pages/neshan_page.dart';
-import 'package:deeplink_x_example/pages/pinterest_page.dart';
-import 'package:deeplink_x_example/pages/play_store_page.dart';
-import 'package:deeplink_x_example/pages/slack_page.dart';
-import 'package:deeplink_x_example/pages/sygic_page.dart';
-import 'package:deeplink_x_example/pages/telegram_page.dart';
-import 'package:deeplink_x_example/pages/threads_page.dart';
-import 'package:deeplink_x_example/pages/tiktok_page.dart';
-import 'package:deeplink_x_example/pages/twitter_page.dart';
-import 'package:deeplink_x_example/pages/two_gis_page.dart';
-import 'package:deeplink_x_example/pages/waze_page.dart';
-import 'package:deeplink_x_example/pages/whatsapp_page.dart';
-import 'package:deeplink_x_example/pages/yandex_maps_page.dart';
-import 'package:deeplink_x_example/pages/youtube_page.dart';
-import 'package:deeplink_x_example/pages/zoom_page.dart';
+import 'package:deeplink_x_example/catalog/catalog.dart';
+import 'package:deeplink_x_example/catalog/detail_page.dart';
+import 'package:deeplink_x_example/theme/app_theme.dart';
 import 'package:deeplink_x_example/use_cases/about_support_page.dart';
 import 'package:deeplink_x_example/use_cases/fallback_playground_page.dart';
 import 'package:deeplink_x_example/use_cases/installed_apps_page.dart';
@@ -36,191 +10,293 @@ import 'package:deeplink_x_example/use_cases/promoted_app_page.dart';
 import 'package:deeplink_x_example/use_cases/rate_review_page.dart';
 import 'package:deeplink_x_example/use_cases/share_message_page.dart';
 import 'package:deeplink_x_example/use_cases/update_app_page.dart';
-import 'package:deeplink_x_example/use_cases/use_case_support.dart';
+import 'package:deeplink_x_example/widgets/pill_chip.dart';
+import 'package:deeplink_x_example/widgets/screen_header.dart';
+import 'package:deeplink_x_example/widgets/section_header.dart';
+import 'package:deeplink_x_example/widgets/tiles.dart';
 import 'package:flutter/material.dart';
 
-/// Simple model describing an example page.
-class _DemoItem {
-  const _DemoItem({required this.title, required this.builder, this.assetName, this.icon})
-    : assert(assetName != null || icon != null, 'An asset or icon is required.');
+/// Real-world use-case demo entry.
+class _UseCaseItem {
+  const _UseCaseItem({required this.title, required this.description, required this.icon, required this.builder});
 
   final String title;
+  final String description;
+  final IconData icon;
   final WidgetBuilder builder;
-  final String? assetName;
-  final IconData? icon;
 }
 
-// List of application demos.
-final _apps = <_DemoItem>[
-  _DemoItem(title: 'Instagram', assetName: 'assets/instagram.png', builder: (_) => const InstagramPage()),
-  _DemoItem(title: 'Telegram', assetName: 'assets/telegram.png', builder: (_) => const TelegramPage()),
-  _DemoItem(title: 'WhatsApp', assetName: 'assets/whatsapp.png', builder: (_) => const WhatsAppPage()),
-  _DemoItem(title: 'Facebook', assetName: 'assets/facebook.png', builder: (_) => const FacebookPage()),
-  _DemoItem(title: 'LinkedIn', assetName: 'assets/linkedin.png', builder: (_) => const LinkedInPage()),
-  _DemoItem(title: 'YouTube', assetName: 'assets/youtube.png', builder: (_) => const YouTubePage()),
-  _DemoItem(title: 'Twitter', assetName: 'assets/twitter.png', builder: (_) => const TwitterPage()),
-  _DemoItem(title: 'Threads', assetName: 'assets/threads.png', builder: (_) => const ThreadsPage()),
-  _DemoItem(title: 'Pinterest', assetName: 'assets/pinterest.png', builder: (_) => const PinterestPage()),
-  _DemoItem(title: 'TikTok', assetName: 'assets/tiktok.png', builder: (_) => const TikTokPage()),
-  _DemoItem(title: 'Zoom', assetName: 'assets/zoom.png', builder: (_) => const ZoomPage()),
-  _DemoItem(title: 'Slack', assetName: 'assets/slack.png', builder: (_) => const SlackPage()),
-  _DemoItem(title: 'Google Maps', assetName: 'assets/google_maps.png', builder: (_) => const GoogleMapsPage()),
-  _DemoItem(title: 'Amap', assetName: 'assets/amap.png', builder: (_) => const AmapPage()),
-  _DemoItem(title: 'Baidu Maps', assetName: 'assets/baidu_maps.png', builder: (_) => const BaiduMapsPage()),
-  _DemoItem(title: '2GIS', assetName: 'assets/2gis.png', builder: (_) => const TwoGisPage()),
-  _DemoItem(title: 'Waze', assetName: 'assets/waze.png', builder: (_) => const WazePage()),
-  _DemoItem(title: 'Apple Maps', assetName: 'assets/apple_maps.png', builder: (_) => const AppleMapsPage()),
-  _DemoItem(title: 'Sygic', assetName: 'assets/sygic.png', builder: (_) => const SygicPage()),
-  _DemoItem(title: 'Moovit', assetName: 'assets/moovit.png', builder: (_) => const MoovitPage()),
-  _DemoItem(title: 'Neshan', assetName: 'assets/neshan.png', builder: (_) => const NeshanPage()),
-  _DemoItem(title: 'Yandex Maps', assetName: 'assets/yandex_maps.png', builder: (_) => const YandexMapsPage()),
+final _useCases = <_UseCaseItem>[
+  _UseCaseItem(
+    title: 'Update App',
+    description: 'Store selection for app updates',
+    icon: Icons.system_update_rounded,
+    builder: (_) => const UpdateAppPage(),
+  ),
+  _UseCaseItem(
+    title: 'About & Support',
+    description: 'Social links, native + web',
+    icon: Icons.contact_support_rounded,
+    builder: (_) => const AboutSupportPage(),
+  ),
+  _UseCaseItem(
+    title: 'Map Selector',
+    description: 'Directions across 10 providers',
+    icon: Icons.map_rounded,
+    builder: (_) => const MapSelectorPage(),
+  ),
+  _UseCaseItem(
+    title: 'Rate & Review',
+    description: 'Direct rating links',
+    icon: Icons.star_rate_rounded,
+    builder: (_) => const RateReviewPage(),
+  ),
+  _UseCaseItem(
+    title: 'Share & Message',
+    description: 'WhatsApp shares, Telegram messages',
+    icon: Icons.share_rounded,
+    builder: (_) => const ShareMessagePage(),
+  ),
+  _UseCaseItem(
+    title: 'Installed Apps',
+    description: 'Installation checks',
+    icon: Icons.install_mobile_rounded,
+    builder: (_) => const InstalledAppsPage(),
+  ),
+  _UseCaseItem(
+    title: 'Meeting & Community',
+    description: 'Zoom meetings, Slack channels',
+    icon: Icons.groups_rounded,
+    builder: (_) => const MeetingCommunityPage(),
+  ),
+  _UseCaseItem(
+    title: 'Promoted App CTA',
+    description: 'Tracked store redirects',
+    icon: Icons.campaign_rounded,
+    builder: (_) => const PromotedAppPage(),
+  ),
+  _UseCaseItem(
+    title: 'Fallback Playground',
+    description: 'Native, web, store policies',
+    icon: Icons.science_rounded,
+    builder: (_) => const FallbackPlaygroundPage(),
+  ),
 ];
 
-// List of store demos.
-final _stores = <_DemoItem>[
-  _DemoItem(title: 'Play Store', assetName: 'assets/google_play.png', builder: (_) => const PlayStorePage()),
-  _DemoItem(title: 'iOS App Store', assetName: 'assets/apple.png', builder: (_) => const IOSAppStorePage()),
-  _DemoItem(title: 'Mac App Store', assetName: 'assets/apple.png', builder: (_) => const MacAppStorePage()),
-  _DemoItem(title: 'Microsoft Store', assetName: 'assets/microsoft.png', builder: (_) => const MicrosoftStorePage()),
-  _DemoItem(title: 'Huawei AppGallery', assetName: 'assets/huawei.png', builder: (_) => const HuaweiAppGalleryPage()),
-  _DemoItem(title: 'Cafe Bazaar', assetName: 'assets/cafe_bazaar.png', builder: (_) => const CafeBazaarPage()),
-  _DemoItem(title: 'Myket', assetName: 'assets/myket.png', builder: (_) => const MyketPage()),
-];
+enum _HomeFilter { useCases, apps, stores }
 
-// List of real-world use cases.
-final _useCases = <_DemoItem>[
-  _DemoItem(title: 'Update App', icon: Icons.system_update, builder: (_) => const UpdateAppPage()),
-  _DemoItem(title: 'About & Support', icon: Icons.contact_support, builder: (_) => const AboutSupportPage()),
-  _DemoItem(title: 'Map Selector', icon: Icons.map, builder: (_) => const MapSelectorPage()),
-  _DemoItem(title: 'Rate & Review', icon: Icons.star_rate, builder: (_) => const RateReviewPage()),
-  _DemoItem(title: 'Share & Message', icon: Icons.share, builder: (_) => const ShareMessagePage()),
-  _DemoItem(title: 'Installed Apps', icon: Icons.install_mobile, builder: (_) => const InstalledAppsPage()),
-  _DemoItem(title: 'Meeting & Community', icon: Icons.groups, builder: (_) => const MeetingCommunityPage()),
-  _DemoItem(title: 'Promoted App CTA', icon: Icons.campaign, builder: (_) => const PromotedAppPage()),
-  _DemoItem(title: 'Fallback Playground', icon: Icons.science, builder: (_) => const FallbackPlaygroundPage()),
-];
-
-List<_DemoItem> get _allItems => <_DemoItem>[..._apps, ..._stores, ..._useCases];
-
-/// Displays a list of available deeplink examples.
+/// Home gallery listing use cases, apps, and stores with filter chips.
 class HomePage extends StatefulWidget {
   /// Creates the home page.
-  const HomePage({super.key});
+  const HomePage({this.themeController, super.key});
+
+  /// Controller backing the header theme toggle; optional so tests can pump
+  /// the page without an app-level controller.
+  final ThemeController? themeController;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _useGrid = true;
+  _HomeFilter? _filter;
 
-  void _toggle() => setState(() => _useGrid = !_useGrid);
+  void _toggleFilter(final _HomeFilter filter) => setState(() => _filter = _filter == filter ? null : filter);
+
+  void _open(final WidgetBuilder builder) {
+    Navigator.of(context).push(MaterialPageRoute<void>(builder: builder));
+  }
+
+  Brightness _effectiveBrightness() =>
+      widget.themeController?.effectiveBrightness(context) ?? Theme.of(context).brightness;
 
   @override
-  Widget build(final BuildContext context) => _useGrid ? _buildGridScaffold() : _buildTabScaffold();
-
-  Scaffold _buildGridScaffold() => Scaffold(
-    appBar: AppBar(
-      title: const Text('DeeplinkX Example'),
-      actions: [IconButton(icon: const Icon(Icons.view_week), onPressed: _toggle)],
-    ),
-    body: SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSection(context, 'Apps', _apps),
-          const SizedBox(height: 24),
-          _buildSection(context, 'Stores', _stores),
-          const SizedBox(height: 24),
-          _buildSection(context, 'Use Cases', _useCases),
-        ],
-      ),
-    ),
-  );
-
-  Widget _buildSection(final BuildContext context, final String title, final List<_DemoItem> items) {
-    final crossAxisCount = _calculateCrossAxisCount(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 8),
-        GridView.count(
-          crossAxisCount: crossAxisCount,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
-          children: [for (final item in items) _GridItem(item: item)],
-        ),
-      ],
-    );
-  }
-
-  int _calculateCrossAxisCount(final BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    if (width >= 1200) {
-      return 6;
-    }
-    if (width >= 900) {
-      return 5;
-    }
-    if (width >= 600) {
-      return 4;
-    }
-    return 3;
-  }
-
-  Widget _buildTabScaffold() {
-    final items = _allItems;
-    return DefaultTabController(
-      length: items.length,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('DeeplinkX Example'),
-          actions: [IconButton(icon: const Icon(Icons.grid_view), onPressed: _toggle)],
-          bottom: TabBar(
-            isScrollable: true,
-            tabs: [for (final item in items) Tab(icon: _DemoLeading(item: item, size: 24), text: item.title)],
+  Widget build(final BuildContext context) {
+    final palette = context.palette;
+    final filter = _filter;
+    final showHeaders = filter == null;
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(9),
+                      child: Image.asset('assets/deeplink_x_logo.jpg', width: 34, height: 34, fit: BoxFit.cover),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'DeeplinkX',
+                            style: TextStyle(
+                              fontSize: 16.5,
+                              fontWeight: FontWeight.w700,
+                              color: palette.text,
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                          Text('Example gallery', style: TextStyle(fontSize: 11.5, color: palette.faint)),
+                        ],
+                      ),
+                    ),
+                    HeaderIconButton(
+                      icon:
+                          _effectiveBrightness() == Brightness.dark
+                              ? Icons.light_mode_rounded
+                              : Icons.dark_mode_rounded,
+                      color: palette.sub,
+                      tooltip: 'Toggle theme',
+                      onPressed: () => widget.themeController?.toggle(context),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 6, 20, 16),
+                child: Row(
+                  children: [
+                    PillChip(
+                      key: const ValueKey('filter-use-cases'),
+                      label: 'Use cases',
+                      selected: filter == _HomeFilter.useCases,
+                      onTap: () => _toggleFilter(_HomeFilter.useCases),
+                    ),
+                    const SizedBox(width: 8),
+                    PillChip(
+                      key: const ValueKey('filter-apps'),
+                      label: 'Apps',
+                      selected: filter == _HomeFilter.apps,
+                      onTap: () => _toggleFilter(_HomeFilter.apps),
+                    ),
+                    const SizedBox(width: 8),
+                    PillChip(
+                      key: const ValueKey('filter-stores'),
+                      label: 'Stores',
+                      selected: filter == _HomeFilter.stores,
+                      onTap: () => _toggleFilter(_HomeFilter.stores),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (filter == null || filter == _HomeFilter.useCases) ...[
+                      if (showHeaders) ...[
+                        SectionHeader(
+                          title: 'Use cases',
+                          linkLabel: 'View all ${_useCases.length}',
+                          onLinkTap: () => _toggleFilter(_HomeFilter.useCases),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                      _GridRows(
+                        columns: 2,
+                        children: [
+                          for (final useCase in _useCases.take(showHeaders ? 4 : _useCases.length))
+                            UseCaseCard(
+                              name: useCase.title,
+                              description: useCase.description,
+                              icon: useCase.icon,
+                              onTap: () => _open(useCase.builder),
+                            ),
+                        ],
+                      ),
+                      if (filter == null) const SizedBox(height: 20),
+                    ],
+                    if (filter == null || filter == _HomeFilter.apps) ...[
+                      if (showHeaders) ...[
+                        SectionHeader(
+                          title: 'Apps',
+                          linkLabel: 'View all ${catalogApps.length}',
+                          onLinkTap: () => _toggleFilter(_HomeFilter.apps),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                      _GridRows(
+                        columns: 4,
+                        children: [
+                          for (final spec in catalogApps.take(showHeaders ? 8 : catalogApps.length))
+                            AppTile(
+                              name: spec.name,
+                              assetName: spec.assetName,
+                              onTap: () => _open((_) => DetailPage(spec: spec)),
+                            ),
+                        ],
+                      ),
+                      if (filter == null) const SizedBox(height: 20),
+                    ],
+                    if (filter == null || filter == _HomeFilter.stores) ...[
+                      if (showHeaders) ...[
+                        SectionHeader(
+                          title: 'Stores',
+                          linkLabel: 'View all ${catalogStores.length}',
+                          onLinkTap: () => _toggleFilter(_HomeFilter.stores),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                      _GridRows(
+                        columns: 4,
+                        children: [
+                          for (final spec in catalogStores.take(showHeaders ? 4 : catalogStores.length))
+                            AppTile(
+                              name: spec.name,
+                              assetName: spec.assetName,
+                              onTap: () => _open((_) => DetailPage(spec: spec)),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        body: TabBarView(children: [for (final item in items) item.builder(context)]),
       ),
     );
   }
 }
 
-class _GridItem extends StatelessWidget {
-  const _GridItem({required this.item});
+/// Fixed-column grid built from rows so tiles keep their natural height and
+/// stay equal-height per row on any viewport width.
+class _GridRows extends StatelessWidget {
+  const _GridRows({required this.columns, required this.children});
 
-  final _DemoItem item;
+  final int columns;
+  final List<Widget> children;
 
   @override
-  Widget build(final BuildContext context) => Card(
-    clipBehavior: Clip.antiAlias,
-    child: InkWell(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: item.builder)),
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _DemoLeading(item: item, size: 40),
-            const SizedBox(height: 8),
-            Text(item.title, textAlign: TextAlign.center),
-          ],
+  Widget build(final BuildContext context) {
+    final rows = <Widget>[];
+    for (var start = 0; start < children.length; start += columns) {
+      if (start > 0) {
+        rows.add(const SizedBox(height: 10));
+      }
+      rows.add(
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var column = 0; column < columns; column++) ...[
+                if (column > 0) const SizedBox(width: 10),
+                Expanded(child: start + column < children.length ? children[start + column] : const SizedBox.shrink()),
+              ],
+            ],
+          ),
         ),
-      ),
-    ),
-  );
-}
-
-class _DemoLeading extends StatelessWidget {
-  const _DemoLeading({required this.item, required this.size});
-
-  final _DemoItem item;
-  final double size;
-
-  @override
-  Widget build(final BuildContext context) => UseCaseLeading(assetName: item.assetName, icon: item.icon, size: size);
+      );
+    }
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: rows);
+  }
 }

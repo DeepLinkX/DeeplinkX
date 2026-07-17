@@ -1,4 +1,8 @@
 import 'package:deeplink_x/deeplink_x.dart';
+import 'package:deeplink_x_example/theme/app_theme.dart';
+import 'package:deeplink_x_example/widgets/blocks.dart';
+import 'package:deeplink_x_example/widgets/icon_box.dart';
+import 'package:deeplink_x_example/widgets/list_row.dart';
 import 'package:flutter/material.dart';
 
 /// Describes an app-backed option displayed in a use-case selector.
@@ -56,6 +60,7 @@ Future<bool?> showLaunchSelector<T extends App>({
   required final List<LaunchOption<T>> options,
   required final Future<bool> Function() onAutomatic,
   required final Future<bool> Function(T app) onSelected,
+  final String pickLabel = 'Or pick an option',
 }) async {
   final result = await showModalBottomSheet<bool>(
     context: context,
@@ -71,6 +76,7 @@ Future<bool?> showLaunchSelector<T extends App>({
             options: options,
             onAutomatic: onAutomatic,
             onSelected: onSelected,
+            pickLabel: pickLabel,
           ),
         ),
   );
@@ -91,6 +97,7 @@ class LaunchSelectorSheet<T extends App> extends StatefulWidget {
     required this.options,
     required this.onAutomatic,
     required this.onSelected,
+    this.pickLabel = 'Or pick an option',
     super.key,
   });
 
@@ -111,6 +118,9 @@ class LaunchSelectorSheet<T extends App> extends StatefulWidget {
 
   /// Callback used by a manually selected option.
   final Future<bool> Function(T app) onSelected;
+
+  /// Uppercase label separating Automatic from the manual options.
+  final String pickLabel;
 
   @override
   State<LaunchSelectorSheet<T>> createState() => _LaunchSelectorSheetState<T>();
@@ -156,62 +166,122 @@ class _LaunchSelectorSheetState<T extends App> extends State<LaunchSelectorSheet
   }
 
   @override
-  Widget build(final BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      Padding(
-        padding: const EdgeInsets.fromLTRB(24, 20, 24, 12),
-        child: Row(
-          children: [
-            Expanded(child: Text(widget.title, style: Theme.of(context).textTheme.titleLarge)),
-            IconButton(
-              tooltip: 'Close',
-              onPressed: _launching ? null : () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.close),
+  Widget build(final BuildContext context) {
+    final palette = context.palette;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 8),
+            child: DecoratedBox(
+              decoration: BoxDecoration(color: palette.chev, borderRadius: BorderRadius.circular(2)),
+              child: const SizedBox(width: 36, height: 4),
             ),
-          ],
+          ),
         ),
-      ),
-      const Divider(height: 1),
-      Expanded(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          children: [
-            ListTile(
-              key: const ValueKey('selector-automatic'),
-              enabled: !_launching,
-              leading: const CircleAvatar(child: Icon(Icons.auto_awesome)),
-              title: const Text('Automatic'),
-              subtitle: Text(widget.automaticSubtitle),
-              trailing: _launching ? const _SmallProgressIndicator() : const Icon(Icons.chevron_right),
-              onTap: () => _launch(widget.onAutomatic),
-            ),
-            const Divider(),
-            if (widget.options.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(24),
-                child: Text('No manual options are configured for this use case.', textAlign: TextAlign.center),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 16.5,
+                    fontWeight: FontWeight.w700,
+                    color: palette.text,
+                    letterSpacing: -0.2,
+                  ),
+                ),
               ),
-            for (var index = 0; index < widget.options.length; index++)
-              _OptionTile<T>(
-                key: ValueKey('selector-${widget.options[index].id}'),
-                option: widget.options[index],
-                availability: _availability[index],
-                enabled: !_launching,
-                onTap: () => _launch(() => widget.onSelected(widget.options[index].app)),
+              IconButton(
+                tooltip: 'Close',
+                onPressed: _launching ? null : () => Navigator.of(context).pop(),
+                icon: Icon(Icons.close_rounded, size: 19, color: palette.faint),
               ),
-          ],
+            ],
+          ),
         ),
-      ),
-    ],
-  );
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 24),
+            children: [
+              Material(
+                color: palette.accentSoft,
+                borderRadius: BorderRadius.circular(14),
+                child: InkWell(
+                  key: const ValueKey('selector-automatic'),
+                  borderRadius: BorderRadius.circular(14),
+                  onTap: _launching ? null : () => _launch(widget.onAutomatic),
+                  child: Padding(
+                    padding: const EdgeInsets.all(13),
+                    child: Row(
+                      children: [
+                        IconBox(
+                          size: 38,
+                          radius: 11,
+                          color: palette.accent,
+                          child: const Icon(Icons.auto_awesome_rounded, size: 20, color: Colors.white),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Automatic',
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: palette.text),
+                              ),
+                              const SizedBox(height: 1),
+                              Text(
+                                widget.automaticSubtitle,
+                                style: TextStyle(fontSize: 11.5, color: palette.sub, height: 1.35),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        if (_launching)
+                          const _SmallProgressIndicator()
+                        else
+                          Icon(Icons.chevron_right_rounded, size: 18, color: palette.accentFg),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 2),
+              LabelText(widget.pickLabel),
+              const SizedBox(height: 4),
+              if (widget.options.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.all(24),
+                  child: Text('No manual options are configured for this use case.', textAlign: TextAlign.center),
+                ),
+              for (var index = 0; index < widget.options.length; index++)
+                _OptionRowFor<T>(
+                  key: ValueKey('selector-${widget.options[index].id}'),
+                  option: widget.options[index],
+                  availability: _availability[index],
+                  enabled: !_launching,
+                  showDivider: index < widget.options.length - 1,
+                  onTap: () => _launch(() => widget.onSelected(widget.options[index].app)),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }
 
-class _OptionTile<T extends App> extends StatelessWidget {
-  const _OptionTile({
+class _OptionRowFor<T extends App> extends StatelessWidget {
+  const _OptionRowFor({
     required this.option,
     required this.availability,
     required this.enabled,
+    required this.showDivider,
     required this.onTap,
     super.key,
   });
@@ -219,6 +289,7 @@ class _OptionTile<T extends App> extends StatelessWidget {
   final LaunchOption<T> option;
   final UseCaseAvailability availability;
   final bool enabled;
+  final bool showDivider;
   final VoidCallback onTap;
 
   String get _status => switch (availability) {
@@ -228,14 +299,23 @@ class _OptionTile<T extends App> extends StatelessWidget {
     UseCaseAvailability.unsupported => 'Not native on this platform • ${option.fallbackLabel}',
   };
 
+  Color? get _dotColor => switch (availability) {
+    UseCaseAvailability.loading => null,
+    UseCaseAvailability.installed => AppPalette.statusInstalled,
+    UseCaseAvailability.notInstalled => AppPalette.statusMissing,
+    UseCaseAvailability.unsupported => AppPalette.statusUnsupported,
+  };
+
   @override
-  Widget build(final BuildContext context) => ListTile(
+  Widget build(final BuildContext context) => OptionRow(
+    title: option.title,
+    assetName: option.assetName,
+    icon: option.icon,
+    statusText: _status,
+    statusDotColor: _dotColor,
     enabled: enabled,
-    leading: UseCaseLeading(assetName: option.assetName, icon: option.icon),
-    title: Text(option.title),
-    subtitle: Text(_status),
-    trailing:
-        availability == UseCaseAvailability.loading ? const _SmallProgressIndicator() : const Icon(Icons.chevron_right),
+    showDivider: showDivider,
+    trailing: availability == UseCaseAvailability.loading ? const _SmallProgressIndicator() : null,
     onTap: onTap,
   );
 }
@@ -259,12 +339,7 @@ class UseCaseLeading extends StatelessWidget {
   Widget build(final BuildContext context) {
     final assetName = this.assetName;
     if (assetName != null) {
-      return Image.asset(
-        assetName,
-        height: size,
-        width: size,
-        errorBuilder: (final context, final error, final stackTrace) => Icon(Icons.broken_image, size: size),
-      );
+      return AssetLogo(assetName: assetName, size: size);
     }
     return Icon(icon, size: size);
   }
@@ -288,4 +363,17 @@ void showLaunchResult(final BuildContext context, {required final bool succeeded
 /// Displays a standardized input validation message.
 void showInputError(final BuildContext context, final String message) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+}
+
+/// Displays a launch result for a detail-screen action, including the exact
+/// API label and whether store fallback was disabled for the attempt.
+void showActionResult(
+  final BuildContext context, {
+  required final bool succeeded,
+  required final String apiLabel,
+  required final bool fallbackEnabled,
+}) {
+  final prefix = succeeded ? 'Launch request succeeded' : 'Nothing could be launched';
+  final suffix = fallbackEnabled ? '' : ' · fallback disabled';
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$prefix · $apiLabel$suffix')));
 }

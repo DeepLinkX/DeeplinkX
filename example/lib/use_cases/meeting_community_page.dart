@@ -1,5 +1,8 @@
 import 'package:deeplink_x/deeplink_x.dart';
 import 'package:deeplink_x_example/use_cases/use_case_support.dart';
+import 'package:deeplink_x_example/widgets/blocks.dart';
+import 'package:deeplink_x_example/widgets/inputs.dart';
+import 'package:deeplink_x_example/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 
 /// Demonstrates meeting and community deeplink workflows.
@@ -73,105 +76,61 @@ class _MeetingCommunityPageState extends State<MeetingCommunityPage> {
 
   @override
   Widget build(final BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Meeting & Community')),
-    body: ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        _CollaborationCard(
-          title: 'Join a Zoom meeting',
-          assetName: 'assets/zoom.png',
-          children: [
-            TextField(
-              key: const ValueKey('zoom-meeting-id'),
-              controller: _meetingIdController,
-              decoration: const InputDecoration(
-                labelText: 'Meeting ID',
-                hintText: '0000000000 (replace before launching)',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _meetingPasswordController,
-              decoration: const InputDecoration(labelText: 'Password (optional)', border: OutlineInputBorder()),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _displayNameController,
-              decoration: const InputDecoration(labelText: 'Display name (optional)', border: OutlineInputBorder()),
-            ),
-            const SizedBox(height: 12),
-            FilledButton.icon(
-              key: const ValueKey('join-zoom'),
-              onPressed: _launching ? null : _joinMeeting,
-              icon: const Icon(Icons.video_call),
-              label: const Text('Join meeting'),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        _CollaborationCard(
-          title: 'Open a Slack channel',
-          assetName: 'assets/slack.png',
-          children: [
-            TextField(
-              key: const ValueKey('slack-team-id'),
-              controller: _teamIdController,
-              decoration: const InputDecoration(
-                labelText: 'Workspace ID',
-                hintText: 'T00000000 (replace before launching)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              key: const ValueKey('slack-channel-id'),
-              controller: _channelIdController,
-              decoration: const InputDecoration(
-                labelText: 'Channel ID',
-                hintText: 'C00000000 (replace before launching)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 12),
-            FilledButton.icon(
-              key: const ValueKey('open-slack'),
-              onPressed: _launching ? null : _openChannel,
-              icon: const Icon(Icons.forum),
-              label: const Text('Open channel'),
-            ),
-          ],
-        ),
-        if (_launching) const Center(child: Padding(padding: EdgeInsets.all(16), child: CircularProgressIndicator())),
-      ],
-    ),
-  );
-}
-
-class _CollaborationCard extends StatelessWidget {
-  const _CollaborationCard({required this.title, required this.assetName, required this.children});
-
-  final String title;
-  final String assetName;
-  final List<Widget> children;
-
-  @override
-  Widget build(final BuildContext context) => Card(
-    child: Padding(
-      padding: const EdgeInsets.all(16),
+    body: SafeArea(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              UseCaseLeading(assetName: assetName),
-              const SizedBox(width: 12),
-              Expanded(child: Text(title, style: Theme.of(context).textTheme.titleMedium)),
-            ],
+          const ScreenHeader(title: 'Meeting & Community'),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
+              children: [
+                FormCard(
+                  assetName: 'assets/zoom.png',
+                  title: 'Join a Zoom meeting',
+                  fields: [
+                    LabeledField(
+                      key: const ValueKey('zoom-meeting-id'),
+                      label: 'Meeting ID',
+                      controller: _meetingIdController,
+                      placeholder: '0000000000 (replace before launching)',
+                      keyboardType: TextInputType.number,
+                    ),
+                    LabeledField(label: 'Password (optional)', controller: _meetingPasswordController),
+                    LabeledField(label: 'Display name (optional)', controller: _displayNameController),
+                  ],
+                  buttonIcon: Icons.videocam_rounded,
+                  buttonLabel: 'Join meeting',
+                  buttonKey: const ValueKey('join-zoom'),
+                  onPressed: _joinMeeting,
+                ),
+                const SizedBox(height: 12),
+                FormCard(
+                  assetName: 'assets/slack.png',
+                  title: 'Open a Slack channel',
+                  fields: [
+                    LabeledField(
+                      key: const ValueKey('slack-team-id'),
+                      label: 'Workspace ID',
+                      controller: _teamIdController,
+                      placeholder: 'T00000000 (replace before launching)',
+                    ),
+                    LabeledField(
+                      key: const ValueKey('slack-channel-id'),
+                      label: 'Channel ID',
+                      controller: _channelIdController,
+                      placeholder: 'C00000000 (replace before launching)',
+                    ),
+                  ],
+                  buttonIcon: Icons.forum_rounded,
+                  buttonLabel: 'Open channel',
+                  buttonKey: const ValueKey('open-slack'),
+                  onPressed: _openChannel,
+                ),
+                if (_launching)
+                  const Center(child: Padding(padding: EdgeInsets.all(16), child: CircularProgressIndicator())),
+              ],
+            ),
           ),
-          const SizedBox(height: 16),
-          ...children,
         ],
       ),
     ),

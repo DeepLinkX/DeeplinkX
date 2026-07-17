@@ -1,5 +1,7 @@
 import 'package:deeplink_x/deeplink_x.dart';
 import 'package:deeplink_x_example/use_cases/use_case_support.dart';
+import 'package:deeplink_x_example/widgets/blocks.dart';
+import 'package:deeplink_x_example/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 
 /// Demonstrates platform-aware rating and review entry points.
@@ -90,40 +92,34 @@ class _RateReviewPageState extends State<RateReviewPage> {
       options: _options,
       onAutomatic: _automatic,
       onSelected: _launch,
+      pickLabel: 'Or pick a destination',
     );
   }
 
   @override
   Widget build(final BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Rate & Review')),
-    body: ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
+    body: SafeArea(
+      child: Column(
+        children: [
+          const ScreenHeader(title: 'Rate & Review'),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
               children: [
-                const UseCaseLeading(assetName: 'assets/telegram.png', size: 64),
-                const SizedBox(height: 16),
-                Text('Enjoying Telegram?', style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 8),
-                const Text('This sample demonstrates direct rating links and store-listing alternatives.'),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    key: const ValueKey('open-rating-selector'),
-                    onPressed: _showStores,
-                    icon: const Icon(Icons.star),
-                    label: const Text('Rate or review'),
-                  ),
+                CenterCard(
+                  assetName: 'assets/telegram.png',
+                  title: 'Enjoying Telegram?',
+                  description: 'This sample demonstrates direct rating links and store-listing alternatives.',
+                  buttonIcon: Icons.star_rounded,
+                  buttonLabel: 'Rate or review',
+                  buttonKey: const ValueKey('open-rating-selector'),
+                  onPressed: _showStores,
                 ),
               ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }

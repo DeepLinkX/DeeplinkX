@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:deeplink_x/deeplink_x.dart';
+import 'package:deeplink_x_example/theme/app_theme.dart';
 import 'package:deeplink_x_example/use_cases/use_case_support.dart';
+import 'package:deeplink_x_example/widgets/blocks.dart';
+import 'package:deeplink_x_example/widgets/buttons.dart';
+import 'package:deeplink_x_example/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 
 /// Preset actions available in the fallback playground.
@@ -128,100 +132,123 @@ class _FallbackPlaygroundPageState extends State<FallbackPlaygroundPage> {
   };
 
   @override
-  Widget build(final BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Fallback Playground')),
-    body: ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        DropdownButtonFormField<FallbackPreset>(
-          key: const ValueKey('fallback-preset'),
-          initialValue: _preset,
-          decoration: const InputDecoration(labelText: 'Action preset', border: OutlineInputBorder()),
-          items: [
-            for (final preset in FallbackPreset.values) DropdownMenuItem(value: preset, child: Text(preset.label)),
-          ],
-          onChanged:
-              _launching
-                  ? null
-                  : (final preset) {
-                    if (preset == null) {
-                      return;
-                    }
-                    setState(() {
-                      _preset = preset;
-                      _lastResult = null;
-                    });
-                    unawaited(_checkAvailability());
-                  },
-        ),
-        const SizedBox(height: 20),
-        Text('Fallback policy', style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 8),
-        SegmentedButton<FallbackPolicy>(
-          key: const ValueKey('fallback-policy'),
-          segments: [
-            for (final policy in FallbackPolicy.values)
-              ButtonSegment(value: policy, label: Text(policy.label), icon: Icon(_policyIcon(policy))),
-          ],
-          selected: {_policy},
-          showSelectedIcon: false,
-          onSelectionChanged:
-              _launching
-                  ? null
-                  : (final policies) {
-                    setState(() {
-                      _policy = policies.single;
-                      _lastResult = null;
-                    });
-                  },
-        ),
-        const SizedBox(height: 20),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _StatusRow(label: 'Platform', value: _deeplinkX.currentPlatform.value),
-                _StatusRow(label: 'Native status', value: _availabilityLabel),
-                _StatusRow(label: 'Configured policy', value: _policy.label),
-                _StatusRow(
-                  label: 'Last result',
-                  value:
-                      _lastResult == null
-                          ? 'Not launched'
-                          : _lastResult!
-                          ? 'Success'
-                          : 'Failure',
-                ),
-                const SizedBox(height: 8),
-                Text(_policyDescription),
-              ],
+  Widget build(final BuildContext context) {
+    final palette = context.palette;
+    final lastResult = _lastResult;
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            const ScreenHeader(title: 'Fallback Playground'),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
+                children: [
+                  SelectCard(
+                    label: 'Action preset',
+                    child: DropdownButtonFormField<FallbackPreset>(
+                      key: const ValueKey('fallback-preset'),
+                      initialValue: _preset,
+                      decoration: const InputDecoration(
+                        isDense: true,
+                        isCollapsed: true,
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.only(top: 4),
+                      ),
+                      style: TextStyle(fontSize: 14.5, color: palette.text, fontFamily: 'InstrumentSans'),
+                      dropdownColor: palette.card,
+                      items: [
+                        for (final preset in FallbackPreset.values)
+                          DropdownMenuItem(value: preset, child: Text(preset.label)),
+                      ],
+                      onChanged:
+                          _launching
+                              ? null
+                              : (final preset) {
+                                if (preset == null) {
+                                  return;
+                                }
+                                setState(() {
+                                  _preset = preset;
+                                  _lastResult = null;
+                                });
+                                unawaited(_checkAvailability());
+                              },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  const LabelText('Fallback policy'),
+                  const SizedBox(height: 8),
+                  SegmentedPills(
+                    key: const ValueKey('fallback-policy'),
+                    options: [
+                      for (final policy in FallbackPolicy.values)
+                        SegmentedPillOption(
+                          icon: _policyIcon(policy),
+                          label: policy.label,
+                          selected: policy == _policy,
+                          onTap:
+                              _launching
+                                  ? () {}
+                                  : () => setState(() {
+                                    _policy = policy;
+                                    _lastResult = null;
+                                  }),
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  StatusCard(
+                    items: [
+                      StatusItem(label: 'Platform', value: _deeplinkX.currentPlatform.value),
+                      StatusItem(
+                        label: 'Native status',
+                        value: _availabilityLabel,
+                        valueColor: switch (_availability) {
+                          UseCaseAvailability.installed => AppPalette.statusInstalled,
+                          UseCaseAvailability.unsupported => AppPalette.statusUnsupported,
+                          UseCaseAvailability.loading || UseCaseAvailability.notInstalled => palette.faint,
+                        },
+                      ),
+                      StatusItem(label: 'Configured policy', value: _policy.label),
+                      StatusItem(
+                        label: 'Last result',
+                        value:
+                            lastResult == null
+                                ? 'Not launched'
+                                : lastResult
+                                ? 'Success'
+                                : 'Failure',
+                        valueColor: (lastResult ?? false) ? AppPalette.statusInstalled : palette.faint,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  NoteText(_policyDescription),
+                  const SizedBox(height: 12),
+                  AccentButton(
+                    key: const ValueKey('launch-fallback-preset'),
+                    label: 'Launch configured action',
+                    icon: Icons.rocket_launch_rounded,
+                    onPressed: _launch,
+                  ),
+                  const SizedBox(height: 12),
+                  const NoteText(
+                    'DeeplinkX returns a final boolean; this page does not infer which internal launch stage succeeded.',
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
-        const SizedBox(height: 16),
-        FilledButton.icon(
-          key: const ValueKey('launch-fallback-preset'),
-          onPressed: _launching ? null : _launch,
-          icon:
-              _launching
-                  ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.rocket_launch),
-          label: const Text('Launch configured action'),
-        ),
-        const SizedBox(height: 12),
-        const Text(
-          'DeeplinkX returns a final boolean; this page does not infer which internal launch stage succeeded.',
-        ),
-      ],
-    ),
-  );
+      ),
+    );
+  }
 
   IconData _policyIcon(final FallbackPolicy policy) => switch (policy) {
-    FallbackPolicy.disabled => Icons.block,
-    FallbackPolicy.web => Icons.language,
-    FallbackPolicy.storeThenWeb => Icons.store,
+    FallbackPolicy.disabled => Icons.block_rounded,
+    FallbackPolicy.web => Icons.language_rounded,
+    FallbackPolicy.storeThenWeb => Icons.storefront_rounded,
   };
 }
 
@@ -230,22 +257,4 @@ class _FallbackTarget {
 
   final App app;
   final AppAction action;
-}
-
-class _StatusRow extends StatelessWidget {
-  const _StatusRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(final BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 4),
-    child: Row(
-      children: [
-        Expanded(child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600))),
-        Expanded(child: Text(value, textAlign: TextAlign.end)),
-      ],
-    ),
-  );
 }

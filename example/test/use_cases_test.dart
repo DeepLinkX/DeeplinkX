@@ -12,13 +12,18 @@ import 'package:deeplink_x_example/use_cases/rate_review_page.dart';
 import 'package:deeplink_x_example/use_cases/share_message_page.dart';
 import 'package:deeplink_x_example/use_cases/update_app_page.dart';
 import 'package:deeplink_x_example/use_cases/use_case_support.dart';
+import 'package:deeplink_x_example/widgets/tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('home use cases', () {
-    testWidgets('shows all nine cards in grid and tab layouts', (final tester) async {
+    testWidgets('filter chips reveal every section', (final tester) async {
       await tester.pumpWidget(const MaterialApp(home: HomePage()));
+
+      expect(find.text('View all 9'), findsOneWidget);
+      expect(find.text('View all 22'), findsOneWidget);
+      expect(find.text('View all 7'), findsOneWidget);
 
       const titles = [
         'Update App',
@@ -31,16 +36,24 @@ void main() {
         'Promoted App CTA',
         'Fallback Playground',
       ];
-      for (final title in titles) {
-        expect(find.text(title), findsOneWidget);
-      }
-
-      await tester.tap(find.byIcon(Icons.view_week));
+      await tester.tap(find.byKey(const ValueKey('filter-use-cases')));
       await tester.pump();
-
       for (final title in titles) {
         expect(find.text(title), findsOneWidget);
       }
+
+      await tester.tap(find.byKey(const ValueKey('filter-apps')));
+      await tester.pump();
+      expect(find.byType(AppTile), findsNWidgets(22));
+
+      await tester.tap(find.byKey(const ValueKey('filter-stores')));
+      await tester.pump();
+      expect(find.byType(AppTile), findsNWidgets(7));
+
+      await tester.tap(find.byKey(const ValueKey('filter-stores')));
+      await tester.pump();
+      expect(find.text('View all 9'), findsOneWidget);
+      expect(find.byType(AppTile), findsNWidgets(12));
     });
   });
 

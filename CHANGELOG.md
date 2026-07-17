@@ -1,5 +1,8 @@
-## Unreleased
+## 1.4.0
 
+* Redesigned the example app after the DeeplinkX design file: a mobile-first gallery with light/dark theming, bundled Instrument Sans typography, and a phone-frame presentation on wide viewports.
+* Replaced the 29 hand-written example pages with a declarative action catalog and a single shared detail screen covering every public app, store, and action with real API labels, a store-fallback toggle, and a live installation indicator.
+* Added a filterable home gallery (use cases / apps / stores) and restyled the nine real-world use cases, the launch selector sheet, and the result snackbars to the new design system.
 * Expanded the example app with nine real-world use cases for store and map selection, social support, ratings, sharing, installation checks, collaboration, promoted app CTAs, and fallback behavior.
 * Added missing Sygic and Apple Maps visibility declarations required by the example's installation checks.
 

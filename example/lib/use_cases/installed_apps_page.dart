@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:deeplink_x/deeplink_x.dart';
+import 'package:deeplink_x_example/theme/app_theme.dart';
 import 'package:deeplink_x_example/use_cases/use_case_support.dart';
+import 'package:deeplink_x_example/widgets/blocks.dart';
+import 'package:deeplink_x_example/widgets/list_row.dart';
+import 'package:deeplink_x_example/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 
 /// Demonstrates native installation checks for every supported app and store.
@@ -108,58 +112,82 @@ class _InstalledAppsPageState extends State<InstalledAppsPage> {
     UseCaseAvailability.unsupported => 'Unsupported on ${_deeplinkX.currentPlatform.value}',
   };
 
+  Color? _dotColor(final UseCaseAvailability availability) => switch (availability) {
+    UseCaseAvailability.loading => null,
+    UseCaseAvailability.installed => AppPalette.statusInstalled,
+    UseCaseAvailability.notInstalled => AppPalette.statusMissing,
+    UseCaseAvailability.unsupported => AppPalette.statusUnsupported,
+  };
+
+  OptionRow _row(final int index, {required final bool showDivider}) {
+    final item = _items[index];
+    final availability = _availability[index];
+    return OptionRow(
+      key: ValueKey('installed-${item.title}'),
+      title: item.title,
+      assetName: item.assetName,
+      statusText: _status(availability),
+      statusDotColor: _dotColor(availability),
+      enabled: availability == UseCaseAvailability.installed && _launchingIndex == null,
+      showDivider: showDivider,
+      trailingIcon: availability == UseCaseAvailability.installed ? Icons.open_in_new_rounded : Icons.remove_rounded,
+      trailing:
+          _launchingIndex == index
+              ? const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2))
+              : null,
+      onTap: () => _launch(index),
+    );
+  }
+
   @override
-  Widget build(final BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: const Text('Installed Apps'),
-      actions: [
-        IconButton(
-          key: const ValueKey('refresh-installed-apps'),
-          tooltip: 'Refresh',
-          onPressed: _refreshing ? null : _refresh,
-          icon: const Icon(Icons.refresh),
-        ),
-      ],
-    ),
-    body: RefreshIndicator(
-      onRefresh: _refresh,
-      child: ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(12, 8, 12, 24),
-        itemCount: _items.length,
-        itemBuilder: (final context, final index) {
-          final item = _items[index];
-          final showHeader = index == 0 || item.category != _items[index - 1].category;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (showHeader)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(4, 16, 4, 6),
-                  child: Text(item.category, style: Theme.of(context).textTheme.titleMedium),
-                ),
-              Card(
-                child: ListTile(
-                  key: ValueKey('installed-${item.title}'),
-                  enabled: _availability[index] == UseCaseAvailability.installed && _launchingIndex == null,
-                  leading: UseCaseLeading(assetName: item.assetName),
-                  title: Text(item.title),
-                  subtitle: Text(_status(_availability[index])),
-                  trailing:
-                      _launchingIndex == index
-                          ? const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                          : _availability[index] == UseCaseAvailability.installed
-                          ? const Icon(Icons.open_in_new)
-                          : null,
-                  onTap: () => _launch(index),
+  Widget build(final BuildContext context) {
+    final sections = <Widget>[
+      const NoteText(
+        'Native installation checks for every supported app and store. Tap an installed row to launch it with fallbacks disabled.',
+      ),
+    ];
+    for (var index = 0; index < _items.length; index++) {
+      final item = _items[index];
+      if (index == 0 || item.category != _items[index - 1].category) {
+        var end = index;
+        while (end < _items.length && _items[end].category == item.category) {
+          end++;
+        }
+        sections
+          ..add(const SizedBox(height: 12))
+          ..add(LabelText(item.category))
+          ..add(const SizedBox(height: 8))
+          ..add(RowsCard(children: [for (var i = index; i < end; i++) _row(i, showDivider: i < end - 1)]));
+      }
+    }
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            ScreenHeader(
+              title: 'Installed Apps',
+              trailing: HeaderIconButton(
+                key: const ValueKey('refresh-installed-apps'),
+                icon: Icons.refresh_rounded,
+                tooltip: 'Refresh',
+                onPressed: _refreshing ? null : _refresh,
+              ),
+            ),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: _refresh,
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
+                  children: sections,
                 ),
               ),
-            ],
-          );
-        },
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _InstalledItem {

@@ -1,5 +1,7 @@
 import 'package:deeplink_x/deeplink_x.dart';
 import 'package:deeplink_x_example/use_cases/use_case_support.dart';
+import 'package:deeplink_x_example/widgets/blocks.dart';
+import 'package:deeplink_x_example/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 
 /// Demonstrates a tracked promoted-app call to action.
@@ -47,57 +49,32 @@ class _PromotedAppPageState extends State<PromotedAppPage> {
 
   @override
   Widget build(final BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Promoted App CTA')),
-    body: ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        Card(
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ColoredBox(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                child: Padding(
-                  padding: const EdgeInsets.all(28),
-                  child: Row(
-                    children: [
-                      const UseCaseLeading(assetName: 'assets/instagram.png', size: 72),
-                      const SizedBox(width: 20),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Discover Instagram', style: Theme.of(context).textTheme.headlineSmall),
-                            const SizedBox(height: 6),
-                            const Text('A tracked store CTA without platform branches in the widget.'),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+    body: SafeArea(
+      child: Column(
+        children: [
+          const ScreenHeader(title: 'Promoted App CTA'),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
+              children: [
+                PromoCard(
+                  assetName: 'assets/instagram.png',
+                  title: 'Discover Instagram',
+                  description: 'A tracked store CTA without platform branches in the widget.',
+                  buttonIcon: Icons.campaign_rounded,
+                  buttonLabel: 'View in store',
+                  buttonKey: const ValueKey('open-promoted-app'),
+                  onPressed: _openPromotion,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: FilledButton.icon(
-                  key: const ValueKey('open-promoted-app'),
-                  onPressed: _launching ? null : _openPromotion,
-                  icon:
-                      _launching
-                          ? const SizedBox.square(dimension: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                          : const Icon(Icons.campaign),
-                  label: const Text('View in store'),
+                const SizedBox(height: 12),
+                const NoteText(
+                  'Google Play receives a referrer; the iOS App Store receives campaign, provider, affiliate, and origin tokens.',
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 16),
-        const Text(
-          'Google Play receives a referrer; the iOS App Store receives campaign, provider, affiliate, and origin tokens.',
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
