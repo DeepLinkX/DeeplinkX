@@ -1,4 +1,4 @@
-package com.example.deeplink_x_example
+package io.github.deeplinkx.demo
 
 import io.flutter.embedding.android.FlutterActivity
 

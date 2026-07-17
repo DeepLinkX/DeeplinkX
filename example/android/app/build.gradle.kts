@@ -5,8 +5,26 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val demoKeystorePath = providers.environmentVariable("DEMO_KEYSTORE_PATH").orNull
+val demoKeystorePassword = providers.environmentVariable("DEMO_KEYSTORE_PASSWORD").orNull
+val demoKeyAlias = providers.environmentVariable("DEMO_KEY_ALIAS").orNull
+val demoKeyPassword = providers.environmentVariable("DEMO_KEY_PASSWORD").orNull
+val demoSigningValues =
+    listOf(
+        demoKeystorePath,
+        demoKeystorePassword,
+        demoKeyAlias,
+        demoKeyPassword,
+    )
+val hasDemoSigning =
+    demoSigningValues.all { !it.isNullOrBlank() }
+require(demoSigningValues.none { !it.isNullOrBlank() } || hasDemoSigning) {
+    "Demo signing requires DEMO_KEYSTORE_PATH, DEMO_KEYSTORE_PASSWORD, " +
+        "DEMO_KEY_ALIAS, and DEMO_KEY_PASSWORD."
+}
+
 android {
-    namespace = "com.example.deeplink_x_example"
+    namespace = "io.github.deeplinkx.demo"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -20,8 +38,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.deeplink_x_example"
+        applicationId = "io.github.deeplinkx.demo"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
@@ -30,11 +47,27 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        if (hasDemoSigning) {
+            create("demoRelease") {
+                storeFile = file(requireNotNull(demoKeystorePath))
+                storePassword = requireNotNull(demoKeystorePassword)
+                keyAlias = requireNotNull(demoKeyAlias)
+                keyPassword = requireNotNull(demoKeyPassword)
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Local release builds retain the Flutter template's debug signing.
+            // CI supplies the dedicated demo signing configuration.
+            signingConfig =
+                if (hasDemoSigning) {
+                    signingConfigs.getByName("demoRelease")
+                } else {
+                    signingConfigs.getByName("debug")
+                }
         }
     }
 }

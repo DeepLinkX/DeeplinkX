@@ -1,5 +1,6 @@
 ## 1.4.0
 
+* Added a cached, tag-based GitHub Actions workflow that signs and publishes architecture-specific Android demo APKs for ARM64, ARMv7, and x86_64.
 * Redesigned the example app after the DeeplinkX design file: a mobile-first gallery with light/dark theming, bundled Instrument Sans typography, and a phone-frame presentation on wide viewports.
 * Replaced the 29 hand-written example pages with a declarative action catalog and a single shared detail screen covering every public app, store, and action with real API labels, a store-fallback toggle, and a live installation indicator.
 * Added a filterable home gallery (use cases / apps / stores) and restyled the nine real-world use cases, the launch selector sheet, and the result snackbars to the new design system.

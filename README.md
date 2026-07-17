@@ -16,6 +16,7 @@
 
 <p align="center">
   <a href="https://deeplinkx.github.io/DeeplinkX/">🌐 Live Demo</a> &nbsp;·&nbsp;
+  <a href="#android-demo-apks">📱 Android Demo APKs</a> &nbsp;·&nbsp;
   <a href="https://pub.dev/documentation/deeplink_x/latest/">📖 API Reference</a> &nbsp;·&nbsp;
   <a href="https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml">➕ Request an App</a>
 </p>
@@ -99,7 +100,19 @@ That's the whole flow — DeeplinkX resolves the platform, checks installation, 
 
 ## Demo
 
-Try the [live web demo](https://deeplinkx.github.io/DeeplinkX/), or run the example on a real device for the full experience — installation checks need a native platform.
+Try the [live web demo](https://deeplinkx.github.io/DeeplinkX/), download an Android demo APK below, or run the example on a real device for the full experience — installation checks need a native platform.
+
+### Android Demo APKs
+
+Choose the APK matching your device. ARM64 is the right choice for most modern Android phones and tablets.
+
+| Architecture | Recommended for | Download |
+|---|---|---|
+| ARM64 (`arm64-v8a`) | Modern Android phones and tablets | [Download ARM64 APK](https://github.com/DeepLinkX/DeeplinkX/releases/latest/download/deeplink-x-demo-arm64-v8a.apk) |
+| ARMv7 (`armeabi-v7a`) | Older 32-bit Android devices | [Download ARMv7 APK](https://github.com/DeepLinkX/DeeplinkX/releases/latest/download/deeplink-x-demo-armeabi-v7a.apk) |
+| x86_64 | Compatible Android emulators and Chromebooks | [Download x86_64 APK](https://github.com/DeepLinkX/DeeplinkX/releases/latest/download/deeplink-x-demo-x86_64.apk) |
+
+When opening a downloaded APK, Android may ask you to allow your browser or file manager to install unknown apps. Grant that permission only for the application you used to download the APK, then disable it again if you no longer need it.
 
 Alongside the individual app and store detail screens, the example includes real-world flows for app updates, automatic store and map selection, support links, ratings, sharing, installation checks, meetings and communities, promoted app CTAs, and fallback-policy exploration.
 
