@@ -1,21 +1,36 @@
 ## 1.4.0
 
+### Added
+
 * Added a cached, tag-based GitHub Actions workflow that signs and publishes architecture-specific Android demo APKs for ARM64, ARMv7, and x86_64.
-* Redesigned the example app after the DeeplinkX design file: a mobile-first gallery with light/dark theming, bundled Instrument Sans typography, and a phone-frame presentation on wide viewports.
-* Replaced the 29 hand-written example pages with a declarative action catalog and a single shared detail screen covering every public app, store, and action with real API labels, a store-fallback toggle, and a live installation indicator.
 * Added a filterable home gallery (use cases / apps / stores) and restyled the nine real-world use cases, the launch selector sheet, and the result snackbars to the new design system.
 * Expanded the example app with nine real-world use cases for store and map selection, social support, ratings, sharing, installation checks, collaboration, promoted app CTAs, and fallback behavior.
 * Added missing Sygic and Apple Maps visibility declarations required by the example's installation checks.
 
+### Changed
+
+* Redesigned the example app after the DeeplinkX design file: a mobile-first gallery with light/dark theming, bundled Instrument Sans typography, and a phone-frame presentation on wide viewports.
+* Replaced the 29 hand-written example pages with a declarative action catalog and a single shared detail screen covering every public app, store, and action with real API labels, a store-fallback toggle, and a live installation indicator.
+
 ## 1.3.9
 
+### Added
+
 * Added verified Threads search and topic-tag actions with native Android/iOS links and web fallbacks.
-* Prevented combined intent/app-link actions from retrying the same app link.
-* Audited Amap, Baidu Maps, 2GIS, Yandex Maps, Moovit, and Neshan URI contracts against current provider documentation and physical Android behavior.
-* Corrected provider-specific route modes, marker defaults, source/partner identifiers, validation, Android URI variants, and canonical web fallbacks.
 * Added the audited app queries to the example iOS and Android projects and documented Telegram's Android package-visibility setup.
 
+### Changed
+
+* Audited Amap, Baidu Maps, 2GIS, Yandex Maps, Moovit, and Neshan URI contracts against current provider documentation and physical Android behavior.
+
+### Fixed
+
+* Prevented combined intent/app-link actions from retrying the same app link.
+* Corrected provider-specific route modes, marker defaults, source/partner identifiers, validation, Android URI variants, and canonical web fallbacks.
+
 ## 1.3.8
+
+### Added
 
 * Added Yandex Maps app support:
   * Open app
@@ -30,16 +45,23 @@
 
 ## 1.3.7
 
+### Added
+
 * Added 2GIS app with the following actions:
   * Open app
   * View map action
   * Directions with coordinates action, including optional origin and travel mode
 * Added documentation for 2GIS deeplinks
 * Added unit tests covering 2GIS actions, exports, and map action interfaces
+
+### Changed
+
 * Updated README map launcher examples and supported app tables
 * Updated the example app with a dedicated 2GIS page and asset
 
 ## 1.3.6
+
+### Added
 
 * Added Baidu Maps app with the following actions:
   * Open app
@@ -52,18 +74,27 @@
   * Native navigation action
 * Added documentation for Baidu Maps deeplinks
 * Added unit tests covering all Baidu Maps actions, exports, and map action interfaces
+
+### Changed
+
 * Updated README map launcher examples and supported app tables
 * Updated the example app with a dedicated Baidu Maps page and asset
 
 ## 1.3.5+2
 
+### Added
+
 * Added tag-based GitHub Actions publishing to pub.dev.
 
 ## 1.3.5+1
 
+### Added
+
 * Added a Pub Readiness GitHub Actions workflow that enforces a full Pana score and runs `flutter pub publish --dry-run`.
 
 ## 1.3.5
+
+### Added
 
 * Added Moovit app with the following actions:
   * Open app
@@ -71,15 +102,25 @@
   * Directions with coordinates action
 * Added documentation for Moovit deeplinks
 * Added unit tests covering all Moovit actions and exports
+
+### Changed
+
 * Updated the example app with a dedicated Moovit page and asset
 
 ## 1.3.4+1
 
-* Refined the package description and README wording for pub.dev keyword visibility (named WhatsApp, Telegram, Instagram, YouTube, Google Maps, and Waze explicitly).
+### Added
+
 * Added README wording for URL schemes, Android Intents, and App Links, plus install-check phrasing around `isAppInstalled()`.
 * Added brief README comparisons with `map_launcher` and `external_app_launcher`.
 
+### Changed
+
+* Refined the package description and README wording for pub.dev keyword visibility (named WhatsApp, Telegram, Instagram, YouTube, Google Maps, and Waze explicitly).
+
 ## 1.3.4
+
+### Added
 
 * Added Amap app with the following actions:
   * Open app
@@ -90,10 +131,15 @@
   * Directions with coordinates action with optional origin, waypoints, and travel modes
 * Added documentation for Amap deeplinks
 * Added unit tests covering all Amap actions and exports
+
+### Changed
+
 * Updated README map launcher examples and supported app tables
 * Updated the example app with a dedicated Amap page and asset
 
 ## 1.3.3
+
+### Added
 
 * Added Neshan app with the following actions:
   * Open app
@@ -101,14 +147,21 @@
   * Directions with coordinates
 * Added documentation for Neshan deeplinks.
 * Added unit tests covering Neshan actions, exports, and map action interfaces.
+
+### Changed
+
 * Updated the example app with a dedicated Neshan page and asset.
 
 ## 1.3.2+1
+
+### Changed
 
 * Rewrote the README with a clearer structure and a fallback flow diagram.
 * Improved maps discoverability in the package description and topics.
 
 ## 1.3.2
+
+### Added
 
 * Added Threads app support, requested by @hafizidev in issue #28:
   * Open app
@@ -117,17 +170,34 @@
   * Open comments action
   * Create post action
 * Added documentation for Threads deeplinks
+
+### Changed
+
 * Updated the example app with a Threads page and asset
 
 ## 1.3.1+1
 
-* Refined README and API guidance for store redirects, clarifying that `redirectToStore` routes users to a configured target app's platform-specific store listing for installs, updates, promotions, or ad landing flows.
-* Added a promoted app/ad CTA `redirectToStore` example with supported tracking and referrer parameters.
-* Improved map provider fallback documentation to better explain declaring one navigation action and letting DeeplinkX launch the first installed provider.
-* Updated README tables and examples for clearer supported action, platform configuration, documentation, and `url_launcher` comparison sections.
+### Breaking Changes
+
 * Updated package metadata in `pubspec.yaml`, including homepage, documentation URL, topics, screenshots, and minimum Flutter SDK.
 
+### Added
+
+* Added a promoted app/ad CTA `redirectToStore` example with supported tracking and referrer parameters.
+
+### Changed
+
+* Refined README and API guidance for store redirects, clarifying that `redirectToStore` routes users to a configured target app's platform-specific store listing for installs, updates, promotions, or ad landing flows.
+* Improved map provider fallback documentation to better explain declaring one navigation action and letting DeeplinkX launch the first installed provider.
+* Updated README tables and examples for clearer supported action, platform configuration, documentation, and `url_launcher` comparison sections.
+
 ## 1.3.1
+
+### Added
+
+* Added GitHub issue forms for user feedback and new app requests
+
+### Changed
 
 * Restructured README for better first-read flow:
   * Restored table of contents
@@ -136,9 +206,10 @@
   * Updated quick start with an iOS Telegram profile example and required `Info.plist` schemes
   * Expanded core concepts, recipes, platform configuration, and the `url_launcher` comparison
   * Added a dedicated new app request callout
-* Added GitHub issue forms for user feedback and new app requests
 
 ## 1.3.0
+
+### Added
 
 * Added map action abstractions for navigation providers:
   * `MapAppAction`
@@ -151,19 +222,18 @@
   * `launchMapSearchAction`
   * `launchMapDirectionsAction`
   * `launchMapDirectionsWithCoordsAction`
-* Updated README examples and AGENTS navigation-app guidance
 * Added tests for map abstractions, launch utilities, and public API coverage
+
+### Changed
+
+* Updated README examples and AGENTS navigation-app guidance
 
 ## 1.2.0
 
+### Changed
+
 * Bump dependency deeplink_x_macos version to 0.2.0 ([#Change](https://pub.dev/packages/deeplink_x_macos/changelog#020))
   * Added Swift Package Manager (SPM) support in macOS federated plugin
-* Fixed platform and store handling
-  * Handle web platform explicitly in PlatformUtil
-  * Make app store platform values readonly
-* Fixed YouTube fallback behavior
-  * Removed Microsoft Store fallback from YouTube store actions
-  * Updated related tests and documentation
 * Improved documentation and README
   * Added a table of contents and GIF demos to README
   * Updated snippets to use `fallbackToStore` and named arguments
@@ -174,7 +244,18 @@
   * Fixed Sygic icon asset and adjusted splash screen visuals
 * Minor internal code readability improvements
 
+### Fixed
+
+* Fixed platform and store handling
+  * Handle web platform explicitly in PlatformUtil
+  * Make app store platform values readonly
+* Fixed YouTube fallback behavior
+  * Removed Microsoft Store fallback from YouTube store actions
+  * Updated related tests and documentation
+
 ## 1.1.6
+
+### Added
 
 * Added Sygic GPS Navigation app with the following actions:
   * Open app
@@ -182,9 +263,14 @@
   * Directions with coordinates action (drive or walk)
 * Added documentation for Sygic deeplinks
 * Added unit tests covering all Sygic actions and exports
+
+### Changed
+
 * Updated the example app with a dedicated Sygic page and assets
 
 ## 1.1.5
+
+### Added
 
 * Added Apple Maps app with the following actions:
   * Open app
@@ -194,15 +280,21 @@
   * Directions with coordinates action
 * Added documentation for Apple Maps deeplinks
 * Added tests for the Apple Maps integration
+
+### Changed
+
 * Updated example app with an Apple Maps tab
 
 ## 1.1.4
+
+### Changed
 
 * Bump dependency deeplink_x_android version to 1.0.0 ([#Change](https://pub.dev/packages/deeplink_x_android/changelog#100))
 
 ## 1.1.3+3
 
-* Update coordinate model tests for coverage issue
+### Added
+
 * Added Waze app with the following actions:
   * Open app
   * View map action
@@ -210,17 +302,27 @@
   * Directions action
   * Directions with coordinates action
 * Added documentation for Waze deeplinks
+
+### Changed
+
+* Update coordinate model tests for coverage issue
 * Updated example app with a Waze tab
 
 ## 1.1.3+2
+
+### Fixed
 
 * Fixed changelog format
 
 ## 1.1.3+1
 
+### Added
+
 * Added coordinate model tests for better reliability
 
 ## 1.1.3
+
+### Added
 
 * Added Waze app with the following actions:
   * Open app
@@ -229,9 +331,14 @@
   * Directions action
   * Directions with coordinates action
 * Added documentation for Waze deeplinks
+
+### Changed
+
 * Updated example app with a Waze tab
 
 ## 1.1.2+1
+
+### Changed
 
 * Updated example project
   * Added splash screen with DeeplinkX logo
@@ -243,6 +350,8 @@
 
 ## 1.1.2
 
+### Added
+
 * Added Google Maps app with following actions:
   * Open app
   * View map action
@@ -250,9 +359,14 @@
   * Directions action
   * Directions with coordinates action
 * Added documentation for Google Maps deeplinks
+
+### Changed
+
 * Updated example app with Google Maps tab
 
 ## 1.1.1
+
+### Added
 
 * Added Slack app with following actions:
   * Open app
@@ -260,19 +374,32 @@
   * Open Channel Action
   * Open User Action
 * Added documentation for Slack deeplinks
+
+### Changed
+
 * Updated example app with Slack tab
 
 ## 1.1.0
 
-* Now DeeplinkX is more reliable for 100% test coverage
-* Bug Fixes
+### Added
+
 * Added Zoom app with following actions:
   * Open app
   * Join Meeting Action
 * Added documentation for Zoom deeplinks
+
+### Changed
+
+* Now DeeplinkX is more reliable for 100% test coverage
 * Updated example app with Zoom tab
 
+### Fixed
+
+* Bug Fixes
+
 ## 1.0.5
+
+### Added
 
 * Added TikTok app with following actions:
   * Open app
@@ -280,9 +407,14 @@
   * Open Video Action
   * Open Tag Action
 * Added documentation for TikTok deeplinks
+
+### Changed
+
 * Updated example app with TikTok tab
 
 ## 1.0.4
+
+### Added
 
 * Added Pinterest app with following actions:
   * Open app
@@ -291,9 +423,14 @@
   * Open Board Action
   * Search action
 * Added documentation for Pinterest deeplinks
+
+### Changed
+
 * Updated example app with Pinterest tab
 
 ## 1.0.3
+
+### Added
 
 * Added Twitter (X) app with following actions:
   * Open app
@@ -301,9 +438,14 @@
   * Open Tweet Action
   * Search action
 * Added documentation for Twitter deeplinks
+
+### Changed
+
 * Updated example app with Twitter tab
 
 ## 1.0.2
+
+### Added
 
 * Added YouTube app with following actions:
   * Open app
@@ -312,9 +454,14 @@
   * Open playlist action
   * Search action
 * Added documentation for YouTube deeplinks
+
+### Changed
+
 * Updated example app with YouTube tab
 
 ## 1.0.1
+
+### Added
 
 * Added Facebook app with following actions:
   * Open app
@@ -324,30 +471,45 @@
   * Open group action
   * Open event action
 * Added platform support for apps for checking if app is installed
+
+### Fixed
+
 * Fixed some bugs
 
 ## 1.0.0
 
+### Breaking Changes
+
+* Changed required permissions for Android:
+  * Instead of adding intent filter query, we now use package query to check if app is installed
+  * Checkout each app's documentation for required permissions
+
+### Added
+
 * First major release
-* More reliable deeplinks:
-  * App Links
-  * Universal Links
-  * Android Intent call
 * New methods:
   * Redirect To Store
   * Launch App
   * Is App Installed
 * Added ability to ignore fallback to web or store when native app is not installed
-* Changed required permissions for Android:
-  * Instead of adding intent filter query, we now use package query to check if app is installed
-  * Checkout each app's documentation for required permissions
+
+### Changed
+
+* More reliable deeplinks:
+  * App Links
+  * Universal Links
+  * Android Intent call
 
 ## 0.1.3
+
+### Changed
 
 * Improved README
   * Used complete GitHub links instead of relative paths
 
 ## 0.1.2
+
+### Added
 
 * Added support for LinkedIn deeplinks:
   * Open profile
@@ -371,9 +533,13 @@
 
 ## 0.1.1
 
+### Changed
+
 * Improved readme
 
 ## 0.1.0
+
+### Added
 
 * New Feature:
   * Added fallback to supported stores option when desired app is not installed
@@ -388,6 +554,8 @@
 
 ## 0.0.3
 
+### Added
+
 * Added support for Google Play Store deeplinks:
   * Open Play Store
   * Open app page by app package name
@@ -398,6 +566,8 @@
   * Open app review page
 
 ## 0.0.2
+
+### Added
 
 * Added support for App Store deeplinks:
   * Open App Store
@@ -417,23 +587,30 @@
 * Added platform-specific configuration guides:
   * LSApplicationQueriesSchemes for iOS
   * Android manifest query requirements
+
+### Changed
+
 * Improved example project:
   * Added Material 3 design
   * Enhanced UI/UX
   * Added URL scheme handling
-* Fixed platform support information
-* Fixed Android manifest requirements
 * Updated dependencies and linting rules
 * Improved code quality with stricter analysis options
 
+### Fixed
+
+* Fixed platform support information
+* Fixed Android manifest requirements
+
 ## 0.0.1
+
+### Added
 
 Initial release of DeeplinkX with the following features:
 
 * Added support for Instagram deeplinks:
   * Open app
   * Open profile
-
 * Cross-platform support for iOS, Android, Web, and Desktop platforms
 * Automatic fallback to web URLs when native apps are not available
 * Type-safe API for creating deeplinks

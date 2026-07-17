@@ -6,6 +6,7 @@ These instructions apply to the entire repository.
 - Ensure lint checks pass by running `flutter analyze`.
 - Run all tests with `flutter test`.
 - Document new features in `CHANGELOG.md` and update any relevant files under `doc/`.
+- In `CHANGELOG.md`, keep each release as a `## <version>` heading and group entries under populated `###` headings in this order: `Breaking Changes`, `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Performance`, `Security`. Omit empty categories and do not add a `# Changelog` heading.
 
 ## Keyword Reports
 
