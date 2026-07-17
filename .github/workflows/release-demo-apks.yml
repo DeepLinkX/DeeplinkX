@@ -1,0 +1,192 @@
+name: Build & Publish Demo APKs
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  FLUTTER_VERSION: ${{ vars.FLUTTER_VERSION || '3.41.1' }}
+  FLUTTER_CHANNEL: ${{ vars.FLUTTER_CHANNEL || 'stable' }}
+
+jobs:
+  verify-tag-on-master:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify tag commit is on master
+        run: |
+          git fetch origin master
+          tag_commit="$(git rev-parse "${GITHUB_REF}^{commit}")"
+          if ! git merge-base --is-ancestor "$tag_commit" origin/master; then
+            echo "Tag commit $tag_commit is not contained in origin/master." >&2
+            exit 1
+          fi
+
+  build:
+    needs: verify-tag-on-master
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+          cache-dependency-path: |
+            example/android/**/*.gradle*
+            example/android/gradle/wrapper/gradle-wrapper.properties
+            example/pubspec.lock
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+          pub-cache: true
+          cache-key: "deeplinkx-demo-apks-flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          pub-cache-key: "deeplinkx-demo-apks-flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
+
+      - name: Flutter version
+        run: flutter --version
+
+      - name: Pub get (root)
+        run: flutter pub get
+
+      - name: Pub get (example)
+        working-directory: example
+        run: flutter pub get
+
+      - name: Test example
+        working-directory: example
+        run: flutter test
+
+      - name: Validate signing secrets
+        env:
+          DEMO_KEYSTORE_BASE64: ${{ secrets.DEMO_KEYSTORE_BASE64 }}
+          DEMO_KEYSTORE_PASSWORD: ${{ secrets.DEMO_KEYSTORE_PASSWORD }}
+          DEMO_KEY_ALIAS: ${{ secrets.DEMO_KEY_ALIAS }}
+          DEMO_KEY_PASSWORD: ${{ secrets.DEMO_KEY_PASSWORD }}
+        run: |
+          for secret_name in \
+            DEMO_KEYSTORE_BASE64 \
+            DEMO_KEYSTORE_PASSWORD \
+            DEMO_KEY_ALIAS \
+            DEMO_KEY_PASSWORD; do
+            if [[ -z "${!secret_name}" ]]; then
+              echo "Missing required GitHub Actions secret: $secret_name" >&2
+              exit 1
+            fi
+          done
+
+      - name: Restore demo keystore
+        env:
+          DEMO_KEYSTORE_BASE64: ${{ secrets.DEMO_KEYSTORE_BASE64 }}
+        run: |
+          umask 077
+          printf '%s' "$DEMO_KEYSTORE_BASE64" \
+            | base64 --decode \
+            > "$RUNNER_TEMP/deeplinkx-demo.jks"
+
+      - name: Build signed split APKs
+        working-directory: example
+        env:
+          DEMO_KEYSTORE_PATH: ${{ runner.temp }}/deeplinkx-demo.jks
+          DEMO_KEYSTORE_PASSWORD: ${{ secrets.DEMO_KEYSTORE_PASSWORD }}
+          DEMO_KEY_ALIAS: ${{ secrets.DEMO_KEY_ALIAS }}
+          DEMO_KEY_PASSWORD: ${{ secrets.DEMO_KEY_PASSWORD }}
+        run: |
+          build_name="${GITHUB_REF_NAME#v}"
+          flutter build apk --release --split-per-abi \
+            --build-name="$build_name" \
+            --build-number="$GITHUB_RUN_NUMBER"
+
+          output_dir="$RUNNER_TEMP/demo-apks"
+          mkdir -p "$output_dir"
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk \
+            "$output_dir/deeplink-x-demo-arm64-v8a.apk"
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk \
+            "$output_dir/deeplink-x-demo-armeabi-v7a.apk"
+          cp build/app/outputs/flutter-apk/app-x86_64-release.apk \
+            "$output_dir/deeplink-x-demo-x86_64.apk"
+
+      - name: Verify APK signatures
+        run: |
+          build_tools="$(find "$ANDROID_HOME/build-tools" \
+            -mindepth 1 -maxdepth 1 -type d \
+            | sort -V \
+            | tail -n 1)"
+          for apk in "$RUNNER_TEMP/demo-apks"/*.apk; do
+            "$build_tools/apksigner" verify --verbose --print-certs "$apk"
+          done
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-apks-${{ github.ref_name }}
+          path: ${{ runner.temp }}/demo-apks/*.apk
+          if-no-files-found: error
+          retention-days: 7
+
+  publish-release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download APK artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: demo-apks-${{ github.ref_name }}
+          path: ${{ runner.temp }}/demo-apks
+
+      - name: Publish APKs to GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mapfile -t assets < <(find "$RUNNER_TEMP/demo-apks" \
+            -maxdepth 1 -type f -name '*.apk' -print \
+            | sort)
+          if [[ "${#assets[@]}" -ne 3 ]]; then
+            echo "Expected three APK assets, found ${#assets[@]}." >&2
+            exit 1
+          fi
+
+          if gh release view "$GITHUB_REF_NAME" \
+            --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "${assets[@]}" \
+              --clobber \
+              --repo "$GITHUB_REPOSITORY"
+
+            if gh release view "$GITHUB_REF_NAME" \
+              --repo "$GITHUB_REPOSITORY" \
+              --json assets \
+              --jq '.assets[].name' \
+              | grep -Fxq 'deeplink-x-demo.apk'; then
+              gh release delete-asset "$GITHUB_REF_NAME" \
+                'deeplink-x-demo.apk' \
+                --yes \
+                --repo "$GITHUB_REPOSITORY"
+            fi
+          else
+            gh release create "$GITHUB_REF_NAME" "${assets[@]}" \
+              --generate-notes \
+              --title "$GITHUB_REF_NAME" \
+              --verify-tag \
+              --repo "$GITHUB_REPOSITORY"
+          fi

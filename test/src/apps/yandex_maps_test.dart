@@ -45,7 +45,9 @@ void main() {
       final action = YandexMaps.openMap(
         center: center,
         zoom: 11,
-        viewport: const YandexMapsViewport(longitudeDelta: 10.5, latitudeDelta: 9.5),
+        // not const on purpose so VM executes the constructor (coverage)
+        // ignore: prefer_const_constructors
+        viewport: YandexMapsViewport(longitudeDelta: 10.5, latitudeDelta: 9.5),
         layer: YandexMapsMapLayer.hybrid,
         showTraffic: true,
         fallbackToStore: true,
@@ -178,12 +180,15 @@ void main() {
     });
 
     test('directionsWithCoords action creates route URLs', () {
+      // not const on purpose so VM executes the constructor (coverage)
+      // ignore: prefer_const_constructors
+      final waypoint = YandexMapsWaypoint(
+        coordinate: const Coordinate(latitude: 55.745719, longitude: 37.604337),
+      );
       final action = YandexMaps.directionsWithCoords(
         origin: center,
         destination: destination,
-        waypoints: const [
-          YandexMapsWaypoint(coordinate: Coordinate(latitude: 55.745719, longitude: 37.604337)),
-        ],
+        waypoints: [waypoint],
         mode: YandexMapsTravelMode.transit,
         fallbackToStore: true,
       );
@@ -241,10 +246,21 @@ void main() {
     });
 
     test('panorama action creates panorama URLs', () {
+      // not const on purpose so VM executes the constructors (coverage)
+      // ignore: prefer_const_constructors
+      final direction = YandexMapsPanoramaDirection(
+        azimuth: 228.97,
+        elevation: 6.060547,
+      );
+      // ignore: prefer_const_constructors
+      final span = YandexMapsPanoramaSpan(
+        horizontal: 130,
+        vertical: 71.919192,
+      );
       final action = YandexMaps.panorama(
         coordinate: center,
-        direction: const YandexMapsPanoramaDirection(azimuth: 228.97, elevation: 6.060547),
-        span: const YandexMapsPanoramaSpan(horizontal: 130, vertical: 71.919192),
+        direction: direction,
+        span: span,
         fallbackToStore: true,
       );
 
