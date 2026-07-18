@@ -1,0 +1,28 @@
+name: Verify Tag on Master
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          # Full history so tag-ancestry can be checked reliably (shallow
+          # clones can misreport merge-base results).
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify tag commit is on master
+        run: |
+          tag_commit="$(git rev-parse "${GITHUB_REF}^{commit}")"
+          if ! git merge-base --is-ancestor "$tag_commit" origin/master; then
+            echo "Tag commit $tag_commit is not contained in origin/master." >&2
+            exit 1
+          fi
