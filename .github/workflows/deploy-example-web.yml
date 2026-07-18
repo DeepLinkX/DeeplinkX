@@ -6,22 +6,19 @@ on:
     paths:
       - "example/**"
       - "lib/**"
-      - "packages/**"
       - "analysis_options.yaml"
       - "pubspec.yaml"
       - "pubspec.lock"
       - ".github/workflows/deploy-example-web.yml"
   workflow_dispatch:
 
-# Required for GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  # Never cancel an in-flight production deployment; queued runs are superseded.
+  cancel-in-progress: false
 
 env:
   FLUTTER_VERSION: ${{ vars.FLUTTER_VERSION || '3.41.1' }}
@@ -32,28 +29,25 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
           cache: true
           pub-cache: true
-          cache-key: "deeplinkx-pages-flutter-:os:-:channel:-:version:-:arch:-:hash:"
-          pub-cache-key: "deeplinkx-pages-flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
+          cache-key: "deeplinkx-flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          pub-cache-key: "deeplinkx-example-pub-:os:-:channel:-:version:-:arch:-:hash:"
 
       - name: Flutter version
         run: flutter --version
-
-      - name: Enable web
-        run: flutter config --enable-web
-
-      - name: Pub get (root)
-        run: flutter pub get
 
       - name: Pub get (example)
         working-directory: example
@@ -70,17 +64,21 @@ jobs:
           cp -v build/web/index.html build/web/404.html
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: example/build/web
 
   deploy:
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0

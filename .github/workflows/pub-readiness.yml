@@ -21,19 +21,22 @@ env:
 jobs:
   pub-readiness:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
           cache: true
           pub-cache: true
-          cache-key: "deeplinkx-pub-readiness-flutter-:os:-:channel:-:version:-:arch:-:hash:"
-          pub-cache-key: "deeplinkx-pub-readiness-flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
+          cache-key: "deeplinkx-flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          pub-cache-key: "deeplinkx-pub-:os:-:channel:-:version:-:arch:-:hash:"
 
       - name: Flutter version
         run: flutter --version
@@ -42,9 +45,13 @@ jobs:
         run: flutter pub get
 
       - name: Install WebP tools
-        run: sudo apt-get install -y webp
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webp
 
       - name: Activate Pana
+        # Intentionally unpinned so CI scoring tracks the live pana version
+        # used by pub.dev.
         run: dart pub global activate pana
 
       - name: Check Pana score

@@ -18,31 +18,20 @@ env:
 
 jobs:
   verify-tag-on-master:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Verify tag commit is on master
-        run: |
-          git fetch origin master
-          tag_commit="$(git rev-parse "${GITHUB_REF}^{commit}")"
-          if ! git merge-base --is-ancestor "$tag_commit" origin/master; then
-            echo "Tag commit $tag_commit is not contained in origin/master." >&2
-            exit 1
-          fi
+    uses: ./.github/workflows/verify-tag.yml
 
   build:
     needs: verify-tag-on-master
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          persist-credentials: false
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
         with:
           distribution: temurin
           java-version: '17'
@@ -53,20 +42,17 @@ jobs:
             example/pubspec.lock
 
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
           cache: true
           pub-cache: true
-          cache-key: "deeplinkx-demo-apks-flutter-:os:-:channel:-:version:-:arch:-:hash:"
-          pub-cache-key: "deeplinkx-demo-apks-flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
+          cache-key: "deeplinkx-flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          pub-cache-key: "deeplinkx-example-pub-:os:-:channel:-:version:-:arch:-:hash:"
 
       - name: Flutter version
         run: flutter --version
-
-      - name: Pub get (root)
-        run: flutter pub get
 
       - name: Pub get (example)
         working-directory: example
@@ -136,7 +122,7 @@ jobs:
           done
 
       - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: demo-apks-${{ github.ref_name }}
           path: ${{ runner.temp }}/demo-apks/*.apk
@@ -146,11 +132,12 @@ jobs:
   publish-release:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: write
     steps:
       - name: Download APK artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: demo-apks-${{ github.ref_name }}
           path: ${{ runner.temp }}/demo-apks
