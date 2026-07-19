@@ -9,8 +9,10 @@ This directory tracks pub.dev keyword visibility snapshots for `deeplink_x`.
 | 2026-07-01 | [pubdev_keyword_visibility_report_2026-07-01.md](pubdev_keyword_visibility_report_2026-07-01.md) | Baseline keyword visibility snapshot before the refreshed publish. |
 | 2026-07-06 | [pubdev_keyword_visibility_report_2026-07-06.md](pubdev_keyword_visibility_report_2026-07-06.md) | Current keyword visibility snapshot after the refreshed publish. |
 | 2026-07-10 | [pubdev_keyword_visibility_report_2026-07-10.md](pubdev_keyword_visibility_report_2026-07-10.md) | Expanded visibility snapshot after Baidu Maps, 2GIS, and Yandex Maps releases. |
+| 2026-07-19 | [pubdev_keyword_visibility_report_2026-07-19.md](pubdev_keyword_visibility_report_2026-07-19.md) | Visibility snapshot after the Threads search/topic and 1.4.0 example refresh releases. |
 | 2026-07-01 to 2026-07-06 | [pubdev_keyword_comparison_2026-07-01_to_2026-07-06.md](pubdev_keyword_comparison_2026-07-01_to_2026-07-06.md) | Ranking movement, wins, regressions, and net assessment. |
 | 2026-07-06 to 2026-07-10 | [pubdev_keyword_comparison_2026-07-06_to_2026-07-10.md](pubdev_keyword_comparison_2026-07-06_to_2026-07-10.md) | Full baseline movement plus new app, related-search, and Medium-derived coverage. |
+| 2026-07-10 to 2026-07-19 | [pubdev_keyword_comparison_2026-07-10_to_2026-07-19.md](pubdev_keyword_comparison_2026-07-10_to_2026-07-19.md) | Full July 10 baseline movement plus Threads search/topic action coverage. |
 
 ## Refresh Checklist
 
