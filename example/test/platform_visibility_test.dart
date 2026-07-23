@@ -27,6 +27,7 @@ void main() {
       'com.baidu.BaiduMap',
       'ru.dublgis.dgismobile',
       'ru.yandex.yandexmaps',
+      'ru.yandex.yandexnavi',
       'com.android.vending',
       'com.huawei.appmarket',
       'com.farsitel.bazaar',
@@ -35,6 +36,12 @@ void main() {
     for (final package in packages) {
       expect(_occurrences(manifest, '<package android:name="$package" />'), 1, reason: package);
     }
+  });
+
+  test('Android visibility contains the Yandex Navigator scheme exactly once', () async {
+    final manifest = await File('android/app/src/main/AndroidManifest.xml').readAsString();
+
+    expect(_occurrences(manifest, '<data android:scheme="yandexnavi" />'), 1);
   });
 
   test('iOS visibility contains every queried scheme exactly once', () async {
@@ -62,6 +69,7 @@ void main() {
       'baidumap',
       'dgis',
       'yandexmaps',
+      'yandexnavi',
       'itms-apps',
     ];
     for (final scheme in schemes) {

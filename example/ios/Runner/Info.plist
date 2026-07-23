@@ -48,6 +48,7 @@
 		<string>baidumap</string>
 		<string>dgis</string>
 		<string>yandexmaps</string>
+		<string>yandexnavi</string>
 		<string>itms-apps</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>

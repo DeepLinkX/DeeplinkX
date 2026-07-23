@@ -9,7 +9,7 @@ class SectionHeader extends StatelessWidget {
   /// Section title.
   final String title;
 
-  /// Trailing link caption, e.g. `View all 22`.
+  /// Trailing link caption, e.g. `View all 23`.
   final String linkLabel;
 
   /// Link tap handler.

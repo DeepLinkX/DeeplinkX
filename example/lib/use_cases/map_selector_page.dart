@@ -116,6 +116,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       fallbackLabel: 'Yandex Maps web',
       assetName: 'assets/yandex_maps.png',
     ),
+    LaunchOption(
+      id: 'yandex-navigator',
+      title: 'Yandex Navigator',
+      app: YandexNavigator.directionsWithCoords(destination: destination),
+      fallbackLabel: 'Yandex Maps web',
+      assetName: 'assets/yandex_navigator.png',
+    ),
   ];
 
   Future<void> _showMaps() async {

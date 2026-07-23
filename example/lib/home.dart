@@ -41,7 +41,7 @@ final _useCases = <_UseCaseItem>[
   ),
   _UseCaseItem(
     title: 'Map Selector',
-    description: 'Directions across 10 providers',
+    description: 'Directions across 11 providers',
     icon: Icons.map_rounded,
     builder: (_) => const MapSelectorPage(),
   ),
