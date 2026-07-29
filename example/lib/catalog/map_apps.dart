@@ -23,7 +23,25 @@ const List<ActionField> _originFields = [
   ),
 ];
 
+const ActionField _tencentKeyField = ActionField(
+  key: 'referer',
+  label: 'Tencent developer key',
+  defaultValue: 'YOUR_TENCENT_MAPS_KEY',
+);
+
 String? _validateOrigin(final ActionValues values) => validateOptionalPair(values, 'originLat', 'originLng', 'origin');
+
+String? _validateTencentMarker(final ActionValues values) {
+  final hasTitle = values.optionalValue('title') != null;
+  final hasAddress = values.optionalValue('address') != null;
+  if (hasTitle != hasAddress) {
+    return 'Enter both marker title and address, or leave both empty.';
+  }
+  return null;
+}
+
+String? _validateTencentCenter(final ActionValues values) =>
+    validateOptionalPair(values, 'centerLat', 'centerLng', 'center');
 
 /// Maps and navigation apps shown in the example gallery.
 final List<AppSpec> mapApps = [
@@ -738,6 +756,134 @@ final List<AppSpec> mapApps = [
           (final v, {required final fallbackToStore}) => YandexNavigator.directionsWithCoords(
             destination: v.coordinate('lat', 'lng'),
             origin: v.optionalCoordinate('originLat', 'originLng'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
+  AppSpec(
+    id: 'tencent_maps',
+    name: 'Tencent Maps',
+    assetName: 'assets/tencent_maps.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'TencentMaps.open(fallbackToStore)',
+        buttonLabel: 'Open Tencent Maps',
+        runner: OpenAppRunner(({required final fallbackToStore}) => TencentMaps.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.location_on_rounded,
+        title: 'View map',
+        apiLabel: 'TencentMaps.view(coordinate, referer)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '39.867192'),
+          _lngField(value: '116.493187'),
+          _tencentKeyField,
+          const ActionField(
+            key: 'title',
+            label: 'Marker title (optional)',
+            defaultValue: 'Tencent Office',
+            optional: true,
+          ),
+          const ActionField(
+            key: 'address',
+            label: 'Marker address (optional)',
+            defaultValue: 'Beijing',
+            optional: true,
+          ),
+        ],
+        validate: _validateTencentMarker,
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TencentMaps.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            title: v.optionalValue('title'),
+            address: v.optionalValue('address'),
+            referer: v.value('referer'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.search_rounded,
+        title: 'Search',
+        apiLabel: 'TencentMaps.search(query, referer)',
+        buttonLabel: 'Search',
+        fields: const [
+          ActionField(key: 'query', label: 'Query', defaultValue: 'coffee'),
+          ActionField(key: 'region', label: 'Region (optional)', defaultValue: 'Beijing', optional: true),
+          _tencentKeyField,
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TencentMaps.search(
+            query: v.value('query'),
+            region: v.optionalValue('region'),
+            referer: v.value('referer'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.travel_explore_rounded,
+        title: 'Nearby search',
+        apiLabel: 'TencentMaps.nearbySearch(query, referer)',
+        buttonLabel: 'Search nearby',
+        fields: [
+          const ActionField(key: 'query', label: 'Query', defaultValue: 'restaurant'),
+          const ActionField(
+            key: 'centerLat',
+            label: 'Center latitude (optional)',
+            optional: true,
+            validator: FieldValidator.latitude,
+          ),
+          const ActionField(
+            key: 'centerLng',
+            label: 'Center longitude (optional)',
+            optional: true,
+            validator: FieldValidator.longitude,
+          ),
+          _tencentKeyField,
+        ],
+        validate: _validateTencentCenter,
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TencentMaps.nearbySearch(
+            query: v.value('query'),
+            center: v.optionalCoordinate('centerLat', 'centerLng'),
+            referer: v.value('referer'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'TencentMaps.directionsWithCoords(destination, referer)',
+        buttonLabel: 'Navigate',
+        fields: [
+          _latField(value: '39.867192'),
+          _lngField(value: '116.493187'),
+          ..._originFields,
+          const ActionField(
+            key: 'destinationTitle',
+            label: 'Destination title (optional)',
+            defaultValue: 'Tencent Office',
+            optional: true,
+          ),
+          const ActionField(key: 'originTitle', label: 'Origin title (optional)', optional: true),
+          _tencentKeyField,
+        ],
+        validate: _validateOrigin,
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TencentMaps.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            origin: v.optionalCoordinate('originLat', 'originLng'),
+            destinationTitle: v.optionalValue('destinationTitle'),
+            originTitle: v.optionalValue('originTitle'),
+            referer: v.value('referer'),
             fallbackToStore: fallbackToStore,
           ),
         ),

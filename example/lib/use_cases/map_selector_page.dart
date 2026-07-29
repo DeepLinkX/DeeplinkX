@@ -7,6 +7,8 @@ import 'package:deeplink_x_example/widgets/inputs.dart';
 import 'package:deeplink_x_example/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 
+const _tencentMapsExampleKey = 'YOUR_TENCENT_MAPS_KEY';
+
 /// Demonstrates automatic and manual navigation-app selection.
 class MapSelectorPage extends StatefulWidget {
   /// Creates the map-selector use case.
@@ -122,6 +124,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       app: YandexNavigator.directionsWithCoords(destination: destination),
       fallbackLabel: 'Yandex Maps web',
       assetName: 'assets/yandex_navigator.png',
+    ),
+    LaunchOption(
+      id: 'tencent-maps',
+      title: 'Tencent Maps',
+      app: TencentMaps.directionsWithCoords(destination: destination, referer: _tencentMapsExampleKey),
+      fallbackLabel: 'Tencent Maps web',
+      assetName: 'assets/tencent_maps.png',
     ),
   ];
 

@@ -213,6 +213,40 @@ void main() {
         expect(routeAction, isA<MapDirectionsWithCoordsAction>());
       });
 
+      test('Tencent Maps', () {
+        final openAction = TencentMaps.open();
+        final viewAction = TencentMaps.view(
+          coordinate: const Coordinate(latitude: 39.867192, longitude: 116.493187),
+          referer: 'developer-key',
+        );
+        final searchAction = TencentMaps.search(
+          query: 'coffee',
+          referer: 'developer-key',
+        );
+        final nearbySearchAction = TencentMaps.nearbySearch(
+          query: 'restaurant',
+          referer: 'developer-key',
+        );
+        final routeAction = TencentMaps.directionsWithCoords(
+          destination: const Coordinate(latitude: 39.867192, longitude: 116.493187),
+          waypoints: const [
+            TencentMapsWaypoint(
+              title: 'Metro Station',
+              coordinate: Coordinate(latitude: 30.248015, longitude: 120.207788),
+            ),
+          ],
+          mode: TencentMapsTravelMode.walking,
+          coordType: TencentMapsCoordType.gps,
+          referer: 'developer-key',
+        );
+
+        expect(openAction, isA<App>());
+        expect(viewAction, isA<MapViewAction>());
+        expect(searchAction, isA<MapSearchAction>());
+        expect(nearbySearchAction, isA<MapSearchAction>());
+        expect(routeAction, isA<MapDirectionsWithCoordsAction>());
+      });
+
       test('Pinterest', () {
         final action = Pinterest.open();
         expect(action, isA<App>());

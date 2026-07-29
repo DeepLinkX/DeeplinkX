@@ -76,6 +76,8 @@
         <package android:name="ru.yandex.yandexmaps" />
         <!-- Yandex Navigator -->
         <package android:name="ru.yandex.yandexnavi" />
+        <!-- Tencent Maps -->
+        <package android:name="com.tencent.map" />
 
         <!-- For store apps -->
         <!-- Google Play Store -->
@@ -129,6 +131,10 @@
         <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="yandexnavi" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="qqmap" />
         </intent>
     </queries>
 </manifest>

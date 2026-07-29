@@ -1,3 +1,16 @@
+## 1.4.2
+
+### Added
+
+* Added Tencent Maps app with the following actions:
+  * Open app with the official cross-platform download fallback
+  * View map using a custom marker or coordinate reverse geocoding
+  * Search with an optional city region
+  * Nearby search using a coordinate or the current location
+  * Directions with coordinates, optional origin, destination details, POI ID, up to 15 waypoints, and driving, transit, walking, or bicycling modes
+* Added action-preserving Tencent Maps web fallbacks for view, search, nearby search, and supported route modes, plus a destination fallback for bicycling.
+* Added Tencent Maps documentation, unit tests, public API coverage, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.4.1
 
 ### Added

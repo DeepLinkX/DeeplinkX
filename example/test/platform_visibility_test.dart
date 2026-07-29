@@ -28,6 +28,7 @@ void main() {
       'ru.dublgis.dgismobile',
       'ru.yandex.yandexmaps',
       'ru.yandex.yandexnavi',
+      'com.tencent.map',
       'com.android.vending',
       'com.huawei.appmarket',
       'com.farsitel.bazaar',
@@ -38,10 +39,11 @@ void main() {
     }
   });
 
-  test('Android visibility contains the Yandex Navigator scheme exactly once', () async {
+  test('Android visibility contains navigation schemes exactly once', () async {
     final manifest = await File('android/app/src/main/AndroidManifest.xml').readAsString();
 
     expect(_occurrences(manifest, '<data android:scheme="yandexnavi" />'), 1);
+    expect(_occurrences(manifest, '<data android:scheme="qqmap" />'), 1);
   });
 
   test('iOS visibility contains every queried scheme exactly once', () async {
@@ -70,6 +72,7 @@ void main() {
       'dgis',
       'yandexmaps',
       'yandexnavi',
+      'qqmap',
       'itms-apps',
     ];
     for (final scheme in schemes) {
