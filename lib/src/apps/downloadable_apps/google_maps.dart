@@ -204,7 +204,7 @@ class GoogleMapsSearchAction extends GoogleMaps
   Uri get fallbackLink => Uri(
         scheme: 'https',
         host: 'www.google.com',
-        path: 'maps/@',
+        path: 'maps/search/',
         queryParameters: {
           'api': '1',
           'query': query,
@@ -256,7 +256,13 @@ class GoogleMapsViewAction extends GoogleMaps
   Uri get fallbackLink => Uri(
         scheme: 'https',
         host: 'www.google.com',
-        path: 'maps/@${coordinate.latitude},${coordinate.longitude},${zoom ?? 14}z',
+        path: 'maps/@',
+        queryParameters: {
+          'api': '1',
+          'map_action': 'map',
+          'center': coordinate.toString(),
+          'zoom': (zoom ?? 14).toString(),
+        },
       );
 }
 

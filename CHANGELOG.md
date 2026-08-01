@@ -1,3 +1,10 @@
+## 1.4.4
+
+### Fixed
+
+* Updated Google Maps view and search web fallbacks to the canonical Maps URL formats with the required `api=1` parameter.
+* Documented and regression-tested destination-only and explicit-origin coordinate directions fallbacks, which already used the canonical `api=1` contract.
+
 ## 1.4.3
 
 ### Added

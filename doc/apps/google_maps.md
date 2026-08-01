@@ -6,6 +6,7 @@ DeeplinkX provides support for Google Maps deep linking actions on iOS and Andro
 
 - [Android Intents](https://developer.android.com/guide/components/google-maps-intents)
 - [iOS URL Scheme](https://developers.google.com/maps/documentation/urls/ios-urlscheme)
+- [Google Maps URLs](https://developers.google.com/maps/documentation/urls/get-started)
 
 ## Available Actions
 
@@ -83,10 +84,13 @@ Add the following to your `android/app/src/main/AndroidManifest.xml` inside the 
 - Directions with coordinates: `https://www.google.com/maps/dir/?api=1&destination={dest_lat},{dest_lng}&origin={origin_lat},{origin_lng}&travelmode={mode}`
 
 ### Web Fallback URLs
-- View map: `https://www.google.com/maps/@{lat},{lng},{zoom}z`
-- Search: `https://www.google.com/maps/@?api=1&query={query}`
-- Directions: `https://maps.google.com/maps/dir/?destination={destination}&origin={origin}&travelmode={mode}`
-- Directions with coordinates: `https://maps.google.com/maps/dir/?origin={origin_lat},{origin_lng}&destination={dest_lat},{dest_lng}&travelmode={mode}`
+- View map: `https://www.google.com/maps/@?api=1&map_action=map&center={lat},{lng}&zoom={zoom}`
+- Search: `https://www.google.com/maps/search/?api=1&query={query}`
+- Directions: `https://www.google.com/maps/dir/?api=1&destination={destination}&origin={origin}&travelmode={mode}`
+- Directions with coordinates: `https://www.google.com/maps/dir/?api=1&destination={dest_lat},{dest_lng}&origin={origin_lat},{origin_lng}&travelmode={mode}`
+- Directions from current location: `https://www.google.com/maps/dir/?api=1&destination=40.6892,-74.0445`
+
+Google requires `api=1` on Maps URLs. Without it, the documented action parameters can be ignored. Coordinate destinations use latitude,longitude order; when `origin` is omitted, Google Maps starts from the user's current location.
 
 ## Supported Fallback Stores
 When the Google Maps app is not installed, DeeplinkX can redirect users to download Google Maps from:

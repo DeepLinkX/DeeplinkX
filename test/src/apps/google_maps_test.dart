@@ -55,7 +55,7 @@ void main() {
       );
       expect(
         action.fallbackLink.toString(),
-        'https://www.google.com/maps/@?api=1&query=1600+Amphitheatre+Parkway',
+        'https://www.google.com/maps/search/?api=1&query=1600+Amphitheatre+Parkway',
       );
       expect(
         action.androidIntentOptions.data,
@@ -95,7 +95,20 @@ void main() {
       expect(double.parse(action.appLink.queryParameters['zoom']!), 15);
 
       expect(action.fallbackLink.host, 'www.google.com');
-      expect(action.fallbackLink.path, '/maps/@37.422,-122.084,15.0z');
+      expect(action.fallbackLink.path, '/maps/@');
+      expect(
+        action.fallbackLink.queryParameters,
+        {
+          'api': '1',
+          'map_action': 'map',
+          'center': '37.422,-122.084',
+          'zoom': '15.0',
+        },
+      );
+      expect(
+        action.fallbackLink.toString(),
+        'https://www.google.com/maps/@?api=1&map_action=map&center=37.422%2C-122.084&zoom=15.0',
+      );
 
       final intentUri = Uri.parse(action.androidIntentOptions.data!);
       expect(intentUri.scheme, 'geo');
@@ -119,11 +132,13 @@ void main() {
       expect(intentUri.scheme, 'https');
       expect(intentUri.host, 'www.google.com');
       expect(intentUri.path, '/maps/dir/');
+      expect(intentUri.queryParameters['api'], '1');
       expect(intentUri.queryParameters['destination'], 'Statue of Liberty');
       expect(intentUri.queryParameters['origin'], 'Times Square, New York');
       expect(intentUri.queryParameters['travelmode'], 'transit');
 
       expect(action.fallbackLink.path, '/maps/dir/');
+      expect(action.fallbackLink.queryParameters['api'], '1');
       expect(action.fallbackLink.queryParameters['travelmode'], 'transit');
       expect(action.fallbackLink.queryParameters['destination'], 'Statue of Liberty');
       expect(action.fallbackLink.queryParameters['origin'], 'Times Square, New York');
@@ -145,14 +160,35 @@ void main() {
       expect(intentUri.scheme, 'https');
       expect(intentUri.host, 'www.google.com');
       expect(intentUri.path, '/maps/dir/');
+      expect(intentUri.queryParameters['api'], '1');
       expect(intentUri.queryParameters['destination'], '40.6892,-74.0445');
       expect(intentUri.queryParameters['origin'], '40.758,-73.9855');
       expect(intentUri.queryParameters['travelmode'], 'walking');
 
       expect(action.fallbackLink.path, '/maps/dir/');
+      expect(action.fallbackLink.queryParameters['api'], '1');
       expect(action.fallbackLink.queryParameters['travelmode'], 'walking');
       expect(action.fallbackLink.queryParameters['destination'], '40.6892,-74.0445');
       expect(action.fallbackLink.queryParameters['origin'], '40.758,-73.9855');
+      expect(
+        action.fallbackLink.toString(),
+        'https://www.google.com/maps/dir/?api=1&destination=40.6892%2C-74.0445&origin=40.758%2C-73.9855&travelmode=walking',
+      );
+    });
+
+    test('coordinate directions preserve current location with a canonical fallback', () {
+      final action = GoogleMaps.directionsWithCoords(
+        destination: const Coordinate(latitude: 40.6892, longitude: -74.0445),
+      );
+
+      expect(
+        action.fallbackLink.toString(),
+        'https://www.google.com/maps/dir/?api=1&destination=40.6892%2C-74.0445',
+      );
+      expect(action.fallbackLink.queryParameters['api'], '1');
+      expect(action.fallbackLink.queryParameters['destination'], '40.6892,-74.0445');
+      expect(action.fallbackLink.queryParameters.containsKey('origin'), isFalse);
+      expect(action.fallbackLink.queryParameters.containsKey('travelmode'), isFalse);
     });
   });
 }
