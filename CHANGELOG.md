@@ -1,3 +1,17 @@
+## 1.4.3
+
+### Added
+
+* Added NAVER Map app with the following actions:
+  * Open app
+  * View the main map or a named marker
+  * Integrated map search and bus-number search
+  * Directions with coordinates, optional origin, up to five waypoints, and driving, public-transit, walking, or bicycling modes
+  * Turn-by-turn navigation with coordinates and optional waypoints
+  * Safe-driving mode
+* Added action-preserving NAVER web fallbacks for map and search actions, plus destination-marker fallbacks for route and navigation actions.
+* Added NAVER Map documentation, tests, public API coverage, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.4.2
 
 ### Added

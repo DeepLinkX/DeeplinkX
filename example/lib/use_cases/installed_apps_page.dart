@@ -50,6 +50,7 @@ class _InstalledAppsPageState extends State<InstalledAppsPage> {
     _InstalledItem('Maps', 'Google Maps', GoogleMaps(), 'assets/google_maps.png'),
     _InstalledItem('Maps', 'Amap', Amap(), 'assets/amap.png'),
     _InstalledItem('Maps', 'Baidu Maps', BaiduMaps(), 'assets/baidu_maps.png'),
+    _InstalledItem('Maps', 'NAVER Map', NaverMap(), 'assets/naver_map.png'),
     _InstalledItem('Maps', '2GIS', TwoGis(), 'assets/2gis.png'),
     _InstalledItem('Maps', 'Waze', Waze(), 'assets/waze.png'),
     _InstalledItem('Maps', 'Apple Maps', AppleMaps(), 'assets/apple_maps.png'),

@@ -8,6 +8,10 @@ import 'package:deeplink_x_example/widgets/screen_header.dart';
 import 'package:flutter/material.dart';
 
 const _tencentMapsExampleKey = 'YOUR_TENCENT_MAPS_KEY';
+const _naverMapLaunchParams = NaverMapLaunchParams(
+  androidAppName: 'io.github.deeplinkx.demo',
+  iosAppName: 'com.example.deeplinkXExample',
+);
 
 /// Demonstrates automatic and manual navigation-app selection.
 class MapSelectorPage extends StatefulWidget {
@@ -23,8 +27,8 @@ class MapSelectorPage extends StatefulWidget {
 
 class _MapSelectorPageState extends State<MapSelectorPage> {
   late final DeeplinkX _deeplinkX = widget.deeplinkX ?? DeeplinkX();
-  final _latitudeController = TextEditingController(text: '35.6892');
-  final _longitudeController = TextEditingController(text: '51.3890');
+  final _latitudeController = TextEditingController(text: '37.5665');
+  final _longitudeController = TextEditingController(text: '126.9780');
 
   @override
   void dispose() {
@@ -46,6 +50,12 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
     }
     return Coordinate(latitude: latitude, longitude: longitude);
   }
+
+  bool _isNaverCoordinate(final Coordinate coordinate) =>
+      coordinate.latitude >= 31.43 &&
+      coordinate.latitude <= 44.35 &&
+      coordinate.longitude >= 122.37 &&
+      coordinate.longitude <= 132.00;
 
   List<LaunchOption<MapDirectionsWithCoordsAction>> _options(final Coordinate destination) => [
     LaunchOption(
@@ -69,6 +79,14 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       fallbackLabel: 'Baidu Maps web',
       assetName: 'assets/baidu_maps.png',
     ),
+    if (_isNaverCoordinate(destination))
+      LaunchOption(
+        id: 'naver-map',
+        title: 'NAVER Map',
+        app: NaverMap.directionsWithCoords(destination: destination, launchParams: _naverMapLaunchParams),
+        fallbackLabel: 'NAVER Map web',
+        assetName: 'assets/naver_map.png',
+      ),
     LaunchOption(
       id: 'apple-maps',
       title: 'Apple Maps',

@@ -50,6 +50,7 @@
 		<string>yandexmaps</string>
 		<string>yandexnavi</string>
 		<string>qqmap</string>
+		<string>nmap</string>
 		<string>itms-apps</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
