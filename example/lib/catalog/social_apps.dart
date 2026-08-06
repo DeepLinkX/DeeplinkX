@@ -665,4 +665,41 @@ final List<AppSpec> socialApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'chatgpt',
+    name: 'ChatGPT',
+    assetName: 'assets/chatgpt.png',
+    category: CatalogCategory.social,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'ChatGPT.open(fallbackToStore)',
+        buttonLabel: 'Open ChatGPT',
+        runner: OpenAppRunner(({required final fallbackToStore}) => ChatGPT.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.forum_rounded,
+        title: 'Open shared conversation',
+        apiLabel: 'ChatGPT.openSharedConversation(shareId)',
+        buttonLabel: 'Open shared conversation',
+        fields: const [ActionField(key: 'shareId', label: 'Share ID', defaultValue: 'abc123')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              ChatGPT.openSharedConversation(shareId: v.value('shareId'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.smart_toy_rounded,
+        title: 'Open GPT',
+        apiLabel: 'ChatGPT.openGpt(gptId)',
+        buttonLabel: 'Open GPT',
+        fields: const [ActionField(key: 'gptId', label: 'GPT ID', defaultValue: 'g-NfGMjwvdl')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              ChatGPT.openGpt(gptId: v.value('gptId'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+    ],
+  ),
 ];
