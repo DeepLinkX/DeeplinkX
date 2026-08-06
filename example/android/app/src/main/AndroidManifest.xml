@@ -32,6 +32,8 @@
             android:value="2" />
     </application>
     <queries>
+        <!-- ChatGPT -->
+        <package android:name="com.openai.chatgpt" />
         <!-- LinkedIn -->
         <package android:name="com.linkedin.android" />
         <!-- Instagram -->

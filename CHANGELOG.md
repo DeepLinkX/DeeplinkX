@@ -1,5 +1,13 @@
 ## 1.4.4
 
+### Added
+
+* Added ChatGPT app with the following actions:
+  * Open app
+  * Open shared conversation
+  * Open GPT
+* Added ChatGPT documentation, tests, public API coverage, catalog examples, and Android/iOS visibility configuration.
+
 ### Fixed
 
 * Updated Google Maps view and search web fallbacks to the canonical Maps URL formats with the required `api=1` parameter.

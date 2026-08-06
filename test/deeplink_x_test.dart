@@ -111,6 +111,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('ChatGPT', () {
+        final action = ChatGPT.open();
+        expect(action, isA<App>());
+      });
+
       test('GoogleMaps', () {
         final action = GoogleMaps.open();
         expect(action, isA<App>());
