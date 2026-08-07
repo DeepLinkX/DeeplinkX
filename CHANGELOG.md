@@ -1,3 +1,13 @@
+## 1.4.5
+
+### Added
+
+* Added Netflix app with the following actions:
+  * Open app
+  * Open title
+  * Watch title
+* Added Netflix documentation, tests, public API coverage, catalog examples, and Android/iOS visibility configuration.
+
 ## 1.4.4
 
 ### Added
