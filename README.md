@@ -34,7 +34,7 @@ DeeplinkX is a Flutter plugin for launching typed external deeplinks — it laun
 - **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Moovit, or Neshan; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
 - **One package, every platform** — iOS, Android, macOS, Windows, Linux, and Web.
 
-Out of the box: **26 apps**, including **13 navigation providers** (ChatGPT, Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Waze, Apple Maps, Sygic, Moovit, Neshan), and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
+Out of the box: **27 apps**, including **13 navigation providers** (ChatGPT, Netflix, Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Waze, Apple Maps, Sygic, Moovit, Neshan), and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
 
 ## Install
 
@@ -380,6 +380,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 |                | Slack             | Open team, open channel, open user                                              |
 |                | LinkedIn          | Open profile page, open company page                                            |
 |                | ChatGPT           | Open app, open shared conversation, open GPT                                    |
+|                | Netflix           | Open app, open title, watch title                                               |
 | **Navigation** | Google Maps       | View map, search location, directions, directions with coordinates              |
 |                | Amap              | Open current location, view map, search, directions, directions with coordinates |
 |                | Baidu Maps        | View map, search, nearby search, line, directions, coordinates, navigation      |
@@ -448,7 +449,7 @@ For NAVER Map, add `<string>nmap</string>` on iOS,
 
 |                                    | DeeplinkX                      | `url_launcher`                                     |
 | ---------------------------------- | ------------------------------ | -------------------------------------------------- |
-| **Typed API for popular apps**     | ✅ 26 apps, no URL maintenance | ❌ Raw URLs only                                   |
+| **Typed API for popular apps**     | ✅ 27 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
@@ -488,6 +489,7 @@ Per-app pages (schemes, required config, fallback behavior) live in [`doc/apps`]
 [Myket](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/myket_store.md)
 
 **Apps:** [ChatGPT](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/chatgpt.md) ·
+[Netflix](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/netflix.md) ·
 [Facebook](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/facebook.md) ·
 [Instagram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/instagram.md) ·
 [Telegram](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/telegram.md) ·

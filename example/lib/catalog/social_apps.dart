@@ -702,4 +702,41 @@ final List<AppSpec> socialApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'netflix',
+    name: 'Netflix',
+    assetName: 'assets/netflix.png',
+    category: CatalogCategory.social,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'Netflix.open(fallbackToStore)',
+        buttonLabel: 'Open Netflix',
+        runner: OpenAppRunner(({required final fallbackToStore}) => Netflix.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.movie_rounded,
+        title: 'Open title',
+        apiLabel: 'Netflix.openTitle(titleId)',
+        buttonLabel: 'Open title',
+        fields: const [ActionField(key: 'titleId', label: 'Title ID', defaultValue: '81215567')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              Netflix.openTitle(titleId: v.value('titleId'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.play_circle_rounded,
+        title: 'Watch title',
+        apiLabel: 'Netflix.watchTitle(titleId)',
+        buttonLabel: 'Watch title',
+        fields: const [ActionField(key: 'titleId', label: 'Title ID', defaultValue: '81215567')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              Netflix.watchTitle(titleId: v.value('titleId'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+    ],
+  ),
 ];

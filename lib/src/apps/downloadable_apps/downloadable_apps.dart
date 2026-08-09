@@ -9,6 +9,7 @@ export 'linkedin.dart';
 export 'moovit.dart';
 export 'naver_map.dart';
 export 'neshan.dart';
+export 'netflix.dart';
 export 'pinterest.dart';
 export 'slack.dart';
 export 'sygic.dart';
