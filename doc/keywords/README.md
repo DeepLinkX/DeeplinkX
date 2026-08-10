@@ -13,6 +13,8 @@ This directory tracks pub.dev keyword visibility snapshots for `deeplink_x`.
 | 2026-07-01 to 2026-07-06 | [pubdev_keyword_comparison_2026-07-01_to_2026-07-06.md](pubdev_keyword_comparison_2026-07-01_to_2026-07-06.md) | Ranking movement, wins, regressions, and net assessment. |
 | 2026-07-06 to 2026-07-10 | [pubdev_keyword_comparison_2026-07-06_to_2026-07-10.md](pubdev_keyword_comparison_2026-07-06_to_2026-07-10.md) | Full baseline movement plus new app, related-search, and Medium-derived coverage. |
 | 2026-07-10 to 2026-07-19 | [pubdev_keyword_comparison_2026-07-10_to_2026-07-19.md](pubdev_keyword_comparison_2026-07-10_to_2026-07-19.md) | Full July 10 baseline movement plus Threads search/topic action coverage. |
+| 2026-08-10 | [pubdev_keyword_visibility_report_2026-08-10.md](pubdev_keyword_visibility_report_2026-08-10.md) | Current pub.dev keyword visibility snapshot. |
+| 2026-07-19 to 2026-08-10 | [pubdev_keyword_comparison_2026-07-19_to_2026-08-10.md](pubdev_keyword_comparison_2026-07-19_to_2026-08-10.md) | Ranking movement and freshness-aware comparison. |
 
 ## Refresh Checklist
 
@@ -27,4 +29,4 @@ This directory tracks pub.dev keyword visibility snapshots for `deeplink_x`.
 - Wait through pub.dev rate limits with retry/backoff; do not mark queries skipped only because of rate limiting.
 - Create a comparison report whenever a prior snapshot exists.
 
-Current supported app keyword coverage baseline: Facebook, Instagram, Telegram, WhatsApp, LinkedIn, YouTube, Twitter, Threads, Pinterest, TikTok, Zoom, Slack, Google Maps, Amap, Baidu Maps, 2GIS, Yandex Maps, Waze, Apple Maps, Sygic, Moovit, and Neshan.
+Current supported app keyword coverage baseline: ChatGPT, Netflix, Facebook, Instagram, Telegram, WhatsApp, LinkedIn, YouTube, Twitter, Threads, Pinterest, TikTok, Zoom, Slack, Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Waze, Apple Maps, Sygic, Moovit, and Neshan.
