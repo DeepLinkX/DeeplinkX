@@ -74,6 +74,8 @@
         <package android:name="com.autonavi.minimap" />
         <!-- Moovit -->
         <package android:name="com.tranzmate" />
+        <!-- HERE WeGo -->
+        <package android:name="com.here.app.maps" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
         <!-- NAVER Map -->
