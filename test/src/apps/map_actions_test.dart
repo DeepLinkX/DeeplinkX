@@ -78,6 +78,11 @@ void main() {
       expect(Sygic.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
 
+    test('Citymapper actions implement supported map abstractions', () {
+      expect(Citymapper.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(Citymapper.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
     test('Moovit actions implement supported map abstractions', () {
       expect(Moovit.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Moovit.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
