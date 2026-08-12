@@ -123,6 +123,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/moovit.png',
     ),
     LaunchOption(
+      id: 'osmand',
+      title: 'OsmAnd',
+      app: OsmAnd.directionsWithCoords(destination: destination),
+      fallbackLabel: 'OsmAnd web',
+      assetName: 'assets/osmand.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),

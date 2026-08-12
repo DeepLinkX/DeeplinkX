@@ -83,6 +83,11 @@ void main() {
       expect(Moovit.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
 
+    test('OsmAnd actions implement supported map abstractions', () {
+      expect(OsmAnd.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(OsmAnd.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
     test('Neshan actions implement supported map abstractions', () {
       expect(Neshan.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Neshan.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
