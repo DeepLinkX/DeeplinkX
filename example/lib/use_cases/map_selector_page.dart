@@ -123,6 +123,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/moovit.png',
     ),
     LaunchOption(
+      id: 'copilot',
+      title: 'CoPilot',
+      app: Copilot.directionsWithCoords(destination: destination),
+      fallbackLabel: 'CoPilot website',
+      assetName: 'assets/copilot.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),

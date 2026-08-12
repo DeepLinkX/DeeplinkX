@@ -997,4 +997,60 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'copilot',
+    name: 'CoPilot',
+    assetName: 'assets/copilot.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'Copilot.open(fallbackToStore)',
+        buttonLabel: 'Open CoPilot',
+        runner: OpenAppRunner(({required final fallbackToStore}) => Copilot.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'Copilot.view(coordinate, title)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '52.5163'),
+          _lngField(value: '13.3777'),
+          const ActionField(key: 'title', label: 'Title (optional)', optional: true, defaultValue: 'Fleet Yard'),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => Copilot.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            title: v.optionalValue('title'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'Copilot.directionsWithCoords(destination, destinationTitle)',
+        buttonLabel: 'Navigate',
+        fields: [
+          _latField(value: '52.5163'),
+          _lngField(value: '13.3777'),
+          const ActionField(
+            key: 'destinationTitle',
+            label: 'Destination title (optional)',
+            optional: true,
+            defaultValue: 'Warehouse',
+          ),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => Copilot.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            destinationTitle: v.optionalValue('destinationTitle'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];
