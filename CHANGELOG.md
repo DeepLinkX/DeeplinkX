@@ -1,3 +1,13 @@
+## 1.4.7
+
+### Added
+
+* Added KakaoMap app with the following actions:
+  * Open app
+  * View map
+  * Directions with coordinates
+* Added KakaoMap documentation, tests, public API coverage, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.4.6
 
 ### Added
