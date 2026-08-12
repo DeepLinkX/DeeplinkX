@@ -123,6 +123,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/moovit.png',
     ),
     LaunchOption(
+      id: 'kakao-map',
+      title: 'KakaoMap',
+      app: KakaoMap.directionsWithCoords(destination: destination),
+      fallbackLabel: 'KakaoMap web',
+      assetName: 'assets/kakao_map.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),

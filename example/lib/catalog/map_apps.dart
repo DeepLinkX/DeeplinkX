@@ -997,4 +997,45 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'kakao_map',
+    name: 'KakaoMap',
+    assetName: 'assets/kakao_map.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'KakaoMap.open(fallbackToStore)',
+        buttonLabel: 'Open KakaoMap',
+        runner: OpenAppRunner(({required final fallbackToStore}) => KakaoMap.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'KakaoMap.view(coordinate)',
+        buttonLabel: 'View location',
+        fields: [_latField(value: '37.5665'), _lngField(value: '126.9780')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              KakaoMap.view(coordinate: v.coordinate('lat', 'lng'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'KakaoMap.directionsWithCoords(destination, origin)',
+        buttonLabel: 'Navigate',
+        fields: [_latField(value: '37.5547'), _lngField(value: '126.9706'), ..._originFields],
+        validate: _validateOrigin,
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => KakaoMap.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            origin: v.optionalCoordinate('originLat', 'originLng'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];
