@@ -997,4 +997,48 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'osmand',
+    name: 'OsmAnd',
+    assetName: 'assets/osmand.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'OsmAnd.open(fallbackToStore)',
+        buttonLabel: 'Open OsmAnd',
+        runner: OpenAppRunner(({required final fallbackToStore}) => OsmAnd.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'OsmAnd.view(coordinate, zoom)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '52.516275'),
+          _lngField(value: '13.377704'),
+          const ActionField(key: 'zoom', label: 'Zoom', defaultValue: '12'),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => OsmAnd.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            zoom: int.tryParse(v.value('zoom')) ?? 15,
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'OsmAnd.directionsWithCoords(destination)',
+        buttonLabel: 'Navigate',
+        fields: [_latField(value: '52.516275'), _lngField(value: '13.377704')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              OsmAnd.directionsWithCoords(destination: v.coordinate('lat', 'lng'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+    ],
+  ),
 ];
