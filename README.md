@@ -34,7 +34,7 @@ DeeplinkX is a Flutter plugin for launching typed external deeplinks — it laun
 - **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, or Neshan; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
 - **One package, every platform** — iOS, Android, macOS, Windows, Linux, and Web.
 
-Out of the box: **38 apps**, including **21 navigation providers** (ChatGPT, Netflix, Temu, Snapchat, CapCut, Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Waze, Apple Maps, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet, Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, Neshan), and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket).
+Out of the box: **39 apps**, including **22 navigation providers (including one unpublished draft)** (ChatGPT, Netflix, Temu, Snapchat, CapCut, Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Waze, Apple Maps, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet, TomTom GO Expert, Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, Neshan), and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket). TomTom GO Expert navigation links are experimental and unverified; this local draft is not release-ready.
 
 ## Install
 
@@ -292,6 +292,7 @@ await deeplinkX.launchMapViewAction(
     SygicTruck.view(coordinate: origin),
     Copilot.view(coordinate: origin),
     TomTomGoFleet.view(coordinate: origin),
+    TomTomGoExpert.view(coordinate: origin), // Unverified; unpublished draft only.
     Moovit.view(coordinate: origin),
     AirNavigationPro.view(coordinate: origin),
     Mappls.view(coordinate: origin),
@@ -349,6 +350,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
     SygicTruck.directionsWithCoords(destination: destination),
     Copilot.directionsWithCoords(destination: destination),
     TomTomGoFleet.directionsWithCoords(destination: destination),
+    TomTomGoExpert.directionsWithCoords(destination: destination), // Unverified draft.
     Moovit.directionsWithCoords(destination: destination),
     AirNavigationPro.directionsWithCoords(destination: destination),
     Mappls.directionsWithCoords(destination: destination),
@@ -368,10 +370,10 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 
 | Method                                | Supported apps                       |
 | ------------------------------------- | ------------------------------------ |
-| `launchMapViewAction`                 | Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, Neshan |
+| `launchMapViewAction`                 | Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), TomTom GO Expert (unverified draft), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, Neshan |
 | `launchMapSearchAction`               | Google Maps, Amap, Baidu Maps, NAVER Map, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Mapy.com             |
 | `launchMapDirectionsAction`           | Google Maps, Amap, Baidu Maps, Apple Maps, Waze                        |
-| `launchMapDirectionsWithCoordsAction` | Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, Neshan |
+| `launchMapDirectionsWithCoordsAction` | Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), TomTom GO Expert (unverified draft), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, Neshan |
 
 ## Supported apps and actions
 
@@ -412,6 +414,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 |                | Sygic Truck       | View map, directions with coordinates                                           |
 |                | CoPilot           | View map, directions with coordinates                                           |
 |                | TomTom GO Fleet   | View map, directions with coordinates (Android)                                |
+|                | TomTom GO Expert (draft) | Open app, view map, coordinate directions (unverified); store/website fallbacks |
 |                | Moovit            | View map, directions with coordinates                                           |
 |                | Air Navigation Pro| View map, directions with coordinates                                           |
 |                | Mappls            | View map, directions with coordinates                                           |
@@ -492,13 +495,23 @@ TomTom GO Fleet navigation intents are supported on Android only. Add
 `<package android:name="com.tomtom.gplay.navapp.gofleet" />` to the Android manifest.
 No iOS scheme or store action is configured.
 
+TomTom GO Expert is the rebranded GO Navigation app. Add
+`<package android:name="com.tomtom.gplay.navapp" />` on Android and open it with
+`await DeeplinkX().launchApp(TomTomGoExpert.open(fallbackToStore: true));`.
+Its official Android/iOS store listings and product website are configured as
+fallbacks. The unpublished draft also proposes `view` and `directionsWithCoords`
+actions with Android package-targeted intents and the iOS `tomtomgo` scheme.
+Add `<string>tomtomgo</string>` to iOS `LSApplicationQueriesSchemes` for testing.
+These native navigation contracts are unverified: passing serialization tests
+does not establish runtime support. Do not publish this draft before validation.
+
 ## DeeplinkX vs `url_launcher`
 
 `url_launcher` is a general-purpose URL opener. DeeplinkX is purpose-built for external app deeplinks:
 
 |                                    | DeeplinkX                      | `url_launcher`                                     |
 | ---------------------------------- | ------------------------------ | -------------------------------------------------- |
-| **Typed API for popular apps**     | ✅ 38 apps, no URL maintenance | ❌ Raw URLs only                                   |
+| **Typed API for popular apps**     | ✅ 39 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
@@ -565,6 +578,7 @@ Per-app pages (schemes, required config, fallback behavior) live in [`doc/apps`]
 [Sygic Truck](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/sygic_truck.md) ·
 [CoPilot](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/copilot.md) ·
 [TomTom GO Fleet](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/tomtom_go_fleet.md) ·
+[TomTom GO Expert](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/tomtom_go_expert.md) ·
 [Moovit](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/moovit.md) ·
 [Air Navigation Pro](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/air_navigation_pro.md) ·
 [Mappls](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/mappls.md) ·

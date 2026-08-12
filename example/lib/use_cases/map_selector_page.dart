@@ -137,6 +137,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/tomtom_go_fleet.png',
     ),
     LaunchOption(
+      id: 'tomtom-go-expert',
+      title: 'TomTom GO Expert (unverified draft)',
+      app: TomTomGoExpert.directionsWithCoords(destination: destination),
+      fallbackLabel: 'TomTom GO Expert website',
+      assetName: 'assets/tomtom_go_expert.png',
+    ),
+    LaunchOption(
       id: 'moovit',
       title: 'Moovit',
       app: Moovit.directionsWithCoords(destination: destination),

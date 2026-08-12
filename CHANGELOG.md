@@ -1,3 +1,9 @@
+## 1.5.4
+
+### Added
+
+* Drafted TomTom GO Expert open app, view map, and directions with coordinates APIs with official Android/iOS store links, website fallback, documentation, catalog examples, and tests. Native iOS opening and navigation links are unverified; this integration is not ready for publication.
+
 ## 1.5.3
 
 ### Added

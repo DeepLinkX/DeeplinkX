@@ -78,6 +78,8 @@
         <package android:name="com.alk.copilot.mapviewer" />
         <!-- TomTom GO Fleet -->
         <package android:name="com.tomtom.gplay.navapp.gofleet" />
+        <!-- TomTom GO Expert -->
+        <package android:name="com.tomtom.gplay.navapp" />
         <!-- Neshan -->
         <package android:name="org.rajman.neshan.traffic.tehran.navigator" />
         <!-- Amap -->

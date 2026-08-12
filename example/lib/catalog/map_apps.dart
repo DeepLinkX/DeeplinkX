@@ -776,6 +776,59 @@ final List<AppSpec> mapApps = [
     ],
   ),
   AppSpec(
+    id: 'tomtom_go_expert',
+    name: 'TomTom GO Expert (draft)',
+    assetName: 'assets/tomtom_go_expert.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app (draft)',
+        apiLabel: 'TomTomGoExpert.open(fallbackToStore)',
+        buttonLabel: 'Open TomTom GO Expert',
+        runner: OpenAppRunner(
+          ({required final fallbackToStore}) => TomTomGoExpert.open(fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map (unverified draft)',
+        apiLabel: 'TomTomGoExpert.view(coordinate, title)',
+        buttonLabel: 'Try proposed view link',
+        fields: [
+          _latField(value: '52.5163'),
+          _lngField(value: '13.3777'),
+          const ActionField(
+            key: 'title',
+            label: 'Title (Android only)',
+            optional: true,
+            defaultValue: 'Brandenburg Gate',
+          ),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TomTomGoExpert.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            title: v.optionalValue('title'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates (unverified draft)',
+        apiLabel: 'TomTomGoExpert.directionsWithCoords(destination)',
+        buttonLabel: 'Try proposed navigation link',
+        fields: [_latField(value: '52.5163'), _lngField(value: '13.3777')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TomTomGoExpert.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
+  AppSpec(
     id: 'moovit',
     name: 'Moovit',
     assetName: 'assets/moovit.png',
