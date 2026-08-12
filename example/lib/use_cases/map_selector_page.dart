@@ -186,6 +186,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/kakao_map.png',
     ),
     LaunchOption(
+      id: 'here-wego',
+      title: 'HERE WeGo',
+      app: HereWeGo.directionsWithCoords(destination: destination),
+      fallbackLabel: 'HERE WeGo web',
+      assetName: 'assets/here_wego.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),
