@@ -24,6 +24,7 @@ void main() {
       'com.google.android.apps.maps',
       'com.waze',
       'com.sygic.aura',
+      'com.sygic.truck',
       'org.rajman.neshan.traffic.tehran.navigator',
       'com.autonavi.minimap',
       'com.tranzmate',

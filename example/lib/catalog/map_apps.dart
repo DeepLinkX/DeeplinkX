@@ -997,4 +997,43 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'sygic_truck',
+    name: 'Sygic Truck',
+    assetName: 'assets/sygic_truck.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'SygicTruck.open(fallbackToStore)',
+        buttonLabel: 'Open Sygic Truck',
+        runner: OpenAppRunner(({required final fallbackToStore}) => SygicTruck.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'SygicTruck.view(coordinate)',
+        buttonLabel: 'View location',
+        fields: [_latField(value: '48.1486'), _lngField(value: '17.1077')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              SygicTruck.view(coordinate: v.coordinate('lat', 'lng'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'SygicTruck.directionsWithCoords(destination)',
+        buttonLabel: 'Navigate',
+        fields: [_latField(value: '48.1486'), _lngField(value: '17.1077')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => SygicTruck.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];
