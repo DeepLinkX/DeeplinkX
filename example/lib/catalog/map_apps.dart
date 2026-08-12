@@ -997,4 +997,52 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'tomtom_go_fleet',
+    name: 'TomTom Go Fleet',
+    assetName: 'assets/tomtom_go_fleet.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'TomTomGoFleet.open(fallbackToStore)',
+        buttonLabel: 'Open TomTom Go Fleet',
+        runner: OpenAppRunner(
+          ({required final fallbackToStore}) => TomTomGoFleet.open(fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'TomTomGoFleet.view(coordinate, title)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '52.5163'),
+          _lngField(value: '13.3777'),
+          const ActionField(key: 'title', label: 'Title (optional)', optional: true, defaultValue: 'Fleet Yard'),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TomTomGoFleet.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            title: v.optionalValue('title'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'TomTomGoFleet.directionsWithCoords(destination)',
+        buttonLabel: 'Navigate',
+        fields: [_latField(value: '52.5163'), _lngField(value: '13.3777')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TomTomGoFleet.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];

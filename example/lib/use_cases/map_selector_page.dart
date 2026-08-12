@@ -123,6 +123,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/moovit.png',
     ),
     LaunchOption(
+      id: 'tomtom-go-fleet',
+      title: 'TomTom Go Fleet',
+      app: TomTomGoFleet.directionsWithCoords(destination: destination),
+      fallbackLabel: 'TomTom website',
+      assetName: 'assets/tomtom_go_fleet.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),
