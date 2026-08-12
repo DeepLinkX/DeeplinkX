@@ -997,4 +997,48 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'tomtom_go',
+    name: 'TomTom Go',
+    assetName: 'assets/tomtom_go.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'TomTomGo.open(fallbackToStore)',
+        buttonLabel: 'Open TomTom Go',
+        runner: OpenAppRunner(({required final fallbackToStore}) => TomTomGo.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'TomTomGo.view(coordinate, title)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '52.5163'),
+          _lngField(value: '13.3777'),
+          const ActionField(key: 'title', label: 'Title (optional)', optional: true, defaultValue: 'Brandenburg Gate'),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TomTomGo.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            title: v.optionalValue('title'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'TomTomGo.directionsWithCoords(destination)',
+        buttonLabel: 'Navigate',
+        fields: [_latField(value: '52.5163'), _lngField(value: '13.3777')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              TomTomGo.directionsWithCoords(destination: v.coordinate('lat', 'lng'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+    ],
+  ),
 ];
