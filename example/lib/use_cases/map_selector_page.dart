@@ -144,6 +144,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/mapy_cz.png',
     ),
     LaunchOption(
+      id: 'tmap',
+      title: 'TMAP',
+      app: TMap.directionsWithCoords(destination: destination),
+      fallbackLabel: 'TMAP website',
+      assetName: 'assets/tmap.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),

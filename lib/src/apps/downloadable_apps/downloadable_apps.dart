@@ -23,6 +23,7 @@ export 'temu.dart';
 export 'tencent_maps.dart';
 export 'threads.dart';
 export 'tiktok.dart';
+export 'tmap.dart';
 export 'twitter.dart';
 export 'two_gis.dart';
 export 'waze.dart';

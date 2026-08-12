@@ -67,7 +67,7 @@ void main() {
       expect(action.fallbackLink.toString(), 'https://map.baidu.com');
     });
 
-    test('view action supplies map_launcher-compatible marker defaults', () {
+    test('view action supplies default marker labels', () {
       final action = BaiduMaps.view(
         coordinate: const Coordinate(latitude: 39.915, longitude: 116.404),
       );

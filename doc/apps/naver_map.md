@@ -7,7 +7,6 @@ DeeplinkX supports NAVER Map on iOS and Android for map display, integrated and 
 - [Official NAVER Map URL-scheme guide](https://guide.ncloud-docs.com/docs/en/maps-url-scheme)
 - [NAVER-confirmed coordinate web link](https://www.ncloud-forums.com/topic/242/)
 - [Google Play listing](https://play.google.com/store/apps/details?id=com.nhn.android.nmap)
-- [`map_launcher` 5.0.1](https://pub.dev/packages/map_launcher) comparison checked on 2026-08-02
 
 ## Calling-App Identifiers
 
@@ -148,7 +147,3 @@ Native Android actions use `ACTION_VIEW`, `CATEGORY_BROWSABLE`, the NAVER Map pa
 4. Search and bus search preserve their query on NAVER's web search.
 5. NAVER does not document a public web-routing contract, so route and navigation actions fall back to the destination marker instead of inventing an unsupported route URL.
 6. Open and safe-driving actions use the NAVER Map homepage because they have no portable web payload.
-
-## `map_launcher` Comparison
-
-`map_launcher` 5.0.1 overlaps with NAVER marker and directions launches. DeeplinkX additionally exposes integrated search, bus search, explicit navigation and safe-driving actions, separate Android/iOS calling-app identifiers, store fallback, and action-preserving web fallbacks. Provider documentation remains authoritative for native URI behavior.

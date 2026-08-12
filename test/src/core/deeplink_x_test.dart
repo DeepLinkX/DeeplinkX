@@ -426,7 +426,7 @@ void main() {
       verifyNever(() => mockLauncherUtil.launchUrl(any()));
     });
 
-    test('map launcher methods accept each supported action type', () async {
+    test('map action methods accept each supported action type', () async {
       final viewResult = await deeplinkX.launchMapViewAction(
         actions: [Waze.view(coordinate: firstCoordinate)],
       );

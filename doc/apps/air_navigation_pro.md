@@ -2,11 +2,10 @@
 
 DeeplinkX supports Air Navigation Pro's iOS `airnavpro` URI scheme and Android package-targeted HTTPS direct-to links so Flutter apps can open a coordinate in Air Navigation Pro on iOS and Android.
 
-Air Navigation Pro does not expose a separate marker URL in the upstream Map Launcher implementation. Its map view action uses the official `direct-to` URL, which is also exposed directly through `AirNavigationPro.directTo`.
+Air Navigation Pro's map view action uses the documented `direct-to` URL, which is also exposed directly through `AirNavigationPro.directTo`.
 
 ## References
 
-- Map Launcher open-source implementation of the same URI patterns: <https://github.com/mattermoran/map_launcher/blob/master/lib/src/directions_url.dart>
 - Air Navigation Pro URL manual: <https://airnavigation.aero/manual/en/html/manual/moving-map.html#create-via-url>
 - Air Navigation Pro App Store listing: <https://apps.apple.com/us/app/air-navigation-pro/id301046057>
 

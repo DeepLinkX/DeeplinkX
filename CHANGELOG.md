@@ -1,3 +1,13 @@
+## 1.4.12
+
+### Added
+
+* Added TMAP app with the following actions:
+  * Open app
+  * View map
+  * Directions with coordinates
+* Added TMAP documentation, tests, public API coverage, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.4.11
 
 ### Added
@@ -179,7 +189,7 @@
 
 ### Changed
 
-* Updated README map launcher examples and supported app tables
+* Updated README map-action examples and supported app tables
 * Updated the example app with a dedicated 2GIS page and asset
 
 ## 1.3.6
@@ -200,7 +210,7 @@
 
 ### Changed
 
-* Updated README map launcher examples and supported app tables
+* Updated README map-action examples and supported app tables
 * Updated the example app with a dedicated Baidu Maps page and asset
 
 ## 1.3.5+2
@@ -235,7 +245,7 @@
 ### Added
 
 * Added README wording for URL schemes, Android Intents, and App Links, plus install-check phrasing around `isAppInstalled()`.
-* Added brief README comparisons with `map_launcher` and `external_app_launcher`.
+* Added brief README comparisons with single-purpose alternatives.
 
 ### Changed
 
@@ -257,7 +267,7 @@
 
 ### Changed
 
-* Updated README map launcher examples and supported app tables
+* Updated README map-action examples and supported app tables
 * Updated the example app with a dedicated Amap page and asset
 
 ## 1.3.3

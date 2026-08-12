@@ -5,7 +5,6 @@ DeeplinkX supports the custom URI scheme used by [Sygic GPS Navigation](https://
 ## References
 
 - Sygic developer program overview: <https://www.sygic.com/developers/professional-navigation-sdk/introduction>
-- Map Launcher open-source implementation of the same URI scheme: <https://github.com/mattermoran/map_launcher/blob/master/lib/src/marker_url.dart>
 
 ## Available Actions
 

@@ -36,7 +36,7 @@ When introducing a new navigation app (e.g. Maps providers), follow this checkli
 4. **Testing**
    - Add unit tests under `test/src/apps/` covering store actions, app links, and fallbacks.
    - Update the integration/coverage checks in `test/deeplink_x_test.dart` when necessary (e.g. exposed API lists).
-   - When `map_launcher` supports the provider, record the checked release and date, compare its overlapping marker and directions behavior, and document intentional differences. Provider documentation and device results remain authoritative.
+   - Use first-party provider documentation and store listings as implementation evidence. Record the checked sources and dates, document intentional limitations, and treat device results as the runtime authority; do not use third-party package implementations as behavioral references.
    - Run `dart format .`, `flutter analyze`, and `flutter test` (via FVM if required).
 
 5. **Release Artifacts**
