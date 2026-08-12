@@ -86,6 +86,8 @@
         <package android:name="cz.seznam.mapy" />
         <!-- TMAP -->
         <package android:name="com.skt.tmap.ku" />
+        <!-- KakaoMap -->
+        <package android:name="net.daum.android.map" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
         <!-- NAVER Map -->
