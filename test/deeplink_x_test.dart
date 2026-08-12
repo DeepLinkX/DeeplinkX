@@ -236,6 +236,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('TomTom GO Fleet', () {
+        final action = TomTomGoFleet.open();
+        expect(action, isA<App>());
+      });
+
       test('Neshan', () {
         final action = Neshan.open();
         expect(action, isA<App>());

@@ -28,6 +28,7 @@ void main() {
       'com.sygic.aura',
       'com.sygic.truck',
       'com.alk.copilot.mapviewer',
+      'com.tomtom.gplay.navapp.gofleet',
       'org.rajman.neshan.traffic.tehran.navigator',
       'com.autonavi.minimap',
       'com.tranzmate',
