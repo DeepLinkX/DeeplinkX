@@ -997,4 +997,70 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'citymapper',
+    name: 'Citymapper',
+    assetName: 'assets/citymapper.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'Citymapper.open(fallbackToStore)',
+        buttonLabel: 'Open Citymapper',
+        runner: OpenAppRunner(({required final fallbackToStore}) => Citymapper.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'Citymapper.view(coordinate, title)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '51.503399'),
+          _lngField(value: '-0.119519'),
+          const ActionField(key: 'title', label: 'Title (optional)', optional: true, defaultValue: 'London Eye'),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => Citymapper.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            title: v.optionalValue('title'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'Citymapper.directionsWithCoords(destination, origin)',
+        buttonLabel: 'Navigate',
+        fields: [
+          _latField(value: '51.503399'),
+          _lngField(value: '-0.119519'),
+          const ActionField(
+            key: 'destinationTitle',
+            label: 'Destination title (optional)',
+            optional: true,
+            defaultValue: 'London Eye',
+          ),
+          ..._originFields,
+          const ActionField(
+            key: 'originTitle',
+            label: 'Origin title (optional)',
+            optional: true,
+            defaultValue: 'Westminster',
+          ),
+        ],
+        validate: _validateOrigin,
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => Citymapper.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            origin: v.optionalCoordinate('originLat', 'originLng'),
+            destinationTitle: v.optionalValue('destinationTitle'),
+            originTitle: v.optionalValue('originTitle'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];

@@ -2,6 +2,7 @@ export 'amap.dart';
 export 'apple_maps.dart';
 export 'baidu_maps.dart';
 export 'chatgpt.dart';
+export 'citymapper.dart';
 export 'facebook.dart';
 export 'google_maps.dart';
 export 'instagram.dart';

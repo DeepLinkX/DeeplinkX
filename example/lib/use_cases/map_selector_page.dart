@@ -123,6 +123,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/moovit.png',
     ),
     LaunchOption(
+      id: 'citymapper',
+      title: 'Citymapper',
+      app: Citymapper.directionsWithCoords(destination: destination),
+      fallbackLabel: 'Citymapper web',
+      assetName: 'assets/citymapper.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),
