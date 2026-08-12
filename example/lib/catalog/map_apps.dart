@@ -997,4 +997,72 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'here_wego',
+    name: 'HERE WeGo',
+    assetName: 'assets/here_wego.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'HereWeGo.open(fallbackToStore)',
+        buttonLabel: 'Open HERE WeGo',
+        runner: OpenAppRunner(({required final fallbackToStore}) => HereWeGo.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'HereWeGo.view(coordinate, title, zoom)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '52.5163'),
+          _lngField(value: '13.3777'),
+          const ActionField(key: 'title', label: 'Title (optional)', optional: true, defaultValue: 'Brandenburg Gate'),
+          const ActionField(key: 'zoom', label: 'Zoom', defaultValue: '15'),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => HereWeGo.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            title: v.optionalValue('title'),
+            zoom: int.tryParse(v.value('zoom')) ?? 16,
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'HereWeGo.directionsWithCoords(destination, origin)',
+        buttonLabel: 'Plan route',
+        fields: [
+          _latField(value: '52.5163'),
+          _lngField(value: '13.3777'),
+          const ActionField(
+            key: 'destinationTitle',
+            label: 'Destination title (optional)',
+            optional: true,
+            defaultValue: 'Brandenburg Gate',
+          ),
+          ..._originFields,
+          const ActionField(
+            key: 'originTitle',
+            label: 'Origin title (optional)',
+            optional: true,
+            defaultValue: 'Berlin Central Station',
+          ),
+        ],
+        validate: _validateOrigin,
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => HereWeGo.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            origin: v.optionalCoordinate('originLat', 'originLng'),
+            destinationTitle: v.optionalValue('destinationTitle'),
+            originTitle: v.optionalValue('originTitle'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];

@@ -4,6 +4,7 @@ export 'baidu_maps.dart';
 export 'chatgpt.dart';
 export 'facebook.dart';
 export 'google_maps.dart';
+export 'here_wego.dart';
 export 'instagram.dart';
 export 'linkedin.dart';
 export 'moovit.dart';
