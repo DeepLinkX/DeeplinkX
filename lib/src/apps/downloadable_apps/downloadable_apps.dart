@@ -14,6 +14,7 @@ export 'pinterest.dart';
 export 'slack.dart';
 export 'sygic.dart';
 export 'telegram.dart';
+export 'temu.dart';
 export 'tencent_maps.dart';
 export 'threads.dart';
 export 'tiktok.dart';

@@ -1,3 +1,13 @@
+## 1.4.6
+
+### Added
+
+* Added Temu app with the following actions:
+  * Open app
+  * Open Temu link
+  * Search
+* Added Temu documentation, tests, public API coverage, catalog examples, and Android/iOS visibility configuration.
+
 ## 1.4.5
 
 ### Added

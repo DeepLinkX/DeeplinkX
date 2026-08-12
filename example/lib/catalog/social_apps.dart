@@ -739,4 +739,47 @@ final List<AppSpec> socialApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'temu',
+    name: 'Temu',
+    assetName: 'assets/temu.png',
+    category: CatalogCategory.social,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'Temu.open(fallbackToStore)',
+        buttonLabel: 'Open Temu',
+        runner: OpenAppRunner(({required final fallbackToStore}) => Temu.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.link_rounded,
+        title: 'Open link',
+        apiLabel: 'Temu.openLink(link)',
+        buttonLabel: 'Open Temu link',
+        fields: const [
+          ActionField(
+            key: 'link',
+            label: 'Temu link',
+            defaultValue: 'https://www.temu.com/search_result.html?search_key=shoes',
+          ),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              Temu.openLink(link: Uri.parse(v.value('link')), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.search_rounded,
+        title: 'Search',
+        apiLabel: 'Temu.search(query)',
+        buttonLabel: 'Search Temu',
+        fields: const [ActionField(key: 'query', label: 'Search query', defaultValue: 'running shoes')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              Temu.search(query: v.value('query'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+    ],
+  ),
 ];
