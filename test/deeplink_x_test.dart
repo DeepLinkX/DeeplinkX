@@ -186,6 +186,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Sygic Truck', () {
+        final action = SygicTruck.open();
+        expect(action, isA<App>());
+      });
+
       test('Moovit', () {
         final action = Moovit.open();
         expect(action, isA<App>());

@@ -55,6 +55,7 @@ class _InstalledAppsPageState extends State<InstalledAppsPage> {
     _InstalledItem('Maps', 'Waze', Waze(), 'assets/waze.png'),
     _InstalledItem('Maps', 'Apple Maps', AppleMaps(), 'assets/apple_maps.png'),
     _InstalledItem('Maps', 'Sygic', Sygic(), 'assets/sygic.png'),
+    _InstalledItem('Maps', 'Sygic Truck', SygicTruck(), 'assets/sygic_truck.png'),
     _InstalledItem('Maps', 'Moovit', Moovit(), 'assets/moovit.png'),
     _InstalledItem('Maps', 'Neshan', Neshan(), 'assets/neshan.png'),
     _InstalledItem('Maps', 'Yandex Maps', YandexMaps(), 'assets/yandex_maps.png'),

@@ -1,3 +1,13 @@
+## 1.4.7
+
+### Added
+
+* Added Sygic Truck app with the following actions:
+  * Open app
+  * View map
+  * Directions with coordinates
+* Added Sygic Truck documentation, tests, public API coverage, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.4.6
 
 ### Added
