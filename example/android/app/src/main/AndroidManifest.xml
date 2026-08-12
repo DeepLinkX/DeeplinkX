@@ -74,6 +74,8 @@
         <package android:name="com.sygic.aura" />
         <!-- Sygic Truck -->
         <package android:name="com.sygic.truck" />
+        <!-- CoPilot -->
+        <package android:name="com.alk.copilot.mapviewer" />
         <!-- Neshan -->
         <package android:name="org.rajman.neshan.traffic.tehran.navigator" />
         <!-- Amap -->
