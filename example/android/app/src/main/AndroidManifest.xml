@@ -74,6 +74,8 @@
         <package android:name="com.autonavi.minimap" />
         <!-- Moovit -->
         <package android:name="com.tranzmate" />
+        <!-- TomTom Go -->
+        <package android:name="com.tomtom.gplay.navapp" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
         <!-- NAVER Map -->
