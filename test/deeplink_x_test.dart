@@ -126,6 +126,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('CapCut', () {
+        final action = CapCut.open();
+        expect(action, isA<App>());
+      });
+
       test('GoogleMaps', () {
         final action = GoogleMaps.open();
         expect(action, isA<App>());

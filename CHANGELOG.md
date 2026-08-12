@@ -1,3 +1,12 @@
+## 1.4.7
+
+### Added
+
+* Added CapCut app with the following actions:
+  * Open app
+  * Open template link
+* Added CapCut documentation, tests, public API coverage, catalog examples, and Android/iOS visibility configuration.
+
 ## 1.4.6
 
 ### Added
