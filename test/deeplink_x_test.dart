@@ -267,6 +267,20 @@ void main() {
         expect(routeAction, isA<MapDirectionsWithCoordsAction>());
       });
 
+      test('OsmAnd', () {
+        final openAction = OsmAnd.open();
+        final viewAction = OsmAnd.view(
+          coordinate: const Coordinate(latitude: 52.516275, longitude: 13.377704),
+        );
+        final routeAction = OsmAnd.directionsWithCoords(
+          destination: const Coordinate(latitude: 52.516275, longitude: 13.377704),
+        );
+
+        expect(openAction, isA<App>());
+        expect(viewAction, isA<MapViewAction>());
+        expect(routeAction, isA<MapDirectionsWithCoordsAction>());
+      });
+
       test('Neshan', () {
         final action = Neshan.open();
         expect(action, isA<App>());

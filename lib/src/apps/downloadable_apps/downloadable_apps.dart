@@ -18,6 +18,7 @@ export 'moovit.dart';
 export 'naver_map.dart';
 export 'neshan.dart';
 export 'netflix.dart';
+export 'osmand.dart';
 export 'pinterest.dart';
 export 'slack.dart';
 export 'snapchat.dart';
