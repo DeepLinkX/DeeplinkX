@@ -98,6 +98,8 @@
         <package android:name="net.daum.android.map" />
         <!-- HERE WeGo -->
         <package android:name="com.here.app.maps" />
+        <!-- Citymapper -->
+        <package android:name="com.citymapper.app.release" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
         <!-- NAVER Map -->
