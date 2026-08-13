@@ -997,4 +997,45 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'air_navigation_pro',
+    name: 'Air Navigation Pro',
+    assetName: 'assets/air_navigation_pro.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'AirNavigationPro.open(fallbackToStore)',
+        buttonLabel: 'Open Air Navigation Pro',
+        runner: OpenAppRunner(
+          ({required final fallbackToStore}) => AirNavigationPro.open(fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'AirNavigationPro.view(coordinate)',
+        buttonLabel: 'View location',
+        fields: [_latField(value: '46.2044'), _lngField(value: '6.1432')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              AirNavigationPro.view(coordinate: v.coordinate('lat', 'lng'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'AirNavigationPro.directionsWithCoords(destination)',
+        buttonLabel: 'Direct to',
+        fields: [_latField(value: '46.2381'), _lngField(value: '6.1090')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => AirNavigationPro.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];

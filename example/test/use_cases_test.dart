@@ -22,7 +22,7 @@ void main() {
       await tester.pumpWidget(const MaterialApp(home: HomePage()));
 
       expect(find.text('View all 9'), findsOneWidget);
-      expect(find.text('View all 30'), findsOneWidget);
+      expect(find.text('View all 31'), findsOneWidget);
       expect(find.text('View all 7'), findsOneWidget);
 
       const titles = [
@@ -44,7 +44,7 @@ void main() {
 
       await tester.tap(find.byKey(const ValueKey('filter-apps')));
       await tester.pump();
-      expect(find.byType(AppTile), findsNWidgets(30));
+      expect(find.byType(AppTile), findsNWidgets(31));
 
       await tester.tap(find.byKey(const ValueKey('filter-stores')));
       await tester.pump();
@@ -208,12 +208,13 @@ void main() {
       await tester.pumpAndSettle();
 
       final actions = deeplinkX.mapDirectionsActions.single;
-      expect(actions, hasLength(13));
+      expect(actions, hasLength(14));
       expect(actions.first, isA<GoogleMapsDirectionsWithCoordsAction>());
       expect(actions[3], isA<NaverMapDirectionsWithCoordsAction>());
       expect(actions[7], isA<SygicDirectionsWithCoordsAction>());
-      expect(actions[10], isA<YandexMapsDirectionsWithCoordsAction>());
-      expect(actions[11], isA<YandexNavigatorDirectionsWithCoordsAction>());
+      expect(actions[9], isA<AirNavigationProDirectToAction>());
+      expect(actions[11], isA<YandexMapsDirectionsWithCoordsAction>());
+      expect(actions[12], isA<YandexNavigatorDirectionsWithCoordsAction>());
       expect(actions.last, isA<TencentMapsDirectionsWithCoordsAction>());
     });
 
@@ -229,7 +230,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final actions = deeplinkX.mapDirectionsActions.single;
-      expect(actions, hasLength(12));
+      expect(actions, hasLength(13));
       expect(actions.whereType<NaverMapDirectionsWithCoordsAction>(), isEmpty);
     });
 
