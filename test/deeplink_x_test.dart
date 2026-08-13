@@ -206,6 +206,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Mappls', () {
+        final action = Mappls.open();
+        expect(action, isA<App>());
+      });
+
       test('Neshan', () {
         final action = Neshan.open();
         expect(action, isA<App>());
