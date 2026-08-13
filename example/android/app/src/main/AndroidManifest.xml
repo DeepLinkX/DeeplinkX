@@ -82,6 +82,8 @@
         <package android:name="com.xample.airnavigation" />
         <!-- Mappls -->
         <package android:name="com.mmi.maps" />
+        <!-- Mapy.com -->
+        <package android:name="cz.seznam.mapy" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
         <!-- NAVER Map -->

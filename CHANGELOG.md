@@ -1,3 +1,14 @@
+## 1.4.11
+
+### Added
+
+* Added Mapy.com app with the following actions:
+  * Open app
+  * View map
+  * Search
+  * Directions with coordinates
+* Added Mapy.com documentation, tests, public API coverage, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.4.10
 
 ### Added

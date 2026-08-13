@@ -211,6 +211,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Mapy.com', () {
+        final action = MapyCz.open();
+        expect(action, isA<App>());
+      });
+
       test('Neshan', () {
         final action = Neshan.open();
         expect(action, isA<App>());
