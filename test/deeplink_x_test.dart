@@ -126,6 +126,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Snapchat', () {
+        final action = Snapchat.open();
+        expect(action, isA<App>());
+      });
+
       test('GoogleMaps', () {
         final action = GoogleMaps.open();
         expect(action, isA<App>());

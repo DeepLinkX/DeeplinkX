@@ -32,6 +32,8 @@
             android:value="2" />
     </application>
     <queries>
+        <!-- Snapchat -->
+        <package android:name="com.snapchat.android" />
         <!-- Temu -->
         <package android:name="com.einnovation.temu" />
         <!-- Netflix -->

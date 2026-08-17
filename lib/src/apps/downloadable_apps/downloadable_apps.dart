@@ -12,6 +12,7 @@ export 'neshan.dart';
 export 'netflix.dart';
 export 'pinterest.dart';
 export 'slack.dart';
+export 'snapchat.dart';
 export 'sygic.dart';
 export 'telegram.dart';
 export 'temu.dart';
