@@ -126,6 +126,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('Snapchat', () {
+        final action = Snapchat.open();
+        expect(action, isA<App>());
+      });
+
       test('CapCut', () {
         final action = CapCut.open();
         expect(action, isA<App>());

@@ -1,4 +1,4 @@
-## 1.4.7
+## 1.4.8
 
 ### Added
 
@@ -6,6 +6,15 @@
   * Open app
   * Open template link
 * Added CapCut documentation, tests, public API coverage, catalog examples, and Android/iOS visibility configuration.
+
+## 1.4.7
+
+### Added
+
+* Added Snapchat app with the following actions:
+  * Open app
+  * Open profile by username
+* Added Snapchat documentation, tests, public API coverage, catalog examples, and Android/iOS visibility configuration.
 
 ## 1.4.6
 

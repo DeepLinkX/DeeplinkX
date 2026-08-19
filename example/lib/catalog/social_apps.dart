@@ -783,6 +783,32 @@ final List<AppSpec> socialApps = [
     ],
   ),
   AppSpec(
+    id: 'snapchat',
+    name: 'Snapchat',
+    assetName: 'assets/snapchat.png',
+    category: CatalogCategory.social,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'Snapchat.open(fallbackToStore)',
+        buttonLabel: 'Open Snapchat',
+        runner: OpenAppRunner(({required final fallbackToStore}) => Snapchat.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.person_rounded,
+        title: 'Open profile',
+        apiLabel: 'Snapchat.openProfile(username)',
+        buttonLabel: 'Open profile',
+        fields: const [ActionField(key: 'username', label: 'Username', defaultValue: 'snapchat')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              Snapchat.openProfile(username: v.value('username'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+    ],
+  ),
+  AppSpec(
     id: 'capcut',
     name: 'CapCut',
     assetName: 'assets/capcut.png',

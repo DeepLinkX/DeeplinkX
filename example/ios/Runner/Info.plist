@@ -27,6 +27,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>capcut</string>
+		<string>snapchat</string>
 		<string>temu</string>
 		<string>nflx</string>
 		<string>chatgpt</string>

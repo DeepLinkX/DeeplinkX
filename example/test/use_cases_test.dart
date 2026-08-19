@@ -22,7 +22,7 @@ void main() {
       await tester.pumpWidget(const MaterialApp(home: HomePage()));
 
       expect(find.text('View all 9'), findsOneWidget);
-      expect(find.text('View all 29'), findsOneWidget);
+      expect(find.text('View all 30'), findsOneWidget);
       expect(find.text('View all 7'), findsOneWidget);
 
       const titles = [
@@ -44,7 +44,7 @@ void main() {
 
       await tester.tap(find.byKey(const ValueKey('filter-apps')));
       await tester.pump();
-      expect(find.byType(AppTile), findsNWidgets(29));
+      expect(find.byType(AppTile), findsNWidgets(30));
 
       await tester.tap(find.byKey(const ValueKey('filter-stores')));
       await tester.pump();
