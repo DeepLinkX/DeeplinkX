@@ -6,6 +6,7 @@ void main() {
   test('Android visibility contains every queried package exactly once', () async {
     final manifest = await File('android/app/src/main/AndroidManifest.xml').readAsString();
     const packages = [
+      'com.lemon.lvoverseas',
       'com.snapchat.android',
       'com.einnovation.temu',
       'com.netflix.mediaclient',
@@ -55,6 +56,7 @@ void main() {
   test('iOS visibility contains every queried scheme exactly once', () async {
     final infoPlist = await File('ios/Runner/Info.plist').readAsString();
     const schemes = [
+      'capcut',
       'snapchat',
       'temu',
       'nflx',

@@ -808,4 +808,36 @@ final List<AppSpec> socialApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'capcut',
+    name: 'CapCut',
+    assetName: 'assets/capcut.png',
+    category: CatalogCategory.social,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'CapCut.open(fallbackToStore)',
+        buttonLabel: 'Open CapCut',
+        runner: OpenAppRunner(({required final fallbackToStore}) => CapCut.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.video_library_rounded,
+        title: 'Open template',
+        apiLabel: 'CapCut.openTemplate(templateLink)',
+        buttonLabel: 'Open template',
+        fields: const [
+          ActionField(
+            key: 'templateLink',
+            label: 'Template link',
+            defaultValue: 'https://www.capcut.com/template-detail/example/1',
+          ),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              CapCut.openTemplate(templateLink: Uri.parse(v.value('templateLink')), fallbackToStore: fallbackToStore),
+        ),
+      ),
+    ],
+  ),
 ];
