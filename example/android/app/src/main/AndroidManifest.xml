@@ -78,6 +78,8 @@
         <package android:name="com.autonavi.minimap" />
         <!-- Moovit -->
         <package android:name="com.tranzmate" />
+        <!-- Air Navigation Pro -->
+        <package android:name="com.xample.airnavigation" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
         <!-- NAVER Map -->

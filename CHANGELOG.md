@@ -1,3 +1,13 @@
+## 1.4.9
+
+### Added
+
+* Added Air Navigation Pro app with the following actions:
+  * Open app
+  * View map
+  * Directions with coordinates
+* Added Air Navigation Pro documentation, tests, public API coverage, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.4.8
 
 ### Added

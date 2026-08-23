@@ -123,6 +123,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/moovit.png',
     ),
     LaunchOption(
+      id: 'air-navigation-pro',
+      title: 'Air Navigation Pro',
+      app: AirNavigationPro.directionsWithCoords(destination: destination),
+      fallbackLabel: 'Air Navigation Pro web',
+      assetName: 'assets/air_navigation_pro.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),
