@@ -8,6 +8,7 @@ export 'facebook.dart';
 export 'google_maps.dart';
 export 'instagram.dart';
 export 'linkedin.dart';
+export 'mappls.dart';
 export 'moovit.dart';
 export 'naver_map.dart';
 export 'neshan.dart';

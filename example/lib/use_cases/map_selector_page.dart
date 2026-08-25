@@ -130,6 +130,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/air_navigation_pro.png',
     ),
     LaunchOption(
+      id: 'mappls',
+      title: 'Mappls',
+      app: Mappls.directionsWithCoords(destination: destination),
+      fallbackLabel: 'Mappls web',
+      assetName: 'assets/mappls.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),

@@ -1038,4 +1038,53 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'mappls',
+    name: 'Mappls',
+    assetName: 'assets/mappls.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'Mappls.open(fallbackToStore)',
+        buttonLabel: 'Open Mappls',
+        runner: OpenAppRunner(({required final fallbackToStore}) => Mappls.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'Mappls.view(coordinate)',
+        buttonLabel: 'View location',
+        fields: [_latField(value: '28.6139'), _lngField(value: '77.2090')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              Mappls.view(coordinate: v.coordinate('lat', 'lng'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'Mappls.directionsWithCoords(destination, destinationTitle)',
+        buttonLabel: 'Navigate',
+        fields: [
+          _latField(value: '28.6129'),
+          _lngField(value: '77.2295'),
+          const ActionField(
+            key: 'destinationTitle',
+            label: 'Destination title (optional)',
+            optional: true,
+            defaultValue: 'India Gate',
+          ),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => Mappls.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            destinationTitle: v.optionalValue('destinationTitle'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];

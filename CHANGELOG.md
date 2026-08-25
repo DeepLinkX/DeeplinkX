@@ -1,3 +1,13 @@
+## 1.4.10
+
+### Added
+
+* Added Mappls app with the following actions:
+  * Open app
+  * View map
+  * Directions with coordinates
+* Added Mappls documentation, tests, public API coverage, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.4.9
 
 ### Added
