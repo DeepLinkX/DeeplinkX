@@ -58,6 +58,7 @@ class _InstalledAppsPageState extends State<InstalledAppsPage> {
     _InstalledItem('Maps', 'Moovit', Moovit(), 'assets/moovit.png'),
     _InstalledItem('Maps', 'Air Navigation Pro', AirNavigationPro(), 'assets/air_navigation_pro.png'),
     _InstalledItem('Maps', 'Mappls', Mappls(), 'assets/mappls.png'),
+    _InstalledItem('Maps', 'Mapy.com', MapyCz(), 'assets/mapy_cz.png'),
     _InstalledItem('Maps', 'Neshan', Neshan(), 'assets/neshan.png'),
     _InstalledItem('Maps', 'Yandex Maps', YandexMaps(), 'assets/yandex_maps.png'),
     _InstalledItem('Maps', 'Yandex Navigator', YandexNavigator(), 'assets/yandex_navigator.png'),

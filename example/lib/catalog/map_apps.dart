@@ -1087,4 +1087,65 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'mapy_cz',
+    name: 'Mapy.com',
+    assetName: 'assets/mapy_cz.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'MapyCz.open(fallbackToStore)',
+        buttonLabel: 'Open Mapy.com',
+        runner: OpenAppRunner(({required final fallbackToStore}) => MapyCz.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'MapyCz.view(coordinate, zoom)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '50.0755'),
+          _lngField(value: '14.4378'),
+          const ActionField(key: 'zoom', label: 'Zoom', defaultValue: '15'),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => MapyCz.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            zoom: int.tryParse(v.value('zoom')) ?? 16,
+            mapSet: MapyCzMapSet.outdoor,
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.search_rounded,
+        title: 'Search',
+        apiLabel: 'MapyCz.search(query)',
+        buttonLabel: 'Search Mapy.com',
+        fields: const [ActionField(key: 'query', label: 'Query', defaultValue: 'coffee shop')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) =>
+              MapyCz.search(query: v.value('query'), fallbackToStore: fallbackToStore),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'MapyCz.directionsWithCoords(destination, routeType, navigate)',
+        buttonLabel: 'Navigate',
+        fields: [_latField(value: '50.0292'), _lngField(value: '14.3681')],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => MapyCz.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            routeType: MapyCzRouteType.carFastTraffic,
+            mapSet: MapyCzMapSet.traffic,
+            navigate: true,
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];

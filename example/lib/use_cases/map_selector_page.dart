@@ -137,6 +137,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/mappls.png',
     ),
     LaunchOption(
+      id: 'mapy-cz',
+      title: 'Mapy.com',
+      app: MapyCz.directionsWithCoords(destination: destination),
+      fallbackLabel: 'Mapy.com web',
+      assetName: 'assets/mapy_cz.png',
+    ),
+    LaunchOption(
       id: 'neshan',
       title: 'Neshan',
       app: Neshan.directionsWithCoords(destination: destination),
