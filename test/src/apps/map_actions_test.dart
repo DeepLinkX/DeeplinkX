@@ -99,6 +99,11 @@ void main() {
       expect(MapyCz.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
 
+    test('TMAP actions implement supported map abstractions', () {
+      expect(TMap.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(TMap.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
     test('Neshan actions implement supported map abstractions', () {
       expect(Neshan.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Neshan.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());

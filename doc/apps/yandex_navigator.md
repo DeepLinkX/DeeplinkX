@@ -7,8 +7,6 @@ DeeplinkX supports the Yandex Navigator custom URI scheme on iOS and Android for
 - Yandex Navigator URL parameters: <https://yandex.com/dev/navigator/doc/ru/concepts/navigator-url-params>
 - Yandex Navigator commercial URL signatures: <https://yandex.com/dev/navigator/doc/ru/concepts/navigator-commercial-use-signature>
 - Yandex Maps web launch URLs: <https://yandex.com/dev/yandex-apps-launch-maps/doc/en/concepts/yandexmaps-web>
-- Map Launcher 4.5.0 Yandex Navigator implementation:
-  <https://github.com/mattermoran/map_launcher/blob/master/lib/src/maps/yandex_navi.dart>
 
 ## Available Actions
 
@@ -131,11 +129,3 @@ uses the current location. Native-only parameters such as `client`,
 | View map                     | ✔️              | ✔️           |
 | Search                       | ✔️              | ✔️           |
 | Directions with coordinates  | ✔️              | ✔️           |
-
-## Map Launcher Comparison
-
-Checked against `map_launcher` 4.5.0 on July 23, 2026. DeeplinkX matches its
-Yandex Navigator marker, destination, optional-origin, and waypoint URI
-behavior. DeeplinkX additionally exposes Yandex's documented search action,
-store fallback, balloon visibility, launch identification parameters, shared
-map-action interfaces, and action-preserving Yandex Maps web fallbacks.

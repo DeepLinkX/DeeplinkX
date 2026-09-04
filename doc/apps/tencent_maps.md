@@ -201,9 +201,3 @@ Add the package and scheme intent under the manifest-level `queries` element:
 | Directions with coordinates | App Store when enabled | Not available | Route plan, or destination geocoder for bicycling |
 
 Set `disableFallback: true` on `launchApp` or `launchAction` to skip store and web fallbacks.
-
-## Comparison With `map_launcher`
-
-Checked against [`map_launcher` 6.0.0](https://pub.dev/packages/map_launcher/versions/6.0.0) on 2026-07-28.
-
-Both packages support Tencent Maps markers and coordinate directions and require a Tencent `referer` key. DeeplinkX additionally exposes keyword search, nearby search, typed store fallback, the official download fallback, native waypoint and destination-POI parameters, and provider-specific HTTPS fallbacks that preserve the requested action where Tencent's web contract supports it.

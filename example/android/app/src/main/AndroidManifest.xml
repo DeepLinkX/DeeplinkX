@@ -84,6 +84,8 @@
         <package android:name="com.mmi.maps" />
         <!-- Mapy.com -->
         <package android:name="cz.seznam.mapy" />
+        <!-- TMAP -->
+        <package android:name="com.skt.tmap.ku" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
         <!-- NAVER Map -->

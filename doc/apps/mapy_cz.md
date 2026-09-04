@@ -95,10 +95,6 @@ DeeplinkX targets the HTTPS URL to `cz.seznam.mapy` through an Android `VIEW` in
 - Search: `https://mapy.com/fnc/v1/search?mapset={mapSet}&query={query}`
 - Route: `https://mapy.com/fnc/v1/route?mapset={mapSet}&start={longitude},{latitude}&end={longitude},{latitude}&routeType={routeType}`
 
-## `map_launcher` Comparison
-
-Checked against `map_launcher` 6.0.0 on 2026-08-27. Its Mapy.cz implementation uses the older `https://mapy.cz/zakladni` marker format and represents directions as a destination location. DeeplinkX intentionally uses Mapy.com's current documented `/fnc/v1/showmap`, `/search`, and `/route` contract, including route type, origin, waypoints, map set, and navigation parameters. Provider documentation and device results remain authoritative.
-
 ## Fallback Behavior
 
 1. DeeplinkX opens the native app when the platform accepts the URL for the installed app.

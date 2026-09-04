@@ -113,7 +113,7 @@ await deeplinkX.launchAction(
 
 ## Shared Map Interfaces
 
-These actions implement shared map-launcher abstractions:
+These actions implement shared map-action abstractions:
 
 | Interface                       | Baidu Maps action                  |
 | ------------------------------- | ---------------------------------- |

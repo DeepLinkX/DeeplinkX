@@ -1148,4 +1148,70 @@ final List<AppSpec> mapApps = [
       ),
     ],
   ),
+  AppSpec(
+    id: 'tmap',
+    name: 'TMAP',
+    assetName: 'assets/tmap.png',
+    category: CatalogCategory.maps,
+    actions: [
+      ActionSpec(
+        icon: Icons.open_in_new_rounded,
+        title: 'Open app',
+        apiLabel: 'TMap.open(fallbackToStore)',
+        buttonLabel: 'Open TMAP',
+        runner: OpenAppRunner(({required final fallbackToStore}) => TMap.open(fallbackToStore: fallbackToStore)),
+      ),
+      ActionSpec(
+        icon: Icons.map_rounded,
+        title: 'View map',
+        apiLabel: 'TMap.view(coordinate, title)',
+        buttonLabel: 'View location',
+        fields: [
+          _latField(value: '37.5665'),
+          _lngField(value: '126.9780'),
+          const ActionField(key: 'title', label: 'Title (optional)', optional: true, defaultValue: 'Seoul City Hall'),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TMap.view(
+            coordinate: v.coordinate('lat', 'lng'),
+            title: v.optionalValue('title'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
+        icon: Icons.near_me_rounded,
+        title: 'Directions with coordinates',
+        apiLabel: 'TMap.directionsWithCoords(destination, origin)',
+        buttonLabel: 'Navigate',
+        fields: [
+          _latField(value: '37.5547'),
+          _lngField(value: '126.9706'),
+          const ActionField(
+            key: 'destinationTitle',
+            label: 'Destination title (optional)',
+            optional: true,
+            defaultValue: 'Seoul Station',
+          ),
+          ..._originFields,
+          const ActionField(
+            key: 'originTitle',
+            label: 'Origin title (optional)',
+            optional: true,
+            defaultValue: 'City Hall',
+          ),
+        ],
+        validate: _validateOrigin,
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => TMap.directionsWithCoords(
+            destination: v.coordinate('lat', 'lng'),
+            origin: v.optionalCoordinate('originLat', 'originLng'),
+            destinationTitle: v.optionalValue('destinationTitle'),
+            originTitle: v.optionalValue('originTitle'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+    ],
+  ),
 ];
