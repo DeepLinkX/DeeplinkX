@@ -104,6 +104,11 @@ void main() {
       expect(TMap.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
     });
 
+    test('KakaoMap actions implement supported map abstractions', () {
+      expect(KakaoMap.view(coordinate: coordinate), isA<MapViewAction>());
+      expect(KakaoMap.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());
+    });
+
     test('Neshan actions implement supported map abstractions', () {
       expect(Neshan.view(coordinate: coordinate), isA<MapViewAction>());
       expect(Neshan.directionsWithCoords(destination: coordinate), isA<MapDirectionsWithCoordsAction>());

@@ -7,6 +7,7 @@ export 'chatgpt.dart';
 export 'facebook.dart';
 export 'google_maps.dart';
 export 'instagram.dart';
+export 'kakao_map.dart';
 export 'linkedin.dart';
 export 'mappls.dart';
 export 'mapy_cz.dart';

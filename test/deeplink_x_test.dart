@@ -221,6 +221,11 @@ void main() {
         expect(action, isA<App>());
       });
 
+      test('KakaoMap', () {
+        final action = KakaoMap.open();
+        expect(action, isA<App>());
+      });
+
       test('Neshan', () {
         final action = Neshan.open();
         expect(action, isA<App>());

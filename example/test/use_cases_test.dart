@@ -22,7 +22,7 @@ void main() {
       await tester.pumpWidget(const MaterialApp(home: HomePage()));
 
       expect(find.text('View all 9'), findsOneWidget);
-      expect(find.text('View all 34'), findsOneWidget);
+      expect(find.text('View all 35'), findsOneWidget);
       expect(find.text('View all 7'), findsOneWidget);
 
       const titles = [
@@ -44,7 +44,7 @@ void main() {
 
       await tester.tap(find.byKey(const ValueKey('filter-apps')));
       await tester.pump();
-      expect(find.byType(AppTile), findsNWidgets(34));
+      expect(find.byType(AppTile), findsNWidgets(35));
 
       await tester.tap(find.byKey(const ValueKey('filter-stores')));
       await tester.pump();
@@ -208,7 +208,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final actions = deeplinkX.mapDirectionsActions.single;
-      expect(actions, hasLength(17));
+      expect(actions, hasLength(18));
       expect(actions.first, isA<GoogleMapsDirectionsWithCoordsAction>());
       expect(actions[3], isA<NaverMapDirectionsWithCoordsAction>());
       expect(actions[7], isA<SygicDirectionsWithCoordsAction>());
@@ -216,8 +216,9 @@ void main() {
       expect(actions[10], isA<MapplsDirectionsWithCoordsAction>());
       expect(actions[11], isA<MapyCzDirectionsWithCoordsAction>());
       expect(actions[12], isA<TMapDirectionsWithCoordsAction>());
-      expect(actions[14], isA<YandexMapsDirectionsWithCoordsAction>());
-      expect(actions[15], isA<YandexNavigatorDirectionsWithCoordsAction>());
+      expect(actions[13], isA<KakaoMapDirectionsWithCoordsAction>());
+      expect(actions[15], isA<YandexMapsDirectionsWithCoordsAction>());
+      expect(actions[16], isA<YandexNavigatorDirectionsWithCoordsAction>());
       expect(actions.last, isA<TencentMapsDirectionsWithCoordsAction>());
     });
 
@@ -233,7 +234,7 @@ void main() {
       await tester.pumpAndSettle();
 
       final actions = deeplinkX.mapDirectionsActions.single;
-      expect(actions, hasLength(16));
+      expect(actions, hasLength(17));
       expect(actions.whereType<NaverMapDirectionsWithCoordsAction>(), isEmpty);
     });
 
