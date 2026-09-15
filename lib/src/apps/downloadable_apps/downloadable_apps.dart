@@ -19,6 +19,7 @@ export 'pinterest.dart';
 export 'slack.dart';
 export 'snapchat.dart';
 export 'sygic.dart';
+export 'sygic_truck.dart';
 export 'telegram.dart';
 export 'temu.dart';
 export 'tencent_maps.dart';

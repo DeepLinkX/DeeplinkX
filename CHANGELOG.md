@@ -1,3 +1,9 @@
+## 1.5.1
+
+### Added
+
+* Added Sygic Truck open app, view map, and directions with coordinates actions, with catalog examples, map-selector support, platform configuration, documentation, and tests.
+
 ## 1.5.0
 
 ### Added

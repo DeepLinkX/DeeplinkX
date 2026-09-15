@@ -116,6 +116,13 @@ class _MapSelectorPageState extends State<MapSelectorPage> {
       assetName: 'assets/sygic.png',
     ),
     LaunchOption(
+      id: 'sygic-truck',
+      title: 'Sygic Truck',
+      app: SygicTruck.directionsWithCoords(destination: destination),
+      fallbackLabel: 'Sygic Truck website',
+      assetName: 'assets/sygic_truck.png',
+    ),
+    LaunchOption(
       id: 'moovit',
       title: 'Moovit',
       app: Moovit.directionsWithCoords(destination: destination),

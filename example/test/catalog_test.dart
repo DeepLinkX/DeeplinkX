@@ -12,7 +12,7 @@ void main() {
 
   group('catalog data', () {
     test('covers every supported app and store exactly once', () {
-      expect(catalogApps, hasLength(35));
+      expect(catalogApps, hasLength(36));
       expect(catalogStores, hasLength(7));
       final ids = allSpecs.map((final spec) => spec.id).toList();
       expect(ids.toSet(), hasLength(ids.length));
