@@ -1,3 +1,9 @@
+## 1.5.2
+
+### Added
+
+* Added CoPilot open app, view map, and directions with coordinates actions, catalog examples, map-selector support, platform configuration, documentation, and tests.
+
 ## 1.5.1
 
 ### Added

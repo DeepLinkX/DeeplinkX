@@ -4,6 +4,7 @@ export 'apple_maps.dart';
 export 'baidu_maps.dart';
 export 'capcut.dart';
 export 'chatgpt.dart';
+export 'copilot.dart';
 export 'facebook.dart';
 export 'google_maps.dart';
 export 'instagram.dart';
