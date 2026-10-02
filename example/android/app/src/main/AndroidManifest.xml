@@ -76,6 +76,8 @@
         <package android:name="com.sygic.truck" />
         <!-- CoPilot -->
         <package android:name="com.alk.copilot.mapviewer" />
+        <!-- TomTom GO Fleet -->
+        <package android:name="com.tomtom.gplay.navapp.gofleet" />
         <!-- Neshan -->
         <package android:name="org.rajman.neshan.traffic.tehran.navigator" />
         <!-- Amap -->

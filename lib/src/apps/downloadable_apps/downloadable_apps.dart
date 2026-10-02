@@ -27,6 +27,7 @@ export 'tencent_maps.dart';
 export 'threads.dart';
 export 'tiktok.dart';
 export 'tmap.dart';
+export 'tomtom_go_fleet.dart';
 export 'twitter.dart';
 export 'two_gis.dart';
 export 'waze.dart';

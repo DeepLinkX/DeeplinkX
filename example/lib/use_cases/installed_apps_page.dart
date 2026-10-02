@@ -57,6 +57,7 @@ class _InstalledAppsPageState extends State<InstalledAppsPage> {
     _InstalledItem('Maps', 'Sygic', Sygic(), 'assets/sygic.png'),
     _InstalledItem('Maps', 'Sygic Truck', SygicTruck(), 'assets/sygic_truck.png'),
     _InstalledItem('Maps', 'CoPilot', Copilot(), 'assets/copilot.png'),
+    _InstalledItem('Maps', 'TomTom GO Fleet', TomTomGoFleet(), 'assets/tomtom_go_fleet.png'),
     _InstalledItem('Maps', 'Moovit', Moovit(), 'assets/moovit.png'),
     _InstalledItem('Maps', 'Air Navigation Pro', AirNavigationPro(), 'assets/air_navigation_pro.png'),
     _InstalledItem('Maps', 'Mappls', Mappls(), 'assets/mappls.png'),

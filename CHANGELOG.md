@@ -1,3 +1,9 @@
+## 1.5.3
+
+### Added
+
+* Added Android TomTom GO Fleet open app, view map, and directions with coordinates actions, catalog examples, map-selector support, platform visibility, documentation, and tests.
+
 ## 1.5.2
 
 ### Added
