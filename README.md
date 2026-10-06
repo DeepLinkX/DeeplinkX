@@ -540,6 +540,8 @@ If DeeplinkX doesn't support the app, store, or navigation provider you need, op
 
 ## Documentation
 
+The [roadmap](ROADMAP.md) lists existing apps and actions, pending app integrations, and planned features in implementation order.
+
 Per-app pages (schemes, required config, fallback behavior) live in [`doc/apps`](https://github.com/DeeplinkX/DeeplinkX/tree/master/doc/apps). Full API reference: [pub.dev](https://pub.dev/documentation/deeplink_x/latest/).
 
 **Stores:** [iOS App Store](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/stores/ios_app_store.md) ·
