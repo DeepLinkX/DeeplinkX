@@ -1,478 +1,549 @@
 # DeeplinkX Roadmap
 
-Apps and features have separate implementation queues. Complete pending entries in each queue in numbered order. Add future entries to the end of the relevant queue.
-
-Status describes repository progress: **Implemented** means the API is present in this checkout, **Draft** means work still needs validation, and **Pending** means work remains to be integrated or implemented. Checked actions track implementation; device verification and release readiness follow each app's documentation.
-
-App categories follow the README groups: **Social**, **Navigation**, and **Stores**. Feature categories describe the capability area.
+Complete each queue in numbered order. Expand entries for actions and completion criteria.
 
 ## 1. Apps and actions
 
-### Pending app queue
+### Pending
 
-These apps have existing PR implementations. Actions remain unchecked until their integration into the main package is complete.
+<details>
+<summary>1. Citymapper · Navigation · Pending</summary>
 
-1. **App:** Citymapper
-   - **Category:** Navigation
-   - **Status:** Pending
-   - **PR:** [#34](https://github.com/DeepLinkX/DeeplinkX/pull/34)
-   - **Actions:**
-     - [ ] Open app (`Citymapper.open`)
-     - [ ] View map (`Citymapper.view`)
-     - [ ] Directions with coordinates (`Citymapper.directionsWithCoords`)
+**PR:** [#34](https://github.com/DeepLinkX/DeeplinkX/pull/34)
 
-2. **App:** OsmAnd
-   - **Category:** Navigation
-   - **Status:** Pending
-   - **PR:** [#35](https://github.com/DeepLinkX/DeeplinkX/pull/35)
-   - **Actions:**
-     - [ ] Open app (`OsmAnd.open`)
-     - [ ] View map (`OsmAnd.view`)
-     - [ ] Directions with coordinates (`OsmAnd.directionsWithCoords`)
+- [ ] Open app (`Citymapper.open`)
+- [ ] View map (`Citymapper.view`)
+- [ ] Directions with coordinates (`Citymapper.directionsWithCoords`)
 
-3. **App:** HERE WeGo
-   - **Category:** Navigation
-   - **Status:** Pending
-   - **PR:** [#38](https://github.com/DeepLinkX/DeeplinkX/pull/38)
-   - **Actions:**
-     - [ ] Open app (`HereWeGo.open`)
-     - [ ] View map (`HereWeGo.view`)
-     - [ ] Directions with coordinates (`HereWeGo.directionsWithCoords`)
+</details>
 
-### Existing baseline
+<details>
+<summary>2. OsmAnd · Navigation · Pending</summary>
 
-The baseline contains 39 apps (including one draft) and 7 stores.
+**PR:** [#35](https://github.com/DeepLinkX/DeeplinkX/pull/35)
 
-#### Apps
+- [ ] Open app (`OsmAnd.open`)
+- [ ] View map (`OsmAnd.view`)
+- [ ] Directions with coordinates (`OsmAnd.directionsWithCoords`)
 
-- **App:** ChatGPT
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`ChatGPT.open`)
-    - [x] Open shared conversation (`ChatGPT.openSharedConversation`)
-    - [x] Open GPT (`ChatGPT.openGpt`)
+</details>
 
-- **App:** Netflix
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Netflix.open`)
-    - [x] Open title (`Netflix.openTitle`)
-    - [x] Watch title (`Netflix.watchTitle`)
+<details>
+<summary>3. HERE WeGo · Navigation · Pending</summary>
 
-- **App:** Temu
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Temu.open`)
-    - [x] Open link (`Temu.openLink`)
-    - [x] Search (`Temu.search`)
+**PR:** [#38](https://github.com/DeepLinkX/DeeplinkX/pull/38)
 
-- **App:** Snapchat
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Snapchat.open`)
-    - [x] Open profile by username (`Snapchat.openProfile`)
+- [ ] Open app (`HereWeGo.open`)
+- [ ] View map (`HereWeGo.view`)
+- [ ] Directions with coordinates (`HereWeGo.directionsWithCoords`)
 
-- **App:** CapCut
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`CapCut.open`)
-    - [x] Open template link (`CapCut.openTemplate`)
+</details>
 
-- **App:** Facebook
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Facebook.open`)
-    - [x] Open profile by ID (`Facebook.openProfileById`)
-    - [x] Open profile by username (`Facebook.openProfileByUsername`)
-    - [x] Open page (`Facebook.openPage`)
-    - [x] Open group (`Facebook.openGroup`)
-    - [x] Open event (`Facebook.openEvent`)
+### Existing apps and stores
 
-- **App:** Instagram
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Instagram.open`)
-    - [x] Open profile by username (`Instagram.openProfile`)
+39 apps (including one draft) and 7 stores.
 
-- **App:** LinkedIn
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`LinkedIn.open`)
-    - [x] Open profile page (`LinkedIn.openProfile`)
-    - [x] Open company page (`LinkedIn.openCompany`)
+<details>
+<summary>Social (17 apps)</summary>
 
-- **App:** WhatsApp
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`WhatsApp.open`)
-    - [x] Chat with phone number (`WhatsApp.chat`)
-    - [x] Share text content (`WhatsApp.shareText`)
+<details>
+<summary>ChatGPT · Implemented</summary>
 
-- **App:** Telegram
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Telegram.open`)
-    - [x] Open profile by username (`Telegram.openProfile`)
-    - [x] Open profile by phone number (`Telegram.openProfileByPhoneNumber`)
-    - [x] Send message by username (`Telegram.sendMessage`)
-    - [x] Send message by phone number (`Telegram.sendMessageByPhoneNumber`)
+- [x] Open app (`ChatGPT.open`)
+- [x] Open shared conversation (`ChatGPT.openSharedConversation`)
+- [x] Open GPT (`ChatGPT.openGpt`)
 
-- **App:** Twitter
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Twitter.open`)
-    - [x] Open profile by username (`Twitter.openProfile`)
-    - [x] Open tweet by ID (`Twitter.openTweet`)
-    - [x] Search (`Twitter.search`)
+</details>
 
-- **App:** Threads
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Threads.open`)
-    - [x] Open profile by username (`Threads.openProfile`)
-    - [x] Open post (`Threads.openPost`)
-    - [x] Open comments (`Threads.openComments`)
-    - [x] Create post (`Threads.createPost`)
-    - [x] Search (`Threads.search`)
-    - [x] Open topic tag (`Threads.openTag`)
+<details>
+<summary>Netflix · Implemented</summary>
 
-- **App:** YouTube
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`YouTube.open`)
-    - [x] Open video (`YouTube.openVideo`)
-    - [x] Open channel (`YouTube.openChannel`)
-    - [x] Open playlist (`YouTube.openPlaylist`)
-    - [x] Search (`YouTube.search`)
+- [x] Open app (`Netflix.open`)
+- [x] Open title (`Netflix.openTitle`)
+- [x] Watch title (`Netflix.watchTitle`)
 
-- **App:** TikTok
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`TikTok.open`)
-    - [x] Open profile by username (`TikTok.openProfile`)
-    - [x] Open video (`TikTok.openVideo`)
-    - [x] Open tag (`TikTok.openTag`)
+</details>
 
-- **App:** Pinterest
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Pinterest.open`)
-    - [x] Open profile by username (`Pinterest.openProfile`)
-    - [x] Open pin (`Pinterest.openPin`)
-    - [x] Open board by ID (`Pinterest.openBoard`)
-    - [x] Search (`Pinterest.search`)
+<details>
+<summary>Temu · Implemented</summary>
 
-- **App:** Zoom
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Zoom.open`)
-    - [x] Join meeting by ID (`Zoom.joinMeeting`)
+- [x] Open app (`Temu.open`)
+- [x] Open link (`Temu.openLink`)
+- [x] Search (`Temu.search`)
 
-- **App:** Slack
-  - **Category:** Social
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Slack.open`)
-    - [x] Open team (`Slack.openTeam`)
-    - [x] Open channel (`Slack.openChannel`)
-    - [x] Open user (`Slack.openUser`)
+</details>
 
-#### Navigation apps
+<details>
+<summary>Snapchat · Implemented</summary>
 
-- **App:** Google Maps
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`GoogleMaps.open`)
-    - [x] View map (`GoogleMaps.view`)
-    - [x] Search (`GoogleMaps.search`)
-    - [x] Directions (`GoogleMaps.directions`)
-    - [x] Directions with coordinates (`GoogleMaps.directionsWithCoords`)
+- [x] Open app (`Snapchat.open`)
+- [x] Open profile by username (`Snapchat.openProfile`)
 
-- **App:** Amap
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Amap.open`)
-    - [x] Open current location (`Amap.myLocation`)
-    - [x] View map (`Amap.view`)
-    - [x] Search (`Amap.search`)
-    - [x] Directions (`Amap.directions`)
-    - [x] Directions with coordinates (`Amap.directionsWithCoords`)
+</details>
 
-- **App:** Baidu Maps
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`BaiduMaps.open`)
-    - [x] View map (`BaiduMaps.view`)
-    - [x] Search (`BaiduMaps.search`)
-    - [x] Nearby search (`BaiduMaps.nearbySearch`)
-    - [x] Open transit line (`BaiduMaps.line`)
-    - [x] Directions (`BaiduMaps.directions`)
-    - [x] Directions with coordinates (`BaiduMaps.directionsWithCoords`)
-    - [x] Navigation (`BaiduMaps.navigate`)
+<details>
+<summary>CapCut · Implemented</summary>
 
-- **App:** NAVER Map
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`NaverMap.open`)
-    - [x] View map (`NaverMap.view`)
-    - [x] Search (`NaverMap.search`)
-    - [x] Bus search (`NaverMap.busSearch`)
-    - [x] Directions with coordinates (`NaverMap.directionsWithCoords`)
-    - [x] Navigation (`NaverMap.navigate`)
-    - [x] Safe driving (`NaverMap.safeDriving`)
+- [x] Open app (`CapCut.open`)
+- [x] Open template link (`CapCut.openTemplate`)
 
-- **App:** Apple Maps
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`AppleMaps.open`)
-    - [x] View map (`AppleMaps.view`)
-    - [x] Search (`AppleMaps.search`)
-    - [x] Directions (`AppleMaps.directions`)
-    - [x] Directions with coordinates (`AppleMaps.directionsWithCoords`)
+</details>
 
-- **App:** 2GIS
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`TwoGis.open`)
-    - [x] View map (`TwoGis.view`)
-    - [x] Directions with coordinates (`TwoGis.directionsWithCoords`)
+<details>
+<summary>Facebook · Implemented</summary>
 
-- **App:** Waze
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Waze.open`)
-    - [x] View map (`Waze.view`)
-    - [x] Search (`Waze.search`)
-    - [x] Directions (`Waze.directions`)
-    - [x] Directions with coordinates (`Waze.directionsWithCoords`)
+- [x] Open app (`Facebook.open`)
+- [x] Open profile by ID (`Facebook.openProfileById`)
+- [x] Open profile by username (`Facebook.openProfileByUsername`)
+- [x] Open page (`Facebook.openPage`)
+- [x] Open group (`Facebook.openGroup`)
+- [x] Open event (`Facebook.openEvent`)
 
-- **App:** Sygic
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Sygic.open`)
-    - [x] View map (`Sygic.view`)
-    - [x] Directions with coordinates (`Sygic.directionsWithCoords`)
+</details>
 
-- **App:** Sygic Truck
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`SygicTruck.open`)
-    - [x] View map (`SygicTruck.view`)
-    - [x] Directions with coordinates (`SygicTruck.directionsWithCoords`)
+<details>
+<summary>Instagram · Implemented</summary>
 
-- **App:** CoPilot
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Copilot.open`)
-    - [x] View map (`Copilot.view`)
-    - [x] Directions with coordinates (`Copilot.directionsWithCoords`)
+- [x] Open app (`Instagram.open`)
+- [x] Open profile by username (`Instagram.openProfile`)
 
-- **App:** TomTom GO Fleet
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`TomTomGoFleet.open`)
-    - [x] View map (`TomTomGoFleet.view`)
-    - [x] Directions with coordinates (`TomTomGoFleet.directionsWithCoords`)
+</details>
 
-- **App:** TomTom GO Expert
-  - **Category:** Navigation
-  - **Status:** Draft
-  - **Actions:**
-    - [ ] Open app (`TomTomGoExpert.open`)
-    - [ ] View map (`TomTomGoExpert.view`)
-    - [ ] Directions with coordinates (`TomTomGoExpert.directionsWithCoords`)
-  - **Note:** Unpublished draft. Native iOS opening and navigation links remain unverified; see [the draft documentation](doc/apps/tomtom_go_expert.md).
+<details>
+<summary>LinkedIn · Implemented</summary>
 
-- **App:** Moovit
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Moovit.open`)
-    - [x] View map (`Moovit.view`)
-    - [x] Directions with coordinates (`Moovit.directionsWithCoords`)
+- [x] Open app (`LinkedIn.open`)
+- [x] Open profile page (`LinkedIn.openProfile`)
+- [x] Open company page (`LinkedIn.openCompany`)
 
-- **App:** Air Navigation Pro
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`AirNavigationPro.open`)
-    - [x] View map (`AirNavigationPro.view`)
-    - [x] Direct-to navigation (`AirNavigationPro.directTo`)
-    - [x] Directions with coordinates (`AirNavigationPro.directionsWithCoords`)
+</details>
 
-- **App:** Mappls
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Mappls.open`)
-    - [x] View map (`Mappls.view`)
-    - [x] Directions with coordinates (`Mappls.directionsWithCoords`)
+<details>
+<summary>WhatsApp · Implemented</summary>
 
-- **App:** Mapy.com
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`MapyCz.open`)
-    - [x] View map (`MapyCz.view`)
-    - [x] Search (`MapyCz.search`)
-    - [x] Directions with coordinates (`MapyCz.directionsWithCoords`)
+- [x] Open app (`WhatsApp.open`)
+- [x] Chat with phone number (`WhatsApp.chat`)
+- [x] Share text content (`WhatsApp.shareText`)
 
-- **App:** TMAP
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`TMap.open`)
-    - [x] View map (`TMap.view`)
-    - [x] Directions with coordinates (`TMap.directionsWithCoords`)
+</details>
 
-- **App:** KakaoMap
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`KakaoMap.open`)
-    - [x] View map (`KakaoMap.view`)
-    - [x] Directions with coordinates (`KakaoMap.directionsWithCoords`)
+<details>
+<summary>Telegram · Implemented</summary>
 
-- **App:** Neshan
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`Neshan.open`)
-    - [x] View map (`Neshan.view`)
-    - [x] Directions with coordinates (`Neshan.directionsWithCoords`)
+- [x] Open app (`Telegram.open`)
+- [x] Open profile by username (`Telegram.openProfile`)
+- [x] Open profile by phone number (`Telegram.openProfileByPhoneNumber`)
+- [x] Send message by username (`Telegram.sendMessage`)
+- [x] Send message by phone number (`Telegram.sendMessageByPhoneNumber`)
 
-- **App:** Yandex Maps
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`YandexMaps.open`)
-    - [x] Open map (`YandexMaps.openMap`)
-    - [x] View map (`YandexMaps.view`)
-    - [x] Search (`YandexMaps.search`)
-    - [x] Open organization card (`YandexMaps.organization`)
-    - [x] What is here (`YandexMaps.whatIsHere`)
-    - [x] Directions with coordinates (`YandexMaps.directionsWithCoords`)
-    - [x] Panorama (`YandexMaps.panorama`)
+</details>
 
-- **App:** Yandex Navigator
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`YandexNavigator.open`)
-    - [x] View map (`YandexNavigator.view`)
-    - [x] Search (`YandexNavigator.search`)
-    - [x] Directions with coordinates (`YandexNavigator.directionsWithCoords`)
+<details>
+<summary>Twitter · Implemented</summary>
 
-- **App:** Tencent Maps
-  - **Category:** Navigation
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open app (`TencentMaps.open`)
-    - [x] View map (`TencentMaps.view`)
-    - [x] Search (`TencentMaps.search`)
-    - [x] Nearby search (`TencentMaps.nearbySearch`)
-    - [x] Directions with coordinates (`TencentMaps.directionsWithCoords`)
+- [x] Open app (`Twitter.open`)
+- [x] Open profile by username (`Twitter.openProfile`)
+- [x] Open tweet by ID (`Twitter.openTweet`)
+- [x] Search (`Twitter.search`)
 
-#### Stores
+</details>
 
-- **App:** iOS App Store
-  - **Category:** Stores
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open store (`IOSAppStore.open`)
-    - [x] Open app page (`IOSAppStore.openAppPage`)
-    - [x] Rate app (`IOSAppStore.rateApp`)
+<details>
+<summary>Threads · Implemented</summary>
 
-- **App:** Mac App Store
-  - **Category:** Stores
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open store (`MacAppStore.open`)
-    - [x] Open app page (`MacAppStore.openAppPage`)
-    - [x] Rate app (`MacAppStore.rateApp`)
+- [x] Open app (`Threads.open`)
+- [x] Open profile by username (`Threads.openProfile`)
+- [x] Open post (`Threads.openPost`)
+- [x] Open comments (`Threads.openComments`)
+- [x] Create post (`Threads.createPost`)
+- [x] Search (`Threads.search`)
+- [x] Open topic tag (`Threads.openTag`)
 
-- **App:** Microsoft Store
-  - **Category:** Stores
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open store (`MicrosoftStore.open`)
-    - [x] Open app page (`MicrosoftStore.openAppPage`)
-    - [x] Rate app (`MicrosoftStore.rateApp`)
+</details>
 
-- **App:** Google Play Store
-  - **Category:** Stores
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open store (`PlayStore.open`)
-    - [x] Open app page (`PlayStore.openAppPage`)
+<details>
+<summary>YouTube · Implemented</summary>
 
-- **App:** Huawei AppGallery
-  - **Category:** Stores
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open store (`HuaweiAppGalleryStore.open`)
-    - [x] Open app page (`HuaweiAppGalleryStore.openAppPage`)
+- [x] Open app (`YouTube.open`)
+- [x] Open video (`YouTube.openVideo`)
+- [x] Open channel (`YouTube.openChannel`)
+- [x] Open playlist (`YouTube.openPlaylist`)
+- [x] Search (`YouTube.search`)
 
-- **App:** Cafe Bazaar
-  - **Category:** Stores
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open store (`CafeBazaarStore.open`)
-    - [x] Open app page (`CafeBazaarStore.openAppPage`)
+</details>
 
-- **App:** Myket
-  - **Category:** Stores
-  - **Status:** Implemented
-  - **Actions:**
-    - [x] Open store (`MyketStore.open`)
-    - [x] Open app page (`MyketStore.openAppPage`)
-    - [x] Rate app (`MyketStore.rateApp`)
+<details>
+<summary>TikTok · Implemented</summary>
 
-For future app entries, use **App**, **Category**, **Status**, optional **PR**, and a nested **Actions** checklist. Keep public API names alongside action labels.
+- [x] Open app (`TikTok.open`)
+- [x] Open profile by username (`TikTok.openProfile`)
+- [x] Open video (`TikTok.openVideo`)
+- [x] Open tag (`TikTok.openTag`)
+
+</details>
+
+<details>
+<summary>Pinterest · Implemented</summary>
+
+- [x] Open app (`Pinterest.open`)
+- [x] Open profile by username (`Pinterest.openProfile`)
+- [x] Open pin (`Pinterest.openPin`)
+- [x] Open board by ID (`Pinterest.openBoard`)
+- [x] Search (`Pinterest.search`)
+
+</details>
+
+<details>
+<summary>Zoom · Implemented</summary>
+
+- [x] Open app (`Zoom.open`)
+- [x] Join meeting by ID (`Zoom.joinMeeting`)
+
+</details>
+
+<details>
+<summary>Slack · Implemented</summary>
+
+- [x] Open app (`Slack.open`)
+- [x] Open team (`Slack.openTeam`)
+- [x] Open channel (`Slack.openChannel`)
+- [x] Open user (`Slack.openUser`)
+
+</details>
+
+</details>
+
+<details>
+<summary>Navigation (22 apps) · includes 1 draft</summary>
+
+<details>
+<summary>Google Maps · Implemented</summary>
+
+- [x] Open app (`GoogleMaps.open`)
+- [x] View map (`GoogleMaps.view`)
+- [x] Search (`GoogleMaps.search`)
+- [x] Directions (`GoogleMaps.directions`)
+- [x] Directions with coordinates (`GoogleMaps.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Amap · Implemented</summary>
+
+- [x] Open app (`Amap.open`)
+- [x] Open current location (`Amap.myLocation`)
+- [x] View map (`Amap.view`)
+- [x] Search (`Amap.search`)
+- [x] Directions (`Amap.directions`)
+- [x] Directions with coordinates (`Amap.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Baidu Maps · Implemented</summary>
+
+- [x] Open app (`BaiduMaps.open`)
+- [x] View map (`BaiduMaps.view`)
+- [x] Search (`BaiduMaps.search`)
+- [x] Nearby search (`BaiduMaps.nearbySearch`)
+- [x] Open transit line (`BaiduMaps.line`)
+- [x] Directions (`BaiduMaps.directions`)
+- [x] Directions with coordinates (`BaiduMaps.directionsWithCoords`)
+- [x] Navigation (`BaiduMaps.navigate`)
+
+</details>
+
+<details>
+<summary>NAVER Map · Implemented</summary>
+
+- [x] Open app (`NaverMap.open`)
+- [x] View map (`NaverMap.view`)
+- [x] Search (`NaverMap.search`)
+- [x] Bus search (`NaverMap.busSearch`)
+- [x] Directions with coordinates (`NaverMap.directionsWithCoords`)
+- [x] Navigation (`NaverMap.navigate`)
+- [x] Safe driving (`NaverMap.safeDriving`)
+
+</details>
+
+<details>
+<summary>Apple Maps · Implemented</summary>
+
+- [x] Open app (`AppleMaps.open`)
+- [x] View map (`AppleMaps.view`)
+- [x] Search (`AppleMaps.search`)
+- [x] Directions (`AppleMaps.directions`)
+- [x] Directions with coordinates (`AppleMaps.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>2GIS · Implemented</summary>
+
+- [x] Open app (`TwoGis.open`)
+- [x] View map (`TwoGis.view`)
+- [x] Directions with coordinates (`TwoGis.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Waze · Implemented</summary>
+
+- [x] Open app (`Waze.open`)
+- [x] View map (`Waze.view`)
+- [x] Search (`Waze.search`)
+- [x] Directions (`Waze.directions`)
+- [x] Directions with coordinates (`Waze.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Sygic · Implemented</summary>
+
+- [x] Open app (`Sygic.open`)
+- [x] View map (`Sygic.view`)
+- [x] Directions with coordinates (`Sygic.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Sygic Truck · Implemented</summary>
+
+- [x] Open app (`SygicTruck.open`)
+- [x] View map (`SygicTruck.view`)
+- [x] Directions with coordinates (`SygicTruck.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>CoPilot · Implemented</summary>
+
+- [x] Open app (`Copilot.open`)
+- [x] View map (`Copilot.view`)
+- [x] Directions with coordinates (`Copilot.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>TomTom GO Fleet · Implemented</summary>
+
+- [x] Open app (`TomTomGoFleet.open`)
+- [x] View map (`TomTomGoFleet.view`)
+- [x] Directions with coordinates (`TomTomGoFleet.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>TomTom GO Expert · Draft</summary>
+
+- [ ] Open app (`TomTomGoExpert.open`)
+- [ ] View map (`TomTomGoExpert.view`)
+- [ ] Directions with coordinates (`TomTomGoExpert.directionsWithCoords`)
+
+Unpublished draft. Native iOS opening and navigation links remain unverified; see [the draft documentation](doc/apps/tomtom_go_expert.md).
+
+</details>
+
+<details>
+<summary>Moovit · Implemented</summary>
+
+- [x] Open app (`Moovit.open`)
+- [x] View map (`Moovit.view`)
+- [x] Directions with coordinates (`Moovit.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Air Navigation Pro · Implemented</summary>
+
+- [x] Open app (`AirNavigationPro.open`)
+- [x] View map (`AirNavigationPro.view`)
+- [x] Direct-to navigation (`AirNavigationPro.directTo`)
+- [x] Directions with coordinates (`AirNavigationPro.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Mappls · Implemented</summary>
+
+- [x] Open app (`Mappls.open`)
+- [x] View map (`Mappls.view`)
+- [x] Directions with coordinates (`Mappls.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Mapy.com · Implemented</summary>
+
+- [x] Open app (`MapyCz.open`)
+- [x] View map (`MapyCz.view`)
+- [x] Search (`MapyCz.search`)
+- [x] Directions with coordinates (`MapyCz.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>TMAP · Implemented</summary>
+
+- [x] Open app (`TMap.open`)
+- [x] View map (`TMap.view`)
+- [x] Directions with coordinates (`TMap.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>KakaoMap · Implemented</summary>
+
+- [x] Open app (`KakaoMap.open`)
+- [x] View map (`KakaoMap.view`)
+- [x] Directions with coordinates (`KakaoMap.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Neshan · Implemented</summary>
+
+- [x] Open app (`Neshan.open`)
+- [x] View map (`Neshan.view`)
+- [x] Directions with coordinates (`Neshan.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Yandex Maps · Implemented</summary>
+
+- [x] Open app (`YandexMaps.open`)
+- [x] Open map (`YandexMaps.openMap`)
+- [x] View map (`YandexMaps.view`)
+- [x] Search (`YandexMaps.search`)
+- [x] Open organization card (`YandexMaps.organization`)
+- [x] What is here (`YandexMaps.whatIsHere`)
+- [x] Directions with coordinates (`YandexMaps.directionsWithCoords`)
+- [x] Panorama (`YandexMaps.panorama`)
+
+</details>
+
+<details>
+<summary>Yandex Navigator · Implemented</summary>
+
+- [x] Open app (`YandexNavigator.open`)
+- [x] View map (`YandexNavigator.view`)
+- [x] Search (`YandexNavigator.search`)
+- [x] Directions with coordinates (`YandexNavigator.directionsWithCoords`)
+
+</details>
+
+<details>
+<summary>Tencent Maps · Implemented</summary>
+
+- [x] Open app (`TencentMaps.open`)
+- [x] View map (`TencentMaps.view`)
+- [x] Search (`TencentMaps.search`)
+- [x] Nearby search (`TencentMaps.nearbySearch`)
+- [x] Directions with coordinates (`TencentMaps.directionsWithCoords`)
+
+</details>
+
+</details>
+
+<details>
+<summary>Stores (7 stores)</summary>
+
+<details>
+<summary>iOS App Store · Implemented</summary>
+
+- [x] Open store (`IOSAppStore.open`)
+- [x] Open app page (`IOSAppStore.openAppPage`)
+- [x] Rate app (`IOSAppStore.rateApp`)
+
+</details>
+
+<details>
+<summary>Mac App Store · Implemented</summary>
+
+- [x] Open store (`MacAppStore.open`)
+- [x] Open app page (`MacAppStore.openAppPage`)
+- [x] Rate app (`MacAppStore.rateApp`)
+
+</details>
+
+<details>
+<summary>Microsoft Store · Implemented</summary>
+
+- [x] Open store (`MicrosoftStore.open`)
+- [x] Open app page (`MicrosoftStore.openAppPage`)
+- [x] Rate app (`MicrosoftStore.rateApp`)
+
+</details>
+
+<details>
+<summary>Google Play Store · Implemented</summary>
+
+- [x] Open store (`PlayStore.open`)
+- [x] Open app page (`PlayStore.openAppPage`)
+
+</details>
+
+<details>
+<summary>Huawei AppGallery · Implemented</summary>
+
+- [x] Open store (`HuaweiAppGalleryStore.open`)
+- [x] Open app page (`HuaweiAppGalleryStore.openAppPage`)
+
+</details>
+
+<details>
+<summary>Cafe Bazaar · Implemented</summary>
+
+- [x] Open store (`CafeBazaarStore.open`)
+- [x] Open app page (`CafeBazaarStore.openAppPage`)
+
+</details>
+
+<details>
+<summary>Myket · Implemented</summary>
+
+- [x] Open store (`MyketStore.open`)
+- [x] Open app page (`MyketStore.openAppPage`)
+- [x] Rate app (`MyketStore.rateApp`)
+
+</details>
+
+</details>
 
 ## 2. Features
 
-1. **Feature:** Query installed applications
-   - **Category:** App discovery
-   - **Status:** Pending
-   - **Description:** List applications installed on the device, including apps outside DeeplinkX's supported catalog. Platform feasibility remains to be assessed.
-   - **Completion criteria:**
-     - [ ] Assess and document platform feasibility and restrictions.
-     - [ ] List installed applications on supported platforms, including apps outside DeeplinkX's supported catalog where permitted.
+<details>
+<summary>1. Query installed applications · App discovery · Pending</summary>
 
-2. **Feature:** Query one supported application
-   - **Category:** App discovery
-   - **Status:** Pending
-   - **Description:** Look up a supported app and check installation status, building on the existing `isAppInstalled()` capability.
-   - **Completion criteria:**
-     - [ ] Look up an application in DeeplinkX's supported catalog.
-     - [ ] Report its installation status using the existing `isAppInstalled()` capability.
+List applications installed on the device, including apps outside DeeplinkX's supported catalog. Platform feasibility remains to be assessed.
 
-For future feature entries, use **Feature**, **Category**, **Status**, **Description**, and a nested **Completion criteria** checklist.
+**Completion criteria:**
+
+- [ ] Assess and document platform feasibility and restrictions.
+- [ ] List installed applications on supported platforms, including apps outside DeeplinkX's supported catalog where permitted.
+
+</details>
+
+<details>
+<summary>2. Query one supported application · App discovery · Pending</summary>
+
+Look up a supported app and check installation status, building on the existing `isAppInstalled()` capability.
+
+**Completion criteria:**
+
+- [ ] Look up an application in DeeplinkX's supported catalog.
+- [ ] Report its installation status using the existing `isAppInstalled()` capability.
+
+</details>
+
+<details>
+<summary>Roadmap notes</summary>
+
+**Implemented:** API present in this repository. **Draft:** validation remains. **Pending:** awaiting integration or implementation.
+
+Checked actions track implementation. Device verification and release readiness follow each app's documentation.
+
+Append new entries to the appropriate queue. Keep the name, category, status, optional PR, and action checklist for apps; use a description and completion criteria for features. App categories follow the README groups.
+
+</details>
