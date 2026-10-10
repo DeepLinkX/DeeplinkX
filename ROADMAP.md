@@ -39,6 +39,157 @@ Complete each queue in numbered order. Expand entries for actions and completion
 
 </details>
 
+<details>
+<summary>4. Gmail · Email · Pending</summary>
+
+**PR:** [#72](https://github.com/DeepLinkX/DeeplinkX/pull/72)
+
+- [ ] Open app (`Gmail.open`)
+- [ ] Compose (`Gmail.compose`)
+
+</details>
+
+<details>
+<summary>5. Outlook · Email · Pending</summary>
+
+**PR:** [#73](https://github.com/DeepLinkX/DeeplinkX/pull/73)
+
+- [ ] Open app (`Outlook.open`)
+- [ ] Compose (`Outlook.compose`)
+
+</details>
+
+<details>
+<summary>6. Yahoo Mail · Email · Pending</summary>
+
+**PR:** [#74](https://github.com/DeepLinkX/DeeplinkX/pull/74)
+
+- [ ] Open app (`YahooMail.open`)
+- [ ] Compose (`YahooMail.compose`)
+
+</details>
+
+<details>
+<summary>7. Spark · Email · Pending</summary>
+
+**PR:** [#75](https://github.com/DeepLinkX/DeeplinkX/pull/75)
+
+- [ ] Open app (`Spark.open`)
+- [ ] Compose (`Spark.compose`)
+
+</details>
+
+<details>
+<summary>8. Airmail · Email · Pending</summary>
+
+**PR:** [#76](https://github.com/DeepLinkX/DeeplinkX/pull/76)
+
+- [ ] Open app (`Airmail.open`)
+- [ ] Compose (`Airmail.compose`)
+
+</details>
+
+<details>
+<summary>9. Fastmail · Email · Pending</summary>
+
+**PR:** [#77](https://github.com/DeepLinkX/DeeplinkX/pull/77)
+
+- [ ] Open app (`Fastmail.open`)
+- [ ] Compose (`Fastmail.compose`)
+
+</details>
+
+<details>
+<summary>10. Proton Mail · Email · Pending</summary>
+
+**PR:** [#78](https://github.com/DeepLinkX/DeeplinkX/pull/78)
+
+- [ ] Open app (`ProtonMail.open`)
+
+</details>
+
+<details>
+<summary>11. Superhuman · Email · Pending</summary>
+
+**PR:** [#79](https://github.com/DeepLinkX/DeeplinkX/pull/79)
+
+- [ ] Open app (`Superhuman.open`)
+
+</details>
+
+<details>
+<summary>12. HEY · Email · Pending</summary>
+
+**PR:** [#80](https://github.com/DeepLinkX/DeeplinkX/pull/80)
+
+- [ ] Open app (`Hey.open`)
+
+</details>
+
+<details>
+<summary>13. Canary Mail · Email · Pending</summary>
+
+**PR:** [#81](https://github.com/DeepLinkX/DeeplinkX/pull/81)
+
+- [ ] Open app (`CanaryMail.open`)
+
+</details>
+
+<details>
+<summary>14. Spike · Email · Pending</summary>
+
+**PR:** [#82](https://github.com/DeepLinkX/DeeplinkX/pull/82)
+
+- [ ] Open app (`Spike.open`)
+
+</details>
+
+<details>
+<summary>15. Polymail · Email · Pending</summary>
+
+**PR:** [#83](https://github.com/DeepLinkX/DeeplinkX/pull/83)
+
+- [ ] Open app (`Polymail.open`)
+
+</details>
+
+<details>
+<summary>16. BlueMail · Email · Pending</summary>
+
+**PR:** [#84](https://github.com/DeepLinkX/DeeplinkX/pull/84)
+
+- [ ] Open app (`BlueMail.open`)
+
+</details>
+
+<details>
+<summary>17. Edison Mail · Email · Pending</summary>
+
+**PR:** [#85](https://github.com/DeepLinkX/DeeplinkX/pull/85)
+
+- [ ] Open app (`EdisonMail.open`)
+
+</details>
+
+<details>
+<summary>18. Samsung Email · Email · Pending</summary>
+
+**PR:** [#86](https://github.com/DeepLinkX/DeeplinkX/pull/86)
+
+- [ ] Open app (`SamsungEmail.open`)
+- [ ] Compose (`SamsungEmail.compose`)
+
+</details>
+
+<details>
+<summary>19. Apple Mail · Email · Pending</summary>
+
+**PR:** [#87](https://github.com/DeepLinkX/DeeplinkX/pull/87)
+
+- [ ] Open app (`AppleMail.open`)
+
+</details>
+
 ### Existing apps and stores
 
 39 apps (including one draft) and 7 stores.
@@ -534,6 +685,21 @@ Look up a supported app and check installation status, building on the existing 
 
 - [ ] Look up an application in DeeplinkX's supported catalog.
 - [ ] Report its installation status using the existing `isAppInstalled()` capability.
+
+</details>
+
+<details>
+<summary>3. Launch mail compose · Email · Pending</summary>
+
+Pass compose actions in priority order. DeeplinkX opens the first installed mail app, then uses a web fallback if none of the native launches succeed. The example adds a Mail Selector use case beside Map Selector.
+
+**PR:** [#88](https://github.com/DeepLinkX/DeeplinkX/pull/88)
+
+**Completion criteria:**
+
+- [ ] Add `MailComposeAction` and `DeeplinkX.launchMailComposeAction`, using the same native-then-fallback order as `launchMapDirectionsWithCoordsAction`.
+- [ ] Document the launcher and its provider list in the README.
+- [ ] Add a Mail Selector example page, home tile, and widget test, following the map selector.
 
 </details>
 
