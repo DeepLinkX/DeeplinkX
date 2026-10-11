@@ -1,3 +1,9 @@
+## 1.5.5
+
+### Added
+
+* Added HERE WeGo open app, view map, and directions with coordinates actions using the official HERE share-link contract, with documentation, tests, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.5.4
 
 ### Added

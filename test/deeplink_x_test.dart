@@ -246,6 +246,11 @@ void main() {
         expect(app, isA<App>());
       });
 
+      test('HERE WeGo', () {
+        final action = HereWeGo.open();
+        expect(action, isA<App>());
+      });
+
       test('Neshan', () {
         final action = Neshan.open();
         expect(action, isA<App>());

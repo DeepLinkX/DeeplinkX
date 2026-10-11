@@ -96,6 +96,8 @@
         <package android:name="com.skt.tmap.ku" />
         <!-- KakaoMap -->
         <package android:name="net.daum.android.map" />
+        <!-- HERE WeGo -->
+        <package android:name="com.here.app.maps" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
         <!-- NAVER Map -->

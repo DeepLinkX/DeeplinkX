@@ -65,6 +65,7 @@ class _InstalledAppsPageState extends State<InstalledAppsPage> {
     _InstalledItem('Maps', 'Mapy.com', MapyCz(), 'assets/mapy_cz.png'),
     _InstalledItem('Maps', 'TMAP', TMap(), 'assets/tmap.png'),
     _InstalledItem('Maps', 'KakaoMap', KakaoMap(), 'assets/kakao_map.png'),
+    _InstalledItem('Maps', 'HERE WeGo', HereWeGo(), 'assets/here_wego.png'),
     _InstalledItem('Maps', 'Neshan', Neshan(), 'assets/neshan.png'),
     _InstalledItem('Maps', 'Yandex Maps', YandexMaps(), 'assets/yandex_maps.png'),
     _InstalledItem('Maps', 'Yandex Navigator', YandexNavigator(), 'assets/yandex_navigator.png'),
