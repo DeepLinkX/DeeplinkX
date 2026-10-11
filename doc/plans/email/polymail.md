@@ -1,59 +1,131 @@
-# Plan: Polymail actions
+# Implementation instructions: Polymail
 
-Implementation brief for a later change. Replace this file with the integration. Do not merge the brief by itself.
+Existing [draft PR #83](https://github.com/DeepLinkX/DeeplinkX/pull/83). Documentation-only revision, checked **2026-10-11**. No API implemented, native route launched, message sent or store action added.
 
-Checked 10 October 2026.
+## Decision and blockers
 
-## Actions
+Vendor downloads establish native Mac and Windows distribution beyond iOS-on-Mac compatibility. No Android package/provider scheme established; named opening is blocked.
 
-- Open app (`Polymail.open`)
+Proposed class spelling: `Polymail`. `Polymail.open` is a candidate only where the table establishes a named route. `Polymail.compose` may implement the proposed [MailComposeAction](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/mail_compose_launcher.md) only after field-preservation and platform prerequisites pass. No public inbox/search/message method is promised by a blocked cell.
 
-## API
+## Proposed API and action gates
 
 ```dart
 Polymail.open({bool fallbackToStore = false})
+
+// Enable only on platforms that pass the compose-field gate below.
+Polymail.compose({
+  List<String> to = const [],
+  List<String> cc = const [],
+  List<String> bcc = const [],
+  String? subject,
+  String? body,
+  bool fallbackToStore = false,
+})
 ```
 
-## Identifiers
+These signatures are proposals. A blocked or unavailable-evidence cell is a research task, not permission to export that action or add a platform. Open follows the existing `App` / `DownloadableApp` pattern; a compatible text-compose action extends `Polymail` and implements `MailComposeAction` plus the appropriate `IntentAppLinkAction` or `AppLinkAppAction` and `Fallbackable`. Explicit desktop invocation needs the separate adapter before it can use this pattern. `supportedPlatforms` describes verified invocation, not downloaded app availability.
 
-- iOS App Store id `1082058386`, slug `polymail-email-inbox`: <https://apps.apple.com/us/app/polymail-email-inbox/id1082058386>
-- The iOS listing also runs on Macs with Apple silicon. That is not a separate bundle id.
-- Android package: no Play listing was found on 10 October 2026. Do not invent one.
-- Custom scheme: unverified. Leave `customScheme` unset.
-- Website: copy the developer website from the App Store listing. Do not guess a host.
+Inbox, Search and Message remain separate future action research. Do not add their constructors until the table's external route and account/message identity are established. Thunderbird's message-ID and Evolution's folder candidates require targeted adapters; no provider-specific sending, attachment or mailbox API is included here.
 
-## URLs
+Keep default-handler compose and installed-app discovery separate from selecting this named provider. Apple Mail must not acquire a named `compose` action through generic `mailto:` alone. Attachments remain outside this five-field interface.
 
-There is no confirmed way to open Polymail. `launchApp` needs an Android package or a custom scheme, and neither was found.
+## Actions by platform
 
-Do not add the class to the public API until one of those identifiers is copied from a Polymail page, the App Store metadata, or the app's published URL types. Keep this brief as the record of the App Store id and the gap.
+| Action | Android | iOS | macOS | Windows | Linux | Web |
+| --- | --- | --- | --- | --- | --- | --- |
+| Open | U | B | B | B | U | W |
+| Compose | U | B | B | B | U | B |
+| Inbox | U | B | B | B | U | B |
+| Search | U | B | B | B | U | B |
+| Message | U | B | B | B | U | B |
 
-If a scheme is confirmed, platforms start at iOS. Add the scheme to `Info.plist`. Add `compose` and the mail selector only when that same kind of source documents a compose URL.
+Status legend (self-contained):
 
-## Sources
+- **D:** provider-documented invocation candidate; runtime not tested.
+- **S:** first-party source candidate; release/manifest/handler verification still required.
+- **C:** OS-contract candidate (Android package open or package-targeted SENDTO); app behavior/fields unverified.
+- **E:** experimental, undocumented/community/historical route; never enable as stable support without evidence.
+- **A:** adapter prerequisite; current DeeplinkX path cannot perform the proposed explicit CLI/application invocation.
+- **B:** availability established but action route, identity or required fields remain blocked/unresolved.
+- **U:** platform distribution/action not established in inspected evidence; does not mean unsupported.
+- **W:** a website/store/product route can open; no particular inbox, draft, search or message is promised.
 
-- App Store listing above, checked 10 October 2026.
+Every cell is research status, not implemented support. All runtime statuses are **not tested**. Open means launch the named app; Inbox is a separately addressed folder; Message is an existing message, not sending. Web Open is explicitly the exception: it can be a product/store page.
 
-## Limits
+ In-app menu items, search features, or compose screenshots are not proof of external invocation.
 
-Blocked on a published scheme or package. No compose action in this brief.
+## Platform evidence and prerequisites
 
-## Files a later implementation must touch
+| Platform | App availability | Identifiers | Native route research | Adapter / configuration prerequisite | Store / download route | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| Android | Not established in inspected sources | Package unverified | No route enabled; availability/identifier unresolved | Verify provider identity/handler before enabling | Not established; follow verified vendor downloads | [polymail-vendor](https://polymail.io/download) |
+| iOS | Listed; runtime not tested | App Store ID `1082058386`; bundle ID unverified | No named route established | Verify provider identity/handler before enabling | [iOS listing](https://apps.apple.com/app/id1082058386) | [polymail-vendor](https://polymail.io/download), [polymail-store-0](https://apps.apple.com/us/app/polymail-email-inbox/id1082058386), [ios-query](https://developer.apple.com/documentation/uikit/uiapplication/canopenurl(_:)) |
+| macOS | Listed; runtime not tested | Bundle ID unverified | No named route established | Current install gate requires bundle ID; launchApp still needs a scheme. Explicit bundle URL/CLI launch needs adapter | Not established; follow verified vendor downloads | [polymail-vendor](https://polymail.io/download) |
+| Windows | Listed; runtime not tested | Product/AppUserModelID/executable identity unverified | No named route established | Current scheme check identifies a handler, not necessarily this provider. Explicit executable/desktop launch needs adapter | Not established; follow verified vendor downloads | [polymail-vendor](https://polymail.io/download) |
+| Linux | Not established in inspected sources | Desktop-file ID/executable identity unverified | No route enabled; availability/identifier unresolved | Current scheme check identifies a handler, not necessarily this provider. Explicit executable/desktop launch needs adapter | Not established; follow verified vendor downloads | [polymail-vendor](https://polymail.io/download), [desktop-entry](https://specifications.freedesktop.org/desktop-entry-spec/latest/) |
+| Web | Website/store route; client availability only where vendor confirms | Host from referenced product/store entry; tenant/account selection unverified | No native web route; browser URL only | Browser URL adapter; do not claim composer or named native handler | Not applicable | [polymail-vendor](https://polymail.io/download) |
 
-Follow the new-app checklist in `AGENTS.md`. This branch does not add the Dart API.
+All rows have runtime status **not tested**. A download/store entry does not establish handler registration. Missing store/desktop IDs remain explicit blockers; implementation must copy verified identifiers, not derive them from brand names.
 
-- `lib/src/apps/downloadable_apps/polymail.dart`
-- Export it from `lib/src/apps/downloadable_apps/downloadable_apps.dart`.
-- `doc/apps/polymail.md` for usage, schemes, store identifiers, and platform configuration.
-- `README.md`: feature counts, the supported-app list, and the documentation list. Compose-capable apps also join the `launchMailComposeAction` provider list when that launcher exists.
-- Example catalog: add `CatalogCategory.email` in `example/lib/catalog/models.dart`, add `example/lib/catalog/email_apps.dart`, include it from `example/lib/catalog/catalog.dart`, add `example/assets/polymail.png`, and update the counts in `example/test/catalog_test.dart`.
-- `example/ios/Runner/Info.plist`: add the custom scheme under `LSApplicationQueriesSchemes` only when a scheme is listed below.
-- `example/android/app/src/main/AndroidManifest.xml`: add a `<package android:name="..."/>` query only when an Android package is listed below.
-- `test/src/apps/polymail_test.dart` covering store actions, app links, and fallbacks.
-- `test/deeplink_x_test.dart` exposed-API list.
-- This app does not implement `MailComposeAction` and stays out of the mail selector.
-- Run `dart format`, `flutter analyze`, and `flutter test` (via FVM if this checkout requires it). Bump `pubspec.yaml` and update `CHANGELOG.md` when the feature is released, not in this brief.
+## Text-compose fields and fallback
 
-## Release limit
+| Platform | Status | to / cc / bcc / subject / body | Fallback semantics |
+| --- | --- | --- | --- |
+| Android | U | No verified named text-compose contract; all five fields unresolved. | Product / download page; no prefilled contract established |
+| iOS | B | No verified named text-compose contract; all five fields unresolved. | Product / download page; no prefilled contract established |
+| macOS | B | No verified named text-compose contract; all five fields unresolved. | Product / download page; no prefilled contract established |
+| Windows | B | No verified named text-compose contract; all five fields unresolved. | Product / download page; no prefilled contract established |
+| Linux | U | No verified named text-compose contract; all five fields unresolved. | Product / download page; no prefilled contract established |
+| Web | B | No verified named text-compose contract; all five fields unresolved. | Product / download page; no prefilled contract established |
 
-Device-check every native URL before release. An unpublished draft stays out of the version bump until that check passes, the same standard already used for TomTom GO Expert.
+
+Never silently discard supplied recipients, subject or body. A future route must preserve every nonempty field or be rejected/skipped before launch; unverified cc/bcc is a blocker, not permission to omit it. A normal store/product fallback may open without prefilling anything, and `true` then means only a route opened. No generic default-mail action is inserted into a named-provider list.
+
+Fallback entry candidate: [https://polymail.io/download](https://polymail.io/download) — **Product / download page**. No complete five-field prefilled compose contract is established here. Use [default-mail compose](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/default_mail_compose.md) separately. Attachments remain outside text compose; see [attachment research](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/attachments.md).
+
+## Implementation gate and future verification
+
+1. Match first-party route/parser and identifiers to the installed release, including exported Android activities, iOS queries, and desktop handler/application identity. Pin moving source links before implementing.
+2. Verify all supplied fields, multiple recipients, Unicode, percent encoding and body newlines; skip incompatible routes without losing recipients.
+3. Verify open separately from addressed Inbox, Search and Message. Message lookup needs account/folder identity and unavailable-message behavior; do not assume web roots or root schemes select Inbox.
+4. Test handler missing, app logged out, multi-account selection, cold/warm start, unavailable store, native priority and normal fallback order. Add this provider to the selector only after a compose action exists and passes its gate.
+5. Future integration must update exports, dedicated app docs, example catalog/logo/configuration and meaningful action tests; follow [test scenarios](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/test_scenarios.md). No release metadata changes in this research phase.
+
+Evidence: [polymail-store-0](https://apps.apple.com/us/app/polymail-email-inbox/id1082058386), [polymail-vendor](https://polymail.io/download), [android](https://developer.android.com/guide/components/intents-common#Email), [mailto](https://www.rfc-editor.org/rfc/rfc6068). Dates and evidence tiers are in the [source register](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/sources.md); secondary leads retain their original 2026-10-10 observation. Missing evidence is not confirmed lack of support.
+
+## Required integration files for a later implementation
+
+- `lib/src/apps/downloadable_apps/polymail.dart`: app identity, verified platform/store metadata and only eligible action classes; export via `lib/src/apps/downloadable_apps/downloadable_apps.dart`.
+- `lib/src/core/interfaces/mail_app_action_interface.dart` and `lib/src/core/interfaces/interfaces.dart`: consume the shared proposed interface when implemented; do not duplicate it per provider.
+- `doc/apps/polymail.md`: document callable actions, exact field mappings, platform configuration, evidence date and runtime limitations. Update `README.md` provider/action tables and counts only when this integration actually lands.
+- `example/lib/catalog/models.dart`, `email_apps.dart`, `catalog.dart`: add the email category once, then this provider's verified actions; add `example/assets/polymail.png` and update `example/test/catalog_test.dart` counts.
+- `example/android/app/src/main/AndroidManifest.xml`: bounded package queries for verified Android IDs and SENDTO/mailto intent visibility where needed. Use the package from the table, never a guessed activity class. Resolve the installed app's exported handler before enabling compose.
+- `example/ios/Runner/Info.plist`: exact verified scheme under `LSApplicationQueriesSchemes`; store ID alone does not justify a scheme or native iOS support. Do not add experimental schemes as stable routes without a recorded validation decision.
+- `test/src/apps/polymail_test.dart`, `test/deeplink_x_test.dart`: metadata, action interfaces, generated URI/intent fields, unsupported-platform handling and fallback cases. Desktop adapter changes need their own native tests and identity evidence.
+- `example/lib/use_cases/mail_selector_page.dart`, `example/lib/home.dart`, `example/test/use_cases_test.dart`: include only implemented, compatible compose actions. Label store, product/support page and web-client fallback destinations accurately.
+
+For apps with a verified Android package, future Android compose uses `android.intent.action.SENDTO`, `mailto:` data and the verified package. Determine whether URI headers or standard extras (`EXTRA_EMAIL`, `EXTRA_CC`, `EXTRA_BCC`, `EXTRA_SUBJECT`, `EXTRA_TEXT`) are actually parsed by this app, and verify bridge types and precedence. OS documentation alone does not prove app acceptance. Do not substitute wildcard ACTION_SEND for text compose.
+
+Match `launchMailComposeAction(actions:, disableFallback:)` to the existing map launcher: all actions in priority order with fallback disabled, stop on success; if permitted, repeat in order with normal `launchAction`, which retries native then requested stores then the fallback URL. Empty/all-failed returns false. `true` means a route opened, including a store or website; it does not validate a draft or sending. Never automatically insert generic default-mail compose.
+
+## Acceptance tests before exposing actions
+
+1. Every supplied to/cc/bcc recipient, subject and body survives exactly; unverified or incompatible fields cause the native/prefilled route to be skipped/rejected before launch. Cover multiple recipients, cc-only, bcc-only and empty drafts.
+2. Persian/Unicode, emoji, plus addresses, reserved characters, percent signs and body newlines survive one encoding/decoding pass. Assert provider-specific query names and delimiters from evidence.
+3. All native attempts precede normal fallbacks; cover first/later native success, second-pass native retry, store/site failures, disabled fallback, empty lists and missing handlers.
+4. Verify named-provider identity with another app set as default, invisible packages, cold/warm start, logged-out and multiple-account states. Root Open does not prove Inbox/Search/Message.
+5. Runtime records include OS/app version, pinned source, route, input and observed draft/destination. Attachments require separate file/URI-grant tests and must not be silently dropped through this contract.
+
+Run the pinned FVM SDK's formatter, analysis, root tests and relevant example/native tests when implementing. This draft only changes documentation; version, changelog, lockfiles and feature counts await a separately authorized implementation/release.
+
+## Direct evidence and dates
+
+- [Android email intents](https://developer.android.com/guide/components/intents-common#Email) — Primary; checked/observed **2026-10-11**. SENDTO/mailto and standard recipient arrays/subject/text; each app must resolve and preserve fields.
+- [freedesktop desktop entry specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/) — Primary; checked/observed **2026-10-11**. Linux desktop entries/Exec identity research; not proof of installed provider or compose handling.
+- [Apple URL handler queries](https://developer.apple.com/documentation/uikit/uiapplication/canopenurl(_:)) — Primary; checked/observed **2026-10-11**. canOpenURL and scheme query configuration; does not enumerate installed mail apps.
+- [RFC 6068](https://www.rfc-editor.org/rfc/rfc6068) — Primary; checked/observed **2026-10-11**. URI encoding and text compose; no portable attachment parameter.
+- [Polymail store listing](https://apps.apple.com/us/app/polymail-email-inbox/id1082058386) — Primary; checked/observed **2026-10-11**. Store identifier/platform availability only; no external compose or scheme evidence.
+- [Polymail official platform/download evidence](https://polymail.io/download) — Primary; checked/observed **2026-10-11**. Listed app availability and official download entry points; actions require separate evidence.
+
+Internet/community and historical references are experimental leads only. Pin moving first-party source to the installed release before implementation. Research dates are retained; publication does not imply a new provider or device check.
