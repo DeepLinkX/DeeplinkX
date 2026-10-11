@@ -1,16 +1,10 @@
-# Plan: mail compose launcher
+# Proposal: shared mail compose launcher
 
-Implementation brief for a later change. Replace this file with the integration. Do not merge the brief by itself.
+Revision of [draft PR #88](https://github.com/DeepLinkX/DeeplinkX/pull/88), checked **2026-10-11**. Documentation only. Preserve shared map launcher behavior; no implementation or API export is added in this phase.
 
-Checked 10 October 2026.
+## Proposed interface
 
-## Feature
-
-`Launch mail compose` is a shared launcher, in the same role as `launchMapDirectionsWithCoordsAction`. Callers pass compose actions in priority order. DeeplinkX opens the first installed mail app, then uses a web fallback only if none of the native launches succeed.
-
-## API
-
-Add `lib/src/core/interfaces/mail_app_action_interface.dart` beside `lib/src/core/interfaces/map_app_action_interface.dart`, and export it from `lib/src/core/interfaces/interfaces.dart`.
+Retain the original names and text-only fields:
 
 ```dart
 abstract class MailAppAction extends DownloadableApp implements AppAction {}
@@ -22,96 +16,53 @@ abstract class MailComposeAction extends MailAppAction {
   String? get subject;
   String? get body;
 }
-```
 
-Add this method on `DeeplinkX` in `lib/src/core/deeplink_x.dart`, next to the `launchMap*Action` methods:
-
-```dart
 Future<bool> launchMailComposeAction({
   required List<MailComposeAction> actions,
   bool disableFallback = false,
-})
+});
 ```
 
-Behavior matches `_launchMapActions`:
+These are proposals, not callable APIs. Future implementation locations remain `lib/src/core/interfaces/mail_app_action_interface.dart`, its interface export, and `lib/src/core/deeplink_x.dart`. App-specific constructors should retain `to`, `cc`, `bcc`, `subject`, `body` and `fallbackToStore` from their original compose proposals. Do not require a nonempty `to` at interface level: an empty draft is a distinct test case; example forms may impose their own validation.
 
-1. Try each action with `launchAction(action, disableFallback: true)`.
-2. Return true on the first success.
-3. If `disableFallback` is true, return false after the native pass.
-4. Otherwise try each action with normal fallback and return true on the first success.
-5. Return false when every attempt fails, including an empty list.
+## Exact two-pass contract
 
-Keep the map methods' behavior unchanged. A private helper shared with `_launchMapActions` is fine when the existing map tests still pass. Duplicating the loop as `_launchMailActions` is also fine.
+Match [_launchMapActions](https://github.com/DeepLinkX/DeeplinkX/blob/f8225e35158d4b69c9ddb7e8128418e9b278d33c/lib/src/core/deeplink_x.dart), including normal `launchAction` retry behavior:
 
-Only compose actions implement `MailComposeAction`. Open-only mail apps stay out of this list.
+1. In caller order, await `launchAction(action, disableFallback: true)` for each action. Stop at the first `true`.
+2. If every native attempt fails and `disableFallback` is `true`, return `false`.
+3. Otherwise, in the same caller order, await normal `launchAction(action)` for each action. Stop at the first `true`.
+4. Return `false` when all attempts fail, including an empty list.
 
-Apps that implement it, once their own integrations land:
+The second pass retries each action's native path before its normal fallback. It is not a fallback-URL-only loop. Within normal `launchAction`, a requested store fallback precedes the action's `Fallbackable` URL. Stores, product/download/support pages and web clients are possible results. Keep this behavior even when a route does not prefill a message.
 
-- Gmail
-- Outlook
-- Yahoo Mail
-- Spark
-- Airmail
-- Fastmail
-- Samsung Email
+**`true` means some route opened**, including a store or website. It does not prove the intended provider opened, a compose sheet appeared, fields survived, or mail was sent. `disableFallback` suppresses stores/websites from this shared loop; it does not guarantee that a provider has a compatible native route.
 
-Each app's compose action maps the shared fields onto that app's real query names. Spark uses `recipient` for `to`. Airmail uses `plainBody` for `body`. Samsung Email uses a package-targeted `mailto:` intent and has no web composer.
+Native calls remain subject to the existing installation/platform gate and exception handling. An Android intent returning `false` can permit the action's app-link attempt; an exception can jump directly to the action's fallback handling. Do not promise custom-scheme-then-intent retry behavior without checking the implementation. Map behavior stays unchanged; any future shared helper must preserve existing tests.
 
-## README
+## Provider readiness and field preservation
 
-Add a section in the same place and shape as "Open a map, search a place, or get directions":
+The original seven compose proposals (Gmail, Outlook, Yahoo Mail, Spark, Airmail, Fastmail, Samsung Email) are candidates, not an implemented provider list. Proton Android, FairEmail and Thunderbird/K-9 have additional first-party source leads. Desktop clients require the [desktop prerequisites](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/desktop_launch_prerequisites.md) before entering a native priority list. See [matrix](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/matrix.md) for platform-specific readiness.
 
-- Short explanation: pass the mail apps in priority order; DeeplinkX opens the first installed one, then the first fallback.
-- A `launchMailComposeAction` example that lists the compose-capable apps.
-- A provider table with one row, `launchMailComposeAction`, and those apps.
-- Note Samsung Email is Android-only and its fallback does not prefill a message.
-- Note Fastmail's compose URL is unverified until a device check.
-- Note Outlook's compose host (`compose` versus `emails/new`) is chosen only after a device check.
-- Extend the result table: `launchMailComposeAction` returns true when any listed provider or its fallback launches.
+Every future native or prefilled web compose route must preserve all supplied nonempty fields. If cc/bcc, subject, body or a recipient separator is unverified or unsupported, reject/skip that route before launch; do not silently discard fields. Normal non-compose fallback may still open under the contract above, with clear labeling. A successful URL launch cannot validate recipient preservation; inspect the resulting draft on devices.
 
-Do not add open-only apps to that table.
+Open-only actions do not implement `MailComposeAction`. Do not automatically insert generic `mailto:` as a named provider's native action or fallback: it could select another provider before the rest of the native priority list. [Default-mail compose](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/default_mail_compose.md) is explicitly separate. Attachments, HTML, sender override and sending are outside this text-compose contract.
 
-## Tests
+## Future README, example and tests
 
-Mirror the `launchMap*Action` cases:
+- README: describe native attempts in priority order followed by **normal fallbacks**, and the bounded meaning of `true`. Provider tables list only integrations that have landed and passed their field/platform gates.
+- Example: retain a proposed Mail Selector alongside Map Selector, with to/cc/bcc/subject/body inputs. Build `LaunchOption<MailComposeAction>` only for implemented compose actions; automatic selection calls the proposed shared launcher, manual selection calls `launchAction`. Label each fallback destination accurately: web client, store, product or support page. Do not say “first provider's web fallback” when normal launchAction may reach a store or a later provider.
+- Keep logo/catalog/scheme/package setup with each eventual integration. Update the selector fake and exposed-API tests when an implementation is authorized.
+- Verify exact call order, second-pass native retries, early success, disabled fallback, empty list and field integrity using [future test scenarios](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/test_scenarios.md).
 
-- `test/src/core/deeplink_x_test.dart`: later native actions run before any fallback; fallback runs only after every native attempt fails; `disableFallback` skips the fallback pass; an empty list returns false.
-- `test/deeplink_x_test.dart`: exposed-API check for `launchMailComposeAction`, plus a `MockMailComposeAction` next to the map mocks.
+No release metadata changes in this brief. Evidence: [local product execution notes](https://github.com/DeepLinkX/DeeplinkX/blob/f8225e35158d4b69c9ddb7e8128418e9b278d33c/lib/src/core/deeplink_x.dart), [Android](https://developer.android.com/guide/components/intents-common#Email), [mailto](https://www.rfc-editor.org/rfc/rfc6068).
 
-## Example
+## Future integration file checklist
 
-Follow `example/lib/use_cases/map_selector_page.dart`.
+- `lib/src/core/interfaces/mail_app_action_interface.dart`, `lib/src/core/interfaces/interfaces.dart`: shared interfaces and export.
+- `lib/src/core/deeplink_x.dart`: public method and exact two-pass loop; preserve map behavior.
+- `README.md`: bounded result semantics and implemented-provider table.
+- `test/src/core/deeplink_x_test.dart`, `test/deeplink_x_test.dart`: call order, retries, stop-on-success, disabled fallback, empty list and exposed API.
+- `example/lib/use_cases/mail_selector_page.dart`, `example/lib/home.dart`, `example/test/use_cases_test.dart`: selector, priority options, accurate fallback labels and fake launcher.
 
-- Add `example/lib/use_cases/mail_selector_page.dart`.
-- Fields: to, cc, bcc, subject, and body. To is required before launch. Cc, bcc, subject, and body are optional.
-- Build one `LaunchOption<MailComposeAction>` per compose-capable app, with the logo asset, a web-fallback label, and that app's `compose` action.
-- Order: Gmail, Outlook, Yahoo Mail, Spark, Airmail, Fastmail, Samsung Email. Samsung Email stays last because it is Android-only.
-- Call `showLaunchSelector<MailComposeAction>` from `example/lib/use_cases/use_case_support.dart`.
-- Automatic action: `deeplinkX.launchMailComposeAction(actions: options.map((option) => option.app).toList())`.
-- Manual action: `deeplinkX.launchAction`.
-- Subtitle: try installed providers in order, then use the first provider's web fallback.
-- Add a home tile in `example/lib/home.dart` next to Map Selector. Title: Mail Selector. Description: compose across installed mail apps.
-- In `example/test/use_cases_test.dart`, extend `_FakeDeeplinkX` with `launchMailComposeAction`, recording the action list the way `launchMapDirectionsWithCoordsAction` records map actions. Cover the selector opening and the automatic launch.
-
-Logos and catalog entries come from each app's own integration. This launcher page lists an app only after that app's compose action exists. Until then, the page can be added with the apps that have already landed, in the order above.
-
-## Files
-
-- `lib/src/core/interfaces/mail_app_action_interface.dart`
-- `lib/src/core/interfaces/interfaces.dart`
-- `lib/src/core/deeplink_x.dart`
-- `README.md`
-- `test/src/core/deeplink_x_test.dart`
-- `test/deeplink_x_test.dart`
-- `example/lib/use_cases/mail_selector_page.dart`
-- `example/lib/home.dart`
-- `example/test/use_cases_test.dart`
-- Each compose action class from the app briefs
-
-## Checks
-
-Run `dart format`, `flutter analyze`, and `flutter test` (via FVM if this checkout requires it), including `example/test`. Bump `pubspec.yaml` and update `CHANGELOG.md` when the feature is released, not in this brief.
-
-## Limits
-
-No attachment parameter. No shared "open any mail app" method. No generic default-mail picker. Open-only apps are not in the selector.
+Default-mail, discovery, attachments and desktop briefs define independent adapter design gates; do not expand the text-compose interface to absorb them. Future code requires pinned FVM formatting, analysis, meaningful root/example tests and device validation; release metadata is unchanged in this planning draft.
