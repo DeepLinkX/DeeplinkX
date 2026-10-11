@@ -1,66 +1,134 @@
-# Plan: Apple Mail actions
+# Implementation instructions: Apple Mail
 
-Implementation brief for a later change. Replace this file with the integration. Do not merge the brief by itself.
+Existing [draft PR #87](https://github.com/DeepLinkX/DeeplinkX/pull/87). Documentation-only revision, checked **2026-10-11**. No API implemented, native route launched, message sent or store action added.
 
-Checked 10 October 2026.
+## Decision and blockers
 
-## Actions
+Correct no-store claim: iOS ID 1108187098. Local com.apple.mail and message registration are metadata observations only. message:// root/message routes remain experimental and unlaunched. Generic mailto belongs to default-mail compose.
 
-- Open app (`AppleMail.open`)
+Proposed class spelling: `AppleMail`. `AppleMail.open` is a candidate only where the table establishes a named route. `AppleMail.compose` may implement the proposed [MailComposeAction](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/mail_compose_launcher.md) only after field-preservation and platform prerequisites pass. No public inbox/search/message method is promised by a blocked cell.
 
-Do not add `AppleMail.compose`. Apple's documented `mailto:` URL opens the user's default mail app. Since iOS 14 that default can be an app other than Mail.
-
-## API
+## Proposed API and action gates
 
 ```dart
 AppleMail.open({bool fallbackToStore = false})
+
+// Enable only on platforms that pass the compose-field gate below.
+AppleMail.compose({
+  List<String> to = const [],
+  List<String> cc = const [],
+  List<String> bcc = const [],
+  String? subject,
+  String? body,
+  bool fallbackToStore = false,
+})
 ```
 
-Force `fallbackToStore` to stay false. `storeActions` is an empty list. Mail has no App Store page.
+These signatures are proposals. A blocked or unavailable-evidence cell is a research task, not permission to export that action or add a platform. Open follows the existing `App` / `DownloadableApp` pattern; a compatible text-compose action extends `AppleMail` and implements `MailComposeAction` plus the appropriate `IntentAppLinkAction` or `AppLinkAppAction` and `Fallbackable`. Explicit desktop invocation needs the separate adapter before it can use this pattern. `supportedPlatforms` describes verified invocation, not downloaded app availability.
 
-## Identifiers
+Inbox, Search and Message remain separate future action research. Do not add their constructors until the table's external route and account/message identity are established. Thunderbird's message-ID and Evolution's folder candidates require targeted adapters; no provider-specific sending, attachment or mailbox API is included here.
 
-- Custom scheme: `message`
-- Android package: none
-- `macosBundleIdentifier`: `com.apple.mail` is the historical Mac bundle id. Confirm it on a current macOS before adding `PlatformType.macos`. Do not ship macOS on an unverified id.
-- Platforms: iOS. Add macOS only after the bundle id check above, because `isAppInstalled` on macOS requires `macosBundleIdentifier`. `launchApp` on macOS still uses the custom scheme.
-- Website: there is no Mail website. Use `https://support.apple.com/mail` only if that support page still exists on the implementation date. Document that it is a support page, not a web client.
+Keep default-handler compose and installed-app discovery separate from selecting this named provider. Apple Mail must not acquire a named `compose` action through generic `mailto:` alone. Attachments remain outside this five-field interface.
 
-## URLs
+## Actions by platform
 
-Open: `message://`
+| Action | Android | iOS | macOS | Windows | Linux | Web |
+| --- | --- | --- | --- | --- | --- | --- |
+| Open | U | E | E | U | U | W |
+| Compose | U | B | B | U | U | B |
+| Inbox | U | B | B | U | U | B |
+| Search | U | B | B | U | U | B |
+| Message | U | B | B | U | U | B |
 
-Public iOS reports say `message://` opens Mail without the compose sheet. Apple's archived URL-scheme article documents `mailto:` for the compose sheet and does not document `message://`. Cite both facts in the doc page.
+Status legend (self-contained):
 
-Add `message` to `LSApplicationQueriesSchemes`.
+- **D:** provider-documented invocation candidate; runtime not tested.
+- **S:** first-party source candidate; release/manifest/handler verification still required.
+- **C:** OS-contract candidate (Android package open or package-targeted SENDTO); app behavior/fields unverified.
+- **E:** experimental, undocumented/community/historical route; never enable as stable support without evidence.
+- **A:** adapter prerequisite; current DeeplinkX path cannot perform the proposed explicit CLI/application invocation.
+- **B:** availability established but action route, identity or required fields remain blocked/unresolved.
+- **U:** platform distribution/action not established in inspected evidence; does not mean unsupported.
+- **W:** a website/store/product route can open; no particular inbox, draft, search or message is promised.
 
-Do not implement compose with `mailto:`. That URL is not Mail-specific.
+Every cell is research status, not implemented support. All runtime statuses are **not tested**. Open means launch the named app; Inbox is a separately addressed folder; Message is an existing message, not sending. Web Open is explicitly the exception: it can be a product/store page.
 
-## Sources
+ In-app menu items, search features, or compose screenshots are not proof of external invocation.
 
-- `message://` opens Mail without compose: <https://stackoverflow.com/questions/8821934/launch-apple-mail-app-from-within-my-own-app>
-- Apple's archived `mailto` documentation: <https://developer.apple.com/library/archive/featuredarticles/iPhoneURLScheme_Reference/MailLinks/MailLinks.html>
+## Platform evidence and prerequisites
 
-## Limits
+| Platform | App availability | Identifiers | Native route research | Adapter / configuration prerequisite | Store / download route | Evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| Android | Not established in inspected sources | Package unverified | No route enabled; availability/identifier unresolved | Verify provider identity/handler before enabling | Not established; follow verified vendor downloads |  |
+| iOS | Listed; runtime not tested | App Store ID `1108187098`; bundle ID unverified | `message://` experimental; generic mailto is default-handler action | Verify provider identity/handler before enabling | [iOS listing](https://apps.apple.com/app/id1108187098) | [apple-store](https://apps.apple.com/us/app/mail/id1108187098), [apple_mail-historical-0](https://stackoverflow.com/questions/8821934/launch-apple-mail-app-from-within-my-own-app), [ios-query](https://developer.apple.com/documentation/uikit/uiapplication/canopenurl(_:)) |
+| macOS | Listed; runtime not tested | Bundle `com.apple.mail` | `message` registered locally; launch/message grammar untested | Current install gate requires bundle ID; launchApp still needs a scheme. Explicit bundle URL/CLI launch needs adapter | Not established; follow verified vendor downloads | [apple-local](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/sources.md#apple-local) |
+| Windows | Not established in inspected sources | Product/AppUserModelID/executable identity unverified | No route enabled; availability/identifier unresolved | Current scheme check identifies a handler, not necessarily this provider. Explicit executable/desktop launch needs adapter | Not established; follow verified vendor downloads |  |
+| Linux | Not established in inspected sources | Desktop-file ID/executable identity unverified | No route enabled; availability/identifier unresolved | Current scheme check identifies a handler, not necessarily this provider. Explicit executable/desktop launch needs adapter | Not established; follow verified vendor downloads | [desktop-entry](https://specifications.freedesktop.org/desktop-entry-spec/latest/) |
+| Web | Website/store route; client availability only where vendor confirms | Host from referenced product/store entry; tenant/account selection unverified | No native web route; browser URL only | Browser URL adapter; do not claim composer or named native handler | Not applicable |  |
 
-No store fallback. No compose action. No Android app. macOS waits on a confirmed bundle id.
+All rows have runtime status **not tested**. A download/store entry does not establish handler registration. Missing store/desktop IDs remain explicit blockers; implementation must copy verified identifiers, not derive them from brand names.
 
-## Files a later implementation must touch
+## Text-compose fields and fallback
 
-Follow the new-app checklist in `AGENTS.md`. This branch does not add the Dart API.
+| Platform | Status | to / cc / bcc / subject / body | Fallback semantics |
+| --- | --- | --- | --- |
+| Android | U | No verified named text-compose contract; all five fields unresolved. | Support page; no prefilled contract established |
+| iOS | B | No verified named text-compose contract; all five fields unresolved. | Support page; no prefilled contract established |
+| macOS | B | No verified named text-compose contract; all five fields unresolved. | Support page; no prefilled contract established |
+| Windows | U | No verified named text-compose contract; all five fields unresolved. | Support page; no prefilled contract established |
+| Linux | U | No verified named text-compose contract; all five fields unresolved. | Support page; no prefilled contract established |
+| Web | B | No verified named text-compose contract; all five fields unresolved. | Support page; no prefilled contract established |
 
-- `lib/src/apps/downloadable_apps/apple_mail.dart`
-- Export it from `lib/src/apps/downloadable_apps/downloadable_apps.dart`.
-- `doc/apps/apple_mail.md` for usage, schemes, store identifiers, and platform configuration.
-- `README.md`: feature counts, the supported-app list, and the documentation list. Compose-capable apps also join the `launchMailComposeAction` provider list when that launcher exists.
-- Example catalog: add `CatalogCategory.email` in `example/lib/catalog/models.dart`, add `example/lib/catalog/email_apps.dart`, include it from `example/lib/catalog/catalog.dart`, add `example/assets/apple_mail.png`, and update the counts in `example/test/catalog_test.dart`.
-- `example/ios/Runner/Info.plist`: add the custom scheme under `LSApplicationQueriesSchemes` only when a scheme is listed below.
-- `example/android/app/src/main/AndroidManifest.xml`: add a `<package android:name="..."/>` query only when an Android package is listed below.
-- `test/src/apps/apple_mail_test.dart` covering store actions, app links, and fallbacks.
-- `test/deeplink_x_test.dart` exposed-API list.
-- This app does not implement `MailComposeAction` and stays out of the mail selector.
-- Run `dart format`, `flutter analyze`, and `flutter test` (via FVM if this checkout requires it). Bump `pubspec.yaml` and update `CHANGELOG.md` when the feature is released, not in this brief.
 
-## Release limit
+Never silently discard supplied recipients, subject or body. A future route must preserve every nonempty field or be rejected/skipped before launch; unverified cc/bcc is a blocker, not permission to omit it. A normal store/product fallback may open without prefilling anything, and `true` then means only a route opened. No generic default-mail action is inserted into a named-provider list.
 
-Device-check every native URL before release. An unpublished draft stays out of the version bump until that check passes, the same standard already used for TomTom GO Expert.
+Fallback entry candidate: [https://support.apple.com/mail](https://support.apple.com/mail) — **Support page**. No complete five-field prefilled compose contract is established here. Use [default-mail compose](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/default_mail_compose.md) separately. Attachments remain outside text compose; see [attachment research](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/attachments.md).
+
+## Implementation gate and future verification
+
+1. Match first-party route/parser and identifiers to the installed release, including exported Android activities, iOS queries, and desktop handler/application identity. Pin moving source links before implementing.
+2. Verify all supplied fields, multiple recipients, Unicode, percent encoding and body newlines; skip incompatible routes without losing recipients.
+3. Verify open separately from addressed Inbox, Search and Message. Message lookup needs account/folder identity and unavailable-message behavior; do not assume web roots or root schemes select Inbox.
+4. Test handler missing, app logged out, multi-account selection, cold/warm start, unavailable store, native priority and normal fallback order. Add this provider to the selector only after a compose action exists and passes its gate.
+5. Future integration must update exports, dedicated app docs, example catalog/logo/configuration and meaningful action tests; follow [test scenarios](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/test_scenarios.md). No release metadata changes in this research phase.
+
+Evidence: [apple-store](https://apps.apple.com/us/app/mail/id1108187098), [apple-local](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/sources.md#apple-local), [apple-default](https://developer.apple.com/library/archive/featuredarticles/iPhoneURLScheme_Reference/MailLinks/MailLinks.html), [mac-open](https://developer.apple.com/documentation/appkit/nsworkspace/open(_:withapplicationat:configuration:completionhandler:)), [apple_mail-historical-0](https://stackoverflow.com/questions/8821934/launch-apple-mail-app-from-within-my-own-app), [android](https://developer.android.com/guide/components/intents-common#Email), [mailto](https://www.rfc-editor.org/rfc/rfc6068). Dates and evidence tiers are in the [source register](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/sources.md); secondary leads retain their original 2026-10-10 observation. Missing evidence is not confirmed lack of support.
+
+## Required integration files for a later implementation
+
+- `lib/src/apps/downloadable_apps/apple_mail.dart`: app identity, verified platform/store metadata and only eligible action classes; export via `lib/src/apps/downloadable_apps/downloadable_apps.dart`.
+- `lib/src/core/interfaces/mail_app_action_interface.dart` and `lib/src/core/interfaces/interfaces.dart`: consume the shared proposed interface when implemented; do not duplicate it per provider.
+- `doc/apps/apple_mail.md`: document callable actions, exact field mappings, platform configuration, evidence date and runtime limitations. Update `README.md` provider/action tables and counts only when this integration actually lands.
+- `example/lib/catalog/models.dart`, `email_apps.dart`, `catalog.dart`: add the email category once, then this provider's verified actions; add `example/assets/apple_mail.png` and update `example/test/catalog_test.dart` counts.
+- `example/android/app/src/main/AndroidManifest.xml`: bounded package queries for verified Android IDs and SENDTO/mailto intent visibility where needed. Use the package from the table, never a guessed activity class. Resolve the installed app's exported handler before enabling compose.
+- `example/ios/Runner/Info.plist`: exact verified scheme under `LSApplicationQueriesSchemes`; store ID alone does not justify a scheme or native iOS support. Do not add experimental schemes as stable routes without a recorded validation decision.
+- `test/src/apps/apple_mail_test.dart`, `test/deeplink_x_test.dart`: metadata, action interfaces, generated URI/intent fields, unsupported-platform handling and fallback cases. Desktop adapter changes need their own native tests and identity evidence.
+- `example/lib/use_cases/mail_selector_page.dart`, `example/lib/home.dart`, `example/test/use_cases_test.dart`: include only implemented, compatible compose actions. Label store, product/support page and web-client fallback destinations accurately.
+
+For apps with a verified Android package, future Android compose uses `android.intent.action.SENDTO`, `mailto:` data and the verified package. Determine whether URI headers or standard extras (`EXTRA_EMAIL`, `EXTRA_CC`, `EXTRA_BCC`, `EXTRA_SUBJECT`, `EXTRA_TEXT`) are actually parsed by this app, and verify bridge types and precedence. OS documentation alone does not prove app acceptance. Do not substitute wildcard ACTION_SEND for text compose.
+
+Match `launchMailComposeAction(actions:, disableFallback:)` to the existing map launcher: all actions in priority order with fallback disabled, stop on success; if permitted, repeat in order with normal `launchAction`, which retries native then requested stores then the fallback URL. Empty/all-failed returns false. `true` means a route opened, including a store or website; it does not validate a draft or sending. Never automatically insert generic default-mail compose.
+
+## Acceptance tests before exposing actions
+
+1. Every supplied to/cc/bcc recipient, subject and body survives exactly; unverified or incompatible fields cause the native/prefilled route to be skipped/rejected before launch. Cover multiple recipients, cc-only, bcc-only and empty drafts.
+2. Persian/Unicode, emoji, plus addresses, reserved characters, percent signs and body newlines survive one encoding/decoding pass. Assert provider-specific query names and delimiters from evidence.
+3. All native attempts precede normal fallbacks; cover first/later native success, second-pass native retry, store/site failures, disabled fallback, empty lists and missing handlers.
+4. Verify named-provider identity with another app set as default, invisible packages, cold/warm start, logged-out and multiple-account states. Root Open does not prove Inbox/Search/Message.
+5. Runtime records include OS/app version, pinned source, route, input and observed draft/destination. Attachments require separate file/URI-grant tests and must not be silently dropped through this contract.
+
+Run the pinned FVM SDK's formatter, analysis, root tests and relevant example/native tests when implementing. This draft only changes documentation; version, changelog, lockfiles and feature counts await a separately authorized implementation/release.
+
+## Direct evidence and dates
+
+- [Android email intents](https://developer.android.com/guide/components/intents-common#Email) — Primary; checked/observed **2026-10-11**. SENDTO/mailto and standard recipient arrays/subject/text; each app must resolve and preserve fields.
+- [Apple mail links](https://developer.apple.com/library/archive/featuredarticles/iPhoneURLScheme_Reference/MailLinks/MailLinks.html) — Primary; checked/observed **2026-10-11**. Archived mailto contract, not guaranteed named-provider selection.
+- [Local macOS Mail metadata](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/sources.md#apple-local) — Local observation; checked/observed **2026-10-11**. /System/Applications/Mail.app/Contents/Info.plist: com.apple.mail; mailto, message, mail-pref-pane URL registration. Metadata read on macOS 27.0.1; no launch.
+- [Apple Mail store listing](https://apps.apple.com/us/app/mail/id1108187098) — Primary; checked/observed **2026-10-11**. iOS listing ID 1108187098, independent of native launch support.
+- [Apple Mail historical research lead](https://stackoverflow.com/questions/8821934/launch-apple-mail-app-from-within-my-own-app) — Secondary, inherited; checked/observed **2026-10-10**. Inherited from original brief; undocumented routes remain experimental. Not a current provider contract.
+- [freedesktop desktop entry specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/) — Primary; checked/observed **2026-10-11**. Linux desktop entries/Exec identity research; not proof of installed provider or compose handling.
+- [Apple URL handler queries](https://developer.apple.com/documentation/uikit/uiapplication/canopenurl(_:)) — Primary; checked/observed **2026-10-11**. canOpenURL and scheme query configuration; does not enumerate installed mail apps.
+- [NSWorkspace targeted URL opening](https://developer.apple.com/documentation/appkit/nsworkspace/open(_:withapplicationat:configuration:completionhandler:)) — Primary; checked/observed **2026-10-11**. OS API candidate for selecting an application; current launcher lacks this adapter.
+- [RFC 6068](https://www.rfc-editor.org/rfc/rfc6068) — Primary; checked/observed **2026-10-11**. URI encoding and text compose; no portable attachment parameter.
+
+Internet/community and historical references are experimental leads only. Pin moving first-party source to the installed release before implementation. Research dates are retained; publication does not imply a new provider or device check.
