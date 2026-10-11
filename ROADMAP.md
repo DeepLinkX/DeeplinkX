@@ -4,7 +4,7 @@ Complete each queue in numbered order. Expand entries for actions and completion
 
 ## 1. Apps and actions
 
-### Pending
+### App queue and research
 
 <details>
 <summary>1. Citymapper · Navigation · Pending</summary>
@@ -29,170 +29,683 @@ Complete each queue in numbered order. Expand entries for actions and completion
 </details>
 
 <details>
-<summary>3. HERE WeGo · Navigation · Pending</summary>
+<summary>3. HERE WeGo · Navigation · Implemented</summary>
 
 **PR:** [#38](https://github.com/DeepLinkX/DeeplinkX/pull/38)
 
-- [ ] Open app (`HereWeGo.open`)
-- [ ] View map (`HereWeGo.view`)
-- [ ] Directions with coordinates (`HereWeGo.directionsWithCoords`)
+- [x] Open app (`HereWeGo.open`)
+- [x] View map (`HereWeGo.view`)
+- [x] Directions with coordinates (`HereWeGo.directionsWithCoords`)
+
+</details>
+
+### Email research — 33 candidates, zero implemented
+
+Documentation-only queue tracked by [PR #89](https://github.com/DeepLinkX/DeeplinkX/pull/89). Read the [review findings](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/review_report.md), [matrix/legend](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/matrix.md) and [source register](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/sources.md). Status letters describe invocation evidence/prerequisites, not implementation. All runtime checks remain unperformed. Missing platform evidence does not mean unsupported.
+
+<details>
+<summary>4. Gmail · Email · Research</summary>
+
+**Existing draft:** [#72](https://github.com/DeepLinkX/DeeplinkX/pull/72) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fgmail-actions/doc/plans/email/gmail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | E | E | B / B / B |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
 
 </details>
 
 <details>
-<summary>4. Gmail · Email · Pending</summary>
+<summary>5. Outlook · Email · Research</summary>
 
-**PR:** [#72](https://github.com/DeepLinkX/DeeplinkX/pull/72)
+**Existing draft:** [#73](https://github.com/DeepLinkX/DeeplinkX/pull/73) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Foutlook-actions/doc/plans/email/outlook.md)
 
-- [ ] Open app (`Gmail.open`)
-- [ ] Compose (`Gmail.compose`)
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | E | E | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | U | U | U / U / U |
+| Web | W | D | B / B / B |
 
-</details>
-
-<details>
-<summary>5. Outlook · Email · Pending</summary>
-
-**PR:** [#73](https://github.com/DeepLinkX/DeeplinkX/pull/73)
-
-- [ ] Open app (`Outlook.open`)
-- [ ] Compose (`Outlook.compose`)
-
-</details>
-
-<details>
-<summary>6. Yahoo Mail · Email · Pending</summary>
-
-**PR:** [#74](https://github.com/DeepLinkX/DeeplinkX/pull/74)
-
-- [ ] Open app (`YahooMail.open`)
-- [ ] Compose (`YahooMail.compose`)
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
 
 </details>
 
 <details>
-<summary>7. Spark · Email · Pending</summary>
+<summary>6. Yahoo Mail · Email · Research</summary>
 
-**PR:** [#75](https://github.com/DeepLinkX/DeeplinkX/pull/75)
+**Existing draft:** [#74](https://github.com/DeepLinkX/DeeplinkX/pull/74) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fyahoo_mail-actions/doc/plans/email/yahoo_mail.md)
 
-- [ ] Open app (`Spark.open`)
-- [ ] Compose (`Spark.compose`)
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | E | E | B / B / B |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
 
-</details>
-
-<details>
-<summary>8. Airmail · Email · Pending</summary>
-
-**PR:** [#76](https://github.com/DeepLinkX/DeeplinkX/pull/76)
-
-- [ ] Open app (`Airmail.open`)
-- [ ] Compose (`Airmail.compose`)
-
-</details>
-
-<details>
-<summary>9. Fastmail · Email · Pending</summary>
-
-**PR:** [#77](https://github.com/DeepLinkX/DeeplinkX/pull/77)
-
-- [ ] Open app (`Fastmail.open`)
-- [ ] Compose (`Fastmail.compose`)
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
 
 </details>
 
 <details>
-<summary>10. Proton Mail · Email · Pending</summary>
+<summary>7. Spark · Email · Research</summary>
 
-**PR:** [#78](https://github.com/DeepLinkX/DeeplinkX/pull/78)
+**Existing draft:** [#75](https://github.com/DeepLinkX/DeeplinkX/pull/75) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fspark-actions/doc/plans/email/spark.md)
 
-- [ ] Open app (`ProtonMail.open`)
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | E | E | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
 
-</details>
-
-<details>
-<summary>11. Superhuman · Email · Pending</summary>
-
-**PR:** [#79](https://github.com/DeepLinkX/DeeplinkX/pull/79)
-
-- [ ] Open app (`Superhuman.open`)
-
-</details>
-
-<details>
-<summary>12. HEY · Email · Pending</summary>
-
-**PR:** [#80](https://github.com/DeepLinkX/DeeplinkX/pull/80)
-
-- [ ] Open app (`Hey.open`)
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
 
 </details>
 
 <details>
-<summary>13. Canary Mail · Email · Pending</summary>
+<summary>8. Airmail · Email · Research</summary>
 
-**PR:** [#81](https://github.com/DeepLinkX/DeeplinkX/pull/81)
+**Existing draft:** [#76](https://github.com/DeepLinkX/DeeplinkX/pull/76) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fairmail-actions/doc/plans/email/airmail.md)
 
-- [ ] Open app (`CanaryMail.open`)
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | U | U | U / U / U |
+| iOS | E | D | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
 
-</details>
-
-<details>
-<summary>14. Spike · Email · Pending</summary>
-
-**PR:** [#82](https://github.com/DeepLinkX/DeeplinkX/pull/82)
-
-- [ ] Open app (`Spike.open`)
-
-</details>
-
-<details>
-<summary>15. Polymail · Email · Pending</summary>
-
-**PR:** [#83](https://github.com/DeepLinkX/DeeplinkX/pull/83)
-
-- [ ] Open app (`Polymail.open`)
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
 
 </details>
 
 <details>
-<summary>16. BlueMail · Email · Pending</summary>
+<summary>9. Fastmail · Email · Research</summary>
 
-**PR:** [#84](https://github.com/DeepLinkX/DeeplinkX/pull/84)
+**Existing draft:** [#77](https://github.com/DeepLinkX/DeeplinkX/pull/77) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Ffastmail-actions/doc/plans/email/fastmail.md)
 
-- [ ] Open app (`BlueMail.open`)
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | E | E | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | B | B | B / B / B |
+| Web | W | B | B / B / B |
 
-</details>
-
-<details>
-<summary>17. Edison Mail · Email · Pending</summary>
-
-**PR:** [#85](https://github.com/DeepLinkX/DeeplinkX/pull/85)
-
-- [ ] Open app (`EdisonMail.open`)
-
-</details>
-
-<details>
-<summary>18. Samsung Email · Email · Pending</summary>
-
-**PR:** [#86](https://github.com/DeepLinkX/DeeplinkX/pull/86)
-
-- [ ] Open app (`SamsungEmail.open`)
-- [ ] Compose (`SamsungEmail.compose`)
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
 
 </details>
 
 <details>
-<summary>19. Apple Mail · Email · Pending</summary>
+<summary>10. Proton Mail · Email · Research</summary>
 
-**PR:** [#87](https://github.com/DeepLinkX/DeeplinkX/pull/87)
+**Existing draft:** [#78](https://github.com/DeepLinkX/DeeplinkX/pull/78) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fproton_mail-actions/doc/plans/email/proton_mail.md)
 
-- [ ] Open app (`AppleMail.open`)
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | S | B / B / B |
+| iOS | S | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | B | B | B / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>11. Superhuman · Email · Research</summary>
+
+**Existing draft:** [#79](https://github.com/DeepLinkX/DeeplinkX/pull/79) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fsuperhuman-actions/doc/plans/email/superhuman.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>12. HEY · Email · Research</summary>
+
+**Existing draft:** [#80](https://github.com/DeepLinkX/DeeplinkX/pull/80) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fhey-actions/doc/plans/email/hey.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | B | B | B / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>13. Canary Mail · Email · Research</summary>
+
+**Existing draft:** [#81](https://github.com/DeepLinkX/DeeplinkX/pull/81) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fcanary_mail-actions/doc/plans/email/canary_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>14. Spike · Email · Research</summary>
+
+**Existing draft:** [#82](https://github.com/DeepLinkX/DeeplinkX/pull/82) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fspike-actions/doc/plans/email/spike.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>15. Polymail · Email · Research</summary>
+
+**Existing draft:** [#83](https://github.com/DeepLinkX/DeeplinkX/pull/83) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fpolymail-actions/doc/plans/email/polymail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | U | U | U / U / U |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>16. BlueMail · Email · Research</summary>
+
+**Existing draft:** [#84](https://github.com/DeepLinkX/DeeplinkX/pull/84) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fblue_mail-actions/doc/plans/email/blue_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | B | B | B / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>17. Edison Mail · Email · Research</summary>
+
+**Existing draft:** [#85](https://github.com/DeepLinkX/DeeplinkX/pull/85) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fedison_mail-actions/doc/plans/email/edison_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>18. Samsung Email · Email · Research</summary>
+
+**Existing draft:** [#86](https://github.com/DeepLinkX/DeeplinkX/pull/86) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fsamsung_email-actions/doc/plans/email/samsung_email.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | U | U | U / U / U |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>19. Apple Mail · Email · Research</summary>
+
+**Existing draft:** [#87](https://github.com/DeepLinkX/DeeplinkX/pull/87) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fapple_mail-actions/doc/plans/email/apple_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | U | U | U / U / U |
+| iOS | E | B | B / B / B |
+| macOS | E | B | B / B / B |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>20. Thunderbird · Email · Research</summary>
+
+**Planning draft:** [Draft #91](https://github.com/DeepLinkX/DeeplinkX/pull/91) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-thunderbird-actions/doc/plans/email/thunderbird.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | S | B / B / B |
+| iOS | U | U | U / U / U |
+| macOS | S+A | S+A | B / B / S+A |
+| Windows | S+A | S+A | B / B / S+A |
+| Linux | S+A | S+A | B / B / S+A |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>21. Betterbird · Email · Research</summary>
+
+**Planning draft:** [Draft #92](https://github.com/DeepLinkX/DeeplinkX/pull/92) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-betterbird-actions/doc/plans/email/betterbird.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | U | U | U / U / U |
+| iOS | U | U | U / U / U |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | B | B | B / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>22. Mailspring · Email · Research</summary>
+
+**Planning draft:** [Draft #93](https://github.com/DeepLinkX/DeeplinkX/pull/93) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-mailspring-actions/doc/plans/email/mailspring.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | U | U | U / U / U |
+| iOS | U | U | U / U / U |
+| macOS | B | S+A | B / B / B |
+| Windows | B | S+A | B / B / B |
+| Linux | B | S+A | B / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>23. Evolution · Email · Research</summary>
+
+**Planning draft:** [Draft #94](https://github.com/DeepLinkX/DeeplinkX/pull/94) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-evolution-actions/doc/plans/email/evolution.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | U | U | U / U / U |
+| iOS | U | U | U / U / U |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | D+A | D+A | D+A / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>24. Geary · Email · Research</summary>
+
+**Planning draft:** [Draft #95](https://github.com/DeepLinkX/DeeplinkX/pull/95) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-geary-actions/doc/plans/email/geary.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | U | U | U / U / U |
+| iOS | U | U | U / U / U |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | B | E+A | B / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>25. KMail · Email · Research</summary>
+
+**Planning draft:** [Draft #96](https://github.com/DeepLinkX/DeeplinkX/pull/96) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-kmail-actions/doc/plans/email/kmail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | U | U | U / U / U |
+| iOS | U | U | U / U / U |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | B | E+A | B / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>26. eM Client · Email · Research</summary>
+
+**Planning draft:** [Draft #97](https://github.com/DeepLinkX/DeeplinkX/pull/97) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-em-client-actions/doc/plans/email/em_client.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>27. Mailbird · Email · Research</summary>
+
+**Planning draft:** [Draft #98](https://github.com/DeepLinkX/DeeplinkX/pull/98) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-mailbird-actions/doc/plans/email/mailbird.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | U | U | U / U / U |
+| iOS | U | U | U / U / U |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>28. FairEmail · Email · Research</summary>
+
+**Planning draft:** [Draft #99](https://github.com/DeepLinkX/DeeplinkX/pull/99) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-fairemail-actions/doc/plans/email/fairemail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | S | B / B / B |
+| iOS | U | U | U / U / U |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>29. K-9 Mail · Email · Research</summary>
+
+**Planning draft:** [Draft #100](https://github.com/DeepLinkX/DeeplinkX/pull/100) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-k9-mail-actions/doc/plans/email/k9_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | S | B / B / B |
+| iOS | U | U | U / U / U |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>30. Aqua Mail · Email · Research</summary>
+
+**Planning draft:** [Draft #101](https://github.com/DeepLinkX/DeeplinkX/pull/101) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-aqua-mail-actions/doc/plans/email/aqua_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>31. Nine · Email · Research</summary>
+
+**Planning draft:** [Draft #102](https://github.com/DeepLinkX/DeeplinkX/pull/102) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-nine-actions/doc/plans/email/nine.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | U | U | U / U / U |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>32. Tuta Mail · Email · Research</summary>
+
+**Planning draft:** [Draft #103](https://github.com/DeepLinkX/DeeplinkX/pull/103) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-tuta-mail-actions/doc/plans/email/tuta_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | B | B | B / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>33. Zoho Mail · Email · Research</summary>
+
+**Planning draft:** [Draft #104](https://github.com/DeepLinkX/DeeplinkX/pull/104) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-zoho-mail-actions/doc/plans/email/zoho_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | B | B | B / B / B |
+| Windows | B | B | B / B / B |
+| Linux | B | B | B / B / B |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>34. Yandex Mail · Email · Research</summary>
+
+**Planning draft:** [Draft #105](https://github.com/DeepLinkX/DeeplinkX/pull/105) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-yandex-mail-actions/doc/plans/email/yandex_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>35. GMX Mail · Email · Research</summary>
+
+**Planning draft:** [Draft #106](https://github.com/DeepLinkX/DeeplinkX/pull/106) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-gmx-mail-actions/doc/plans/email/gmx_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | B | B | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
+
+</details>
+
+<details>
+<summary>36. WEB.DE Mail · Email · Research</summary>
+
+**Planning draft:** [Draft #107](https://github.com/DeepLinkX/DeeplinkX/pull/107) · [Brief](https://github.com/DeepLinkX/DeeplinkX/blob/codex%2Fplan-web-de-mail-actions/doc/plans/email/web_de_mail.md)
+
+| Platform | Open | Compose | Inbox / Search / Message |
+| --- | --- | --- | --- |
+| Android | C | C | B / B / B |
+| iOS | B | B | B / B / B |
+| macOS | U | U | U / U / U |
+| Windows | U | U | U / U / U |
+| Linux | U | U | U / U / U |
+| Web | W | B | B / B / B |
+
+- [ ] Verify source/release, identifiers and all supplied fields
+- [ ] Resolve adapter blockers and record device results
+- [ ] Implement only evidenced actions after separate authorization
 
 </details>
 
 ### Existing apps and stores
 
-39 apps (including one draft) and 7 stores.
+40 app exports (including one draft) and 7 stores in the current repository. Email research candidates are excluded.
 
 <details>
 <summary>Social (17 apps)</summary>
@@ -365,7 +878,16 @@ Complete each queue in numbered order. Expand entries for actions and completion
 </details>
 
 <details>
-<summary>Navigation (22 apps) · includes 1 draft</summary>
+<summary>Navigation (23 apps) · includes 1 draft</summary>
+
+<details>
+<summary>HERE WeGo · Implemented</summary>
+
+- [x] Open app (`HereWeGo.open`)
+- [x] View map (`HereWeGo.view`)
+- [x] Directions with coordinates (`HereWeGo.directionsWithCoords`)
+
+</details>
 
 <details>
 <summary>Google Maps · Implemented</summary>
@@ -689,24 +1211,69 @@ Look up a supported app and check installation status, building on the existing 
 </details>
 
 <details>
-<summary>3. Launch mail compose · Email · Pending</summary>
+<summary>3. Launch mail compose · Email · Research</summary>
 
-Pass compose actions in priority order. DeeplinkX opens the first installed mail app, then uses a web fallback if none of the native launches succeed. The example adds a Mail Selector use case beside Map Selector.
+[Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/mail_compose_launcher.md) · [Existing draft #88](https://github.com/DeepLinkX/DeeplinkX/pull/88)
 
-**PR:** [#88](https://github.com/DeepLinkX/DeeplinkX/pull/88)
+Try native actions in caller order, then normal fallbacks; true means a route opened, including stores/sites.
 
-**Completion criteria:**
+- [ ] Verify platform/source evidence and blockers
+- [ ] Run future acceptance scenarios after implementation is authorized
 
-- [ ] Add `MailComposeAction` and `DeeplinkX.launchMailComposeAction`, using the same native-then-fallback order as `launchMapDirectionsWithCoordsAction`.
-- [ ] Document the launcher and its provider list in the README.
-- [ ] Add a Mail Selector example page, home tile, and widget test, following the map selector.
+</details>
+
+<details>
+<summary>4. Default-mail compose · Email · Research</summary>
+
+[Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/default_mail_compose.md)
+
+Invoke the configured handler explicitly; keep it separate from named-provider priority lists.
+
+- [ ] Verify platform/source evidence and blockers
+- [ ] Run future acceptance scenarios after implementation is authorized
+
+</details>
+
+<details>
+<summary>5. Installed mail app discovery/open selection · Email · Research</summary>
+
+[Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/installed_mail_apps.md)
+
+Research bounded app discovery and opening the chosen provider; do not infer a universal installed-app inventory.
+
+- [ ] Verify platform/source evidence and blockers
+- [ ] Run future acceptance scenarios after implementation is authorized
+
+</details>
+
+<details>
+<summary>6. Compose with attachments · Email · Research</summary>
+
+[Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/attachments.md)
+
+Research file transport, grants and lifetime separately from the text-compose contract.
+
+- [ ] Verify platform/source evidence and blockers
+- [ ] Run future acceptance scenarios after implementation is authorized
+
+</details>
+
+<details>
+<summary>7. Desktop mail launch prerequisites · Email · Research</summary>
+
+[Brief](https://github.com/DeepLinkX/DeeplinkX/blob/plan%2Fmail-compose-launcher/doc/plans/email/desktop_launch_prerequisites.md)
+
+Verify desktop identity, route and adapter together before enabling a named provider.
+
+- [ ] Verify platform/source evidence and blockers
+- [ ] Run future acceptance scenarios after implementation is authorized
 
 </details>
 
 <details>
 <summary>Roadmap notes</summary>
 
-**Implemented:** API present in this repository. **Draft:** validation remains. **Pending:** awaiting integration or implementation.
+**Implemented:** API present in this repository. **Draft:** validation remains. **Pending:** awaiting integration or implementation. **Research:** documentation-only candidate; evidence/adapter/runtime gates remain, and it is excluded from implemented counts.
 
 Checked actions track implementation. Device verification and release readiness follow each app's documentation.
 
