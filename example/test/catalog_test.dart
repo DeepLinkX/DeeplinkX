@@ -12,7 +12,7 @@ void main() {
 
   group('catalog data', () {
     test('covers every supported app and store exactly once', () {
-      expect(catalogApps, hasLength(40));
+      expect(catalogApps, hasLength(41));
       expect(catalogStores, hasLength(7));
       final ids = allSpecs.map((final spec) => spec.id).toList();
       expect(ids.toSet(), hasLength(ids.length));
@@ -22,6 +22,18 @@ void main() {
       for (final spec in allSpecs) {
         expect(File(spec.assetName).existsSync(), isTrue, reason: spec.assetName);
       }
+    });
+
+    test('Citymapper view is labeled as directions to a point', () {
+      final spec = catalogApps.singleWhere((final spec) => spec.id == 'citymapper');
+      expect(spec.category, CatalogCategory.maps);
+      expect(spec.actions.map((final action) => action.title), ['Open app', 'View map', 'Directions with coordinates']);
+      final view = spec.actions[1];
+      expect(view.buttonLabel, 'Get directions to point');
+      final values = ActionValues({for (final field in view.fields) field.key: field.defaultValue});
+      final built = (view.runner as AppActionRunner).build(values, fallbackToStore: false) as CitymapperViewAction;
+      expect(built.appLink.host, 'directions');
+      expect(built.appLink.queryParameters['endcoord'], '51.503399,-0.119519');
     });
 
     test('every action builds from its default values under both fallback flags', () {

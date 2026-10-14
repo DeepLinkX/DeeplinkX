@@ -1,3 +1,9 @@
+## 1.5.6
+
+### Added
+
+* Added Citymapper open app, view map (directions to a point), and directions with coordinates actions with package-targeted Android intents, official store/web fallbacks, documentation, tests, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.5.5
 
 ### Added
