@@ -1,3 +1,9 @@
+## 1.5.7
+
+### Added
+
+* Added OsmAnd open app, view map, and directions with coordinates actions with package-targeted Android intents, official store/web fallbacks, documentation, tests, catalog examples, map-selector support, and Android/iOS visibility configuration.
+
 ## 1.5.6
 
 ### Added

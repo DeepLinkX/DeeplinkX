@@ -100,6 +100,8 @@
         <package android:name="com.here.app.maps" />
         <!-- Citymapper -->
         <package android:name="com.citymapper.app.release" />
+        <!-- OsmAnd -->
+        <package android:name="net.osmand" />
         <!-- Baidu Maps -->
         <package android:name="com.baidu.BaiduMap" />
         <!-- NAVER Map -->

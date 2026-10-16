@@ -12,7 +12,7 @@ void main() {
 
   group('catalog data', () {
     test('covers every supported app and store exactly once', () {
-      expect(catalogApps, hasLength(41));
+      expect(catalogApps, hasLength(42));
       expect(catalogStores, hasLength(7));
       final ids = allSpecs.map((final spec) => spec.id).toList();
       expect(ids.toSet(), hasLength(ids.length));
@@ -22,6 +22,18 @@ void main() {
       for (final spec in allSpecs) {
         expect(File(spec.assetName).existsSync(), isTrue, reason: spec.assetName);
       }
+    });
+
+    test('OsmAnd catalog builds the HTTPS view and package-targeted route', () {
+      final spec = catalogApps.singleWhere((final spec) => spec.id == 'osmand');
+      expect(spec.category, CatalogCategory.maps);
+      expect(spec.actions.map((final action) => action.title), ['Open app', 'View map', 'Directions with coordinates']);
+      final viewSpec = spec.actions[1];
+      final values = ActionValues({for (final field in viewSpec.fields) field.key: field.defaultValue});
+      final view = (viewSpec.runner as AppActionRunner).build(values, fallbackToStore: false) as OsmAndViewAction;
+      expect(view.appLink.scheme, 'https');
+      expect(view.appLink.queryParameters['pin'], '52.516275,13.377704');
+      expect(view.androidIntentOptions.package, 'net.osmand');
     });
 
     test('Citymapper view is labeled as directions to a point', () {

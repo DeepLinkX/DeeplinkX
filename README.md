@@ -21,7 +21,7 @@
   <a href="https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml">➕ Request an App</a>
 </p>
 
-DeeplinkX is a Flutter plugin for launching typed external deeplinks — it launches deeplinks into **other** apps from your Flutter app. Open a chat in **WhatsApp**, a profile in **Telegram** or **Instagram**, a video on **YouTube**, or a location in **Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet, Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, or Neshan** with turn-by-turn directions — with one strongly-typed call. When the target app isn't installed, it automatically falls back to the right app store, then to a web URL. No URL strings to maintain, no `Platform.isAndroid` branches to write.
+DeeplinkX is a Flutter plugin for launching typed external deeplinks — it launches deeplinks into **other** apps from your Flutter app. Open a chat in **WhatsApp**, a profile in **Telegram** or **Instagram**, a video on **YouTube**, or a location in **Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet, Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, OsmAnd, or Neshan** with turn-by-turn directions — with one strongly-typed call. When the target app isn't installed, it automatically falls back to the right app store, then to a web URL. No URL strings to maintain, no `Platform.isAndroid` branches to write.
 
 > **What does the X stand for?** *External.* DeeplinkX is built for launching links **out** to other apps — not for handling incoming links into your own. For inbound links, use `app_links` or `go_router`.
 
@@ -31,10 +31,10 @@ DeeplinkX is a Flutter plugin for launching typed external deeplinks — it laun
 - **Smart fallback** — installed → open the app; not installed → open its store; no store → open the web URL.
 - **Installation check** — ask `isAppInstalled()` before you launch.
 - **Cross-platform store redirect** — point users at a store listing (your app, a promoted app, an ad CTA) and DeeplinkX picks the right store for the device.
-- **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, or Neshan; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
+- **Maps & navigation** — open a location, search a place, or launch turn-by-turn directions in Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, OsmAnd, or Neshan; list your preferred apps and DeeplinkX opens the first installed one, falling back to the web map otherwise.
 - **One package, every platform** — iOS, Android, macOS, Windows, Linux, and Web.
 
-Out of the box: **41 apps**, including **24 navigation providers (including one unpublished draft)** (ChatGPT, Netflix, Temu, Snapchat, CapCut, Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Waze, Apple Maps, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet, TomTom GO Expert, Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, Neshan), and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket). TomTom GO Expert navigation links are experimental and unverified; this local draft is not release-ready.
+Out of the box: **42 apps**, including **25 navigation providers (including one unpublished draft)** (ChatGPT, Netflix, Temu, Snapchat, CapCut, Facebook, Instagram, LinkedIn, WhatsApp, Telegram, Twitter, Threads, YouTube, TikTok, Pinterest, Zoom, Slack, Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Waze, Apple Maps, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet, TomTom GO Expert, Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, OsmAnd, Neshan), and **7 stores** (iOS App Store, Mac App Store, Microsoft Store, Google Play, Huawei AppGallery, Cafe Bazaar, Myket). TomTom GO Expert navigation links are experimental and unverified; this local draft is not release-ready.
 
 ## Install
 
@@ -267,7 +267,7 @@ await deeplinkX.redirectToStore(
 
 ### Open a map, search a place, or get directions
 
-Launch **Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, or Neshan** for supported map actions — **view** a location, **search** a place, get **directions** (by address), or get **directions with coordinates** — on supported platforms, including web and desktop where available. For each, list the maps apps you prefer in priority order; DeeplinkX opens the first installed one and falls back to the web map if none are present. CoPilot URL launch requires the provider's Truck license. TomTom GO Fleet intents are Android-only and require an eligible fleet-managed app setup. NAVER Map actions require your Android application ID and iOS bundle ID; Tencent Maps actions require a developer key. Need another provider? [Request it](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml) — map support is actively expanding.
+Launch **Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, OsmAnd, or Neshan** for supported map actions — **view** a location, **search** a place, get **directions** (by address), or get **directions with coordinates** — on supported platforms, including web and desktop where available. For each, list the maps apps you prefer in priority order; DeeplinkX opens the first installed one and falls back to the web map if none are present. CoPilot URL launch requires the provider's Truck license. TomTom GO Fleet intents are Android-only and require an eligible fleet-managed app setup. NAVER Map actions require your Android application ID and iOS bundle ID; Tencent Maps actions require a developer key. Need another provider? [Request it](https://github.com/DeepLinkX/DeeplinkX/issues/new?template=new_app_request.yml) — map support is actively expanding.
 
 ```dart
 const origin = Coordinate(latitude: 37.5665, longitude: 126.9780);
@@ -301,6 +301,7 @@ await deeplinkX.launchMapViewAction(
     KakaoMap.view(coordinate: origin),
     HereWeGo.view(coordinate: origin),
     Citymapper.view(coordinate: origin), // Opens directions to the point, not a marker-only map.
+    OsmAnd.view(coordinate: origin),
     Neshan.view(coordinate: origin),
     YandexMaps.view(coordinate: origin),
     YandexNavigator.view(coordinate: origin),
@@ -361,6 +362,7 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
     KakaoMap.directionsWithCoords(destination: destination),
     HereWeGo.directionsWithCoords(destination: destination),
     Citymapper.directionsWithCoords(destination: destination),
+    OsmAnd.directionsWithCoords(destination: destination),
     Neshan.directionsWithCoords(destination: destination),
     YandexMaps.directionsWithCoords(destination: destination),
     YandexNavigator.directionsWithCoords(destination: destination),
@@ -374,12 +376,14 @@ await deeplinkX.launchMapDirectionsWithCoordsAction(
 
 | Method                                | Supported apps                       |
 | ------------------------------------- | ------------------------------------ |
-| `launchMapViewAction`                 | Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), TomTom GO Expert (unverified draft), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, Neshan |
+| `launchMapViewAction`                 | Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), TomTom GO Expert (unverified draft), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, OsmAnd, Neshan |
 | `launchMapSearchAction`               | Google Maps, Amap, Baidu Maps, NAVER Map, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Mapy.com             |
 | `launchMapDirectionsAction`           | Google Maps, Amap, Baidu Maps, Apple Maps, Waze                        |
-| `launchMapDirectionsWithCoordsAction` | Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), TomTom GO Expert (unverified draft), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, Neshan |
+| `launchMapDirectionsWithCoordsAction` | Google Maps, Amap, Baidu Maps, NAVER Map, 2GIS, Tencent Maps, Yandex Maps, Yandex Navigator, Apple Maps, Waze, Sygic, Sygic Truck, CoPilot, TomTom GO Fleet (Android), TomTom GO Expert (unverified draft), Moovit, Air Navigation Pro, Mappls, Mapy.com, TMAP, KakaoMap, HERE WeGo, Citymapper, OsmAnd, Neshan |
 
 ## Supported apps and actions
+
+OsmAnd uses package-targeted Android intents for the free app and HTTPS map links on iOS. Native interception and legacy iOS detection/opening remain device-unverified; its browser directions fallback may require choosing a start point. See [OsmAnd configuration and limitations](doc/apps/osmand.md).
 
 Citymapper's `view()` opens directions to a point, not a marker-only map. Its native requests and HTTPS fallbacks follow the [official Citymapper directions contract](https://citymapper.com/news/2386/launch-citymapper-for-directions); see [Citymapper configuration and device-validation limits](doc/apps/citymapper.md).
 
@@ -431,6 +435,7 @@ HERE WeGo actions use the [official HERE share-link contract](https://docs.here.
 |                | KakaoMap          | View map, directions with coordinates                                           |
 |                | HERE WeGo         | View map, directions with coordinates                                           |
 |                | Citymapper        | View map (directions to a point), directions with coordinates                    |
+|                | OsmAnd            | View map, directions with coordinates                                           |
 |                | Neshan            | View map, directions with coordinates                                           |
 |                | Yandex Maps       | Open map, view map, search, organization card, what is here, directions with coordinates, panorama |
 |                | Yandex Navigator  | View map, search, directions with coordinates                                   |
@@ -521,7 +526,7 @@ does not establish runtime support. Do not publish this draft before validation.
 
 |                                    | DeeplinkX                      | `url_launcher`                                     |
 | ---------------------------------- | ------------------------------ | -------------------------------------------------- |
-| **Typed API for popular apps**     | ✅ 41 apps, no URL maintenance | ❌ Raw URLs only                                   |
+| **Typed API for popular apps**     | ✅ 42 apps, no URL maintenance | ❌ Raw URLs only                                   |
 | **Automatic store / web fallback** | ✅ Built in                    | ❌ Manual implementation required                  |
 | **Installation check**             | ✅ `isAppInstalled()`          | ⚠️ `canLaunchUrl()` — unreliable for HTTPS schemes |
 | **Android Intent support**         | ✅ Advanced intent options     | ⚠️ Basic intent launching only                     |
@@ -599,6 +604,7 @@ Per-app pages (schemes, required config, fallback behavior) live in [`doc/apps`]
 [KakaoMap](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/kakao_map.md) ·
 [HERE WeGo](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/here_wego.md) ·
 [Citymapper](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/citymapper.md) ·
+[OsmAnd](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/osmand.md) ·
 [Neshan](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/neshan.md) ·
 [Yandex Maps](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/yandex_maps.md) ·
 [Yandex Navigator](https://github.com/DeeplinkX/DeeplinkX/blob/master/doc/apps/yandex_navigator.md) ·
