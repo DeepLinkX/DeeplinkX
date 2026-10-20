@@ -132,6 +132,23 @@ final List<AppSpec> socialApps = [
         ),
       ),
       ActionSpec(
+        icon: Icons.chat_rounded,
+        title: 'Chat with username',
+        apiLabel: 'WhatsApp.chatByUsername(username, message)',
+        buttonLabel: 'Start chat',
+        fields: const [
+          ActionField(key: 'username', label: 'Username (without @)', defaultValue: 'example_user'),
+          ActionField(key: 'message', label: 'Message (optional)', defaultValue: 'Hello! How are you?', optional: true),
+        ],
+        runner: AppActionRunner(
+          (final v, {required final fallbackToStore}) => WhatsApp.chatByUsername(
+            username: v.value('username'),
+            message: v.optionalValue('message'),
+            fallbackToStore: fallbackToStore,
+          ),
+        ),
+      ),
+      ActionSpec(
         icon: Icons.share_rounded,
         title: 'Share text',
         apiLabel: 'WhatsApp.shareText(text)',

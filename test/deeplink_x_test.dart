@@ -63,7 +63,9 @@ void main() {
 
       test('WhatsApp', () {
         final action = WhatsApp.open();
+        final usernameChat = WhatsApp.chatByUsername(username: 'example_user');
         expect(action, isA<App>());
+        expect(usernameChat, isA<WhatsAppChatByUsernameAction>());
       });
 
       test('LinkedIn', () {
