@@ -1,3 +1,13 @@
+## 1.5.8
+
+### Added
+
+* Added `WhatsApp.chatByUsername` with optional prefilled messages, native username links, store and web fallbacks, documentation, tests, and a catalog example.
+
+### Fixed
+
+* Corrected the WhatsApp documentation's text-sharing examples to use `WhatsApp.shareText`.
+
 ## 1.5.7
 
 ### Added

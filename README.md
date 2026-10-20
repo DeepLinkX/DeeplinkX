@@ -190,6 +190,10 @@ await deeplinkX.launchAction(
 await deeplinkX.launchAction(
   WhatsApp.chat(phoneNumber: '1234567890', fallbackToStore: true),
 );
+
+await deeplinkX.launchAction(
+  WhatsApp.chatByUsername(username: 'example_user', message: 'Hello!', fallbackToStore: true),
+);
 ```
 
 ### Open another app from Flutter
@@ -400,7 +404,7 @@ HERE WeGo actions use the [official HERE share-link contract](https://docs.here.
 |                | Myket             | Open app page, rate app                                                          |
 | **Social**     | Telegram          | Open profile by username, open profile by phone number, send message            |
 |                | Instagram         | Open profile by username                                                        |
-|                | WhatsApp          | Chat with phone number, share text content                                      |
+|                | WhatsApp          | Chat with phone number or username, share text content                          |
 |                | Facebook          | Open profile by ID, open profile by username, open page, open group, open event |
 |                | YouTube           | Open video, open channel, open playlist, search                                 |
 |                | Twitter           | Open profile by username, open tweet by ID, search                              |

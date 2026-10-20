@@ -86,6 +86,23 @@ class WhatsApp extends App implements DownloadableApp {
         fallbackToStore: fallbackToStore,
       );
 
+  /// Creates an action to start a chat with a WhatsApp username.
+  ///
+  /// Supply [username] without the leading `@`. It is used as supplied, without
+  /// normalization or validation. [message] optionally prefills the chat composer.
+  /// Set [fallbackToStore] to redirect to an app store when WhatsApp cannot open.
+  /// WhatsApp may prompt for the recipient's username key.
+  static WhatsAppChatByUsernameAction chatByUsername({
+    required final String username,
+    final String? message,
+    final bool fallbackToStore = false,
+  }) =>
+      WhatsAppChatByUsernameAction(
+        username: username,
+        message: message,
+        fallbackToStore: fallbackToStore,
+      );
+
   /// Creates an action to share text via the WhatsApp app.
   ///
   /// Parameters:
@@ -157,6 +174,60 @@ class WhatsAppChatAction extends WhatsApp implements AppLinkAppAction, Fallbacka
       path: phoneNumber,
       queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
     );
+  }
+}
+
+/// An action to start a chat with a WhatsApp username and optional message.
+///
+/// Uses a native app link with a click-to-chat web fallback, matching
+/// [WhatsAppChatAction]. Username availability depends on WhatsApp's rollout.
+class WhatsAppChatByUsernameAction extends WhatsApp implements AppLinkAppAction, Fallbackable {
+  /// Creates an action for [username] with an optional prefilled [message].
+  ///
+  /// Supply [username] without the leading `@`. It is used as supplied, without
+  /// normalization or validation. [fallbackToStore] enables app store fallback.
+  WhatsAppChatByUsernameAction({
+    required this.username,
+    required this.message,
+    required super.fallbackToStore,
+  });
+
+  /// The recipient's username without the leading `@`.
+  final String username;
+
+  /// The optional message to prefill in the chat composer.
+  final String? message;
+
+  /// The native app link for starting a chat with [username].
+  @override
+  Uri get appLink {
+    final queryParameters = <String, String>{
+      'username': username,
+      if (message != null) 'text': message!,
+    };
+    final link = Uri(
+      scheme: 'whatsapp',
+      host: 'send',
+      queryParameters: queryParameters,
+    );
+    // Uri omits '=' for empty values; preserve an explicitly empty message.
+    return message == '' ? link.replace(query: '${link.query}=') : link;
+  }
+
+  /// The click-to-chat web link for [username] when WhatsApp cannot open.
+  @override
+  Uri get fallbackLink {
+    final queryParameters = <String, String>{
+      if (message != null) 'text': message!,
+    };
+    final link = Uri(
+      scheme: 'https',
+      host: 'wa.me',
+      path: username,
+      queryParameters: queryParameters.isNotEmpty ? queryParameters : null,
+    );
+    // Uri omits '=' for empty values; preserve an explicitly empty message.
+    return message == '' ? link.replace(query: '${link.query}=') : link;
   }
 }
 

@@ -131,6 +131,92 @@ void main() {
   });
 
   group('launchAction', () {
+    group('WhatsApp username chat', () {
+      late WhatsAppChatByUsernameAction action;
+
+      setUp(() {
+        action = WhatsApp.chatByUsername(username: 'example_user', message: 'Hello World');
+      });
+
+      for (final platform in [PlatformType.android, PlatformType.ios, PlatformType.macos, PlatformType.windows]) {
+        test('launches the native username URL on $platform', () async {
+          deeplinkX = DeeplinkX(launcherUtil: mockLauncherUtil, platformType: platform);
+
+          expect(await deeplinkX.launchAction(action), isTrue);
+
+          verify(() => mockLauncherUtil.launchUrl(action.appLink)).called(1);
+          verifyNever(() => mockLauncherUtil.launchUrl(action.fallbackLink));
+          verifyNever(() => mockLauncherUtil.launchIntent(any()));
+        });
+      }
+
+      test('opens the username web link when WhatsApp is not installed', () async {
+        when(() => mockLauncherUtil.isAppInstalled(action)).thenAnswer((final _) async => false);
+
+        expect(await deeplinkX.launchAction(action), isTrue);
+
+        verify(() => mockLauncherUtil.launchUrl(action.fallbackLink)).called(1);
+        verifyNever(() => mockLauncherUtil.launchUrl(action.appLink));
+      });
+
+      test('opens the username web link after native launch fails', () async {
+        when(() => mockLauncherUtil.launchUrl(action.appLink)).thenAnswer((final _) async => false);
+
+        expect(await deeplinkX.launchAction(action), isTrue);
+
+        verifyInOrder([
+          () => mockLauncherUtil.launchUrl(action.appLink),
+          () => mockLauncherUtil.launchUrl(action.fallbackLink),
+        ]);
+      });
+
+      test('opens the store before the web link when enabled', () async {
+        action = WhatsApp.chatByUsername(username: 'example_user', fallbackToStore: true);
+        final storeLink = PlayStore.openAppPage(packageName: 'com.whatsapp').universalLink;
+        when(() => mockLauncherUtil.isAppInstalled(action)).thenAnswer((final _) async => false);
+
+        expect(await deeplinkX.launchAction(action), isTrue);
+
+        verify(() => mockLauncherUtil.launchUrl(storeLink)).called(1);
+        verifyNever(() => mockLauncherUtil.launchUrl(action.appLink));
+        verifyNever(() => mockLauncherUtil.launchUrl(action.fallbackLink));
+      });
+
+      test('opens the username web link if store launch fails', () async {
+        action = WhatsApp.chatByUsername(username: 'example_user', fallbackToStore: true);
+        final storeLink = PlayStore.openAppPage(packageName: 'com.whatsapp').universalLink;
+        when(() => mockLauncherUtil.isAppInstalled(action)).thenAnswer((final _) async => false);
+        when(() => mockLauncherUtil.launchUrl(storeLink)).thenAnswer((final _) async => false);
+
+        expect(await deeplinkX.launchAction(action), isTrue);
+
+        verifyInOrder([
+          () => mockLauncherUtil.launchUrl(storeLink),
+          () => mockLauncherUtil.launchUrl(action.fallbackLink),
+        ]);
+      });
+
+      test('does not open the store or web when fallback is disabled and WhatsApp is absent', () async {
+        action = WhatsApp.chatByUsername(username: 'example_user', fallbackToStore: true);
+        when(() => mockLauncherUtil.isAppInstalled(action)).thenAnswer((final _) async => false);
+
+        expect(await deeplinkX.launchAction(action, disableFallback: true), isFalse);
+
+        verifyNever(() => mockLauncherUtil.launchUrl(any()));
+      });
+
+      test('does not fall back after a failed native launch when fallback is disabled', () async {
+        action = WhatsApp.chatByUsername(username: 'example_user', fallbackToStore: true);
+        when(() => mockLauncherUtil.launchUrl(action.appLink)).thenAnswer((final _) async => false);
+
+        expect(await deeplinkX.launchAction(action, disableFallback: true), isFalse);
+
+        verify(() => mockLauncherUtil.launchUrl(action.appLink)).called(1);
+        verifyNever(() => mockLauncherUtil.launchUrl(action.fallbackLink));
+        verifyNever(() => mockLauncherUtil.launchUrl(PlayStore.openAppPage(packageName: 'com.whatsapp').universalLink));
+      });
+    });
+
     test('launches intent action', () async {
       final action = MockIntentAction();
       const options = AndroidIntentOption(action: 'action');

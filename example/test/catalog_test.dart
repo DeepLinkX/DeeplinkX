@@ -24,6 +24,33 @@ void main() {
       }
     });
 
+    test('WhatsApp catalog builds username chats after phone chats', () {
+      final spec = catalogApps.singleWhere((final spec) => spec.id == 'whatsapp');
+      expect(spec.actions.map((final action) => action.title), [
+        'Open app',
+        'Chat with number',
+        'Chat with username',
+        'Share text',
+      ]);
+      final chatSpec = spec.actions[2];
+      expect(chatSpec.apiLabel, 'WhatsApp.chatByUsername(username, message)');
+      final values = ActionValues({for (final field in chatSpec.fields) field.key: field.defaultValue});
+      final runner = chatSpec.runner as AppActionRunner;
+      final chat = runner.build(values, fallbackToStore: true) as WhatsAppChatByUsernameAction;
+      expect(chat.username, 'example_user');
+      expect(chat.message, 'Hello! How are you?');
+      expect(chat.fallbackToStore, isTrue);
+      expect(chat.appLink.queryParameters['username'], 'example_user');
+      expect(chat.fallbackLink.path, '/example_user');
+
+      final withoutMessage =
+          runner.build(const ActionValues({'username': 'other_user', 'message': ''}), fallbackToStore: false)
+              as WhatsAppChatByUsernameAction;
+      expect(withoutMessage.username, 'other_user');
+      expect(withoutMessage.message, isNull);
+      expect(withoutMessage.fallbackToStore, isFalse);
+    });
+
     test('OsmAnd catalog builds the HTTPS view and package-targeted route', () {
       final spec = catalogApps.singleWhere((final spec) => spec.id == 'osmand');
       expect(spec.category, CatalogCategory.maps);
