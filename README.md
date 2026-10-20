@@ -542,6 +542,35 @@ Redirecting to a store page with `url_launcher` means detecting the platform, lo
 
 Compared to single-purpose alternatives, `external_app_launcher` opens an app or its store listing but has no typed map or social-app actions. DeeplinkX covers apps, maps, and stores from one typed API.
 
+## DeeplinkX vs `whatsapp_unilink`
+
+> **Maintenance concern: `whatsapp_unilink` appears unmaintained on pub.dev. Its latest release, 2.1.0, was published on November 20, 2022 — over three years without a new published version as of October 21, 2026.** See the [pub.dev release history](https://pub.dev/packages/whatsapp_unilink/versions).
+
+`whatsapp_unilink` builds WhatsApp HTTP links from an optional phone number and message. Its Flutter examples use a separate launcher such as `url_launcher` to open those links. DeeplinkX provides typed WhatsApp actions together with native launching, installation checks, and configurable store and web fallbacks:
+
+| WhatsApp capability | DeeplinkX | `whatsapp_unilink` 2.1.0 |
+| ------------------- | --------- | ----------------------- |
+| **Phone-number chat with optional prefilled text** | `WhatsApp.chat(phoneNumber:, message:)` | `WhatsAppUnilink(phoneNumber:, text:)` builds the link |
+| **Username chat with optional prefilled text** | `WhatsApp.chatByUsername(username:, message:)` | No username parameter or action |
+| **Share text without specifying a recipient** | `WhatsApp.shareText(text:)` | Omit `phoneNumber` and supply `text` |
+| **Native app launching** | Built into `launchAction` / `launchApp` | Launch the generated HTTP link separately; the OS/browser decides how to open it |
+| **Installation check** | `isAppInstalled(WhatsApp())` | Not provided |
+| **Store and web fallback handling** | Optional `fallbackToStore: true`, then action-specific web fallback; `disableFallback: true` suppresses fallbacks | HTTP link only; implement app/store routing separately |
+| **Phone-number cleanup** | Supply international digits, including country code, without `+` | Removes formatting and leading zeros; does not infer a country code |
+| **Other external apps and stores** | Shared typed API for supported social apps, maps, and stores | WhatsApp link builder |
+
+For example, target a WhatsApp username without constructing a URL:
+
+```dart
+final launched = await DeeplinkX().launchAction(
+  WhatsApp.chatByUsername(
+    username: 'example_user', // Recipient's exact username, without @
+    message: 'Hello!',
+    fallbackToStore: true,
+  ),
+);
+```
+
 ## Return values
 
 Every launch method returns a `Future<bool>`:

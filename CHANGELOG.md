@@ -1,3 +1,9 @@
+## 1.5.9
+
+### Changed
+
+* Added a sourced README comparison with `whatsapp_unilink`, covering WhatsApp phone-number and username chats, text sharing, launching, installation checks, fallbacks, and link-only use cases.
+
 ## 1.5.8
 
 ### Added
